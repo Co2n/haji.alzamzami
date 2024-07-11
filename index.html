@@ -1,46 +1,79 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title></title>
-    </head>
-    <body>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="myDiv">
-        <h1>The website's is under construction</h1>
-        <h2>Coming Soon</h2>
-        </div>
-        
-        <style>
-            body{
-                background-color: #ded883;
-                text-align: center;
-            }
-            
-            .myDiv{
-                border: 2px solid lightpink;
-                color: solid cyan;
-                font-family: bold;
-            
-            }
-            
-            .myDiv:hover{
-                
-                background-color: lime;
-                color: black;
-                font-family: chiller;
-            }
-            
-        </style>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Under Construction</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #777;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-top: 16px solid #3498db;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <h1>Under Construction</h1>
+  <p>We are working hard to bring you something amazing.</p>
+
+  <script>
+    // Optional countdown timer
+    const countdownDate = new Date("2023-07-01").getTime();
+
+    const countdown = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.body.innerHTML += `
+        <p>Launching in: ${days}d ${hours}h ${minutes}m ${seconds}s</p>
+      `;
+
+      if (distance < 0) {
+        clearInterval(countdown);
+        document.body.removeChild(document.querySelector('.loader'));
+      }
+    }, 1000);
+  </script>
+</body>
 </html>
