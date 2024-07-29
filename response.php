@@ -1,4 +1,3 @@
-//------------------------ Below is sample response file program in PHP (response.php) ---------------------------
 <?php
 //you can print text, image, barcode and QR code by sending request from your website. You just need to send data in JSON format
 //note that putting comments, header output etc. may create invalid JSON response and app cannot parse the response
