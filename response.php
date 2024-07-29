@@ -13,7 +13,7 @@ array_push($a,$obj1);
 
 //sending image entry		
 $obj2->type = 1;//image
-$obj2->path = 'https://www.mydomain.com/image.jpg';//complete filepath on your web server; make sure that it is not big size
+$obj2->path = '';//complete filepath on your web server; make sure that it is not big size
 $obj2->align = 2;//0 if left, 1 if center, 2 if right; set left align for big size images
 array_push($a,$obj2);
 
