@@ -1,0 +1,39 @@
+html, body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+   background-color: gray;
+}
+.container {
+   display: flex;
+}
+
+.column {
+   background-color: white;
+   border-radius: 5px;
+   box-sizing: border-box;
+   margin: 15px 15px;
+   padding: 24px;
+   flex: 1;
+}
+
+.block textarea {
+   width: 100%;
+}
+
+ul {
+   text-align: center;
+   list-style: none;
+}
+
+button {
+   padding: 8px 16px;
+   background-color: rgba(63, 86, 155, 0.267);
+   color: white;
+   transition: all 0,2s;
+}
+
+button::hover {
+   background-color: white;
+   color: rgba(63, 86, 155, 0.267);
+}
