@@ -83,7 +83,7 @@ body {
 }
 
 .mynavbar {
-  background-color: rgba(255, 255, 255, 0.3) !important;
+  background-color: rgba(223, 147, 24, 0.3) !important;
   backdrop-filter: blur(4px);
 }
 
@@ -142,7 +142,7 @@ body {
 .tempat h3 {
   color: var(--blue);
   font-family: "Berkshire Swash", serif;
-  font-size: 2rem;
+  font-size: 4rem;
   margin-bottom: 1rem;
 }
 
@@ -156,7 +156,7 @@ body {
 }
 
 .tempat .couple {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .tempat .couple h3 {
@@ -167,6 +167,7 @@ body {
 
 .tempat .couple img {
   width: 100%;
+  border-radius: 20px;
 }
 
 .tempat .heart {
@@ -198,7 +199,6 @@ body {
   color: var(--blue);
   font-weight: bold;
 }
-
 .jadwal {
   background-image: url("img/arsir.png");
   background-size: contain;
@@ -468,6 +468,9 @@ footer li {
   .logo {
     height: 100px;
   }
+  .tempat .couple img {
+    width: 100%;
+  }
   .tempat .heart {
     transform: translateX(-50%) translateY(45px);
   }
@@ -481,6 +484,10 @@ footer li {
 
   .simply-countdown > .simply-section {
     padding: 60px;
+  }
+
+  .tempat .couple img {
+    width: 80%;
   }
 
   .tempat .heart {
@@ -537,13 +544,45 @@ footer li {
   .tempat .header{
     height: 80px;
   }
+  .tempat .couple img {
+    width: 100%;
+  }
   .tempat p {
     font-size: 1.8rem;
   }
   .tempat a {
     font-size: 1.8rem;
   }
+  .jadwal img {
+    width: 80%;
+  }
+  .jadwal .pribahasa{
+    font-size: 1.3rem;
+  }
+  .jadwal .card-header {
+    font-size: 2rem;
+  }
+  .jadwal .card-header span {
+    font-size: 1.5rem;
+  }
+  .jadwal .card-body {
+    font-size: 1.5rem;
+  }
+  .jadwal .card-footer {
+    font-size: 1.5rem;
+  }
 
+  .rsvp p{
+    font-size: 1.5rem;
+  }
+  /* .rsvp form,
+  .rsvp input,
+  .rsvp select,
+  .rsvp button
+  {
+    font-size: 1.5rem;
+  } */
+  
   .simply-countdown > .simply-section {
     padding: 50px;
     margin: 5px;
