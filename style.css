@@ -624,10 +624,11 @@ footer i{
     font-size: 60%;
   }
   .header{
-    height: 90px;
+    height: 85px;
   }
   .logo{
-    height: 90px;
+    margin: 5px 0;
+    height: 75px;
   }
   .hero p {
     font-size: 1.8rem;
