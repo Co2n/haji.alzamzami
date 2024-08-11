@@ -27,17 +27,17 @@
         </div>
         <div class="col-md-10 text-center box-daftar">
           <form class="row g-3 needs-validation" id="pendaftaran" method="post"
-            action="https://script.google.com/macros/s/AKfycbwzlDMpcMBVZtCEEDXRE6QnXL2odLfSVTCFlZ07MGOeHCpLP0qL4jNKxP_hLsJ44kPV/exec"
-            novalidate>
+            action="https://script.google.com/macros/s/AKfycbwzlDMpcMBVZtCEEDXRE6QnXL2odLfSVTCFlZ07MGOeHCpLP0qL4jNKxP_hLsJ44kPV/exec">
             <div class="col-md-3">
               <label for="porsi" class="form-label">No. Porsi*</label>
-              <input name="PORSI" min="1000614429" max="1009999999" length="10" type="number" class="form-control"
-                id="porsi" placeholder="1000" length="10" required />
-              <!-- <div class="valid-feedback">Ini sudah ok!</div> -->
+              <input name="PORSI" min="1000614429" length="10" type="number" class="form-control" id="porsi"
+                placeholder="1000" length="10" required />
+              <div class="valid-feedback">Ini sudah ok!</div>
             </div>
             <div class="col-md-3">
               <label for="spph" class="form-label">No. SPPH</label>
-              <input name="SPPH" type="number" class="form-control" id="spph" placeholder="10" />
+              <input min="102305516" length="10" name="SPPH" type="number" class="form-control" id="spph"
+                placeholder="10" />
               <div class="valid-feedback">Ini sudah ok!</div>
             </div>
             <div class="col-md-3">
@@ -48,7 +48,8 @@
             </div>
             <div class="col-md-3">
               <label for="hp" class="form-label">No. HP*</label>
-              <input name="HP" length="13" type="text" class="form-control" id="hp" placeholder="08.." required />
+              <input min="0800000000000" name="HP" length="13" type="number" class="form-control" id="hp"
+                placeholder="08.." required />
               <div class="valid-feedback">Ini sudah ok!</div>
             </div>
             <div class="col-md-6">
@@ -56,7 +57,7 @@
               <input name="NAMA" type="text" class="form-control" id="namalengkap" placeholder="sesuai KTP" required />
               <div class="valid-feedback">Ini sudah ok!</div>
             </div>
-            
+
             <div class="col-md-3">
               <label for="tmpLahir" class="form-label">Tempat Lhr*</label>
               <input name="TMP_LHR" type="text" class="form-control" id="tmpLahir" required />
@@ -70,7 +71,7 @@
             <div class="col-md-12">
               <script>
                 function check(browser) {
-                  document.getElementById("GENDER").value = browser;
+                  document.getElementById("gender").value = browser;
                 }
               </script>
               <input type="radio" class="form-check-input" id="pria" name="GENDER" value="L" onclick="check(this.value)"
@@ -79,7 +80,7 @@
               <input type="radio" class="form-check-input" id="wanita" name="GENDER" value="P"
                 onclick="check(this.value)" required>
               <label class="form-check-label" for="wanita">Wanita</label>
-              <input type="hidden" name="GENDER" id="GENDER">
+              <input type="hidden" name="GENDER" id="gender">
               <div class="invalid-feedback">Pilih salah satu jenis kelamin</div>
             </div>
             <div class="col-md-4">
@@ -89,12 +90,12 @@
             </div>
             <div class="col-md-2">
               <label for="rt" class="form-label">RT*</label>
-              <input name="RT" length="3" type="text" class="form-control" id="rt" placeholder="000" required />
+              <input name="RT" length="3" type="number" class="form-control" id="rt" placeholder="000" required />
               <div class="valid-feedback">ok!</div>
             </div>
             <div class="col-md-2">
               <label for="rw" class="form-label">RW*</label>
-              <input name="RW" length="3" type="text" class="form-control" id="rw" placeholder="000" required />
+              <input name="RW" length="3" type="number" class="form-control" id="rw" placeholder="000" required />
               <div class="valid-feedback">ok!</div>
             </div>
             <div class="col-md-4">
@@ -109,7 +110,7 @@
             </div>
             <div class="col-md-2">
               <label for="kodepos" class="form-label">Kode Pos</label>
-              <input name="KODE_POS" type="number" class="form-control" id="kodepos" />
+              <input min="45000" length="5" name="KODE_POS" type="number" class="form-control" id="kodepos" />
               <div class="valid-feedback">Ini sudah ok!</div>
             </div>
             <div class="col-md-3">
@@ -131,7 +132,7 @@
             <input type="hidden" name="REG" value="TRUE" />
             <div class="col-12">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="invalidCheck" required />
+                <input class="form-check-input" type="checkbox" value="1" id="invalidCheck" onclick="dapatkanURI()" required />
                 <label class="form-check-label" for="invalidCheck">
                   Bismillah, dengan ini saya mendaftarkan diri bimbingan Manasik Haji di KBIHU Al-Zamzami
                 </label>
@@ -146,6 +147,7 @@
               </button>
             </div>
           </form>
+          <input type="hidden" id="getNamaPendaftar">
         </div>
       </div>
     </div>
@@ -153,6 +155,7 @@
 
   <script>
     getLocation();
+
     const x = document.getElementById("lok");
     function getLocation() {
       if (navigator.geolocation) {
@@ -167,8 +170,19 @@
         position.coords.latitude + " , " + position.coords.longitude
       );
     }
+
+    function dapatkanURI() {
+      const elementGender = document.getElementById("gender").value;
+      const elementNama = document.getElementById("namalengkap").value;
+      var uri = elementGender === "L" ? "Bpk. " + elementNama : elementGender === "P" ? "Ibu " + elementNama : "";
+      const pendaftar = document.getElementById("getNamaPendaftar");
+      pendaftar.setAttribute("value", encodeURI(uri));
+      console.log(pendaftar.value);
+    }
+
     (function () {
       "use strict";
+
       window.addEventListener("load", function () {
         const form = document.getElementById("pendaftaran");
         form.addEventListener("submit", function (e) {
@@ -184,7 +198,7 @@
               body: data,
             }).then(() => {
               alert("Terimakasih, Pendaftaran telah kami terima");
-              location.replace("https://haji.alzamzami.co.id")
+              location.replace("index.html?n=" + document.getElementById("getNamaPendaftar").value)
             });
           }
           form.classList.add("was-validated");
