@@ -1,17 +1,23 @@
-.daftar {
-   /* background-image: url(img/bg.jpg); */
-   background-size: contain;
-   background-position: bottom;
-   background-repeat: no-repeat;
-   min-height: 100vh;
- }
+ .daftar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(img/bg-prewed-3.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  /* filter: blur(); */
+}
  
  .daftar h2 {
    color: var(--blue);
    font-family: "Berkshire Swash", serif;
-   font-size: 3rem;
+   font-size: 2rem;
    font-weight: bold;
-   margin: 30px 0;
+   margin: 15px 0;
  }
  
  .daftar h3 {
@@ -25,6 +31,7 @@
    background-color: rgba(255, 255, 255, 0.834) !important;
    /* color: white; */
    padding: 50px;
+   border-radius: 10px;
  }
 
  .daftar p {

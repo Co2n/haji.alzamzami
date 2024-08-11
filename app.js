@@ -113,6 +113,7 @@ function getData() {
 }
 
 const x = document.getElementById("lok");
+// const autopress = document.getElementById("find");
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -122,7 +123,6 @@ function getLocation() {
   }
 }
 function showPosition(position) {
-  const autopress = document.getElementById("find");
   x.setAttribute(
     "value",
     position.coords.latitude + " , " + position.coords.longitude
