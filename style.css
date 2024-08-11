@@ -91,6 +91,11 @@ body {
   height: 100vh;
 }
 
+.mynavbar .navbar-toggler-icon {
+  width: 3em;
+  height: 3em;
+  vertical-align: middle;
+}
 .mynavbar .navbar-brand,
 .mynavbar .offcanvas-title {
   font-family: "Sacramento", cursive;
@@ -275,7 +280,7 @@ body {
 .gallery p,
 .rsvp p,
 .gifts p {
-  font-size: 1rem;
+  font-size: 1.6rem;
   font-weight: 300;
 }
 
@@ -434,6 +439,10 @@ footer li {
   margin: 0.5rem;
 }
 
+footer p {
+  font-size: 1.3em;
+}
+
 .audio-icon-wrapper {
   width: 4rem;
   height: 4rem;
@@ -451,6 +460,11 @@ footer li {
   justify-content: center;
   align-items: center;
   line-height: 0;
+}
+
+.sosmed i{
+  font-size: 30px;
+  color: white;
 }
 
 @keyframes rotating {
@@ -572,16 +586,17 @@ footer li {
     font-size: 1.5rem;
   }
 
-  .rsvp p{
-    font-size: 1.5rem;
-  }
-  /* .rsvp form,
+  .rsvp form,
   .rsvp input,
   .rsvp select,
   .rsvp button
   {
-    font-size: 1.5rem;
-  } */
+    font-size: 1.6rem;
+  }
+
+  .gifts li{
+    font-size: 1.6rem;
+  }
   
   .simply-countdown > .simply-section {
     padding: 50px;
@@ -651,13 +666,23 @@ footer li {
     font-size: 50%;
   }
   .header{
-    height: 75px;
+    height: 65px;
   }
   .logo{
+    margin: 5px 0;
     height: 75px;
   }
   .hero p {
-    font-size: 1.8rem;
+    margin: 5px 0;;
+    font-size: 1.7rem;
+  }
+
+  .tempat iframe {
+    height: 200px;
+  }
+
+  .tempat .couple {
+    margin-top: 10px;
   }
 
   .simply-countdown > .simply-section {

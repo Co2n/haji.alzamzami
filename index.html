@@ -48,14 +48,14 @@
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <img class="logo-title text-center" id="offcanvasNavbarLabel" src="img/logokbihu.svg" />
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="#tempat">Tempat</a>
+            <a class="nav-link modal-close" href="#tempat">Tempat</a>
             <a class="nav-link" href="#jadwal">Jadwal</a>
             <a class="nav-link" href="#gallery">Gallery</a>
             <a class="nav-link" href="#rsvp">RSVP</a>
@@ -65,6 +65,9 @@
       </div>
     </div>
   </nav>
+  <script>
+
+  </script>
 
   <section id="tempat" class="tempat">
     <div class="container">
@@ -182,43 +185,59 @@
         </div>
       </div>
 
-      <form class="row g-3 needs-validation"
+      <form class="row row-cols-md-auto g-3 align-items-center justify-content-center needs-validation"
         action="https://script.google.com/macros/s/AKfycbzKh3IoQ1aD3gZfohdNZDjkovscQ3BbvAFwhUUcJEMySAb9ljGmJWyPRK_gXKKASZam/exec"
         method="post" id="my-form" novalidate>
-        <fieldset id="myFieldset">
-          <div class="col-12">
-            <div class="mb-3">
-              <label for="nama" class="form-label">Nama</label>
-              <input type="text" class="form-control" id="nama" name="Nama" placeholder="Lengkap" required />
-              <div class="invalid-feedback">Harus diisi!</div>
-              <input type="hidden" id="lok" name="Lokasi" />
-              <input type="hidden" id="keg" name="Kegiatan" />
-            </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <!-- <label for="nama" class="form-label">Nama</label> -->
+            <input type="text" class="form-control" id="nama" name="Nama" placeholder="Nama" required />
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Harus diisi!</div>
+            <input type="hidden" id="lok" name="Lokasi" />
+            <input type="hidden" id="keg" name="Kegiatan" />
           </div>
-          <div class="col-12">
-            <div class="mb-3">
-              <label for="jumlah" class="form-label">Jumlah</label>
-              <input type="number" class="form-control" id="jumlah" name="Jumlah" min="1" max="5" length="1"
-                placeholder="Berapa?" required />
-              <div class="invalid-feedback">Harus diisi angka max 5!</div>
-            </div>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <!-- <label for="jumlah" class="form-label">Jumlah</label> -->
+            <input type="number" class="form-control" id="jumlah" name="Jumlah" min="1" max="5" length="1"
+              placeholder="Jml" required />
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Harus diisi angka max 5!</div>
           </div>
-          <div class="col-12">
-            <div class="mb-3">
-              <label for="status" class="form-label">Konfirmasi</label>
-              <select name="Status" id="status" class="form-select" required>
-                <option selected disabled value="">Pilih salah satu</option>
-                <option value="Hadir">Hadir</option>
-                <option value="Tidak Hadir">Tidak</option>
-              </select>
-              <div class="invalid-feedback">Hadir / Tidak ?</div>
-            </div>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <!-- <label for="status" class="form-label">Konfirmasi</label> -->
+            <script>
+              function check(browser) {
+                document.getElementById("status").value = browser;
+              }
+            </script>
+            <input class="form-check-input" type="radio" name="status" onclick="check(this.value)" id="hadir"
+              value="Hadir" required>
+            <label class="form-check-label" for="hadir">Hadir</label>
+            <input class="form-check-input" type="radio" name="status" onclick="check(this.value)" id="tidak"
+              value="Tidak" required>
+            <label class="form-check-label" for="tidak">Tidak</label>
+            <div class="invalid-feedback">Pilih Salah Satu!</div>
+            <input type="hidden" id="status" name="Status" />
+            <!-- <select name="Status" id="status" class="form-select" required>
+              <option selected disabled value="">Pilih salah satu</option>
+              <option value="Hadir">Hadir</option>
+              <option value="Tidak Hadir">Tidak</option>
+            </select>
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Hadir / Tidak ?</div> -->
           </div>
-          <div class="col-12" style="margin-top: 35px">
+        </div>
+        <div class="col-12 text-center">
+          <div class="mb-3">
             <button id="buttonKirim" class="btn btn-primary" type="submit">Kirim</button>
           </div>
+        </div>
       </form>
-      </fieldset>
     </div>
   </section>
 
@@ -237,7 +256,15 @@
           <ul class="list-group">
             <li class="list-group-item">
               <div class="fw-bold">MANDIRI</div>
-              1340024423757 - MUNA FARIDAH
+              <div id="noRek">1340024423757</div>
+              <div>a.n. MUNA FARIDAH</div>
+              <button class="btn btn-secondary" onclick="myGetNoRek('noRek')">
+                Salin No Rek
+              </button>
+              <!-- <button onclick="myGetNoRek()" onmouseout="outNoRek()">
+                <span class="tooltiptext" id="noRek">Salin No Rek</span>
+                Salin No Rek
+              </button> -->
             </li>
             <!-- <li class="list-group-item">
                 <div class="fw-bold">Muna Faridah</div>
@@ -257,12 +284,9 @@
   <footer>
     <div class="container">
       <div class="row">
-        <div class="col text-center">
-          <small class="block">&copy; 2024 Co2n. All Rights Reserved.</small>
-          <small class="block">Design by
-            <a href="https://www.instagram.com/kokon_koswanto/">Co2n</a>.</small>
-
+        <div class="col text-center sosmed">
           <ul class="mt-3">
+            <p>Temukan kami disalahsatu sosial media di bawah ini. </p>
             <li>
               <a href="https://www.instagram.com/haji.alzamzami/" target="_blank"><i class="bi bi-instagram"></i></a>
             </li>
@@ -273,6 +297,10 @@
               <a href="https://www.tiktok.com/@haji.alzamzami" target="_blank"><i class="bi bi-tiktok"></i></a>
             </li>
           </ul>
+          <small class="block">&copy; 2024 Co2n. All Rights Reserved.</small>
+          <small class="block">Design by
+            <a href="https://www.instagram.com/kokon_koswanto/">Co2n</a>.</small>
+
         </div>
       </div>
     </div>
@@ -410,6 +438,22 @@
     namaContainer.innerText = `${pronoun} ${nama}`.replace(/ ,$/, ",");
 
     document.querySelector("#nama").value = nama;
+  </script>
+  <script>
+    function myGetNoRek(containerid) {
+      if (document.selection) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select().createTextRange();
+        document.execCommand("copy");
+      } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        alert("Nomor rekening berhasil di salin")
+      }
+    }
   </script>
 </body>
 
