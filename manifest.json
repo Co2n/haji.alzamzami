@@ -1,6 +1,7 @@
 {
  "name": "KBIHU Al-Zamzami",
- "short_name": "KBIHUALZAMZAMI",
+ "short_name": "alzamzami",
+ "description": "Kelompok Bimbingan Ibadah Haji",
  "start_url": "/index.html",
  "display": "standalone",
  "background_color": "#24292D",
