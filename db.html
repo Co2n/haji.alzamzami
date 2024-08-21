@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="">
+   <meta name="author" content="">
+
+   <title>KBIHU AL-ZAMZAMI</title>
+
+   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
+
+   <!-- Bootstrap core CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
+
+   <!-- Custom styles for this template -->
+   <link href="/css/db.css" rel="stylesheet">
+   
+</head>
+
+<body>
+   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto text-center">
+         <div class="inner">
+            <h4 class="masthead-brand">Kelompok Bimbingan Ibadah Haji dan Umrah</h4>
+            <h3 class="masthead-brand">AL-ZAMZAMI</h3>
+         </div>
+      </header>
+
+      <main role="main" class="inner cover">
+         <div class="d-md-flex flex-md-equal w-100 my-md-3">
+            <div class="bg-dark w-50 mr-md-3 pt-3 px-3 pt-md-3 px-md-3 text-center text-white overflow-hidden">
+              <div class="my-3 py-3">
+               <div class="dt-container container">
+                  <div class="dt-layout-row">
+                     <ul class="nav nav-pills justify-content-center">
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="0">TAHUN</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="1">URUT</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="2">REG</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="3">PORSI</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="4">PANGGIL</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="5">NAMA</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="6">AYAH</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="7">NAMA
+                              LENGKAP</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="8">JENIS KELAMIN</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="9">TEMPAT LHR</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="10">TANGGAL LHR</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="11">USIA</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="12">ALAMAT</a>
+                        </li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="13">DESA</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="14">KECAMATAN</a></li>
+                        <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="15">DESA-KEC</a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+              </div>
+            </div>
+            <div class="bg-light w-50 pl-md-3 pt-3 px-3 pt-md-3 px-md-3 text-center overflow-hidden">
+              <div class="my-3 p-3">
+               <table class="table" style="width: 100%;">
+                  <thead class="thead-dark">
+                     <tr>
+                        <th class="text-right" scope="col" style="width: 10%;">KOLOM</th>
+                        <th scope="col"> PENCARIAN </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr class="text-right" id="filter_col0" data-column="0">
+                        <td>TAHUN</td>
+                        <td> <input type="text" class="column_filter form-control" id="col0_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col2" data-column="2">
+                        <td>REG</td>
+                        <td> <input type="text" class="column_filter form-control" id="col2_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col3" data-column="3">
+                        <td>PORSI</td>
+                        <td> <input type="text" class="column_filter form-control" id="col3_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col5" data-column="5">
+                        <td>NAMA</td>
+                        <td> <input type="text" class="column_filter form-control" id="col5_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col6" data-column="6">
+                        <td>AYAH</td>
+                        <td> <input type="text" class="column_filter form-control" id="col6_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col11" data-column="11">
+                        <td>USIA</td>
+                        <td> <input type="text" class="column_filter form-control" id="col11_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col12" data-column="12">
+                        <td>ALAMAT</td>
+                        <td> <input type="text" class="column_filter form-control" id="col12_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col13" data-column="13">
+                        <td>DESA</td>
+                        <td> <input type="text" class="column_filter form-control" id="col13_filter" required /></td>
+                     </tr>
+                     <tr class="text-right" id="filter_col14" data-column="14">
+                        <td>KECAMATAN</td>
+                        <td> <input type="text" class="column_filter form-control" id="col14_filter" required /></td>
+                     </tr>
+                  </tbody>
+               </table>
+              </div>
+            </div>
+          </div>
+         <table id="tabelJemaah" class="display nowrap table table-bordered table-striped" style="width:100%">
+            <thead>
+               <tr>
+                  <th>TAHUN</th>
+                  <th>URUT</th>
+                  <th>REG</th>
+                  <th>PORSI</th>
+                  <th></th>
+                  <th>NAMA</th>
+                  <th>AYAH</th>
+                  <th>NAMA LENGKAP</th>
+                  <th></th>
+                  <th>TMP LHR</th>
+                  <th>TGL LHR</th>
+                  <th>USIA</th>
+                  <th>ALAMAT</th>
+                  <th>DESA</th>
+                  <th>KECAMATAN</th>
+                  <th>DESA - KEC</th>
+               </tr>
+            </thead>
+         </table>
+      </main>
+
+      <footer class="mastfoot mt-auto text-center">
+         <div class="inner">
+            <p></p>
+            <p>Creative Crew Al-Zamzami</p>
+         </div>
+      </footer>
+   </div>
+
+
+   <!-- Bootstrap core JavaScript
+    ================================================== -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap4.js"></script>
+
+   <script src="https://cdn.datatables.net/rowgroup/1.5.0/js/dataTables.rowGroup.js"></script>
+   <script src="https://cdn.datatables.net/rowgroup/1.5.0/js/rowGroup.dataTables.js"></script>
+   <script src="https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js"></script>
+   <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+   <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js"></script>
+   <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js"></script>
+
+   <script src="/js/db.js"></script>
+
+</body>
+
+</html>

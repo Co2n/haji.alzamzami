@@ -1,0 +1,16 @@
+table.dataTable tr.group-end td {
+   text-align: right;
+   font-weight: normal;
+}
+
+td.highlight {
+   background-color: rgba(var(--dt-row-hover), 0.052) !important;
+}
+
+.nav li {
+   margin: 2px;
+}
+
+.form-control:valid {
+   background-color: #fefec8 !important;
+}
