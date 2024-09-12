@@ -105,8 +105,8 @@ const table = new DataTable('#tabelJemaah', {
    ],
    order: [[5, 'asc']],
    ajax: {
-      // url: 'dbNow.json',
-      url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
+      url: 'dbNow.json',
+      // url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
       dataSrc: 'data'
    },
    columns: [
@@ -439,7 +439,6 @@ const table = new DataTable('#tabelJemaah', {
       var countGenderL = 0;
       var countGenderP = 0;
       api.cells(null, 12, { page: 'current'} ).nodes().each(function (n) { if ($(n).hasClass('g')) {
-         document.getElementById('tinggi').value = $(n).text();
          if ($(n).text() === "L") {
             countGenderL += 1
          }
