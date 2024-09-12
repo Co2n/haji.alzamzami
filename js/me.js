@@ -105,8 +105,8 @@ const table = new DataTable('#tabelJemaah', {
    ],
    order: [[5, 'asc']],
    ajax: {
-      url: 'dbNow.json',
-      // url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
+      // url: 'dbNow.json',
+      url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
       dataSrc: 'data'
    },
    columns: [
@@ -556,28 +556,4 @@ document.querySelectorAll('a.toggle-vis').forEach((el) => {
 function formatUang(subject) {
    rupiah = subject.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
    return `Rp${rupiah}`;
-}
-
-function colChild() {
-   var columns = table.columns(':visible')[0];
-   // var columns = table.columns().visible();
-   //    var rows = table.rows().data().toArray();
-   //    var result = []; // this array will contain only the visible fields of each row
-   //    for (var i = 0; i < rows.length; ++i) {
-   //       var row = [];
-   //       for (var j = 0; j < columns.length; ++j){
-   //          if (columns[j]) { // is visible
-   //             row.push(rows[i][j]);
-   //             console.log(j)
-   //          }
-   //       }
-   //       result.push(row);
-   //    }
-   // console.log(columns[5])
-
-   for (var i = 0; i < columns.length; ++i) {
-      console.log(table.cell(0, columns[i]).node().getAttribute('class'))
-   }
-   // console.log(table.cell(0, 1).node().getAttribute('class'))
-   // console.log(columns[5])
 }
