@@ -89,15 +89,15 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 80 }, //COL-8
       { visible: false, targets: 81 }, //COL-9
       { visible: false, targets: 82 }, //COL-10
-      { visible: false, targets: 83 }, //GAMIS
-      { visible: false, targets: 84 }, //PUNDAK
-      { visible: false, targets: 85 }, //P-BADAN
-      { visible: false, targets: 86 }, //L-DADA
-      { visible: false, targets: 87 }, //L-PINGGANG
-      { visible: false, targets: 88 }, //L-PINGGUL
-      { visible: false, targets: 89 }, //P-TANGAN
-      { visible: false, targets: 90 }, //L-TANGAN
-      { visible: false, targets: 91 }, //KERAH
+      { visible: false, targets: 83, className: 'dt-body-center'  }, //GAMIS
+      { visible: false, targets: 84, className: 'dt-body-center'  }, //PUNDAK
+      { visible: false, targets: 85, className: 'dt-body-center'  }, //P-BADAN
+      { visible: false, targets: 86, className: 'dt-body-center'  }, //L-DADA
+      { visible: false, targets: 87, className: 'dt-body-center'  }, //L-PINGGANG
+      { visible: false, targets: 88, className: 'dt-body-center'  }, //L-PINGGUL
+      { visible: false, targets: 89, className: 'dt-body-center'  }, //P-TANGAN
+      { visible: false, targets: 90, className: 'dt-body-center'  }, //L-TANGAN
+      { visible: false, targets: 91, className: 'dt-body-center'  }, //KERAH
       { visible: false, targets: 92 }, //PARAF
       { visible: false, targets: 93 }, //TANDA TANGAN
       { visible: false, targets: 94 }, //KETERANGAN
