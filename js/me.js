@@ -80,28 +80,28 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 71, className: 'dt-body-center' }, //EVALUASI KOLOSAL
       { visible: false, targets: 72, className: 'dt-body-center' }, //PERSIAPAN KEBERANGKATAN
       { visible: false, targets: 73, className: 'dt-body-center' }, //PASKA HAJI
-      { visible: false, targets: 74 }, //COL-1
-      { visible: false, targets: 75 }, //COL-2
-      { visible: false, targets: 76 }, //COL-3
-      { visible: false, targets: 77 }, //COL-4
-      { visible: false, targets: 78 }, //COL-5
-      { visible: false, targets: 79 }, //COL-7
-      { visible: false, targets: 80 }, //COL-8
-      { visible: false, targets: 81 }, //COL-9
-      { visible: false, targets: 82 }, //COL-10
-      { visible: false, targets: 83, className: 'dt-body-center'  }, //GAMIS
-      { visible: false, targets: 84, className: 'dt-body-center'  }, //PUNDAK
-      { visible: false, targets: 85, className: 'dt-body-center'  }, //P-BADAN
-      { visible: false, targets: 86, className: 'dt-body-center'  }, //L-DADA
-      { visible: false, targets: 87, className: 'dt-body-center'  }, //L-PINGGANG
-      { visible: false, targets: 88, className: 'dt-body-center'  }, //L-PINGGUL
-      { visible: false, targets: 89, className: 'dt-body-center'  }, //P-TANGAN
-      { visible: false, targets: 90, className: 'dt-body-center'  }, //L-TANGAN
-      { visible: false, targets: 91, className: 'dt-body-center'  }, //KERAH
-      { visible: false, targets: 92 }, //PARAF
-      { visible: false, targets: 93 }, //TANDA TANGAN
-      { visible: false, targets: 94 }, //KETERANGAN
-      { visible: false, targets: 95 }, //KET
+      { visible: false, targets: 74, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-1
+      { visible: false, targets: 75, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-2
+      { visible: false, targets: 76, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-3
+      { visible: false, targets: 77, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-4
+      { visible: false, targets: 78, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-5
+      { visible: false, targets: 79, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-7
+      { visible: false, targets: 80, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
+      { visible: false, targets: 81, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
+      { visible: false, targets: 82, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
+      { visible: false, targets: 83, searchable: false, orderable: false, className: 'dt-body-center' }, //GAMIS
+      { visible: false, targets: 84, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
+      { visible: false, targets: 85, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
+      { visible: false, targets: 86, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
+      { visible: false, targets: 87, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGANG
+      { visible: false, targets: 88, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
+      { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
+      { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
+      { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //KERAH
+      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //PARAF
+      { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //TANDA TANGAN
+      { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //KETERANGAN
+      { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //KET
    ],
    order: [[5, 'asc']],
    ajax: {
