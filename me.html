@@ -2,539 +2,448 @@
 <html lang="en">
 
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="">
-   <meta name="author" content="">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
 
-   <title>KBIHU AL-ZAMZAMI</title>
+      <title>KBIHU AL-ZAMZAMI</title>
 
-   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
 
-   <!-- Bootstrap core CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
+      <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap4.css">
+      
+      <!-- Custom styles for this template -->
+      <link href="/css/me.css" rel="stylesheet">
 
-   <!-- Custom styles for this template -->
-   <link href="/css/me.css" rel="stylesheet">
-   
 </head>
 
 <body>
-   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto text-center">
-         <div class="inner">
-            <h4 class="masthead-brand">Kelompok Bimbingan Ibadah Haji dan Umrah</h4>
-            <h3 class="masthead-brand">AL-ZAMZAMI</h3>
-            <nav class="nav nav-masthead justify-content-center">
-               <a class="nav-link active" href="#">Home</a>
-               <a class="nav-link" href="#">Features</a>
-               <a class="nav-link" href="#">Contact</a>
-            </nav>
-         </div>
-      </header>
+      <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto text-center">
+                  <div class="inner">
+                        <h4 class="masthead-brand">KELOMPOK BIMBINGAN IBADAH HAJI & UMRAH</h4>
+                        <h3 class="masthead-brand">AL-ZAMZAMI</h3>
+                        <div class="dt-container">
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                    <!-- </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center"> -->
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="0">NO</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="1">PORSI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="2">MUSIM</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="3">STATUS</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="4">SEBAGAI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="5">ABSEN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="6">PELUNASAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="7">HIJRI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="8">SPPH</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="9">SAPA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="10">NAMA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="11">AYAH</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="12">GENDER</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="13">NAMA_LENGKAP</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="14">TMP_LHR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="15">TGL_LHR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="16">USIA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="17">ALAMAT</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="18">DESA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="19">KECAMATAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="20">KODE_POS</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="21">BANK</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="22">TGL DAFTAR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="23">REFF</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="24">DESA_KEC</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="25">FOTO</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="26">HP</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="27">HP_KEL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="28">KTP</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="29">NIK</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="30">PENDIDIKAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="31">PEKERJAAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="32">PASPOR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="33">NO_PASPOR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="34">NM_PASPOR</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="35">IMIGRASI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="36">EXPIRE</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="37">BIMBINGAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="38">PERLENGKAPAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="39">KOLOSAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="40">PASPORAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="41">BIO VISA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="42">BIMB?</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="43">PERL?</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="44">KOLO?</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="45">PASP?</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="46">BIO ?</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="47">BUKU MANASIK AZ</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="48">KAIN IHROM</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="49">BAJU KOKO</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="50">BATIK ALZAMZAMI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="51">BATIK NASIONAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="52">CELANA PUTIH</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="53">KOLOR PUTIH</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="54">KERUDUNG ALZAMZAMI</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="55">KERUDUNG NASIONAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="56">GAMIS</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="57">MUKENA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="58">ROK PUTIH</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="59">SYAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="60">TAS LEHER</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="61">KAOS SAKU</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="62">TAARUF</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="63">MANASIK AWAL 1</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="64">MANASIK AWAL 2</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="65">MANASIK AWAL 3</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="66">MANASIK AWAL 4</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="67">MANASIK AWAL 5</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="68">MANASIK AWAL 6</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="69">PERSIAPAN KOLOSAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="70">MANASIK KOLOSAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="71">EVALUASI KOLOSAL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="72">PERSIAPAN KEBERANGKATAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="73">PASKA HAJI</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="74">COL-1</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="75">COL-2</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="76">COL-3</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="77">COL-4</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="78">COL-5</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="79">COL-7</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="80">COL-8</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="81">COL-9</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="82">COL-10</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="83">GAMIS</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="84">PUNDAK</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="85">P-BADAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="86">L-DADA</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="87">L-PINGGANG</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="88">L-PINGGUL</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="89">P-TANGAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="90">L-TANGAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="91">KERAH</a></li>
+                                    </ul>
+                              </div>
+                              <div class="dt-layout-row">
+                                    <ul class="nav nav-pills justify-content-center">
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="92">PARAF</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="93">TANDA TANGAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="94">KETERANGAN</a></li>
+                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="95">KET</a></li>
+                                    </ul>
+                              </div>
+                        </div>
+                        <div class="container">
+                              <div class="row justify-content-md-center">
+                                    <div class="col col-lg-6">
+                                          <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                      <span class="input-group-text">Judul Dokumen :</span>
+                                                </div>
+                                                <input id="titleDok" type="text" class="form-control" placeholder="Title" aria-label="Title"
+                                                      aria-describedby="titleDok" >
+                                          </div>
+                                    </div>
+                                    <div class="col col-lg-3">
+                                          <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                      <span class="input-group-text">Tinggi Baris :</span>
+                                                </div>
+                                                <input id="tinggi" type="text" class="form-control" placeholder="0" aria-label="Tinggi"
+                                                      aria-describedby="Tinggi" >
+                                          </div>
+                                    </div>
+                                    <div class="col col-lg-3">
+                                          <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                      <span class="input-group-text">Paper :</span>
+                                                </div>
+                                                <select class="custom-select" id="paper">
+                                                      <option value="portrait">Portrait</option>
+                                                      <option value="landscape">Landscape</option>
+                                                </select>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="container">
+                              <div class="row justify-content-md-center">
+                                    <div class="col col-lg-4">
+                                          <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                      <label class="input-group-text" for="hijri">Musim Hijriyah :</label>
+                                                </div>
+                                                <select class="custom-select" id="hijri">
+                                                </select>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </header>
 
-      <main role="main" class="inner cover">
-         <table id="example" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-               <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011-04-25</td>
-                  <td>$320,800</td>
-               </tr>
-               <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011-07-25</td>
-                  <td>$170,750</td>
-               </tr>
-               <tr>
-                  <td>Ashton Cox</td>
-                  <td>Junior Technical Author</td>
-                  <td>San Francisco</td>
-                  <td>66</td>
-                  <td>2009-01-12</td>
-                  <td>$86,000</td>
-               </tr>
-               <tr>
-                  <td>Cedric Kelly</td>
-                  <td>Senior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                  <td>2012-03-29</td>
-                  <td>$433,060</td>
-               </tr>
-               <tr>
-                  <td>Airi Satou</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>33</td>
-                  <td>2008-11-28</td>
-                  <td>$162,700</td>
-               </tr>
-               <tr>
-                  <td>Brielle Williamson</td>
-                  <td>Integration Specialist</td>
-                  <td>New York</td>
-                  <td>61</td>
-                  <td>2012-12-02</td>
-                  <td>$372,000</td>
-               </tr>
-               <tr>
-                  <td>Herrod Chandler</td>
-                  <td>Sales Assistant</td>
-                  <td>San Francisco</td>
-                  <td>59</td>
-                  <td>2012-08-06</td>
-                  <td>$137,500</td>
-               </tr>
-               <tr>
-                  <td>Rhona Davidson</td>
-                  <td>Integration Specialist</td>
-                  <td>Tokyo</td>
-                  <td>55</td>
-                  <td>2010-10-14</td>
-                  <td>$327,900</td>
-               </tr>
-               <tr>
-                  <td>Colleen Hurst</td>
-                  <td>Javascript Developer</td>
-                  <td>San Francisco</td>
-                  <td>39</td>
-                  <td>2009-09-15</td>
-                  <td>$205,500</td>
-               </tr>
-               <tr>
-                  <td>Sonya Frost</td>
-                  <td>Software Engineer</td>
-                  <td>Edinburgh</td>
-                  <td>23</td>
-                  <td>2008-12-13</td>
-                  <td>$103,600</td>
-               </tr>
-               <tr>
-                  <td>Jena Gaines</td>
-                  <td>Office Manager</td>
-                  <td>London</td>
-                  <td>30</td>
-                  <td>2008-12-19</td>
-                  <td>$90,560</td>
-               </tr>
-               <tr>
-                  <td>Quinn Flynn</td>
-                  <td>Support Lead</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                  <td>2013-03-03</td>
-                  <td>$342,000</td>
-               </tr>
-               <tr>
-                  <td>Charde Marshall</td>
-                  <td>Regional Director</td>
-                  <td>San Francisco</td>
-                  <td>36</td>
-                  <td>2008-10-16</td>
-                  <td>$470,600</td>
-               </tr>
-               <tr>
-                  <td>Haley Kennedy</td>
-                  <td>Senior Marketing Designer</td>
-                  <td>London</td>
-                  <td>43</td>
-                  <td>2012-12-18</td>
-                  <td>$313,500</td>
-               </tr>
-               <tr>
-                  <td>Tatyana Fitzpatrick</td>
-                  <td>Regional Director</td>
-                  <td>London</td>
-                  <td>19</td>
-                  <td>2010-03-17</td>
-                  <td>$385,750</td>
-               </tr>
-               <tr>
-                  <td>Michael Silva</td>
-                  <td>Marketing Designer</td>
-                  <td>London</td>
-                  <td>66</td>
-                  <td>2012-11-27</td>
-                  <td>$198,500</td>
-               </tr>
-               <tr>
-                  <td>Paul Byrd</td>
-                  <td>Chief Financial Officer (CFO)</td>
-                  <td>New York</td>
-                  <td>64</td>
-                  <td>2010-06-09</td>
-                  <td>$725,000</td>
-               </tr>
-               <tr>
-                  <td>Gloria Little</td>
-                  <td>Systems Administrator</td>
-                  <td>New York</td>
-                  <td>59</td>
-                  <td>2009-04-10</td>
-                  <td>$237,500</td>
-               </tr>
-               <tr>
-                  <td>Bradley Greer</td>
-                  <td>Software Engineer</td>
-                  <td>London</td>
-                  <td>41</td>
-                  <td>2012-10-13</td>
-                  <td>$132,000</td>
-               </tr>
-               <tr>
-                  <td>Dai Rios</td>
-                  <td>Personnel Lead</td>
-                  <td>Edinburgh</td>
-                  <td>35</td>
-                  <td>2012-09-26</td>
-                  <td>$217,500</td>
-               </tr>
-               <tr>
-                  <td>Jenette Caldwell</td>
-                  <td>Development Lead</td>
-                  <td>New York</td>
-                  <td>30</td>
-                  <td>2011-09-03</td>
-                  <td>$345,000</td>
-               </tr>
-               <tr>
-                  <td>Yuri Berry</td>
-                  <td>Chief Marketing Officer (CMO)</td>
-                  <td>New York</td>
-                  <td>40</td>
-                  <td>2009-06-25</td>
-                  <td>$675,000</td>
-               </tr>
-               <tr>
-                  <td>Caesar Vance</td>
-                  <td>Pre-Sales Support</td>
-                  <td>New York</td>
-                  <td>21</td>
-                  <td>2011-12-12</td>
-                  <td>$106,450</td>
-               </tr>
-               <tr>
-                  <td>Doris Wilder</td>
-                  <td>Sales Assistant</td>
-                  <td>Sydney</td>
-                  <td>23</td>
-                  <td>2010-09-20</td>
-                  <td>$85,600</td>
-               </tr>
-               <tr>
-                  <td>Angelica Ramos</td>
-                  <td>Chief Executive Officer (CEO)</td>
-                  <td>London</td>
-                  <td>47</td>
-                  <td>2009-10-09</td>
-                  <td>$1,200,000</td>
-               </tr>
-               <tr>
-                  <td>Gavin Joyce</td>
-                  <td>Developer</td>
-                  <td>Edinburgh</td>
-                  <td>42</td>
-                  <td>2010-12-22</td>
-                  <td>$92,575</td>
-               </tr>
-               <tr>
-                  <td>Jennifer Chang</td>
-                  <td>Regional Director</td>
-                  <td>Singapore</td>
-                  <td>28</td>
-                  <td>2010-11-14</td>
-                  <td>$357,650</td>
-               </tr>
-               <tr>
-                  <td>Brenden Wagner</td>
-                  <td>Software Engineer</td>
-                  <td>San Francisco</td>
-                  <td>28</td>
-                  <td>2011-06-07</td>
-                  <td>$206,850</td>
-               </tr>
-               <tr>
-                  <td>Fiona Green</td>
-                  <td>Chief Operating Officer (COO)</td>
-                  <td>San Francisco</td>
-                  <td>48</td>
-                  <td>2010-03-11</td>
-                  <td>$850,000</td>
-               </tr>
-               <tr>
-                  <td>Shou Itou</td>
-                  <td>Regional Marketing</td>
-                  <td>Tokyo</td>
-                  <td>20</td>
-                  <td>2011-08-14</td>
-                  <td>$163,000</td>
-               </tr>
-               <tr>
-                  <td>Michelle House</td>
-                  <td>Integration Specialist</td>
-                  <td>Sydney</td>
-                  <td>37</td>
-                  <td>2011-06-02</td>
-                  <td>$95,400</td>
-               </tr>
-               <tr>
-                  <td>Suki Burks</td>
-                  <td>Developer</td>
-                  <td>London</td>
-                  <td>53</td>
-                  <td>2009-10-22</td>
-                  <td>$114,500</td>
-               </tr>
-               <tr>
-                  <td>Prescott Bartlett</td>
-                  <td>Technical Author</td>
-                  <td>London</td>
-                  <td>27</td>
-                  <td>2011-05-07</td>
-                  <td>$145,000</td>
-               </tr>
-               <tr>
-                  <td>Gavin Cortez</td>
-                  <td>Team Leader</td>
-                  <td>San Francisco</td>
-                  <td>22</td>
-                  <td>2008-10-26</td>
-                  <td>$235,500</td>
-               </tr>
-               <tr>
-                  <td>Martena Mccray</td>
-                  <td>Post-Sales support</td>
-                  <td>Edinburgh</td>
-                  <td>46</td>
-                  <td>2011-03-09</td>
-                  <td>$324,050</td>
-               </tr>
-               <tr>
-                  <td>Unity Butler</td>
-                  <td>Marketing Designer</td>
-                  <td>San Francisco</td>
-                  <td>47</td>
-                  <td>2009-12-09</td>
-                  <td>$85,675</td>
-               </tr>
-               <tr>
-                  <td>Howard Hatfield</td>
-                  <td>Office Manager</td>
-                  <td>San Francisco</td>
-                  <td>51</td>
-                  <td>2008-12-16</td>
-                  <td>$164,500</td>
-               </tr>
-               <tr>
-                  <td>Hope Fuentes</td>
-                  <td>Secretary</td>
-                  <td>San Francisco</td>
-                  <td>41</td>
-                  <td>2010-02-12</td>
-                  <td>$109,850</td>
-               </tr>
-               <tr>
-                  <td>Vivian Harrell</td>
-                  <td>Financial Controller</td>
-                  <td>San Francisco</td>
-                  <td>62</td>
-                  <td>2009-02-14</td>
-                  <td>$452,500</td>
-               </tr>
-               <tr>
-                  <td>Timothy Mooney</td>
-                  <td>Office Manager</td>
-                  <td>London</td>
-                  <td>37</td>
-                  <td>2008-12-11</td>
-                  <td>$136,200</td>
-               </tr>
-               <tr>
-                  <td>Jackson Bradshaw</td>
-                  <td>Director</td>
-                  <td>New York</td>
-                  <td>65</td>
-                  <td>2008-09-26</td>
-                  <td>$645,750</td>
-               </tr>
-               <tr>
-                  <td>Olivia Liang</td>
-                  <td>Support Engineer</td>
-                  <td>Singapore</td>
-                  <td>64</td>
-                  <td>2011-02-03</td>
-                  <td>$234,500</td>
-               </tr>
-               <tr>
-                  <td>Bruno Nash</td>
-                  <td>Software Engineer</td>
-                  <td>London</td>
-                  <td>38</td>
-                  <td>2011-05-03</td>
-                  <td>$163,500</td>
-               </tr>
-               <tr>
-                  <td>Sakura Yamamoto</td>
-                  <td>Support Engineer</td>
-                  <td>Tokyo</td>
-                  <td>37</td>
-                  <td>2009-08-19</td>
-                  <td>$139,575</td>
-               </tr>
-               <tr>
-                  <td>Thor Walton</td>
-                  <td>Developer</td>
-                  <td>New York</td>
-                  <td>61</td>
-                  <td>2013-08-11</td>
-                  <td>$98,540</td>
-               </tr>
-               <tr>
-                  <td>Finn Camacho</td>
-                  <td>Support Engineer</td>
-                  <td>San Francisco</td>
-                  <td>47</td>
-                  <td>2009-07-07</td>
-                  <td>$87,500</td>
-               </tr>
-               <tr>
-                  <td>Serge Baldwin</td>
-                  <td>Data Coordinator</td>
-                  <td>Singapore</td>
-                  <td>64</td>
-                  <td>2012-04-09</td>
-                  <td>$138,575</td>
-               </tr>
-               <tr>
-                  <td>Zenaida Frank</td>
-                  <td>Software Engineer</td>
-                  <td>New York</td>
-                  <td>63</td>
-                  <td>2010-01-04</td>
-                  <td>$125,250</td>
-               </tr>
-               <tr>
-                  <td>Zorita Serrano</td>
-                  <td>Software Engineer</td>
-                  <td>San Francisco</td>
-                  <td>56</td>
-                  <td>2012-06-01</td>
-                  <td>$115,000</td>
-               </tr>
-               <tr>
-                  <td>Jennifer Acosta</td>
-                  <td>Junior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>43</td>
-                  <td>2013-02-01</td>
-                  <td>$75,650</td>
-               </tr>
-               <tr>
-                  <td>Cara Stevens</td>
-                  <td>Sales Assistant</td>
-                  <td>New York</td>
-                  <td>46</td>
-                  <td>2011-12-06</td>
-                  <td>$145,600</td>
-               </tr>
-               <tr>
-                  <td>Hermione Butler</td>
-                  <td>Regional Director</td>
-                  <td>London</td>
-                  <td>47</td>
-                  <td>2011-03-21</td>
-                  <td>$356,250</td>
-               </tr>
-               <tr>
-                  <td>Lael Greer</td>
-                  <td>Systems Administrator</td>
-                  <td>London</td>
-                  <td>21</td>
-                  <td>2009-02-27</td>
-                  <td>$103,500</td>
-               </tr>
-               <tr>
-                  <td>Jonas Alexander</td>
-                  <td>Developer</td>
-                  <td>San Francisco</td>
-                  <td>30</td>
-                  <td>2010-07-14</td>
-                  <td>$86,500</td>
-               </tr>
-               <tr>
-                  <td>Shad Decker</td>
-                  <td>Regional Director</td>
-                  <td>Edinburgh</td>
-                  <td>51</td>
-                  <td>2008-11-13</td>
-                  <td>$183,000</td>
-               </tr>
-               <tr>
-                  <td>Michael Bruce</td>
-                  <td>Javascript Developer</td>
-                  <td>Singapore</td>
-                  <td>29</td>
-                  <td>2011-06-27</td>
-                  <td>$183,000</td>
-               </tr>
-               <tr>
-                  <td>Donna Snider</td>
-                  <td>Customer Support</td>
-                  <td>New York</td>
-                  <td>27</td>
-                  <td>2011-01-25</td>
-                  <td>$112,000</td>
-               </tr>
-            </tbody>
-            <tfoot>
-               <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-               </tr>
-            </tfoot>
-         </table>
-      </main>
+            <main role="main" class="inner cover">
+                  <table id="tabelJemaah" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                              <tr>
+                                    <th>NO</th>
+                                    <th>PORSI</th>
+                                    <th>MUSIM</th>
+                                    <th>STATUS</th>
+                                    <th>SEBAGAI</th>
+                                    <th>ABSEN</th>
+                                    <th>PELUNASAN</th>
+                                    <th>HIJRI</th>
+                                    <th>SPPH</th>
+                                    <th>SAPA</th>
+                                    <th>NAMA</th>
+                                    <th>AYAH</th>
+                                    <th>GENDER</th>
+                                    <th>NAMA_LENGKAP</th>
+                                    <th>TMP_LHR</th>
+                                    <th>TGL_LHR</th>
+                                    <th>USIA</th>
+                                    <th>ALAMAT</th>
+                                    <th>DESA</th>
+                                    <th>KECAMATAN</th>
+                                    <th>KODE_POS</th>
+                                    <th>BANK</th>
+                                    <th>TGL DAFTAR</th>
+                                    <th>REFF</th>
+                                    <th>DESA_KEC</th>
+                                    <th>FOTO</th>
+                                    <th>HP</th>
+                                    <th>HP_KEL</th>
+                                    <th>KTP</th>
+                                    <th>NIK</th>
+                                    <th>PENDIDIKAN</th>
+                                    <th>PEKERJAAN</th>
+                                    <th>PASPOR</th>
+                                    <th>NO_PASPOR</th>
+                                    <th>NM_PASPOR</th>
+                                    <th>IMIGRASI</th>
+                                    <th>EXPIRE</th>
+                                    <th>BIMBINGAN</th>
+                                    <th>PERLENGKAPAN</th>
+                                    <th>KOLOSAL</th>
+                                    <th>PASPORAN</th>
+                                    <th>BIO VISA</th>
+                                    <th>BIMB?</th>
+                                    <th>PERL?</th>
+                                    <th>KOLO?</th>
+                                    <th>PASP?</th>
+                                    <th>BIO ?</th>
+                                    <th>BUKU MANASIK AZ</th>
+                                    <th>KAIN IHROM</th>
+                                    <th>BAJU KOKO</th>
+                                    <th>BATIK ALZAMZAMI</th>
+                                    <th>BATIK NASIONAL</th>
+                                    <th>CELANA PUTIH</th>
+                                    <th>KOLOR PUTIH</th>
+                                    <th>KERUDUNG ALZAMZAMI</th>
+                                    <th>KERUDUNG NASIONAL</th>
+                                    <th>GAMIS</th>
+                                    <th>MUKENA</th>
+                                    <th>ROK PUTIH</th>
+                                    <th>SYAL</th>
+                                    <th>TAS LEHER</th>
+                                    <th>KAOS SAKU</th>
+                                    <th>TAARUF</th>
+                                    <th>MANASIK AWAL 1</th>
+                                    <th>MANASIK AWAL 2</th>
+                                    <th>MANASIK AWAL 3</th>
+                                    <th>MANASIK AWAL 4</th>
+                                    <th>MANASIK AWAL 5</th>
+                                    <th>MANASIK AWAL 6</th>
+                                    <th>PERSIAPAN KOLOSAL</th>
+                                    <th>MANASIK KOLOSAL</th>
+                                    <th>EVALUASI KOLOSAL</th>
+                                    <th>PERSIAPAN KEBERANGKATAN</th>
+                                    <th>PASKA HAJI</th>
+                                    <th>COL-1</th>
+                                    <th>COL-2</th>
+                                    <th>COL-3</th>
+                                    <th>COL-4</th>
+                                    <th>COL-5</th>
+                                    <th>COL-7</th>
+                                    <th>COL-8</th>
+                                    <th>COL-9</th>
+                                    <th>COL-10</th>
+                                    <th>GAMIS</th>
+                                    <th>PUNDAK</th>
+                                    <th>P-BADAN</th>
+                                    <th>L-DADA</th>
+                                    <th>L-PINGGANG</th>
+                                    <th>L-PINGGUL</th>
+                                    <th>P-TANGAN</th>
+                                    <th>L-TANGAN</th>
+                                    <th>KERAH</th>
+                                    <th>PARAF</th>
+                                    <th>TANDA TANGAN</th>
+                                    <th>KETERANGAN</th>
+                                    <th>KET</th>
+                              </tr>
+                        </thead>
 
-      <footer class="mastfoot mt-auto text-center">
-         <div class="inner">
-            <p></p>
-            <p>Creative Crew Al-Zamzami</p>
-         </div>
-      </footer>
-   </div>
+                        <tfoot>
+                              <tr>
+                                    <th>NO</th>
+                                    <th>PORSI</th>
+                                    <th>MUSIM</th>
+                                    <th>STATUS</th>
+                                    <th>SEBAGAI</th>
+                                    <th>ABSEN</th>
+                                    <th>PELUNASAN</th>
+                                    <th>HIJRI</th>
+                                    <th>SPPH</th>
+                                    <th>SAPA</th>
+                                    <th>NAMA</th>
+                                    <th>AYAH</th>
+                                    <th>GENDER</th>
+                                    <th>NAMA_LENGKAP</th>
+                                    <th>TMP_LHR</th>
+                                    <th>TGL_LHR</th>
+                                    <th>USIA</th>
+                                    <th>ALAMAT</th>
+                                    <th>DESA</th>
+                                    <th>KECAMATAN</th>
+                                    <th>KODE_POS</th>
+                                    <th>BANK</th>
+                                    <th>TGL DAFTAR</th>
+                                    <th>REFF</th>
+                                    <th>DESA_KEC</th>
+                                    <th>FOTO</th>
+                                    <th>HP</th>
+                                    <th>HP_KEL</th>
+                                    <th>KTP</th>
+                                    <th>NIK</th>
+                                    <th>PENDIDIKAN</th>
+                                    <th>PEKERJAAN</th>
+                                    <th>PASPOR</th>
+                                    <th>NO_PASPOR</th>
+                                    <th>NM_PASPOR</th>
+                                    <th>IMIGRASI</th>
+                                    <th>EXPIRE</th>
+                                    <th>BIMBINGAN</th>
+                                    <th>PERLENGKAPAN</th>
+                                    <th>KOLOSAL</th>
+                                    <th>PASPORAN</th>
+                                    <th>BIO VISA</th>
+                                    <th>BIMB?</th>
+                                    <th>PERL?</th>
+                                    <th>KOLO?</th>
+                                    <th>PASP?</th>
+                                    <th>BIO ?</th>
+                                    <th>BUKU MANASIK AZ</th>
+                                    <th>KAIN IHROM</th>
+                                    <th>BAJU KOKO</th>
+                                    <th>BATIK ALZAMZAMI</th>
+                                    <th>BATIK NASIONAL</th>
+                                    <th>CELANA PUTIH</th>
+                                    <th>KOLOR PUTIH</th>
+                                    <th>KERUDUNG ALZAMZAMI</th>
+                                    <th>KERUDUNG NASIONAL</th>
+                                    <th>GAMIS</th>
+                                    <th>MUKENA</th>
+                                    <th>ROK PUTIH</th>
+                                    <th>SYAL</th>
+                                    <th>TAS LEHER</th>
+                                    <th>KAOS SAKU</th>
+                                    <th>TAARUF</th>
+                                    <th>MANASIK AWAL 1</th>
+                                    <th>MANASIK AWAL 2</th>
+                                    <th>MANASIK AWAL 3</th>
+                                    <th>MANASIK AWAL 4</th>
+                                    <th>MANASIK AWAL 5</th>
+                                    <th>MANASIK AWAL 6</th>
+                                    <th>PERSIAPAN KOLOSAL</th>
+                                    <th>MANASIK KOLOSAL</th>
+                                    <th>EVALUASI KOLOSAL</th>
+                                    <th>PERSIAPAN KEBERANGKATAN</th>
+                                    <th>PASKA HAJI</th>
+                                    <th>COL-1</th>
+                                    <th>COL-2</th>
+                                    <th>COL-3</th>
+                                    <th>COL-4</th>
+                                    <th>COL-5</th>
+                                    <th>COL-7</th>
+                                    <th>COL-8</th>
+                                    <th>COL-9</th>
+                                    <th>COL-10</th>
+                                    <th>GAMIS</th>
+                                    <th>PUNDAK</th>
+                                    <th>L-BADAN</th>
+                                    <th>L-DADA</th>
+                                    <th>L-PINGGANG</th>
+                                    <th>L-PINGGUL</th>
+                                    <th>P-TANGAN</th>
+                                    <th>L-TANGAN</th>
+                                    <th>KERAH</th>
+                                    <th>PARAF</th>
+                                    <th>TANDA TANGAN</th>
+                                    <th>KETERANGAN</th>
+                                    <th>KET</th>
+                              </tr>
+                        </tfoot>
+                  </table>
+            </main>
 
+            <footer class="mastfoot mt-auto text-center">
+                  <div class="inner">
+                        <p></p>
+                        <p>Creative Crew Al-Zamzami</p>
+                  </div>
+            </footer>
+      </div>
+      <button onclick="colChild()">Click me</button>
 
-   <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
     ================================================== -->
-   <!-- Placed at the end of the document so the pages load faster -->
-   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
-   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap4.js"></script>
-   <script src="/js/me.js"></script>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>
+      <script src="https://cdn.datatables.net/2.1.5/js/dataTables.bootstrap4.js"></script>
+      <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
+      <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.bootstrap4.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+      <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.print.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.colVis.min.js"></script>
+
+      <script src="https://cdn.datatables.net/colreorder/2.0.4/js/dataTables.colReorder.js"></script>
+      <script src="https://cdn.datatables.net/colreorder/2.0.4/js/colReorder.dataTables.js"></script>
+      
+      <script src="https://cdn.datatables.net/plug-ins/2.1.5/api/sum().js"></script>
+
+      <script src="/js/me.js"></script>
 
 </body>
 

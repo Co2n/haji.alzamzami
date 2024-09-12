@@ -8,7 +8,11 @@ td.highlight {
 }
 
 .nav li {
-   margin: 2px;
+   margin: 5px;
+}
+
+.nav-link {
+   cursor: pointer;
 }
 
 .form-control:valid {

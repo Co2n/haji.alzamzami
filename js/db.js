@@ -75,7 +75,7 @@ const table = new DataTable('#tabelJemaah', {
    ordering: true,
    // select: false,
    paging: true,
-   pageLength: 10,
+   pageLength: 5,
    layout: {
       topStart: {
       },
@@ -116,11 +116,11 @@ const table = new DataTable('#tabelJemaah', {
             },
          ]
       },
-      bottomEnd: {
-         paging: {
-            firstLast: true
-         }
-      }
+      // bottomEnd: {
+      //    paging: {
+      //       firstLast: true
+      //    }
+      // }
    },
    // layout: {
    //    topStart: {
