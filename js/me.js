@@ -105,8 +105,8 @@ const table = new DataTable('#tabelJemaah', {
    ],
    order: [[5, 'asc']],
    ajax: {
-      url: 'dbNow.json',
-      // url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
+      // url: 'dbNow.json',
+      url: 'https://script.google.com/macros/s/AKfycbw7Y8lw9oPCQWsF2JZLgBicNtUpIXf-wxL0rzfuczZfk080PqRqCX54Y4QiNJ_ASF83Aw/exec',
       dataSrc: 'data'
    },
    columns: [
