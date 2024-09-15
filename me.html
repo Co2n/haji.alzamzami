@@ -14,6 +14,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
       <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
       <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap4.css">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css"/>
       
       <!-- Custom styles for this template -->
       <link href="/css/me.css" rel="stylesheet">
@@ -191,12 +193,18 @@
                         </div>
                         <div class="container">
                               <div class="row justify-content-md-center">
-                                    <div class="col col-lg-4">
+                                    <div class="col col-lg-3">
                                           <div class="input-group mb-4">
                                                 <div class="input-group-prepend">
                                                       <label class="input-group-text" for="hijri">Musim Hijriyah :</label>
                                                 </div>
                                                 <select class="custom-select" id="hijri">
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col col-lg-2">
+                                          <div class="input-group mb-4">
+                                                <select id="filterStatus" multiple="multiple">
                                                 </select>
                                           </div>
                                     </div>
@@ -395,7 +403,7 @@
                                     <th>COL-10</th>
                                     <th>GAMIS</th>
                                     <th>PUNDAK</th>
-                                    <th>L-BADAN</th>
+                                    <th>P-BADAN</th>
                                     <th>L-DADA</th>
                                     <th>L-PINGGANG</th>
                                     <th>L-PINGGUL</th>
@@ -442,6 +450,10 @@
       
       <script src="https://cdn.datatables.net/plug-ins/2.1.5/api/sum().js"></script>
 
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js" ></script>
+      
+      
       <script src="/js/me.js"></script>
 
 </body>

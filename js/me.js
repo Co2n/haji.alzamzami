@@ -3,6 +3,7 @@ const nama = urlParams.get("edit");
 
 // DataTable.type('date', 'render', DataTable.render.date('YYYY'));
 DataTable.type('num', 'render', DataTable.render.number());
+var urlImage = 'https://drive.google.com/uc?export=view&id=1IqtdPL-PEJ1KJ25o6pAVuNqfZkQpJIxM';
 
 const table = new DataTable('#tabelJemaah', {
    columnDefs: [
@@ -31,14 +32,14 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 22, render: DataTable.render.date('DD MMM YYYY') }, //TGL DAFTAR
       { visible: false, targets: 23 }, //REFF
       { targets: 24 }, //DESA_KEC
-      { visible: false, targets: 25, createdCell: function (td, cellData, rowData, row, col) { if (cellData.length > 0) { $(td).text(cellData.replace('now_Images', col)); } } }, //FOTO
+      { visible: false, targets: 25, className: 'dt-body-center img' }, //FOTO
       { visible: false, targets: 26, render: DataTable.render.text() }, //HP
       { visible: false, targets: 27, render: DataTable.render.text() }, //HP_KEL
-      { visible: false, targets: 28 }, //KTP
+      { visible: false, targets: 28, className: 'dt-body-center img' }, //KTP
       { visible: false, targets: 29, className: 'dt-body-center', render: DataTable.render.text() }, //NIK
       { visible: false, targets: 30 }, //PENDIDIKAN
       { visible: false, targets: 31 }, //PEKERJAAN
-      { visible: false, targets: 32 }, //PASPOR
+      { visible: false, targets: 32, className: 'dt-body-center img' }, //PASPOR
       { visible: false, targets: 33, className: 'dt-body-center' }, //NO_PASPOR
       { visible: false, targets: 34 }, //NM_PASPOR
       { visible: false, targets: 35 }, //IMIGRASI
@@ -135,14 +136,14 @@ const table = new DataTable('#tabelJemaah', {
       { data: "tgl daftar" }, //22
       { data: "reff" }, //23
       { data: "desa_kec" }, //24
-      { data: "foto" }, //25
+      { data: "foto", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //25
       { data: "hp" }, //26
       { data: "hp_kel" }, //27
-      { data: "ktp" }, //28
+      { data: "ktp", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //28
       { data: "nik" }, //29
       { data: "pendidikan" }, //30
       { data: "pekerjaan" }, //31
-      { data: "paspor" }, //32
+      { data: "paspor", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //32
       { data: "no_paspor" }, //33
       { data: "nm_paspor" }, //34
       { data: "imigrasi" }, //35
@@ -298,7 +299,7 @@ const table = new DataTable('#tabelJemaah', {
             },
             {
                extend: 'print',
-               // autoPrint: false,
+               autoPrint: false,
                text: 'Print Dokumen',
                title: function () {
                   switch ($("#titleDok").val()) {
@@ -325,6 +326,14 @@ const table = new DataTable('#tabelJemaah', {
                      //       return inner;
                      //    }
                      // }
+                     body: function (inner, rowidx, colidx, node) {
+                        if (node.classList.contains('img')) {
+                           //return '<img src="https://drive.google.com/thumbnail?id=' + inner + '&sz=s100">';
+                           return inner;
+                        } else {
+                           return inner;
+                        }
+                     }
                   }
                },
                customize: function (win, butt, tbl) {
@@ -351,7 +360,12 @@ const table = new DataTable('#tabelJemaah', {
                   // Untuk menyelaraskan style di view dan di print 
                   let colVisible = table.columns(':visible')[0];
                   for (var i = 0; i < colVisible.length; ++i) {
-                     $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) { $(this).addClass(table.cell(0, colVisible[i]).node().getAttribute('class')) });
+                     $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) { 
+                        $(this).addClass(
+                           //ambil dari style view
+                           table.cell(0, colVisible[i]).node().getAttribute('class')
+                        ) 
+                     });
                   }
 
                   // --> Landscape START
@@ -386,32 +400,6 @@ const table = new DataTable('#tabelJemaah', {
       zeroRecords: 'Maaf - Tidak ditemukan'
    },
    initComplete: function () {
-      // this.api()
-      //     .columns()
-      //     .every(function () {
-      //         let column = this;
-
-      //         // Create select element
-      //         let select = document.createElement('select');
-      //         select.add(new Option(''));
-      //         column.footer().replaceChildren(select);
-
-      //         // Apply listener for user change in value
-      //         select.addEventListener('change', function () {
-      //             column
-      //                 .search(select.value, {exact: true})
-      //                 .draw();
-      //         });
-
-      //         // Add list of options
-      //         column
-      //             .data()
-      //             .unique()
-      //             .sort()
-      //             .each(function (d, j) {
-      //                 select.add(new Option(d));
-      //             });
-      //     });
       this.api()
          .columns(7)
          .every(function () {
@@ -428,29 +416,40 @@ const table = new DataTable('#tabelJemaah', {
                   selectTahun.add(new Option(d, d));
                }
             })
-
          })
 
+      var options = [];
+      this.api()
+         .columns(3)
+         .every(function () {
+            let column = this;
+            column.data().unique().sort().each(function (d, j) {
+               options[j] = { label: d, title: d, value: d }
+            })
+         })
+      $('#filterStatus').multiselect('dataprovider', options);
    },
    paging: false,
    drawCallback: function (row, data, start, end, display) {
       var api = this.api();
-      
+
       var countGenderL = 0;
       var countGenderP = 0;
-      api.cells(null, 12, { page: 'current'} ).nodes().each(function (n) { if ($(n).hasClass('g')) {
-         if ($(n).text() === "L") {
-            countGenderL += 1
+      api.cells(null, 12, { page: 'current' }).nodes().each(function (n) {
+         if ($(n).hasClass('g')) {
+            if ($(n).text() === "L") {
+               countGenderL += 1
+            }
+            if ($(n).text() === "P") {
+               countGenderP += 1
+            }
          }
-         if ($(n).text() === "P") {
-            countGenderP += 1
-         }
-      }})
+      })
       $(api.column(12).footer()).html('L(' + countGenderL + ') P(' + countGenderP + ')');
 
       var total = 0;
       var intVal = function (i) { return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 16, { page: 'current'} ).nodes().each(function (n) { if ($(n).hasClass('lansia')) { if (intVal($(n).text()) > 0) { total += 1 } } });
+      api.cells(null, 16, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('lansia')) { if (intVal($(n).text()) > 0) { total += 1 } } });
       $(api.column(16).footer()).html('LN: ' + total);
       // // $(api.column(16).footer()).html(api.column(16).nodes().count());
 
@@ -507,6 +506,38 @@ $('#hijri').on('change', function () {
       .columns(7)
       .search(this.value)
       .draw();
+});
+
+$('#filterStatus').multiselect({
+   buttonText: function (options, select) {
+      if (options.length === 0) {
+         return 'Status All';
+      }
+      else if (options.length > 3) {
+         return '> 3 status terpilih';
+      }
+      else {
+         var labels = [];
+         options.each(function () {
+            if ($(this).attr('label') !== undefined) {
+               labels.push($(this).attr('label'));
+            }
+            else {
+               labels.push($(this).html());
+            }
+         });
+         return labels.join(', ') + '';
+      }
+   },
+   onChange: function (option, checked, select) {
+      //build a regex filter string with an or(|) condition
+      var positions = $('#filterStatus option:selected').map(function (a, item) {
+         return '^' + item.value + '$';
+      }).get().join('|');
+
+      //filter in column 1, with an regex, no smart filtering, not case sensitive
+      table.column(3).search(positions, true, false, false).draw(false);
+   }
 });
 
 document.querySelectorAll('a.toggle-vis').forEach((el) => {
