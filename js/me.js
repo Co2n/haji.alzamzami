@@ -209,94 +209,27 @@ const table = new DataTable('#tabelJemaah', {
       { data: "ket" }, //95
    ],
    colReorder: true,
+   paging: false,
    layout: {
       topStart: {
+         search: {
+            placeholder: 'Ketik di Sini!'
+         }
+      },
+      topEnd: ['pageLength'],
+      top2Start: {
          buttons: [
+            // 'colvis',
             {
-               extend: 'copyHtml5',
-               text: 'Copy',
-               title: function () {
-                  switch ($("#titleDok").val()) {
-                     case '':
-                        return 'Data Peserta Bimbingan Manasik Haji'
-                        break;
-
-                     default:
-                        return $("#titleDok").val()
-                        break;
-                  }
-               },
-               messageTop: 'KBIHU Al-Zamzami Kuningan',
-               exportOptions: {
-                  columns: ':visible'
-               }
+               extend: 'colvis',
+                    columnText: function (dt, idx, title) {
+                        return idx + 1 + ': ' + title;
+                    }
             },
-            {
-               extend: 'excelHtml5',
-               text: 'Excel',
-               title: function () {
-                  switch ($("#titleDok").val()) {
-                     case '':
-                        return 'Data Peserta Bimbingan Manasik Haji'
-                        break;
-
-                     default:
-                        return $("#titleDok").val()
-                        break;
-                  }
-               },
-               messageTop: 'KBIHU Al-Zamzami Kuningan',
-               exportOptions: {
-                  columns: ':visible'
-               }
-            },
-            {
-               extend: 'pdfHtml5',
-               text: 'PDF',
-               orientation: document.getElementById('paper').value,
-               // pageSize: 'A4',
-               title: function () {
-                  switch ($("#titleDok").val()) {
-                     case '':
-                        return 'Data Peserta Bimbingan Manasik Haji'
-                        break;
-
-                     default:
-                        return $("#titleDok").val()
-                        break;
-                  }
-               },
-               exportOptions: {
-                  columns: ':visible'
-               },
-               customize: function (doc) {
-                  doc['footer'] = (function (page, pages) {
-                     return {
-                        columns: [
-                           {
-                              alignment: 'center',
-                              text: [
-                                 ' Hal. ',
-                                 { text: page.toString(), italics: true },
-                                 ' dari ',
-                                 { text: pages.toString(), italics: true }
-                              ]
-                           }],
-                        margin: [10, 0]
-                     }
-                  });
-                  doc['header'] = (function (page, pages) {
-                     return {
-                        columns: [
-                           {
-                              alignment: 'center',
-                              text: ['KBIHU Al-Zamzami']
-                           }],
-                        margin: [10, 10]
-                     }
-                  });
-               }
-            },
+         ],
+      },
+      top2End: {
+         buttons: [
             {
                extend: 'print',
                autoPrint: false,
@@ -389,15 +322,104 @@ const table = new DataTable('#tabelJemaah', {
 
                }
             },
+            {
+               extend: 'pdfHtml5',
+               text: 'PDF',
+               orientation: document.getElementById('paper').value,
+               // pageSize: 'A4',
+               title: function () {
+                  switch ($("#titleDok").val()) {
+                     case '':
+                        return 'Data Peserta Bimbingan Manasik Haji'
+                        break;
+
+                     default:
+                        return $("#titleDok").val()
+                        break;
+                  }
+               },
+               exportOptions: {
+                  columns: ':visible'
+               },
+               customize: function (doc) {
+                  doc['footer'] = (function (page, pages) {
+                     return {
+                        columns: [
+                           {
+                              alignment: 'center',
+                              text: [
+                                 ' Hal. ',
+                                 { text: page.toString(), italics: true },
+                                 ' dari ',
+                                 { text: pages.toString(), italics: true }
+                              ]
+                           }],
+                        margin: [10, 0]
+                     }
+                  });
+                  doc['header'] = (function (page, pages) {
+                     return {
+                        columns: [
+                           {
+                              alignment: 'center',
+                              text: ['KBIHU Al-Zamzami']
+                           }],
+                        margin: [10, 10]
+                     }
+                  });
+               }
+            },
+            {
+               extend: 'excelHtml5',
+               text: 'Excel',
+               title: function () {
+                  switch ($("#titleDok").val()) {
+                     case '':
+                        return 'Data Peserta Bimbingan Manasik Haji'
+                        break;
+
+                     default:
+                        return $("#titleDok").val()
+                        break;
+                  }
+               },
+               messageTop: 'KBIHU Al-Zamzami Kuningan',
+               exportOptions: {
+                  columns: ':visible'
+               }
+            },
+            {
+               extend: 'copyHtml5',
+               text: 'Copy',
+               title: function () {
+                  switch ($("#titleDok").val()) {
+                     case '':
+                        return 'Data Peserta Bimbingan Manasik Haji'
+                        break;
+
+                     default:
+                        return $("#titleDok").val()
+                        break;
+                  }
+               },
+               messageTop: 'KBIHU Al-Zamzami Kuningan',
+               exportOptions: {
+                  columns: ':visible'
+               }
+            }
          ]
-      }
+      },
    },
    language: {
       info: 'Hal. _PAGE_ dari _PAGES_',
       infoEmpty: 'Data tidak tersedia!',
       infoFiltered: '(terjaring dari total _MAX_ data)',
-      lengthMenu: 'Tampil _MENU_ data per hal',
-      zeroRecords: 'Maaf - Tidak ditemukan'
+      lengthMenu: 'Tampil _MENU_ baris per halaman',
+      zeroRecords: 'Maaf - Tidak ditemukan',
+      search : 'Pencarian:',
+      buttons: {
+         colvis: 'Tampil / Hilangkan Kolom'
+      }
    },
    initComplete: function () {
       this.api()
@@ -429,7 +451,6 @@ const table = new DataTable('#tabelJemaah', {
          })
       $('#filterStatus').multiselect('dataprovider', options);
    },
-   paging: false,
    drawCallback: function (row, data, start, end, display) {
       var api = this.api();
 
