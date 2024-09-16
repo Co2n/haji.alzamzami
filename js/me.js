@@ -136,14 +136,14 @@ const table = new DataTable('#tabelJemaah', {
       { data: "tgl daftar" }, //22
       { data: "reff" }, //23
       { data: "desa_kec" }, //24
-      { data: "foto", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //25
+      { data: "foto", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //25
       { data: "hp" }, //26
       { data: "hp_kel" }, //27
-      { data: "ktp", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //28
+      { data: "ktp", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //28
       { data: "nik" }, //29
       { data: "pendidikan" }, //30
       { data: "pekerjaan" }, //31
-      { data: "paspor", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //32
+      { data: "paspor", render: function (data, type) { if (data !== '') { let linkOri = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; let linkThumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkOri + '" target="_blank">' + '<img src="' + linkThumnail + '">' + '</a>' } return data } }, //32
       { data: "no_paspor" }, //33
       { data: "nm_paspor" }, //34
       { data: "imigrasi" }, //35
@@ -210,8 +210,67 @@ const table = new DataTable('#tabelJemaah', {
    ],
    colReorder: true,
    paging: false,
+   fixedHeader: true,
+   language: {
+      info: 'Hal. _PAGE_ dari _PAGES_',
+      infoEmpty: 'Data tidak tersedia!',
+      infoFiltered: '(terjaring dari total _MAX_ data)',
+      lengthMenu: 'Tampil _MENU_ baris per halaman',
+      zeroRecords: 'Maaf - Tidak ditemukan',
+      search: 'Pencarian:',
+      buttons: {
+         colvis: 'Tampil / Hilangkan Kolom'
+      },
+      searchBuilder: {
+         add: 'Tambahkan Kondisi',
+         condition: 'Komparasi',
+         clearAll: 'Reset',
+         delete: 'Hapus',
+         deleteTitle: 'Hapus Judul',
+         data: 'Kolom',
+         left: '<-',
+         leftTitle: 'Judul Kiri',
+         logicAnd: 'Dan',
+         logicOr: 'Atau',
+         right: '->',
+         rightTitle: 'Judul Kanan',
+         title: {
+            0: 'Jaring Pencarian',
+            _: 'Jaring Pencarian (%d)'
+         },
+         value: 'Opsi',
+         valueJoiner: '@',
+         conditions: {
+            string: {
+               contains: 'Berisi',
+               empty: 'Kosong',
+               endsWith: 'Berakhir dengan',
+               equals: 'Sama dengan',
+               not: 'Tidak',
+               notContains: 'Tidak Berisi',
+               notEmpty: 'Tidak Kosong',
+               notEndsWith: 'Tidak Berakhir dengan',
+               notStartsWith: 'Tidak Dimulai dengan',
+               startsWith: 'Mulai dengan'
+            }
+         }
+      }
+   },
    layout: {
-      top2: 'searchBuilder',
+      top2: {
+         searchBuilder: {
+            preDefined: {
+               criteria: [
+                  {
+                     condition: '=',
+                     data: 'HIJRI',
+                     value: ['1446']
+                  }
+               ],
+               logic: 'AND'
+            }
+         }
+      },
       topStart: {
          search: {
             placeholder: 'Ketik di Sini!'
@@ -223,11 +282,13 @@ const table = new DataTable('#tabelJemaah', {
             // 'colvis',
             {
                extend: 'colvis',
-                    columnText: function (dt, idx, title) {
-                        return idx + 1 + ': ' + title;
-                    }
-            },
-         ],
+               columnText: function (dt, idx, title) {
+                  return idx + 1 + ': ' + title;
+               },
+               collectionLayout: 'fixed columns',
+               popoverTitle: 'TENTUKAN KOLOM'
+            }
+         ]
       },
       top2End: {
          buttons: [
@@ -294,11 +355,11 @@ const table = new DataTable('#tabelJemaah', {
                   // Untuk menyelaraskan style di view dan di print 
                   let colVisible = table.columns(':visible')[0];
                   for (var i = 0; i < colVisible.length; ++i) {
-                     $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) { 
+                     $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) {
                         $(this).addClass(
                            //ambil dari style view
                            table.cell(0, colVisible[i]).node().getAttribute('class')
-                        ) 
+                        )
                      });
                   }
 
@@ -411,82 +472,37 @@ const table = new DataTable('#tabelJemaah', {
          ]
       },
    },
-   fixedHeader: true,
-   language: {
-      info: 'Hal. _PAGE_ dari _PAGES_',
-      infoEmpty: 'Data tidak tersedia!',
-      infoFiltered: '(terjaring dari total _MAX_ data)',
-      lengthMenu: 'Tampil _MENU_ baris per halaman',
-      zeroRecords: 'Maaf - Tidak ditemukan',
-      search : 'Pencarian:',
-      buttons: {
-         colvis: 'Tampil / Hilangkan Kolom'
-      },
-      searchBuilder: {
-         add: 'Tambahkan Kondisi',
-         condition: 'Komparasi',
-         conditions: {
-            string: {
-                contains: 'Berisi',
-                empty: 'Kosong',
-                endsWith: 'Berakhir dengan',
-                equals: 'Sama dengan',
-                not: 'Tidak',
-                notContains: 'Tidak Berisi',
-                notEmpty: 'Tidak Kosong',
-                notEndsWith: 'Tidak Berakhir dengan',
-                notStartsWith: 'Tidak Dimulai dengan',
-                startsWith: 'Mulai dengan'
-            }
-         },
-         clearAll: 'Reset',
-         delete: 'Hapus',
-         deleteTitle: 'Hapus Judul',
-         data: 'Kolom',
-         left: 'Kiri',
-         leftTitle: 'Judul Kiri',
-         logicAnd: 'Dan',
-         logicOr: 'Atau',
-         right: 'Kanan',
-         rightTitle: 'Judul Kanan',
-         title: {
-             0: 'Jaring Pencarian',
-             _: 'Jaring Pencarian (%d)'
-         },
-         value: 'Opsi',
-         valueJoiner: '@',
-     }
-   },
-   initComplete: function () {
-      this.api()
-         .columns(7)
-         .every(function () {
-            let column = this;
-            let selectTahun = document.getElementById("hijri");
-            column.data().unique().sort().each(function (d, j) {
-               if (j === column.data().unique().sort().length - 1) {
-                  //set selected option
-                  selectTahun.add(new Option(d, d, true, true));
-                  //auto filter
-                  column.search(d).draw();
-               } else {
-                  //tambah option
-                  selectTahun.add(new Option(d, d));
-               }
-            })
-         })
 
-      var options = [];
-      this.api()
-         .columns(3)
-         .every(function () {
-            let column = this;
-            column.data().unique().sort().each(function (d, j) {
-               options[j] = { label: d, title: d, value: d }
-            })
-         })
-      $('#filterStatus').multiselect('dataprovider', options);
-   },
+   // initComplete: function () {
+   //    this.api()
+   //       .columns(7)
+   //       .every(function () {
+   //          let column = this;
+   //          let selectTahun = document.getElementById("hijri");
+   //          column.data().unique().sort().each(function (d, j) {
+   //             if (j === column.data().unique().sort().length - 1) {
+   //                //set selected option
+   //                selectTahun.add(new Option(d, d, true, true));
+   //                //auto filter
+   //                column.search(d).draw();
+   //             } else {
+   //                //tambah option
+   //                selectTahun.add(new Option(d, d));
+   //             }
+   //          })
+   //       })
+
+   //    var options = [];
+   //    this.api()
+   //       .columns(3)
+   //       .every(function () {
+   //          let column = this;
+   //          column.data().unique().sort().each(function (d, j) {
+   //             options[j] = { label: d, title: d, value: d }
+   //          })
+   //       })
+   //    $('#filterStatus').multiselect('dataprovider', options);
+   // },
    drawCallback: function (row, data, start, end, display) {
       var api = this.api();
 
@@ -558,47 +574,44 @@ table
    .draw();
 
 // aksi ketika select option difilter
-$('#hijri').on('change', function () {
-   table
-      .columns(7)
-      .search(this.value)
-      .draw();
-});
+// $('#hijri').on('change', function () {
+//    table
+//       .columns(7)
+//       .search(this.value)
+//       .draw();
+// });
 
-$('#filterStatus').multiselect({
-   buttonText: function (options, select) {
-      if (options.length === 0) {
-         return 'Status All';
-      }
-      else if (options.length > 3) {
-         return '> 3 status terpilih';
-      }
-      else {
-         var labels = [];
-         options.each(function () {
-            if ($(this).attr('label') !== undefined) {
-               labels.push($(this).attr('label'));
-            }
-            else {
-               labels.push($(this).html());
-            }
-         });
-         return labels.join(', ') + '';
-      }
-   },
-   onChange: function (option, checked, select) {
-      //build a regex filter string with an or(|) condition
-      var positions = $('#filterStatus option:selected').map(function (a, item) {
-         return '^' + item.value + '$';
-      }).get().join('|');
-      
-      //filter in column 1, with an regex, no smart filtering, not case sensitive
-      table.column(3).search(positions, true, false, false).draw(false);
-   }
-});
-table.on('columns-reordered', function (e, settings, details) {
-   // settings
-});
+// $('#filterStatus').multiselect({
+//    buttonText: function (options, select) {
+//       if (options.length === 0) {
+//          return 'Status All';
+//       }
+//       else if (options.length > 3) {
+//          return '> 3 status terpilih';
+//       }
+//       else {
+//          var labels = [];
+//          options.each(function () {
+//             if ($(this).attr('label') !== undefined) {
+//                labels.push($(this).attr('label'));
+//             }
+//             else {
+//                labels.push($(this).html());
+//             }
+//          });
+//          return labels.join(', ') + '';
+//       }
+//    },
+//    onChange: function (option, checked, select) {
+//       //build a regex filter string with an or(|) condition
+//       var positions = $('#filterStatus option:selected').map(function (a, item) {
+//          return '^' + item.value + '$';
+//       }).get().join('|');
+
+//       //filter in column 1, with an regex, no smart filtering, not case sensitive
+//       table.column(3).search(positions, true, false, false).draw(false);
+//    }
+// });
 
 // document.querySelectorAll('a.toggle-vis').forEach((el) => {
 //    if (nama === "true") {
