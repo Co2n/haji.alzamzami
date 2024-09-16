@@ -211,6 +211,7 @@ const table = new DataTable('#tabelJemaah', {
    colReorder: true,
    paging: false,
    layout: {
+      top2: 'searchBuilder',
       topStart: {
          search: {
             placeholder: 'Ketik di Sini!'
@@ -410,6 +411,7 @@ const table = new DataTable('#tabelJemaah', {
          ]
       },
    },
+   fixedHeader: true,
    language: {
       info: 'Hal. _PAGE_ dari _PAGES_',
       infoEmpty: 'Data tidak tersedia!',
@@ -419,7 +421,41 @@ const table = new DataTable('#tabelJemaah', {
       search : 'Pencarian:',
       buttons: {
          colvis: 'Tampil / Hilangkan Kolom'
-      }
+      },
+      searchBuilder: {
+         add: 'Tambahkan Kondisi',
+         condition: 'Komparasi',
+         conditions: {
+            string: {
+                contains: 'Berisi',
+                empty: 'Kosong',
+                endsWith: 'Berakhir dengan',
+                equals: 'Sama dengan',
+                not: 'Tidak',
+                notContains: 'Tidak Berisi',
+                notEmpty: 'Tidak Kosong',
+                notEndsWith: 'Tidak Berakhir dengan',
+                notStartsWith: 'Tidak Dimulai dengan',
+                startsWith: 'Mulai dengan'
+            }
+         },
+         clearAll: 'Reset',
+         delete: 'Hapus',
+         deleteTitle: 'Hapus Judul',
+         data: 'Kolom',
+         left: 'Kiri',
+         leftTitle: 'Judul Kiri',
+         logicAnd: 'Dan',
+         logicOr: 'Atau',
+         right: 'Kanan',
+         rightTitle: 'Judul Kanan',
+         title: {
+             0: 'Jaring Pencarian',
+             _: 'Jaring Pencarian (%d)'
+         },
+         value: 'Opsi',
+         valueJoiner: '@',
+     }
    },
    initComplete: function () {
       this.api()
@@ -555,36 +591,39 @@ $('#filterStatus').multiselect({
       var positions = $('#filterStatus option:selected').map(function (a, item) {
          return '^' + item.value + '$';
       }).get().join('|');
-
+      
       //filter in column 1, with an regex, no smart filtering, not case sensitive
       table.column(3).search(positions, true, false, false).draw(false);
    }
 });
-
-document.querySelectorAll('a.toggle-vis').forEach((el) => {
-   if (nama === "true") {
-      el.addEventListener('click', function (e) {
-         let isExpanded = this.getAttribute('aria-pressed');
-         // console.log(isExpanded)
-         if (isExpanded === 'false') {
-            this.setAttribute('class', 'toggle-vis nav-link active');
-            this.setAttribute('aria-pressed', 'true');
-         }
-         if (isExpanded === 'true') {
-            this.setAttribute('class', 'toggle-vis nav-link');
-            this.setAttribute('aria-pressed', 'false');
-         }
-
-         e.preventDefault();
-
-         let columnIdx = e.target.getAttribute('data-column');
-         let column = table.column(columnIdx);
-
-         // Toggle the visibility
-         column.visible(!column.visible());
-      });
-   }
+table.on('columns-reordered', function (e, settings, details) {
+   // settings
 });
+
+// document.querySelectorAll('a.toggle-vis').forEach((el) => {
+//    if (nama === "true") {
+//       el.addEventListener('click', function (e) {
+//          let isExpanded = this.getAttribute('aria-pressed');
+//          // console.log(isExpanded)
+//          if (isExpanded === 'false') {
+//             this.setAttribute('class', 'toggle-vis nav-link active');
+//             this.setAttribute('aria-pressed', 'true');
+//          }
+//          if (isExpanded === 'true') {
+//             this.setAttribute('class', 'toggle-vis nav-link');
+//             this.setAttribute('aria-pressed', 'false');
+//          }
+
+//          e.preventDefault();
+
+//          let columnIdx = e.target.getAttribute('data-column');
+//          let column = table.column(columnIdx);
+
+//          // Toggle the visibility
+//          column.visible(!column.visible());
+//       });
+//    }
+// });
 
 // // menciptakan hightlight pada colomn
 // table.on('mouseenter', 'td', function () {

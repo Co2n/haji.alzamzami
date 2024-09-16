@@ -8,11 +8,14 @@
       <meta name="author" content="">
 
       <title>KBIHU AL-ZAMZAMI</title>
-
-
+      
       <!-- Bootstrap core CSS -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
       <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
+
+      <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/1.8.0/css/searchBuilder.bootstrap4.css">
+      <link rel="stylesheet" href=" https://cdn.datatables.net/datetime/1.5.3/css/dataTables.dateTime.min.css">
+
       <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/2.0.4/css/colReorder.dataTables.css">
       <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap4.css">
 
@@ -33,125 +36,6 @@
                               <!-- <div class="dt-layout-row">
                                     <ul class="nav nav-pills justify-content-center">
                                           <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="0">NO</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="1">PORSI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="2">MUSIM</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="3">STATUS</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="4">SEBAGAI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="5">ABSEN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="6">PELUNASAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="7">HIJRI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="8">SPPH</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="9">SAPA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="10">NAMA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="11">AYAH</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="12">GENDER</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="13">NAMA_LENGKAP</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="14">TMP_LHR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="15">TGL_LHR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="16">USIA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="17">ALAMAT</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="18">DESA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="19">KECAMATAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="20">KODE_POS</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="21">BANK</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="22">TGL DAFTAR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="23">REFF</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link active" aria-pressed="true" data-column="24">DESA_KEC</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="25">FOTO</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="26">HP</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="27">HP_KEL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="28">KTP</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="29">NIK</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="30">PENDIDIKAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="31">PEKERJAAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="32">PASPOR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="33">NO_PASPOR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="34">NM_PASPOR</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="35">IMIGRASI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="36">EXPIRE</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="37">BIMBINGAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="38">PERLENGKAPAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="39">KOLOSAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="40">PASPORAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="41">BIO VISA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="42">BIMB?</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="43">PERL?</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="44">KOLO?</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="45">PASP?</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="46">BIO ?</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="47">BUKU MANASIK AZ</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="48">KAIN IHROM</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="49">BAJU KOKO</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="50">BATIK ALZAMZAMI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="51">BATIK NASIONAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="52">CELANA PUTIH</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="53">KOLOR PUTIH</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="54">KERUDUNG ALZAMZAMI</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="55">KERUDUNG NASIONAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="56">GAMIS</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="57">MUKENA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="58">ROK PUTIH</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="59">SYAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="60">TAS LEHER</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="61">KAOS SAKU</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="62">TAARUF</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="63">MANASIK AWAL 1</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="64">MANASIK AWAL 2</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="65">MANASIK AWAL 3</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="66">MANASIK AWAL 4</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="67">MANASIK AWAL 5</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="68">MANASIK AWAL 6</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="69">PERSIAPAN KOLOSAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="70">MANASIK KOLOSAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="71">EVALUASI KOLOSAL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="72">PERSIAPAN KEBERANGKATAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="73">PASKA HAJI</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="74">COL-1</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="75">COL-2</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="76">COL-3</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="77">COL-4</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="78">COL-5</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="79">COL-7</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="80">COL-8</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="81">COL-9</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="82">COL-10</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="83">GAMIS</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="84">PUNDAK</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="85">P-BADAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="86">L-DADA</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="87">L-PINGGANG</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="88">L-PINGGUL</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="89">P-TANGAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="90">L-TANGAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="91">KERAH</a></li>
-                                    </ul>
-                              </div>
-                              <div class="dt-layout-row">
-                                    <ul class="nav nav-pills justify-content-center">
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="92">PARAF</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="93">TANDA TANGAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="94">KETERANGAN</a></li>
-                                          <li class="nav-item"><a class="toggle-vis nav-link" aria-pressed="false" data-column="95">KET</a></li>
                                     </ul>
                               </div> -->
                         </div>
@@ -435,6 +319,11 @@
       <script src="https://cdn.datatables.net/2.1.5/js/dataTables.bootstrap4.js"></script>
       <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
       <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.bootstrap4.js"></script>
+
+      <script src="https://cdn.datatables.net/searchbuilder/1.8.0/js/dataTables.searchBuilder.js"></script>
+      <script src="https://cdn.datatables.net/searchbuilder/1.8.0/js/searchBuilder.bootstrap4.js"></script>
+      <script src="https://cdn.datatables.net/datetime/1.5.3/js/dataTables.dateTime.min.js"></script>
+      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
