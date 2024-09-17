@@ -373,30 +373,27 @@ const table = new DataTable('#tabelJemaah', {
 
 
                   // Untuk menyelaraskan style di view dan di print 
-                  let colVisibleHeader = table.columns(':visible')[0];
-                  for (var i = 0; i < colVisibleHeader.length; ++i) {
+                  let colVisible = table.columns(':visible')[0];
+                  for (var i = 0; i < colVisible.length; ++i) {
+                     //header
                      $(win.document.body).find('table thead th:nth-child(' + (i + 1) + ')').each(function (index) {
                         $(this).addClass(
                            //ambil dari style view
-                           table.cell(0, colVisibleHeader[i]).node().getAttribute('class')
+                           table.cell(0, colVisible[i]).node().getAttribute('class')
                         )
                      });
-                  }
-                  let colVisible = table.columns(':visible')[0];
-                  for (var i = 0; i < colVisible.length; ++i) {
+                     //isi
                      $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) {
                         $(this).addClass(
                            //ambil dari style view
                            table.cell(0, colVisible[i]).node().getAttribute('class')
                         )
                      });
-                  }
-                  let colVisibleFooter = table.columns(':visible')[0];
-                  for (var i = 0; i < colVisibleFooter.length; ++i) {
+                     //footer
                      $(win.document.body).find('table tfoot th:nth-child(' + (i + 1) + ')').each(function (index) {
                         $(this).addClass(
                            //ambil dari style view
-                           table.cell(0, colVisibleFooter[i]).node().getAttribute('class')
+                           table.cell(0, colVisible[i]).node().getAttribute('class')
                         )
                      });
                   }
