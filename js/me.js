@@ -5,9 +5,16 @@ const nama = urlParams.get("edit");
 DataTable.type('num', 'render', DataTable.render.number());
 var urlImage = 'https://drive.google.com/uc?export=view&id=1IqtdPL-PEJ1KJ25o6pAVuNqfZkQpJIxM';
 
+DataTable.feature.register('judulDokumen', function (settings, opts) {
+   let toolbar = document.createElement('div');
+   toolbar.innerHTML = opts.text;
+
+   return toolbar;
+});
+
 const table = new DataTable('#tabelJemaah', {
    columnDefs: [
-      { targets: 0, searchable: false, orderable: false, className: 'dt-body-right' }, //NO
+      { targets: 0, className: 'dt-body-right',  searchable: false, orderable: false }, //NO
       { targets: 1, className: 'dt-body-right', render: DataTable.render.number('', ',') }, //PORSI
       { visible: false, targets: 2 }, //MUSIM
       { visible: false, targets: 3 }, //STATUS
@@ -15,7 +22,7 @@ const table = new DataTable('#tabelJemaah', {
       { targets: 5, className: 'dt-body-center absen' }, //ABSEN
       { visible: false, targets: 6 }, //PELUNASAN
       { visible: false, targets: 7, render: DataTable.render.number('', ',') }, //HIJRI
-      { visible: false, targets: 8 }, //SPPH
+      { visible: false, targets: 8, render: DataTable.render.number('', ',') }, //SPPH
       { targets: 9 }, //SAPA
       { visible: false, targets: 10 }, //NAMA
       { visible: false, targets: 11 }, //AYAH
@@ -23,7 +30,7 @@ const table = new DataTable('#tabelJemaah', {
       { targets: 13 }, //NAMA_LENGKAP
       { visible: false, targets: 14 }, //TMP_LHR
       { visible: false, targets: 15, render: DataTable.render.date('DD MMM YYYY') }, //TGL_LHR
-      { visible: false, targets: 16, className: 'dt-body-center', createdCell: function (td, cellData, rowData, row, col) { if (cellData >= 85) { $(td).addClass('lansia'); } } }, //USIA
+      { visible: false, targets: 16, className: 'dt-body-center usia', createdCell: function (td, cellData, rowData, row, col) { if (cellData >= 85) { $(td).addClass('lansia'); } } }, //USIA
       { visible: false, targets: 17 }, //ALAMAT
       { visible: false, targets: 18 }, //DESA
       { visible: false, targets: 19 }, //KECAMATAN
@@ -208,6 +215,7 @@ const table = new DataTable('#tabelJemaah', {
       { data: "keterangan" }, //94
       { data: "ket" }, //95
    ],
+   processing: true,
    colReorder: true,
    fixedHeader: true,
    paging: false,
@@ -257,6 +265,18 @@ const table = new DataTable('#tabelJemaah', {
       }
    },
    layout: {
+      top3Start: {
+         div: {
+            className: 'warn',
+            id: 'warn-btn',
+            html: 'Click button to acknowledge: <button>Ack</button>'
+         }
+      },
+      top3End: {
+         judulDokumen: {
+            text: 'My custom toolbar!'
+         }
+      },
       top2: {
          searchBuilder: {
             preDefined: {
@@ -353,12 +373,30 @@ const table = new DataTable('#tabelJemaah', {
 
 
                   // Untuk menyelaraskan style di view dan di print 
+                  let colVisibleHeader = table.columns(':visible')[0];
+                  for (var i = 0; i < colVisibleHeader.length; ++i) {
+                     $(win.document.body).find('table thead th:nth-child(' + (i + 1) + ')').each(function (index) {
+                        $(this).addClass(
+                           //ambil dari style view
+                           table.cell(0, colVisibleHeader[i]).node().getAttribute('class')
+                        )
+                     });
+                  }
                   let colVisible = table.columns(':visible')[0];
                   for (var i = 0; i < colVisible.length; ++i) {
                      $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) {
                         $(this).addClass(
                            //ambil dari style view
                            table.cell(0, colVisible[i]).node().getAttribute('class')
+                        )
+                     });
+                  }
+                  let colVisibleFooter = table.columns(':visible')[0];
+                  for (var i = 0; i < colVisibleFooter.length; ++i) {
+                     $(win.document.body).find('table tfoot th:nth-child(' + (i + 1) + ')').each(function (index) {
+                        $(this).addClass(
+                           //ambil dari style view
+                           table.cell(0, colVisibleFooter[i]).node().getAttribute('class')
                         )
                      });
                   }
@@ -508,7 +546,7 @@ const table = new DataTable('#tabelJemaah', {
 
       var countGenderL = 0;
       var countGenderP = 0;
-      api.cells(null, 12, { page: 'current' }).nodes().each(function (n) {
+      api.cells(null, '.g', { page: 'current' }).nodes().each(function (n) {
          if ($(n).hasClass('g')) {
             if ($(n).text() === "L") {
                countGenderL += 1
@@ -518,38 +556,38 @@ const table = new DataTable('#tabelJemaah', {
             }
          }
       })
-      $(api.column(12).footer()).html('L(' + countGenderL + ') P(' + countGenderP + ')');
+      $(api.column('.g').footer()).html('L(' + countGenderL + ') P(' + countGenderP + ')');
 
       var total = 0;
       var intVal = function (i) { return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 16, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('lansia')) { if (intVal($(n).text()) > 0) { total += 1 } } });
-      $(api.column(16).footer()).html('LN: ' + total);
-      // // $(api.column(16).footer()).html(api.column(16).nodes().count());
+      api.cells(null, '.usia', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('lansia')) { if (intVal($(n).text()) > 0) { total += 1 } } });
+      $(api.column('.usia').footer()).html('LN: ' + total);
+      // $(api.column(16).footer()).html(api.column(16).nodes().count());
 
       var sumBimb = 0;
       var intValBimb = function (i) { return typeof i === 'string' ? i.replace(/[Rp.]+/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 37, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('bimb')) { sumBimb += intValBimb($(n).text()) } });
-      $(api.column(37).footer()).html(formatUang(sumBimb));
+      api.cells(null, '.Bimb', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('bimb')) { sumBimb += intValBimb($(n).text()) } });
+      $(api.column('.Bimb').footer()).html(formatUang(sumBimb));
 
       var sumPerl = 0;
       var intValPerl = function (i) { return typeof i === 'string' ? i.replace(/[Rp.]+/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 38, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('perl')) { sumPerl += intValPerl($(n).text()) } });
-      $(api.column(38).footer()).html(formatUang(sumPerl));
+      api.cells(null, '.Perl', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('perl')) { sumPerl += intValPerl($(n).text()) } });
+      $(api.column('.Perl').footer()).html(formatUang(sumPerl));
 
       var sumKolo = 0;
       var intValKolo = function (i) { return typeof i === 'string' ? i.replace(/[Rp.]+/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 39, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('kolo')) { sumKolo += intValKolo($(n).text()) } });
-      $(api.column(39).footer()).html(formatUang(sumKolo));
+      api.cells(null, '.Kolo', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('kolo')) { sumKolo += intValKolo($(n).text()) } });
+      $(api.column('.Kolo').footer()).html(formatUang(sumKolo));
 
       var sumPasp = 0;
       var intValPasp = function (i) { return typeof i === 'string' ? i.replace(/[Rp.]+/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 40, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('pasp')) { sumPasp += intValPasp($(n).text()) } });
-      $(api.column(40).footer()).html(formatUang(sumPasp));
+      api.cells(null, '.Pasp', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('pasp')) { sumPasp += intValPasp($(n).text()) } });
+      $(api.column('.Pasp').footer()).html(formatUang(sumPasp));
 
       var sumBiov = 0;
       var intValBiov = function (i) { return typeof i === 'string' ? i.replace(/[Rp.]+/g, '') * 1 : typeof i === 'number' ? i : 0 };
-      api.cells(null, 41, { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('biov')) { sumBiov += intValBiov($(n).text()) } });
-      $(api.column(41).footer()).html(formatUang(sumBiov));
+      api.cells(null, '.Biov', { page: 'current' }).nodes().each(function (n) { if ($(n).hasClass('biov')) { sumBiov += intValBiov($(n).text()) } });
+      $(api.column('.Biov').footer()).html(formatUang(sumBiov));
 
 
    },
