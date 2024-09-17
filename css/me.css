@@ -34,6 +34,7 @@ div.dropdown-menu.dt-button-collection.fixed.columns div[role=menu] {
 
 div.dt-button-collection .dt-button-active {
    border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+   font-weight: bold;
 }
 
 div.dt-button-collection-title {
