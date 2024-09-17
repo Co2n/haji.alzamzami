@@ -10,6 +10,10 @@ table.dataTable tbody td {
    background-color: white;
  }
 
+ div.dt-button-background {
+   background-color: rgba(1, 65, 169, 0.603);
+ }
+
 .absen{
     font-weight: bold;
 }
@@ -25,7 +29,7 @@ td.highlight {
 
 div.dropdown-menu.dt-button-collection.fixed.columns div[role=menu] {
    height: 500px;
-   width: auto;
+   width: 850px;
 }
 
 div.dt-button-collection .dt-button-active {
