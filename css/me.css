@@ -6,6 +6,10 @@ table.dataTable tbody td {
    vertical-align: middle;
 }
 
+.table thead th {
+   background-color: white;
+ }
+
 .absen{
     font-weight: bold;
 }

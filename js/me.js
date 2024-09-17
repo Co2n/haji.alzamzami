@@ -209,8 +209,8 @@ const table = new DataTable('#tabelJemaah', {
       { data: "ket" }, //95
    ],
    colReorder: true,
-   paging: false,
    fixedHeader: true,
+   paging: false,
    language: {
       info: 'Hal. _PAGE_ dari _PAGES_',
       infoEmpty: 'Data tidak tersedia!',
