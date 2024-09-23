@@ -209,7 +209,7 @@ function outputer(vals) {
       </div>
     </div>
     <div class="container dokumen">
-      <h5>Chaker <span>(Petugas Validasi)</span></h5>
+      <h5>Checkers <span>(Petugas Validasi)</span></h5>
       <hr>
 
       <div class="row">
