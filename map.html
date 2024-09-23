@@ -21,7 +21,7 @@
   <div class="text-center">
     <img class="logo" style="height: auto; width: 300px;" src="img/logokbihu.svg" />
     <p style="padding-top: 20px;">Jl. Cut Nyak Dhien Lingk. Subur Rt/Rw. 007/002 Kel. Windusengkahan Kec/Kab. Kuningan
-      <br><i class="bi bi-whatsapp"></i> 0813-6996-8499 <i class="bi bi-envelope"></i> kbihualzamzami@gmail.com
+      <br><i class="bi bi-whatsapp"></i> 0813-6996-8499, <i class="bi bi-envelope"></i> kbihualzamzami@gmail.com
     </p>
     <hr style="border: 1px solid rgb(89, 89, 89)">
   </div>
@@ -29,169 +29,36 @@
     <h1>DOKUMEN</h1>
     <h1>PEMBUATAN PASPOR</h1>
     <hr>
-    <div class="container text-center">
+    <div class=" text-center visible">
       <div class="row justify-content-center">
-        <div class="col col-4">
-          <div class="input-group mb-1">
+        <div class="col-6">
+          <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">No Absen</span>
+              <span class="input-group-text" id="basic-addon1">Musim</span>
             </div>
-            <input type="text" class="form-control" placeholder="0" aria-label="Username"
-              aria-describedby="basic-addon1">
+            <input type="number" class="form-control" value="1446" id="hijriyah" placeholder="Hijriyah"
+              aria-label="tahun" aria-describedby="basic-addon1">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon2">No Absen</span>
+            </div>
+            <input type="number" class="form-control" maxlength="3" id="absen" placeholder="0" aria-label="absen"
+              aria-describedby="basic-addon2">
+            <div class="valid-feedback">Ini sudah ok!</div>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Cek</button>
+              <button class="btn btn-outline-secondary" type="button" id="cek">Cek</button>
             </div>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Print</button>
+              <button class="btn btn-outline-secondary" type="button" id="print">Print</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <hr>
-    <div class="test">
-
-    </div>
+    <hr class="visible">
   </div>
-  <div class="content">
-    <div class="container text-center" style="padding-top: 20px;">
-      <p>Calon Jemaah Haji dengan nomor porsi 1000000000 <br> Atas Nama</p>
-      <h2>Nama Jemaah Pasporan</h2>
-      <h4>Desa - Kecamatan</h4>
-    </div>
-    <div class="container dokumen">
-      <h5 style="margin-top: 50px;">Berkas Dokumen</h5>
-      <hr>
-
-      <div class="row">
-        <div class="col-6">
-          <div class="row">
-            <div class="col-1"><span>Asli</span></div>
-            <div class="col-1"><span>Copy</span></div>
-            <div class="col" style="margin-left: 20px;"></div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Perdim Imigrasi</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Rekom Kemenag</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Paspor Expire</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Bukti Storan BPIH/Pelunasan</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">SPH Pelimpahan Porsi</div>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="row">
-            <div class="col-1"><span>Asli</span></div>
-            <div class="col-1"><span>Copy</span></div>
-            <div class="col" style="margin-left: 20px;"></div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">E-KTP</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Kartu Keluarga (KK)</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Akta Kelahiran</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Ijazah</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Buku Nikah</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container dokumen">
-      <h5>Pelengkap</h5>
-      <hr>
-
-      <div class="row">
-        <div class="col-6">
-          <div class="row">
-            <div class="col-1"><span>Asli</span></div>
-            <div class="col" style="margin-left: 20px;"></div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Surat Keterangan Kakek</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Surat Ket. Singkatan Nama</div>
-          </div>
-          <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox" id=""></div>
-            <div class="col" style="margin-left: 20px;">Surat Kehilangan Paspor (Kepolisian)</div>
-          </div>
-        </div>
-        <div class="col-6"></div>
-      </div>
-    </div>
-    <div class="container dokumen">
-      <h5>Chaker <span>(Petugas Validasi)</span></h5>
-      <hr>
-
-      <div class="row">
-        <div class="col-4">
-          <div class="checker">
-            <span>paraf</span>
-            <br>
-            <br>
-            <br>
-            <span>Nama: </span>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="checker">
-            <span>paraf</span>
-            <br>
-            <br>
-            <br>
-            <span>Nama: </span>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="checker">
-            <span>paraf</span>
-            <br>
-            <br>
-            <br>
-            <span>Nama: </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div> <!-- /container -->
+  <div id="loading"></div>
+  <div id="textOutput"></div>
+  <script src="js/map.js"></script>
 </body>
 
 </html>
