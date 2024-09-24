@@ -110,6 +110,11 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
       { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
       { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
+      { visible: false, targets: 96, searchable: false, orderable: false, className: 'dt-body-center' }, //KERAH
+      { visible: false, targets: 97 }, //PARAF
+      { visible: false, targets: 98 }, //TANDA TANGAN
+      { visible: false, targets: 99 }, //KETERANGAN
+      { visible: false, targets: 100 }, //KET
    ],
    order: [[5, 'asc']],
    ajax: {
@@ -214,6 +219,11 @@ const table = new DataTable('#tabelJemaah', {
       { data: "l-pinggul" }, //93
       { data: "p-tangan" }, //94
       { data: "l-tangan" }, //95
+      { data: "kerah" }, //96
+      { data: "paraf" }, //97
+      { data: "tanda tangan" }, //98
+      { data: "keterangan" }, //99
+      { data: "ket" }, //100
    ],
    processing: true,
    colReorder: true,
@@ -265,18 +275,18 @@ const table = new DataTable('#tabelJemaah', {
       }
    },
    layout: {
-      top3Start: {
-         div: {
-            className: 'warn',
-            id: 'warn-btn',
-            html: 'Click button to acknowledge: <button>Ack</button>'
-         }
-      },
-      top3End: {
-         judulDokumen: {
-            text: 'My custom toolbar!'
-         }
-      },
+      // top3Start: {
+      //    div: {
+      //       className: 'warn',
+      //       id: 'warn-btn',
+      //       html: 'Click button to acknowledge: <button>Ack</button>'
+      //    }
+      // },
+      // top3End: {
+      //    judulDokumen: {
+      //       text: 'My custom toolbar!'
+      //    }
+      // },
       top2: {
          searchBuilder: {
             preDefined: {
@@ -589,6 +599,9 @@ const table = new DataTable('#tabelJemaah', {
    },
    rowCallback: function (row, data) {
       $('#tinggi').on('keyup', function () {
+         $(row).css('height', this.value + 'px');
+      });
+      $('#tinggi').on('click', function () {
          $(row).css('height', this.value + 'px');
       });
    }

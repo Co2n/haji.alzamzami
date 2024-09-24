@@ -24,7 +24,6 @@ input.largerCheckbox {
 
 
 /* creating css loader */
-
 #loading {
    width: 2rem;
    height: 2rem;
@@ -36,6 +35,12 @@ input.largerCheckbox {
    animation: spin 1s infinite linear;
 }
 #loading.display {
+   visibility: visible;
+}
+#textOutput {
+   visibility: hidden;
+}
+#textOutput.display {
    visibility: visible;
 }
 @keyframes spin {
