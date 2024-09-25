@@ -205,7 +205,6 @@ function outputer(vals) {
     <div class="container dokumen">
       <h5>Pelengkap</h5>
       <hr>
-
       <div class="row">
         <div class="col-6">
           <div class="row">
@@ -225,13 +224,19 @@ function outputer(vals) {
             <div class="col" style="margin-left: 15px;">Surat Kehilangan Paspor (Kepolisian)</div>
           </div>
         </div>
-        <div class="col-6"></div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-6"><span>Keterangan Lainnya </span></div>
+          </div>
+          <div class="row">
+            <p></p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container dokumen">
       <h5>Checkers <span>(Petugas Validasi)</span></h5>
       <hr>
-
       <div class="row">
         <div class="col-4">
           <div class="checker">
