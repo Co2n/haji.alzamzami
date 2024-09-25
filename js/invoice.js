@@ -83,7 +83,7 @@ function outputer(vals) {
       `<div class="content">
         <div class="container text-center">
          <div class="alert alert-danger" role="alert">
-            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Surat Kehilangan dari Kepolisian?
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap!
          </div>
         </div>
       </div>`;
@@ -92,7 +92,7 @@ function outputer(vals) {
       `<div class="content">
       <div class="container text-center">
          <div class="alert alert-danger" role="alert">
-            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Paspor Lama?
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! 
          </div>
         </div>
       </div>`;
@@ -101,7 +101,7 @@ function outputer(vals) {
       `<div class="content">
       <div class="container text-center">
          <div class="alert alert-danger" role="alert">
-            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Bukti Setoran BPIH / Pelunasan / SPH Pelimpahan ???
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! 
          </div>
         </div>
       </div>`;
@@ -110,7 +110,7 @@ function outputer(vals) {
       `<div class="content">
       <div class="container text-center">
          <div class="alert alert-danger" role="alert">
-            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Akta Lahir / Ijazah / Buku Nikah ???
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap!
          </div>
         </div>
       </div>`;
