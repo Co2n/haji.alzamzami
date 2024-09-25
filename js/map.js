@@ -78,7 +78,16 @@ function outputer(vals) {
   const bap = vals[40];
   const perpanjangan = vals[39];
 
-  if (bap == true && suketKehilangan == '') {
+  if (vals[1] > 1000691172) {
+    textOutput.innerHTML =
+      `<div class="content">
+        <div class="container text-center">
+         <div class="alert alert-danger" role="alert">
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Surat Kehilangan dari Kepolisian?
+         </div>
+        </div>
+      </div>`;
+  } else if (bap == true && suketKehilangan == '') {
     textOutput.innerHTML =
       `<div class="content">
         <div class="container text-center">
