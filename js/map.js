@@ -153,7 +153,7 @@ function outputer(vals) {
             <div class="col" style="margin-left: 15px;">Rekom Kemenag</div>
           </div>
           <div class="row">
-            <div class="col-1"><input type="checkbox" class="largerCheckbox"></div>
+            <div class="col-1"><input type="checkbox" class="largerCheckbox" ${pasporLama}></div>
             <div class="col-1"><input type="checkbox" class="largerCheckbox" ${pasporLama}></div>
             <div class="col" style="margin-left: 15px;">Paspor Lama</div>
           </div>
