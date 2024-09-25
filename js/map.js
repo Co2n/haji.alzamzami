@@ -83,7 +83,7 @@ function outputer(vals) {
       `<div class="content">
         <div class="container text-center">
          <div class="alert alert-danger" role="alert">
-            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Berkas pasporan belum siap! Surat Kehilangan dari Kepolisian?
+            Dokumen atas nama <strong>` + vals[9] + ` ` + vals[13] + `</strong><br>Ceuk Pak Haji Nur mah tacan baleg no Porsina !!!
          </div>
         </div>
       </div>`;
