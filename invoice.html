@@ -31,110 +31,29 @@
               <h3>Invoice</h3>
             </div>
           </div>
-          <div class="hr"></div>
+          <!-- <div class="hr"></div> -->
+          <hr>
           <div class="text-center">
             <div class="invoice-btns">
-              <label for="absen">No. Absen</label>
-              <input type="number" name="absen" id="absen">
-              <button type="button" class="invoice-btn">
+              <input type="number" name="musim" id="hijriyah" placeholder="Musim" value="1446">
+              <input type="number" name="absen" id="absen" placeholder="No Absen">
+              <button type="button" class="invoice-btn" id="cek">
                 <span>
                   <i class="fa-solid fa-rotate"></i>
                 </span>
                 <span>Cek</span>
               </button>
-              <button type="button" class="invoice-btn" onclick="printInvoice()">
+              <button type="button" class="invoice-btn" id="print">
                 <span>
                   <i class="fa-solid fa-print"></i>
                 </span>
                 <span>Print</span>
               </button>
-              <button type="button" class="invoice-btn">
-                <span>
-                  <i class="fa-solid fa-download"></i>
-                </span>
-                <span>Download</span>
-              </button>
             </div>
           </div>
           <div class="hr"></div>
-          <!-- InnerPertama -->
-          <div class="invoice-head-middle">
-            <div class="invoice-head-middle-left text-start">
-              <p><span class="text-bold">Date</span>: 05/12/2020</p>
-            </div>
-            <div></div>
-            <div class="invoice-head-middle-right text-end">
-              <p>
-                <spanf class="text-bold">Invoice No:</span>16789
-              </p>
-            </div>
-          </div>
-          <div class="hr"></div>
-          <div class="invoice-head-bottom">
-            <div class="invoice-head-bottom-left">
-              <ul>
-                <li class='text-bold'>Kepada Yth;</li>
-                <li>Nama Jemaah</li>
-                <li>Alamat</li>
-                <li>Desa - Kec</li>
-              </ul>
-            </div>
-            <div class="text-center">
-                <!-- <ul>
-                  <li><img src="img/waqr.svg"></li>
-                  <li>0813-6996-84997</li>
-                </ul> -->
-            </div>
-            <div class="invoice-head-bottom-right">
-                <ul class="text-end">
-                  <li class='text-bold'>Pembayaran ke;</li>
-                  <li>Kantor / Bendahara</li>
-                  <li>a.n. Muna Faridah</li>
-                  <li>Wa : 085798501702</li>
-                  <li>No.Rek., Mandiri 1340024423757</li>
-                </ul>
-            </div>
-          </div>
-          <!-- endInnerPertama -->
-        </div>
-        <div class="overflow-view">
-          <div class="invoice-body">
-            <table>
-              <thead>
-                <tr>
-                  <td style="width: 70%;" class="text-bold" colspan="3">Biaya</td>
-                  <td class="text-bold text-end">Nilai</td>
-                  <td class="text-bold text-end">Masuk</td>
-                  <td class="text-bold text-end">Balance</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colspan="3">Bimbingan</td>
-                  <td class="text-end">3.5000.000</td>
-                  <td class="text-end">2.000.000</td>
-                  <td class="text-end">-1.500.000</td>
-                </tr>
-                <tr>
-                  <td class="text-end" style="width: 5%;">1</td>
-                  <td colspan="3">20/08/2024</td>
-                  <td class="text-end">1.000.000</td>
-                  <td class="text-end"></td>
-                </tr>
-                <tr>
-                  <td class="text-end" style="width: 5%;">1</td>
-                  <td colspan="3">20/08/2024</td>
-                  <td class="text-end">1.000.000</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="invoice-body-bottom">
-              <div class="invoice-body-info-item border-bottom">
-                <div class="info-item-td text-end text-bold">Jumlah :</div>
-                <div class="info-item-td text-end">1.500.000</div>
-              </div>
-            </div>
-          </div>
+          <div class="results"></div>
+          <div id="textOutput"></div>
         </div>
         <div class="invoice-foot text-center">
           <p><span class="text-bold text-center">NOTE:&nbsp;</span>This is computer generated receipt and does not
@@ -143,6 +62,7 @@
       </div>
     </div>
   </div>
+  <script src="js/moment.min.js"></script>
   <script src="js/invoice.js"></script>
 </body>
 

@@ -46,10 +46,10 @@ function displayLoading() {
   loader.classList.add("display");
   content.classList.remove("display");
   // to stop loading after some time
-  setTimeout(() => {
-    loader.classList.remove("display");
-    content.classList.add("display");
-  }, 5000);
+  // setTimeout(() => {
+  //   loader.classList.remove("display");
+  //   content.classList.add("display");
+  // }, 5000);
 }
 
 // hiding loading 

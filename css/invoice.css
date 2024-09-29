@@ -144,6 +144,30 @@ body{
     width: auto;
 }
 
+.results{
+    margin-top: 20px;
+}
+
+#loading {
+    width: 2rem;
+    height: 2rem;
+    border: 5px solid #f3f3f3;
+    border-top: 6px solid #9c41f2;
+    border-radius: 100%;
+    margin: auto;
+    visibility: hidden;
+    animation: spin 1s infinite linear;
+ }
+ #loading.display {
+    visibility: visible;
+ }
+ #textOutput {
+    visibility: hidden;
+ }
+ #textOutput.display {
+    visibility: visible;
+ }
+
 @media screen and (max-width: 992px){
     .invoice{
         padding: 40px;
@@ -193,6 +217,14 @@ body{
 
     .invoice {
       padding: 0 !important;
+      margin-right: 2px;
       border: 0 solid rgb(255, 255, 255);
+    }
+    .hilang {
+        visibility: hidden;
+        display: none;
+    }
+    #hilang{
+        display: none;
     }
 }
