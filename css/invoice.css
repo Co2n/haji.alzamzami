@@ -38,6 +38,9 @@ ul li{
 .text-bold{
     font-weight: 700;
 }
+.text-italic{
+    font-style: italic;
+}
 /* hr line */
 .hr{
     height: 1px;

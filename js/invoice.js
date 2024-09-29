@@ -1,7 +1,7 @@
 // const moment = require("./moment.min.js");
 // import { moment } from './moment.min.js';
 
-const url = 'https://script.google.com/macros/s/AKfycbxIlmmR9xQze6T2c7B6ZBbNnV6uAZROAjltD8X3ogwI0n62MlPj0tG-qgTIrJNfGtvh/exec';
+const url = 'https://script.google.com/macros/s/AKfycbwRy2kbzRXLTAG8ggxOepQvO9c80IIplGydUgLdb03aZeYCTT3BrKasWb16Ws_mY8mC/exec';
 const myMusim = document.querySelector('#hijriyah');
 const myAbsen = document.querySelector('#absen');
 const btn = document.querySelector('#cek');
@@ -137,7 +137,7 @@ function outputer(vals) {
               <td style="width: 70%;" class="text-bold" colspan="2">BIAYA</td>
               <td class="text-bold text-end">NILAI</td>
               <td class="text-bold text-end">MASUK</td>
-              <td class="text-bold text-end">SISA</td>
+              <td class="text-bold text-end">SELISIH</td>
             </tr>
           </thead>
           <tbody>
@@ -146,19 +146,19 @@ function outputer(vals) {
         <div class="invoice-body-bottom">
           <div class="invoice-body-info-item border-bottom">
             <div class="info-item-td text-end text-bold">Jumlah :</div>
-            <div class="info-item-td text-end">1.500.000</div>
+            <div class="info-item-td text-end" id="jumlah"></div>
           </div>
+          <div class="text-end text-italic" id="terbilang"></div>
         </div>
       </div>
     </div>`;
   }
-  buatTagihan(vals.data[0].ref, vals.data[0].keuangan);
+  buatTagihan(vals.data[0].ref);
   hideLoading();
 }
 
-function buatTagihan(ref, keuangan) {
+function buatTagihan(ref) {
   // console.log(ref);
-  // console.log(keuangan);
   // const uniqueBiaya = [new Set(keuangan.map(item => item.biaya))];
   // console.log(uniqueBiaya)
 
@@ -169,86 +169,94 @@ function buatTagihan(ref, keuangan) {
     if (item) {
       var newRow = tableBody.insertRow();
       newRow.setAttribute('class', item.penerimaan.toLowerCase())
-      
+
       var newKategori = newRow.insertCell(0);
       newKategori.setAttribute('class', 'text-bold');
       newKategori.setAttribute('colspan', '2');
-      
+
       var newCheckBox = document.createElement('input');
       newCheckBox.setAttribute('type', 'checkbox');
       newCheckBox.setAttribute('class', 'hilang');
-      newCheckBox.setAttribute('onclick', `setValueNol('` + item.penerimaan.toLowerCase() + `')`);
+      var jmlPenerimaan = item.listpenerimaan.length + 1;
+      var sumPenerimaan = item.listpenerimaan.reduce((sum, item) => sum + item.nilai, 0);
+      newCheckBox.setAttribute('onclick', `setValueNol('` + item.penerimaan.toLowerCase() + `',` + jmlPenerimaan + `,` + item.nilai + `,` + sumPenerimaan + `)`);
       newCheckBox.setAttribute('id', item.penerimaan.toLowerCase());
       newCheckBox.checked = 'checked';
-      
+
       newKategori.appendChild(newCheckBox);
       newKategori.appendChild(document.createTextNode(' ' + toTitleCase(item.penerimaan)));
-      
+
       var newNilai = newRow.insertCell(1);
       newNilai.setAttribute('class', 'text-end');
       newNilai.textContent = item.nilai.toLocaleString('de-DE');
-      
+
       var newMasuk = newRow.insertCell(2);
-      newMasuk.setAttribute('class', 'text-end');
-      newMasuk.textContent = 0;
-      
+      newMasuk.setAttribute('class', 'text-end text-italic');
+      newMasuk.textContent = sumPenerimaan.toLocaleString('de-DE');;
+
       var newBalance = newRow.insertCell(3);
-      newBalance.setAttribute('class', 'text-end');
-      newBalance.textContent = (item.nilai - 0).toLocaleString('de-DE');
+      newBalance.setAttribute('class', 'text-end sum');
+      newBalance.textContent = (item.nilai - sumPenerimaan).toLocaleString('de-DE');
 
-      let hitung = 0;
-      Object.entries(keuangan).forEach(([key, val]) => {
-        
-        if (val.biaya == item.penerimaan) {
-          hitung += 1;
-          var newRowSub = tableBody.insertRow();
-          newRowSub.setAttribute('class', 'sub-' + item.penerimaan.toLowerCase())
-          
-          var newTab = newRowSub.insertCell(0);
-          newTab.setAttribute('class', 'text-end')
-          newTab.setAttribute('style', 'width: 5%;')
-          newTab.textContent = hitung + '.';
-          
-          var newDate = newRowSub.insertCell(1);
-          newDate.setAttribute('style', 'width: 65%')
-          newDate.textContent = moment(val.date).format('DD-MM-YYYY');
+      var hitung = 0;
+      Object.entries(item.listpenerimaan).forEach(([key, val]) => {
+        hitung += 1;
+        var newRowSub = tableBody.insertRow();
+        newRowSub.setAttribute('class', item.penerimaan.toLowerCase())
 
-          var nilaiNull = newRowSub.insertCell(2);
-          nilaiNull.textContent = '';
+        var newTab = newRowSub.insertCell(0);
+        newTab.setAttribute('class', 'text-end text-italic')
+        newTab.setAttribute('style', 'width: 5%;')
+        // newTab.textContent = hitung + '.';
 
-          var masuk = newRowSub.insertCell(3);
-          masuk.setAttribute('class', 'text-end')
-          masuk.textContent = (val.nilai).toLocaleString('de-DE');
+        var newDate = newRowSub.insertCell(1);
+        newDate.setAttribute('class', 'text-italic')
+        newDate.setAttribute('style', 'width: 65%')
+        newDate.textContent = moment(val.date).format('DD-MM-YYYY');
 
-          var sisa = newRowSub.insertCell(4);
-          sisa.textContent = '';
+        var nilaiNull = newRowSub.insertCell(2);
+        nilaiNull.textContent = '';
 
-        }
+        var masuk = newRowSub.insertCell(3);
+        masuk.setAttribute('class', 'text-end text-italic')
+        masuk.textContent = (val.nilai).toLocaleString('de-DE');
+
+        var sisa = newRowSub.insertCell(4);
+        sisa.textContent = '';
       });
-      // for (var i = 0; i < 4; i++) {
-      //   var newCell = newRow.insertCell();
-      //   newCell.innerHTML = 'Kolom ' + (i + 1);
-      // }
     }
   });
-
+  sumTable();
 }
 
-function setValueNol(att) {
-  var setTr = document.getElementById('tableKeuangan').getElementsByTagName('tbody')[0].getElementsByClassName(att)[0];
-  var setTrSub = document.getElementById('tableKeuangan').getElementsByTagName('tbody')[0].getElementsByClassName('sub-' + att)[0];
+function setValueNol(att, int, nilai, masuk) {
+  var setTr = document.getElementById('tableKeuangan').getElementsByTagName('tbody')[0];
   var setCekBok = document.getElementById(att);
-  if (setCekBok.checked == false) {
-    setTr.setAttribute('id', 'hilang');
-    setTrSub.setAttribute('id', 'hilang');
-    // setCekBok.checked = false;
+  switch (setCekBok.checked) {
+    case true:
+      for (let i = 0; i < int; i++) {
+        if (int == 1) {
+          setTr.getElementsByClassName(att)[i].removeAttribute('id', 'hilang');
+        }
+        if (i == 0) {
+          setTr.getElementsByClassName(att)[i].getElementsByTagName('td')[1].innerHTML = nilai.toLocaleString('de-DE');
+          setTr.getElementsByClassName(att)[i].getElementsByTagName('td')[3].innerHTML = (nilai - masuk).toLocaleString('de-DE');
+        }
+      }
+      break;
+    case false:
+      for (let i = 0; i < int; i++) {
+        if (int == 1) {
+          setTr.getElementsByClassName(att)[i].setAttribute('id', 'hilang');
+        }
+        if (i == 0) {
+          setTr.getElementsByClassName(att)[i].getElementsByTagName('td')[1].innerHTML = 0;
+          setTr.getElementsByClassName(att)[i].getElementsByTagName('td')[3].innerHTML = (0 - masuk).toLocaleString('de-DE');
+        }
+      }
+      break;
   }
-  if (setCekBok.checked == true) {
-    console.log('true ' + att)
-    setTr.removeAttribute('id', 'hilang');
-    setTrSub.removeAttribute('id', 'hilang');
-    // setCekBok.checked = true;
-  }
+  sumTable();
 }
 
 function toTitleCase(str) {
@@ -263,33 +271,26 @@ function printInvoice() {
 }
 
 function sumTable() {
-  let table = document.getElementById("tableKeuangan");
-  let rows = table.getElementsByTagName("tr");
-  let totalN = 0;
-  let totalM = 0;
-  let totalSisa = 0;
+  // Ambil semua elemen yang berisi nilai "SELISIH"
+  const selisihElements = document.querySelectorAll('#tableKeuangan tbody tr td.sum');
 
-  for (let i = 1; i < rows.length - 1; i++) { // Skip header and footer rows
-      let cells = rows[i].getElementsByTagName("td");
-      if (cells.length > 0) {
-          let nilaiN = parseFloat(cells[2].innerText) || 0;
-          let nilaiM = parseFloat(cells[3].innerText) || 0;
-          let nilaiSisa = parseFloat(cells[4].innerText) || 0;
+  // Inisialisasi variabel untuk menyimpan total selisih
+  let totalSelisih = 0;
 
-          totalN += nilaiN;
-          totalM += nilaiM;
-          totalSisa += nilaiSisa;
-      }
-  }
+  // Iterasi melalui elemen-elemen tersebut dan tambahkan nilai-nilainya
+  selisihElements.forEach(element => {
+    // Ambil nilai teks dari elemen dan konversi ke angka
+    const nilaiSelisih = parseInt(element.textContent.replace(/\./g, ''));
 
-  // Update the sum(sisa) cell
-  let sumSisaCell = rows[rows.length - 1].getElementsByTagName("td")[4];
-  sumSisaCell.innerText = totalSisa;
-  
-  console.log("Total N: " + totalN);
-  console.log("Total M: " + totalM);
-  console.log("Sum Sisa: " + totalSisa);
+    // Tambahkan nilai ke total selisih
+    totalSelisih += nilaiSelisih;
+  });
+
+  // Tampilkan hasil penjumlahan
+  // console.log('Total Selisih:', totalSelisih);
+  var total = document.getElementById('jumlah');
+  total.innerHTML = totalSelisih.toLocaleString('de-DE');
+  var trbilang = document.getElementById('terbilang');
+  trbilang.innerHTML = angkaTerbilang(totalSelisih);
+
 }
-
-// Panggil fungsi ini setelah halaman selesai dimuat
-window.onload = sumTable;
