@@ -145,10 +145,20 @@ function outputer(vals) {
         </table>
         <div class="invoice-body-bottom">
           <div class="invoice-body-info-item border-bottom">
-            <div class="info-item-td text-end text-bold">Jumlah :</div>
-            <div class="info-item-td text-end" id="jumlah"></div>
+            <div class="info-item-td text-end text-italic">Nilai :</div>
+            <div class="info-item-td text-end" id="nilai"></div>
           </div>
-          <div class="text-end text-italic" id="terbilang"></div>
+          <div class="invoice-body-info-item border-bottom">
+            <div class="info-item-td text-end text-italic">Masuk :</div>
+            <div class="info-item-td text-end text-italic" id="masuk"></div>
+          </div>
+          <div class="invoice-body-info-item border-bottom">
+            <div class="info-item-td text-end text-bold">Selisih :</div>
+            <div class="info-item-td text-end text-bold" id="selisih"></div>
+          </div>
+          <div class="invoice-body-info-item-terbilang border-bottom">
+            <div class="info-item-td text-end text-italic" id="terbilang"></div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -187,15 +197,15 @@ function buatTagihan(ref) {
       newKategori.appendChild(document.createTextNode(' ' + toTitleCase(item.penerimaan)));
 
       var newNilai = newRow.insertCell(1);
-      newNilai.setAttribute('class', 'text-end');
+      newNilai.setAttribute('class', 'text-end nilai');
       newNilai.textContent = item.nilai.toLocaleString('de-DE');
 
       var newMasuk = newRow.insertCell(2);
-      newMasuk.setAttribute('class', 'text-end text-italic');
+      newMasuk.setAttribute('class', 'text-end text-italic masuk');
       newMasuk.textContent = sumPenerimaan.toLocaleString('de-DE');;
 
       var newBalance = newRow.insertCell(3);
-      newBalance.setAttribute('class', 'text-end sum');
+      newBalance.setAttribute('class', 'text-end selisih');
       newBalance.textContent = (item.nilai - sumPenerimaan).toLocaleString('de-DE');
 
       var hitung = 0;
@@ -272,11 +282,23 @@ function printInvoice() {
 
 function sumTable() {
   // Ambil semua elemen yang berisi nilai "SELISIH"
-  const selisihElements = document.querySelectorAll('#tableKeuangan tbody tr td.sum');
+  const nilaiElements = document.querySelectorAll('#tableKeuangan tbody tr td.nilai');
+  const masukElements = document.querySelectorAll('#tableKeuangan tbody tr td.masuk');
+  const selisihElements = document.querySelectorAll('#tableKeuangan tbody tr td.selisih');
 
   // Inisialisasi variabel untuk menyimpan total selisih
+  let totalNilai = 0;
+  let totalMasuk = 0;
   let totalSelisih = 0;
 
+  nilaiElements.forEach(element => {
+    const nilaiNilai = parseInt(element.textContent.replace(/\./g, ''));
+    totalNilai += nilaiNilai;
+  });
+  masukElements.forEach(element => {
+    const nilaiMasuk = parseInt(element.textContent.replace(/\./g, ''));
+    totalMasuk += nilaiMasuk;
+  });
   // Iterasi melalui elemen-elemen tersebut dan tambahkan nilai-nilainya
   selisihElements.forEach(element => {
     // Ambil nilai teks dari elemen dan konversi ke angka
@@ -288,9 +310,21 @@ function sumTable() {
 
   // Tampilkan hasil penjumlahan
   // console.log('Total Selisih:', totalSelisih);
-  var total = document.getElementById('jumlah');
-  total.innerHTML = totalSelisih.toLocaleString('de-DE');
+  var totalN = document.getElementById('nilai');
+  totalN.innerHTML = totalNilai.toLocaleString('de-DE');
+
+  var totalM = document.getElementById('masuk');
+  totalM.innerHTML = totalMasuk.toLocaleString('de-DE');
+
+  var totalS = document.getElementById('selisih');
+  totalS.innerHTML = totalSelisih.toLocaleString('de-DE');
+
   var trbilang = document.getElementById('terbilang');
   trbilang.innerHTML = angkaTerbilang(totalSelisih);
 
 }
+const textArea = document.querySelector('#catatan');
+const addCatatan = document.querySelector('#addCatatan');
+textArea.addEventListener('keyup', function (event) {
+  addCatatan.innerHTML = textArea.value;
+});
