@@ -78,7 +78,7 @@ function outputer(vals) {
   const bap = vals[40];
   const perpanjangan = vals[39];
 
-  if (vals[1] > 1000691172) {
+  if (vals[1] > 1000704204) {
     textOutput.innerHTML =
       `<div class="content">
         <div class="container text-center">
