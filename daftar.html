@@ -188,10 +188,9 @@
     function dapatkanURI() {
       const elementGender = document.getElementById("gender").value;
       const elementNama = document.getElementById("namalengkap").value;
-      var uri = elementGender === "L" ? "Bpk. " + elementNama : elementGender === "P" ? "Ibu " + elementNama : "";
       const pendaftar = document.getElementById("getNamaPendaftar");
+      const uri = elementGender === "L" ? "Bpk. " + elementNama : elementGender === "P" ? "Ibu " + elementNama : "";
       pendaftar.setAttribute("value", encodeURI(uri));
-      console.log(pendaftar.value);
     }
 
     (function () {
@@ -201,6 +200,7 @@
         const form = document.getElementById("pendaftaran");
         form.addEventListener("submit", function (e) {
           if (!form.checkValidity()) {
+            //document.getElementById("invalidCheck").checked = false;
             event.preventDefault();
             event.stopPropagation();
           } else {
@@ -214,11 +214,13 @@
               alert("Terimakasih, Pendaftaran telah kami terima");
               location.replace("index.html?n=" + document.getElementById("getNamaPendaftar").value)
             });
+            document.getElementById("invalidCheck").checked = false;
           }
           form.classList.add("was-validated");
         }, false);
       });
     })();
+
   </script>
 </body>
 

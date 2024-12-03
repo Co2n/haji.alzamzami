@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Organizational Chart</title>
+   <style>
+     body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.node-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.node {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    margin: 20px;
+}
+
+.node-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.node-content {
+    padding: 10px;
+}
+
+.input-port, .output-port {
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px 0;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-port:hover, .output-port:hover {
+    background-color: #d6d8db;
+}
+   </style>
+</head>
+
+<body>
+   <div class="node-editor">
+       <div class="node">
+           <div class="node-header">Join Node</div>
+           <div class="node-content">
+               <div class="input-port">Input 1</div>
+               <div class="input-port">Input 2</div>
+               <div class="output-port">Output</div>
+           </div>
+       </div>
+   </div>
+</body>
+</html>

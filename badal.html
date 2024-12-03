@@ -15,7 +15,7 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="badalhaji.css" />
+  <link rel="stylesheet" href="badal.css" />
 </head>
 
 <body>
@@ -147,7 +147,6 @@
               </button>
             </div>
           </form>
-          <input type="hidden" id="getNamaPendaftar">
         </div>
       </div>
     </div>
@@ -175,7 +174,7 @@
       const elementGender = document.getElementById("gender").value;
       const elementNama = document.getElementById("namalengkap").value;
       var uri = elementGender === "L" ? "Bpk. " + elementNama : elementGender === "P" ? "Ibu " + elementNama : "";
-      const pendaftar = document.getElementById("getNamaPendaftar");
+      const pendaftar = document.getElementById("namalengkap");
       pendaftar.setAttribute("value", encodeURI(uri));
       console.log(pendaftar.value);
     }
@@ -187,6 +186,7 @@
         const form = document.getElementById("pendaftaran");
         form.addEventListener("submit", function (e) {
           if (!form.checkValidity()) {
+            
             event.preventDefault();
             event.stopPropagation();
           } else {
@@ -198,13 +198,14 @@
               body: data,
             }).then(() => {
               alert("Terimakasih, Pendaftaran telah kami terima");
-              location.replace("index.html?n=" + document.getElementById("getNamaPendaftar").value)
+              location.replace("index.html?n=" + document.getElementById("namalengkap").value)
             });
           }
           form.classList.add("was-validated");
         }, false);
       });
     })();
+
   </script>
 </body>
 
