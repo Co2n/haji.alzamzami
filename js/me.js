@@ -106,7 +106,7 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
       { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
       { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
-      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //GAMIS
+      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //UK-GAMIS
       { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
       { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
       { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
@@ -219,7 +219,7 @@ const table = new DataTable('#tabelJemaah', {
       { data: "col-8" }, //89
       { data: "col-9" }, //90
       { data: "col-10" }, //91
-      { data: "gamis" }, //92
+      { data: "uk-gamis" }, //92
       { data: "pundak" }, //93
       { data: "p-badan" }, //94
       { data: "l-dada" }, //95
