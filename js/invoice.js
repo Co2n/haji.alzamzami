@@ -67,27 +67,27 @@ function hideLoading() {
 function outputer(vals) {
   // console.log(vals.data[0]);
   const tanggal = moment().format('DD-MM-YYYY');
-  const musim = vals.data[0].hijri;
-  const porsi = vals.data[0].porsi;
-  const invoice = 'A' + vals.data[0].absen + porsi.toString().replace('100', 'Z');
-  const namalengkap = vals.data[0].sapa + ' ' + vals.data[0].nama_lengkap;
-  const alamat = vals.data[0].alamat;
-  const desa_kec = vals.data[0].desa_kec;
-
+  
   if (!vals.data[0]) {
     textOutput.innerHTML =
-      `<div class="invoice-foot text-center">
-      <p>Kabener atuh.. aing mah.. pusing bapa mah..</p>
+    `<div class="invoice-foot text-center">
+    <p>Kabener atuh.. aing mah.. pusing bapa mah..</p>
     </div>`;
     // } else if (!vals.data[0].keuangan[0]){
-    //   textOutput.innerHTML =
-    //   `<div class="invoice-btns text-center">
-    //     <p>Belum ada riwayat keuangan!<br>
-    //     <input type="checkbox" id="tagihan">
-    //     <label style="font-size: 0.9em; padding-left: 5px;">Buat tagihan!</label></p>
-    //   </div>`;
-    // }
-  } else {
+      //   textOutput.innerHTML =
+      //   `<div class="invoice-btns text-center">
+      //     <p>Belum ada riwayat keuangan!<br>
+      //     <input type="checkbox" id="tagihan">
+      //     <label style="font-size: 0.9em; padding-left: 5px;">Buat tagihan!</label></p>
+      //   </div>`;
+      // }
+    } else {
+    const musim = vals.data[0].hijri;
+    const porsi = vals.data[0].porsi;
+    const invoice = 'A' + vals.data[0].absen + porsi.toString().replace('100', 'Z');
+    const namalengkap = vals.data[0].sapa + ' ' + vals.data[0].nama_lengkap;
+    const alamat = vals.data[0].alamat;
+    const desa_kec = vals.data[0].desa_kec;
     textOutput.innerHTML =
       `<div class="invoice-head-middle">
       <div class="invoice-head-middle-left text-start">
@@ -163,7 +163,9 @@ function outputer(vals) {
       </div>
     </div>`;
   }
-  buatTagihan(vals.data[0].ref);
+  if (vals.data[0]) {
+    buatTagihan(vals.data[0].ref);
+  }
   hideLoading();
 }
 
@@ -178,7 +180,7 @@ function buatTagihan(ref) {
   ref.forEach(function (item) {
     if (item) {
       var newRow = tableBody.insertRow();
-      newRow.setAttribute('class', item.penerimaan.toLowerCase())
+      newRow.setAttribute('class', item.penerimaan.toLowerCase() + ' Sub')
 
       var newKategori = newRow.insertCell(0);
       newKategori.setAttribute('class', 'text-bold');
@@ -222,7 +224,7 @@ function buatTagihan(ref) {
         var newDate = newRowSub.insertCell(1);
         newDate.setAttribute('class', 'text-italic')
         newDate.setAttribute('style', 'width: 65%')
-        newDate.textContent = moment(val.date).format('DD-MM-YYYY');
+        newDate.textContent = moment(val.date).format('DD-MM-YYYY') + ' ' + val.keterangan;
 
         var nilaiNull = newRowSub.insertCell(2);
         nilaiNull.textContent = '';

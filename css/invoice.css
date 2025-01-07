@@ -99,7 +99,14 @@ body{
     padding: var(--padding-top) var(--padding-bottom);
 }
 .invoice-body table tr{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.5);
+}
+.invoice-body table .Sub{
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    /* border-bottom: 1px dashed rgba(0, 0, 0, 0.5); */
+}
+.invoice-body table .Sub td {
+    font-weight: 700;
 }
 .invoice-body table thead{
     background-color: rgba(0, 0, 0, 0.02);
