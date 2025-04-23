@@ -155,11 +155,11 @@ const table = new DataTable('#tabelJemaah', {
       { data: "foto", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //25
       { data: "hp" }, //26
       { data: "hp_kel" }, //27
-      { data: "ktp", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //28
+      { data: "ktp", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s600';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //28
       { data: "nik" }, //29
       { data: "pendidikan" }, //30
       { data: "pekerjaan" }, //31
-      { data: "paspor", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //32
+      { data: "paspor", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s900';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //32
       { data: "no_paspor" }, //33
       { data: "nm_paspor" }, //34
       { data: "imigrasi" }, //35
