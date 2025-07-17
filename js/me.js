@@ -14,15 +14,15 @@ DataTable.feature.register('judulDokumen', function (settings, opts) {
 
 const table = new DataTable('#tabelJemaah', {
    columnDefs: [
-      { targets: 0, className: 'dt-body-right', searchable: false, orderable: false, }, //NO
-      { targets: 1, className: 'dt-body-right', render: DataTable.render.number('', ',') }, //PORSI
+      { targets: 0, className: 'dt-body-right' , searchable: false, orderable: false, }, //NO
+      { targets: 1, className: 'dt-body-right', render: DataTable.render.number('', ',' ) }, //PORSI
       { visible: false, targets: 2 }, //MUSIM
       { visible: false, targets: 3 }, //STATUS
       { visible: false, targets: 4 }, //SEBAGAI
       { targets: 5, className: 'dt-body-center absen' }, //ABSEN
       { visible: false, targets: 6 }, //PELUNASAN
-      { visible: false, targets: 7, render: DataTable.render.number('', ',') }, //HIJRI
-      { visible: false, targets: 8, render: DataTable.render.number('', ',') }, //SPPH
+      { visible: false, targets: 7, render: DataTable.render.number('', ',' ) }, //HIJRI
+      { visible: false, targets: 8, render: DataTable.render.number('', ',' ) }, //SPPH
       { targets: 9 }, //SAPA
       { visible: false, targets: 10 }, //NAMA
       { visible: false, targets: 11 }, //AYAH
@@ -30,7 +30,7 @@ const table = new DataTable('#tabelJemaah', {
       { targets: 13 }, //NAMA_LENGKAP
       { visible: false, targets: 14 }, //TMP_LHR
       { visible: false, targets: 15, render: DataTable.render.date('DD MMM YYYY') }, //TGL_LHR
-      { visible: false, targets: 16, className: 'dt-body-center usia', createdCell: function (td, cellData, rowData, row, col) { if (cellData >= 85) { $(td).addClass('lansia'); } } }, //USIA
+      { visible: false, targets: 16, className: 'dt-body-center usia', createdCell: function(td, cellData, rowData, row, col) { if(cellData >= 85){ $(td).addClass('lansia'); }  } }, //USIA
       { visible: false, targets: 17 }, //ALAMAT
       { visible: false, targets: 18 }, //DESA
       { visible: false, targets: 19 }, //KECAMATAN
@@ -57,11 +57,11 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 40 }, //STT_KEGIATAN
       { visible: false, targets: 41 }, //BAP
       { visible: false, targets: 42 }, //BERKAS
-      { visible: false, targets: 43, className: 'bimb', render: DataTable.render.number('.', ',', null, 'Rp. ') }, //BIMBINGAN
-      { visible: false, targets: 44, className: 'perl', render: DataTable.render.number('.', ',', null, 'Rp. ') }, //PERLENGKAPAN
-      { visible: false, targets: 45, className: 'kolo', render: DataTable.render.number('.', ',', null, 'Rp. ') }, //KOLOSAL
-      { visible: false, targets: 46, className: 'pasp', render: DataTable.render.number('.', ',', null, 'Rp. ') }, //PASPORAN
-      { visible: false, targets: 47, className: 'biov', render: DataTable.render.number('.', ',', null, 'Rp. ') }, //BIO VISA
+      { visible: false, targets: 43, className: 'bimb', render: DataTable.render.number('.', ',', null, 'Rp. ' ) }, //BIMBINGAN
+      { visible: false, targets: 44, className: 'perl', render: DataTable.render.number('.', ',', null, 'Rp. ' ) }, //PERLENGKAPAN
+      { visible: false, targets: 45, className: 'kolo', render: DataTable.render.number('.', ',', null, 'Rp. ' ) }, //KOLOSAL
+      { visible: false, targets: 46, className: 'pasp', render: DataTable.render.number('.', ',', null, 'Rp. ' ) }, //PASPORAN
+      { visible: false, targets: 47, className: 'biov', render: DataTable.render.number('.', ',', null, 'Rp. ' ) }, //BIO VISA
       { visible: false, targets: 48, className: 'dt-body-center' }, //BIMB?
       { visible: false, targets: 49, className: 'dt-body-center' }, //PERL?
       { visible: false, targets: 50, className: 'dt-body-center' }, //KOLO?
@@ -86,41 +86,43 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 69, className: 'dt-body-center' }, //TAS GENDONG
       { visible: false, targets: 70, className: 'dt-body-center' }, //KAOS KAKI
       { visible: false, targets: 71, className: 'dt-body-center' }, //TAARUF
-      { visible: false, targets: 72, className: 'dt-body-center' }, //MANASIK AWAL 1
-      { visible: false, targets: 73, className: 'dt-body-center' }, //MANASIK AWAL 2
-      { visible: false, targets: 74, className: 'dt-body-center' }, //MANASIK AWAL 3
-      { visible: false, targets: 75, className: 'dt-body-center' }, //MANASIK AWAL 4
-      { visible: false, targets: 76, className: 'dt-body-center' }, //MANASIK AWAL 5
-      { visible: false, targets: 77, className: 'dt-body-center' }, //MANASIK AWAL 6
-      { visible: false, targets: 78, className: 'dt-body-center' }, //PERSIAPAN KOLOSAL
-      { visible: false, targets: 79, className: 'dt-body-center' }, //MANASIK KOLOSAL
-      { visible: false, targets: 80, className: 'dt-body-center' }, //EVALUASI KOLOSAL
-      { visible: false, targets: 81, className: 'dt-body-center' }, //PERSIAPAN KEBERANGKATAN
-      { visible: false, targets: 82, className: 'dt-body-center' }, //PASKA HAJI
-      { visible: false, targets: 83, className: 'dt-body-center' }, //MANASIK PEMANTAPAN
-      { visible: false, targets: 84, className: 'dt-body-center' }, //MANASIK PRIVAT
-      { visible: false, targets: 85, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-1
-      { visible: false, targets: 86, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-2
-      { visible: false, targets: 87, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-3
-      { visible: false, targets: 88, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-4
-      { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-5
-      { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-7
-      { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
-      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
-      { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
-      { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //UK-GAMIS
-      { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
-      { visible: false, targets: 96, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
-      { visible: false, targets: 97, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
-      { visible: false, targets: 98, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGANG
-      { visible: false, targets: 99, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
-      { visible: false, targets: 100, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
-      { visible: false, targets: 101, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
-      { visible: false, targets: 102, searchable: false, orderable: false, className: 'dt-body-center' }, //KERAH
-      { visible: false, targets: 103, className: 'dt-body-center' }, //PARAF
-      { visible: false, targets: 104, className: 'dt-body-center' }, //TANDA TANGAN
-      { visible: false, targets: 105, className: 'dt-body-center' }, //KETERANGAN
-      { visible: false, targets: 106, className: 'dt-body-center' }, //KET
+      { visible: false, targets: 72, className: 'dt-body-center' }, //TAARUF 2
+      { visible: false, targets: 73, className: 'dt-body-center' }, //MANASIK AWAL 1
+      { visible: false, targets: 74, className: 'dt-body-center' }, //MANASIK AWAL 2
+      { visible: false, targets: 75, className: 'dt-body-center' }, //MANASIK AWAL 3
+      { visible: false, targets: 76, className: 'dt-body-center' }, //MANASIK AWAL 4
+      { visible: false, targets: 77, className: 'dt-body-center' }, //MANASIK AWAL 5
+      { visible: false, targets: 78, className: 'dt-body-center' }, //MANASIK AWAL 6
+      { visible: false, targets: 79, className: 'dt-body-center' }, //MANASIK PEMANTAPAN
+      { visible: false, targets: 80, className: 'dt-body-center' }, //PERSIAPAN KOLOSAL
+      { visible: false, targets: 81, className: 'dt-body-center' }, //MANASIK KOLOSAL
+      { visible: false, targets: 82, className: 'dt-body-center' }, //EVALUASI KOLOSAL
+      { visible: false, targets: 83, className: 'dt-body-center' }, //MANASIK PRIVAT
+      { visible: false, targets: 84, className: 'dt-body-center' }, //PELATIHAN KARU KARU
+      { visible: false, targets: 85, className: 'dt-body-center' }, //PERSIAPAN KEBERANGKATAN
+      { visible: false, targets: 86, className: 'dt-body-center' }, //PASKA HAJI
+      { visible: false, targets: 87, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-1
+      { visible: false, targets: 88, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-2
+      { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-3
+      { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-4
+      { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-5
+      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-7
+      { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
+      { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
+      { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
+      { visible: false, targets: 96, searchable: false, orderable: false, className: 'dt-body-center' }, //UK-GAMIS
+      { visible: false, targets: 97, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
+      { visible: false, targets: 98, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
+      { visible: false, targets: 99, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
+      { visible: false, targets: 100, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGANG
+      { visible: false, targets: 101, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
+      { visible: false, targets: 102, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
+      { visible: false, targets: 103, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
+      { visible: false, targets: 104, className: 'dt-body-center' }, //KERAH
+      { visible: false, targets: 105, className: 'dt-body-center' }, //PARAF
+      { visible: false, targets: 106, className: 'dt-body-center' }, //TANDA TANGAN
+      { visible: false, targets: 107, className: 'dt-body-center' }, //KETERANGAN
+      { visible: false, targets: 108, className: 'dt-body-center' }, //KET
    ],
    order: [[5, 'asc']],
    ajax: {
@@ -154,15 +156,15 @@ const table = new DataTable('#tabelJemaah', {
       { data: "tgl daftar" }, //22
       { data: "reff" }, //23
       { data: "desa_kec" }, //24
-      { data: "foto", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //25
+      { data: "foto", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s100'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //25
       { data: "hp" }, //26
       { data: "hp_kel" }, //27
-      { data: "ktp", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s600'; let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s200'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //28
+      { data: "ktp", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s600';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s200'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //28
       { data: "nik" }, //29
       { data: "pendidikan" }, //30
       { data: "pekerjaan" }, //31
-      { data: "paspor", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s900'; let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //32
-      { data: "endors", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s900'; let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s600'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //33
+      { data: "paspor", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s900';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s400'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //32
+      { data: "endors", render: function (data, type) { if (data !== '') { let linkori = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s900';  let linkthumnail = 'https://drive.google.com/thumbnail?id=' + data + '&sz=s600'; return '<a href="' + linkori + '" target="_blank">' + '<img src="' + linkthumnail + '">' + '</a>' } return data } }, //33
       { data: "no_paspor" }, //34
       { data: "nm_paspor" }, //35
       { data: "imigrasi" }, //36
@@ -201,41 +203,43 @@ const table = new DataTable('#tabelJemaah', {
       { data: "tas gendong" }, //69
       { data: "kaos kaki" }, //70
       { data: "taaruf" }, //71
-      { data: "manasik awal 1" }, //72
-      { data: "manasik awal 2" }, //73
-      { data: "manasik awal 3" }, //74
-      { data: "manasik awal 4" }, //75
-      { data: "manasik awal 5" }, //76
-      { data: "manasik awal 6" }, //77
-      { data: "persiapan kolosal" }, //78
-      { data: "manasik kolosal" }, //79
-      { data: "evaluasi kolosal" }, //80
-      { data: "persiapan keberangkatan" }, //81
-      { data: "paska haji" }, //82
-      { data: "manasik pemantapan" }, //83
-      { data: "manasik privat" }, //84
-      { data: "col-1" }, //85
-      { data: "col-2" }, //86
-      { data: "col-3" }, //87
-      { data: "col-4" }, //88
-      { data: "col-5" }, //89
-      { data: "col-7" }, //90
-      { data: "col-8" }, //91
-      { data: "col-9" }, //92
-      { data: "col-10" }, //93
-      { data: "uk-gamis" }, //94
-      { data: "pundak" }, //95
-      { data: "p-badan" }, //96
-      { data: "l-dada" }, //97
-      { data: "l-pinggang" }, //98
-      { data: "l-pinggul" }, //99
-      { data: "p-tangan" }, //100
-      { data: "l-tangan" }, //101
-      { data: "kerah" }, //102
-      { data: "paraf" }, //103
-      { data: "tanda tangan" }, //104
-      { data: "keterangan" }, //105
-      { data: "ket" }, //106
+      { data: "taaruf 2" }, //72
+      { data: "manasik awal 1" }, //73
+      { data: "manasik awal 2" }, //74
+      { data: "manasik awal 3" }, //75
+      { data: "manasik awal 4" }, //76
+      { data: "manasik awal 5" }, //77
+      { data: "manasik awal 6" }, //78
+      { data: "manasik pemantapan" }, //79
+      { data: "persiapan kolosal" }, //80
+      { data: "manasik kolosal" }, //81
+      { data: "evaluasi kolosal" }, //82
+      { data: "manasik privat" }, //83
+      { data: "pelatihan karu karu" }, //84
+      { data: "persiapan keberangkatan" }, //85
+      { data: "paska haji" }, //86
+      { data: "col-1" }, //87
+      { data: "col-2" }, //88
+      { data: "col-3" }, //89
+      { data: "col-4" }, //90
+      { data: "col-5" }, //91
+      { data: "col-7" }, //92
+      { data: "col-8" }, //93
+      { data: "col-9" }, //94
+      { data: "col-10" }, //95
+      { data: "uk-gamis" }, //96
+      { data: "pundak" }, //97
+      { data: "p-badan" }, //98
+      { data: "l-dada" }, //99
+      { data: "l-pinggang" }, //100
+      { data: "l-pinggul" }, //101
+      { data: "p-tangan" }, //102
+      { data: "l-tangan" }, //103
+      { data: "kerah" }, //104
+      { data: "paraf" }, //105
+      { data: "tanda tangan" }, //106
+      { data: "keterangan" }, //107
+      { data: "ket" }, //108
    ],
    processing: true,
    colReorder: true,
