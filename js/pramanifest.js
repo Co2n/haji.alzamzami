@@ -99,6 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let returned = false;
         jemaahItems.forEach(item => {
             const jemaahId = item.dataset.id;
+
+            // Jangan kembalikan jemaah unknown ke daftar
+            if (jemaahId === 'jemaah-unknown') return;
+
             const jemaah = jemaahData.find(j => j.id === jemaahId);
             // Pastikan tidak ada duplikat dan jemaah ada
             if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
@@ -164,6 +168,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- SORTABLEJS INITIALIZATION ---
 
+    // Inisialisasi untuk Jemaah Unknown (clone only)
+    const jemaahUnknownContainer = document.getElementById('jemaahUnknownContainer');
+    if (jemaahUnknownContainer) {
+        new Sortable(jemaahUnknownContainer, {
+            group: {
+                name: 'jemaah-group',
+                pull: 'clone', // Clone the item, don't move it
+                put: false // Don't allow items to be dropped here
+            },
+            animation: 150,
+            sort: false, // Disable sorting within this container
+            ghostClass: 'sortable-ghost',
+            forceFallback: true,
+        });
+    }
+
     // Inisialisasi untuk daftar jemaah utama
     const jemaahList = document.getElementById('jemaahList');
     if (jemaahList) {
@@ -177,48 +197,40 @@ document.addEventListener('DOMContentLoaded', function () {
             ghostClass: 'sortable-ghost',
             forceFallback: true,
             sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
-            onEnd: function (evt) {
-                // Update state saat item ditambahkan atau dihapus dari daftar utama
-                if (evt.to === jemaahList && evt.from !== jemaahList) { // Item ditambahkan
-                    const jemaahId = evt.item.dataset.id;
-                    const jemaah = jemaahData.find(j => j.id === jemaahId);
-                    if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
-                        availableJemaah.push(jemaah);
-                    }
-                    cariJemaahInput.dispatchEvent(new Event('input'));
+            onAdd: function (evt) { // Item dropped INTO this list
+                const jemaahId = evt.item.dataset.id;
+                if (jemaahId === 'jemaah-unknown') {
+                    evt.item.remove(); // It's a clone, just remove it
+                    return;
                 }
-                if (evt.from === jemaahList && evt.to !== jemaahList) { // Item dihapus
-                    availableJemaah = availableJemaah.filter(j => j.id !== evt.item.dataset.id);
+                // It's a real jemaah, add back to state
+                const jemaah = jemaahData.find(j => j.id === jemaahId);
+                if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
+                    availableJemaah.push(jemaah);
                 }
-
-                // Perbarui penomoran di kedua kontainer
-                updateJemaahItemNumbering(evt.to);
-                if (evt.from !== evt.to) {
-                    updateJemaahItemNumbering(evt.from);
-                }
+                // Re-render the list to respect search filter
+                cariJemaahInput.dispatchEvent(new Event('input'));
+            },
+            onRemove: function (evt) { // Item dragged OUT OF this list
+                // Remove from state
+                availableJemaah = availableJemaah.filter(j => j.id !== evt.item.dataset.id);
             }
         });
     }
 
     // Fungsi untuk membuat area konten regu menjadi dropzone
     const initJemaahDropzone = (container) => {
-        new Sortable(container, {
-            group: {
-                name: 'jemaah-group',
-                pull: true,
-                put: true
-            },
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            forceFallback: true,
-            onEnd: function (evt) {
-                // Perbarui penomoran di kedua kontainer
-                updateJemaahItemNumbering(evt.to);
-                if (evt.from !== evt.to) {
-                    updateJemaahItemNumbering(evt.from);
-                }
-            }
-        });
+        if (container) {
+            new Sortable(container, {
+                group: { name: 'jemaah-group', pull: true, put: true },
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                forceFallback: true,
+                onAdd: (evt) => updateJemaahItemNumbering(evt.to),
+                onRemove: (evt) => updateJemaahItemNumbering(evt.from),
+                onUpdate: (evt) => updateJemaahItemNumbering(evt.from),
+            });
+        }
     };
 
     // Fungsi untuk menomori ulang kartu regu
