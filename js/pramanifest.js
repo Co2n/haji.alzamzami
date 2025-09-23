@@ -59,6 +59,86 @@ document.addEventListener('DOMContentLoaded', function () {
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P"
+        },
+        {
+            id: "jemaah-8",
+            nama: "Hadi Wibowo",
+            alamat: "Jl. Imam Bonjol No. 3, Palembang",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "L"
+        },
+        {
+            id: "jemaah-9",
+            nama: "Indah Sari",
+            alamat: "Jl. Ahmad Yani No. 12, Denpasar",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "P"
+        },
+        {
+            id: "jemaah-10",
+            nama: "Joko Susilo",
+            alamat: "Jl. Teuku Umar No. 7, Balikpapan",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "L"
+        },
+        {
+            id: "jemaah-11",
+            nama: "Kartika Dewi",
+            alamat: "Jl. Gajah Mada No. 9, Pontianak",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "P"
+        },
+        {
+            id: "jemaah-12",
+            nama: "Lukman Hakim",
+            alamat: "Jl. Pangeran Antasari No. 2, Banjarmasin",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "L"
+        },
+        {
+            id: "jemaah-13",
+            nama: "Maya Anggraini",
+            alamat: "Jl. Sam Ratulangi No. 11, Manado",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "P"
+        },
+        {
+            id: "jemaah-14",
+            nama: "Nanda Pratama",
+            alamat: "Jl. Wolter Monginsidi No. 5, Jayapura",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "L"
+        },
+        {
+            id: "jemaah-15",
+            nama: "Olivia Putri",
+            alamat: "Jl. Pattimura No. 1, Ambon",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "P"
+        },
+        {
+            id: "jemaah-16",
+            nama: "Putra Wijaya",
+            alamat: "Jl. Sudirman No. 101, Pekanbaru",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "L"
+        },
+        {
+            id: "jemaah-17",
+            nama: "Rina Marlina",
+            alamat: "Jl. Kartini No. 21, Bandar Lampung",
+            foto: "img/foto.jpg",
+            status: "Aktif",
+            gender: "P"
         }
     ];
 
@@ -117,6 +197,59 @@ document.addEventListener('DOMContentLoaded', function () {
             cariJemaahInput.dispatchEvent(new Event('input'));
         }
     };
+
+    // --- COUNTERS ---
+    const updateAllCountsOnPage = () => {
+        // Regu Counts
+        document.querySelectorAll('.regu-card > .card-header').forEach(header => {
+            const card = header.closest('.regu-card');
+            const count = card.querySelectorAll('.jemaah-item').length;
+            const titleSpan = header.querySelector('span');
+            let badge = header.querySelector('.regu-count-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge bg-info text-dark ms-2 regu-count-badge';
+                if (titleSpan) {
+                    titleSpan.insertAdjacentElement('afterend', badge);
+                }
+            }
+            badge.textContent = count;
+        });
+
+        // Rombongan Counts
+        document.querySelectorAll('.rombongan > .card-header').forEach(header => {
+            const card = header.closest('.rombongan');
+            const count = card.querySelectorAll('.jemaah-item').length;
+            const titleSpan = header.querySelector('span');
+            let badge = header.querySelector('.rombongan-count-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge bg-secondary ms-2 rombongan-count-badge';
+                if (titleSpan) {
+                    titleSpan.insertAdjacentElement('afterend', badge);
+                }
+            }
+            badge.textContent = count;
+        });
+
+        // Kloter Counts
+        document.querySelectorAll('.kloter > .card-header').forEach(header => {
+            const card = header.closest('.kloter');
+            const count = card.querySelectorAll('.jemaah-item').length;
+            const titleSpan = header.querySelector('span');
+            let badge = header.querySelector('.kloter-count-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge bg-primary ms-2 kloter-count-badge';
+                if (titleSpan) {
+                    titleSpan.insertAdjacentElement('afterend', badge);
+                }
+            }
+            badge.textContent = count;
+        });
+    };
+    // Use a timeout to let the DOM update after a drag operation
+    const debouncedUpdateAllCounts = () => setTimeout(updateAllCountsOnPage, 50);
 
     // --- JEMAAH ITEM NUMBERING ---
     const updateJemaahItemNumbering = (container) => {
@@ -226,9 +359,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
                 forceFallback: true,
-                onAdd: (evt) => updateJemaahItemNumbering(evt.to),
-                onRemove: (evt) => updateJemaahItemNumbering(evt.from),
-                onUpdate: (evt) => updateJemaahItemNumbering(evt.from),
+                onAdd: (evt) => {
+                    updateJemaahItemNumbering(evt.to);
+                    debouncedUpdateAllCounts();
+                },
+                onRemove: (evt) => {
+                    updateJemaahItemNumbering(evt.from);
+                    debouncedUpdateAllCounts();
+                },
+                onUpdate: (evt) => {
+                    updateJemaahItemNumbering(evt.from);
+                    debouncedUpdateAllCounts();
+                },
             });
         }
     };
@@ -264,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (evt.from !== evt.to) {
                         reorderReguInContainer(evt.from);
                     }
+                    debouncedUpdateAllCounts();
                 }
             });
         }
@@ -304,6 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (evt.from !== evt.to) {
                         reorderRombonganInContainer(evt.from);
                     }
+                    debouncedUpdateAllCounts();
                 }
             });
         }
@@ -370,6 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Inisialisasi Sortable pada kontainer rombongan yang baru dibuat di kloter baru
         const newRombonganContainer = newKloter.querySelector('.rombongan-card-container');
         initSortableRombongan(newRombonganContainer);
+        debouncedUpdateAllCounts();
     });
 
 
@@ -381,11 +526,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hapusKloterBtn) {
             if (kloterCardContainer.children.length > 1) {
                 const kloterCard = hapusKloterBtn.closest('.card.kloter');
-                if (kloterCard) {
+                // Add confirmation dialog before deleting
+                if (kloterCard && confirm('Apakah Anda yakin ingin menghapus kloter ini? Semua rombongan dan regu di dalamnya akan ikut terhapus.')) {
                     // Kembalikan semua jemaah di dalam kloter ini ke daftar utama
                     returnJemaahToAvailableList(kloterCard);
                     kloterCard.remove();
                     reorderKloterCards();
+                    debouncedUpdateAllCounts();
                 }
             } else {
                 alert('Minimal harus ada satu kloter.');
@@ -447,18 +594,21 @@ document.addEventListener('DOMContentLoaded', function () {
             // Inisialisasi Sortable pada kontainer regu yang baru dibuat
             const newReguContainer = newRombonganCard.querySelector('.regu-container');
             initSortableRegu(newReguContainer);
+            debouncedUpdateAllCounts();
         }
 
         // Handle "Hapus Rombongan"
         const hapusRombonganBtn = e.target.closest('.hapus-rombongan-btn');
         if (hapusRombonganBtn) {
             const rombonganCard = hapusRombonganBtn.closest('.card.rombongan');
-            if (rombonganCard) {
+            // Add confirmation dialog before deleting
+            if (rombonganCard && confirm('Apakah Anda yakin ingin menghapus rombongan ini? Semua regu di dalamnya akan ikut terhapus.')) {
                 const rombonganContainer = rombonganCard.parentElement;
                 // Kembalikan semua jemaah di dalam rombongan ini ke daftar utama
                 returnJemaahToAvailableList(rombonganCard);
                 rombonganCard.remove();
                 reorderRombonganInContainer(rombonganContainer);
+                debouncedUpdateAllCounts();
             }
         }
 
@@ -486,19 +636,24 @@ document.addEventListener('DOMContentLoaded', function () {
             // Inisialisasi dropzone untuk regu yang baru dibuat
             const newReguContentArea = newReguCol.querySelector('.regu-content-area');
             initJemaahDropzone(newReguContentArea);
+            debouncedUpdateAllCounts();
         }
 
         // Handle "Hapus Regu"
         const hapusReguBtn = e.target.closest('.hapus-regu-btn');
         if (hapusReguBtn) {
             const reguCol = hapusReguBtn.closest('.col-xl-3, .col-md-4, .col-sm-6');
-            if (reguCol) {
+            // Add confirmation dialog before deleting
+            if (reguCol && confirm('Apakah Anda yakin ingin menghapus regu ini?')) {
                 const reguContainer = reguCol.parentElement;
                 // Kembalikan semua jemaah di dalam regu ini ke daftar utama
                 returnJemaahToAvailableList(reguCol);
                 reguCol.remove();
                 reorderReguInContainer(reguContainer);
+                debouncedUpdateAllCounts();
             }
         }
     });
+
+    updateAllCountsOnPage();
 });

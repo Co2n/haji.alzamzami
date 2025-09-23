@@ -31,20 +31,6 @@ body {
   padding-top: 70px;
 }
 
-/* Media query untuk layar besar (lg dan di atasnya) */
-@media (min-width: 992px) {
-  .main-content {
-    /* Memberi jarak kiri seukuran lebar sidebar */
-    margin-left: 250px;
-  }
-
-  .sidebar {
-    /* Offcanvas akan transform: none secara otomatis oleh Bootstrap di layar besar */
-    transform: none !important;
-    visibility: visible !important;
-  }
-}
-
 .card {
   border: none;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
@@ -66,7 +52,9 @@ body {
     position: -webkit-sticky; /* Untuk Safari */
     position: sticky;
     top: 70px; /* Jarak dari atas, sesuaikan dengan padding .main-content */
-    max-height: calc(100vh - 85px); /* Tinggi maksimum agar tidak melebihi viewport */
+    max-height: calc(100vh - 120px); /* calc(100vh - 85px) Tinggi maksimum agar tidak melebihi viewport */
+    display: flex; /* Menjadikan card sebagai flex container */
+    flex-direction: column; /* Mengatur item di dalamnya (header, body) secara vertikal */
     z-index: 1020; /* Memastikan card ini di atas konten lain saat scroll */
 }
 
@@ -78,4 +66,29 @@ body {
 
 .jemaah-item:active {
     cursor: grabbing;
+}
+
+.jemaah-scroll-list {
+    flex-grow: 1; /* Membuat list ini mengisi sisa ruang vertikal */
+    overflow-y: auto; /* Mengaktifkan scroll jika konten melebihi area */
+    min-height: 0; /* Trik flexbox untuk memastikan penyusutan yang benar */
+}
+
+.sticky-jemaah-card > .card-body {
+    flex-grow: 1; /* Membuat card-body mengisi sisa ruang di dalam card */
+    min-height: 0; /* Mencegah overflow yang tidak diinginkan di dalam flex container */
+}
+
+/* Media query untuk layar besar (lg dan di atasnya) */
+@media (min-width: 992px) {
+  .main-content {
+    /* Memberi jarak kiri seukuran lebar sidebar */
+    margin-left: 250px;
+  }
+
+  .sidebar {
+    /* Offcanvas akan transform: none secara otomatis oleh Bootstrap di layar besar */
+    transform: none !important;
+    visibility: visible !important;
+  }
 }
