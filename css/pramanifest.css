@@ -81,17 +81,3 @@ body {
     flex-grow: 1; /* Membuat card-body mengisi sisa ruang di dalam card */
     min-height: 0; /* Mencegah overflow yang tidak diinginkan di dalam flex container */
 }
-
-/* Media query untuk layar besar (lg dan di atasnya) */
-@media (min-width: 992px) {
-  .main-content {
-    /* Memberi jarak kiri seukuran lebar sidebar */
-    margin-left: 250px;
-  }
-
-  .sidebar {
-    /* Offcanvas akan transform: none secara otomatis oleh Bootstrap di layar besar */
-    transform: none !important;
-    visibility: visible !important;
-  }
-}
