@@ -191,6 +191,20 @@ document.addEventListener('DOMContentLoaded', function () {
         
     ];
 
+    const rombonganStyles = [
+        { bg: '#EC2027', text: '#FFFFFF' }, // 1
+        { bg: '#FCEE21', text: '#000000' }, // 2
+        { bg: '#0000FF', text: '#FFFFFF' }, // 3
+        { bg: '#A65F27', text: '#FFFFFF' }, // 4
+        { bg: '#6ABD45', text: '#000000' }, // 5
+        { bg: '#FFFFFF', text: '#000000' }, // 6
+        { bg: '#F79520', text: '#000000' }, // 7
+        { bg: '#6B3180', text: '#FFFFFF' }, // 8
+        { bg: '#0A0A0A', text: '#FFFFFF' }, // 9
+        { bg: '#F8B4BA', text: '#000000' }, // 10
+        { bg: '#7C7C7C', text: '#FFFFFF' }  // 11
+    ];
+
     // Buat salinan data jemaah yang bisa diubah untuk mengelola state jemaah yang tersedia
     let availableJemaah = [...jemaahData];
 
@@ -453,13 +467,40 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fungsi untuk menomori ulang kartu regu
     const reorderReguInContainer = (reguContainer) => {
         if (!reguContainer) return;
-        const reguCards = reguContainer.querySelectorAll('.col-xl-3');
+
+        // Find parent rombongan and its style
+        const rombonganCard = reguContainer.closest('.card.rombongan');
+        if (!rombonganCard) return; // Exit if not inside a rombongan
+        const rombonganHeader = rombonganCard.querySelector('.card-header');
+        const style = {
+            bg: rombonganHeader.style.backgroundColor,
+            text: rombonganHeader.style.color
+        };
+
+        const reguCards = reguContainer.querySelectorAll('.regu-card');
         reguCards.forEach((card, index) => {
             const header = card.querySelector('.card-header');
             if (header) {
                 // Mengambil span di dalam header untuk diubah
                 const titleSpan = header.querySelector('span');
                 if (titleSpan) titleSpan.textContent = `Regu ${index + 1}`;
+
+                // Apply style
+                header.style.backgroundColor = style.bg;
+                header.style.color = style.text;
+
+                // Adjust button color
+                const button = header.querySelector('.hapus-regu-btn');
+                if (button) {
+                    // The color from style is rgb() format, not hex.
+                    if (style.text === 'rgb(255, 255, 255)') { // #FFFFFF
+                        button.classList.remove('btn-outline-danger');
+                        button.classList.add('btn-outline-light');
+                    } else {
+                        button.classList.remove('btn-outline-light');
+                        button.classList.add('btn-outline-danger');
+                    }
+                }
             }
         });
     };
@@ -499,8 +540,32 @@ document.addEventListener('DOMContentLoaded', function () {
         rombonganCards.forEach((card, index) => {
             const header = card.querySelector('.card-header');
             if (header) {
+                const rombonganNumber = index + 1;
                 const titleSpan = header.querySelector('span');
-                if (titleSpan) titleSpan.textContent = `Rombongan ${index + 1}`;
+                if (titleSpan) titleSpan.textContent = `Rombongan ${rombonganNumber}`;
+
+                // Apply styles
+                const styleIndex = (rombonganNumber - 1) % rombonganStyles.length;
+                const style = rombonganStyles[styleIndex];
+                header.style.backgroundColor = style.bg;
+                header.style.color = style.text;
+
+                const button = header.querySelector('.hapus-rombongan-btn');
+                if (button) {
+                    if (style.text === '#FFFFFF') {
+                        button.classList.remove('btn-outline-danger');
+                        button.classList.add('btn-outline-light');
+                    } else {
+                        button.classList.remove('btn-outline-light');
+                        button.classList.add('btn-outline-danger');
+                    }
+                }
+
+                // Apply the same style to child Regu cards
+                const reguContainer = card.querySelector('.regu-container');
+                if (reguContainer) {
+                    reorderReguInContainer(reguContainer);
+                }
             }
         });
     };
@@ -529,7 +594,10 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Inisialisasi untuk semua kontainer rombongan yang sudah ada saat halaman dimuat
-    document.querySelectorAll('.rombongan-card-container').forEach(initSortableRombongan);
+    document.querySelectorAll('.rombongan-card-container').forEach(container => {
+        initSortableRombongan(container);
+        reorderRombonganInContainer(container);
+    });
 
 
     const kloterCardContainer = document.getElementById('kloterCardContainer');
@@ -665,6 +733,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Inisialisasi Sortable pada kontainer regu yang baru dibuat
             const newReguContainer = newRombonganCard.querySelector('.regu-container');
             initSortableRegu(newReguContainer);
+            // Panggil reorder untuk menerapkan nomor dan style
+            reorderRombonganInContainer(rombonganContainer);
             debouncedUpdateAllCounts();
         }
 
@@ -707,6 +777,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Inisialisasi dropzone untuk regu yang baru dibuat
             const newReguContentArea = newReguCol.querySelector('.regu-content-area');
             initJemaahDropzone(newReguContentArea);
+            reorderReguInContainer(reguContainer);
             debouncedUpdateAllCounts();
         }
 

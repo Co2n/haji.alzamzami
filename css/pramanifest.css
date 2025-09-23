@@ -32,7 +32,6 @@ body {
 }
 
 .card {
-  border: none;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
@@ -72,6 +71,10 @@ body {
     flex-grow: 1; /* Membuat list ini mengisi sisa ruang vertikal */
     overflow-y: auto; /* Mengaktifkan scroll jika konten melebihi area */
     min-height: 0; /* Trik flexbox untuk memastikan penyusutan yang benar */
+}
+
+.regu-content-area .jemaah-item {
+    border-radius: .375rem; /* Menambahkan border radius */
 }
 
 .sticky-jemaah-card > .card-body {
