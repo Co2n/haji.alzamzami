@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Merdeka No. 1, Jakarta",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
         },
         {
             id: "jemaah-2",
@@ -226,6 +226,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="badge bg-success mb-1">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
                     <small class="text-muted">${jemaah.alamat}</small>
+                </div>
+                <div class="dropdown ms-auto jemaah-item-menu">
+                    <button class="btn btn-sm btn-light py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karom">Set Karom</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karu">Set Karu</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
+                    </ul>
                 </div>
             `;
             fragment.appendChild(listItem);
@@ -793,6 +805,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 reguCol.remove();
                 reorderReguInContainer(reguContainer);
                 debouncedUpdateAllCounts();
+            }
+        }
+
+        // Handle Jemaah Item Dropdown Actions
+        const jemaahActionBtn = e.target.closest('.jemaah-action-btn');
+        if (jemaahActionBtn) {
+            e.preventDefault();
+            const action = jemaahActionBtn.dataset.action;
+            const jemaahItem = jemaahActionBtn.closest('.jemaah-item');
+
+            if (action === 'remove') {
+                if (jemaahItem) {
+                    const jemaahId = jemaahItem.dataset.id;
+
+                    // If it's a "Jemaah Unknown" clone, just remove it.
+                    if (jemaahId === 'jemaah-unknown') {
+                        jemaahItem.remove();
+                        debouncedUpdateAllCounts();
+                        return;
+                    }
+
+                    // If it's a real jemaah, move it back to the main list.
+                    const jemaah = jemaahData.find(j => j.id === jemaahId);
+                    if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
+                        availableJemaah.push(jemaah);
+                    }
+
+                    jemaahItem.remove(); // Remove from the regu list
+                    cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
+                    debouncedUpdateAllCounts();
+                }
+            } else if (action === 'details') {
+                alert('Aksi "Lihat Detail" untuk jemaah ' + jemaahItem.querySelector('.fw-bold').textContent);
             }
         }
     });

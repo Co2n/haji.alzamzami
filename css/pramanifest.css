@@ -77,6 +77,16 @@ body {
     border-radius: .375rem; /* Menambahkan border radius */
 }
 
+/* Sembunyikan menu dropdown dan checkbox jemaah secara default */
+.jemaah-item .jemaah-item-menu {
+    display: none;
+}
+
+/* Tampilkan menu dropdown dan checkbox ketika item jemaah berada di dalam regu */
+.regu-content-area .jemaah-item .jemaah-item-menu {
+    display: inline-block;
+}
+
 .sticky-jemaah-card > .card-body {
     flex-grow: 1; /* Membuat card-body mengisi sisa ruang di dalam card */
     min-height: 0; /* Mencegah overflow yang tidak diinginkan di dalam flex container */
