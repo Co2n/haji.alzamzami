@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
+            role: null,
         },
         {
             id: "jemaah-2",
@@ -18,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Pahlawan No. 10, Surabaya",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-3",
@@ -26,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Kenanga No. 5, Bandung",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-4",
@@ -34,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Mawar No. 22, Yogyakarta",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-5",
@@ -42,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Sudirman Kav. 5, Semarang",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-6",
@@ -50,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Gatot Subroto No. 15, Medan",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-7",
@@ -58,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Diponegoro No. 8, Makassar",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-8",
@@ -66,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Imam Bonjol No. 3, Palembang",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-9",
@@ -74,7 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Ahmad Yani No. 12, Denpasar",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-10",
@@ -82,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Teuku Umar No. 7, Balikpapan",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-11",
@@ -90,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Gajah Mada No. 9, Pontianak",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-12",
@@ -98,7 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Pangeran Antasari No. 2, Banjarmasin",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-13",
@@ -106,7 +118,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Sam Ratulangi No. 11, Manado",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-14",
@@ -114,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Wolter Monginsidi No. 5, Jayapura",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-15",
@@ -122,7 +136,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Pattimura No. 1, Ambon",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-16",
@@ -130,7 +145,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Sudirman No. 101, Pekanbaru",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-17",
@@ -138,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Kartini No. 21, Bandar Lampung",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-18",
@@ -146,7 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Hasanuddin No. 4, Mataram",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-19",
@@ -154,7 +172,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Sisingamangaraja No. 88, Kupang",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-20",
@@ -162,7 +181,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Jenderal Sudirman No. 12, Ternate",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-21",
@@ -170,7 +190,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Diponegoro No. 30, Sorong",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         {
             id: "jemaah-22",
@@ -178,7 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Merdeka Timur No. 5, Manokwari",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "L"
+            gender: "L",
+            role: null,
         },
         {
             id: "jemaah-23",
@@ -186,7 +208,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alamat: "Jl. Pahlawan Revolusi No. 1, Nabire",
             foto: "img/foto.jpg",
             status: "Aktif",
-            gender: "P"
+            gender: "P",
+            role: null,
         },
         
     ];
@@ -220,10 +243,19 @@ document.addEventListener('DOMContentLoaded', function () {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaah.id;
+
+            const karomDisabled = jemaah.role === 'karom' ? 'disabled' : '';
+            const karuDisabled = jemaah.role === 'karu' ? 'disabled' : '';
+            const roleBadgeHTML = jemaah.role === 'karom'
+                ? '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karom</span>'
+                : jemaah.role === 'karu'
+                    ? '<span class="badge bg-info text-dark ms-1 jemaah-role-badge">Karu</span>'
+                    : '';
+
             listItem.innerHTML = `
                 <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
                 <div>
-                    <span class="badge bg-success mb-1">${jemaah.status}</span>
+                    <span class="badge bg-success mb-1">${jemaah.status}</span>${roleBadgeHTML}
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
                     <small class="text-muted">${jemaah.alamat}</small>
                 </div>
@@ -232,9 +264,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karom">Set Karom</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karu">Set Karu</a></li>
+                        <li><a class="dropdown-item jemaah-action-btn ${karomDisabled}" href="#" data-action="karom">Set Karom</a></li>
+                        <li><a class="dropdown-item jemaah-action-btn ${karuDisabled}" href="#" data-action="karu">Set Karu</a></li>
+                        <li class="clear-set-item" style="display: none;"><hr class="dropdown-divider"></li>
+                        <li class="clear-set-item" style="display: none;"><a class="dropdown-item jemaah-action-btn" href="#" data-action="clear">Clear Set</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
                     </ul>
@@ -389,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
             sort: false, // Disable sorting within this container
             ghostClass: 'sortable-ghost',
             forceFallback: true,
+            handle: '.rounded-circle',
         });
     }
 
@@ -406,6 +440,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ghostClass: 'sortable-ghost',
             forceFallback: true,
             sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
+            handle: '.rounded-circle',
             onAdd: function (evt) { // Item dropped INTO this list
                 const item = evt.item;
                 const fromList = evt.from;
@@ -460,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
                 forceFallback: true,
+                handle: '.rounded-circle',
                 onAdd: (evt) => {
                     updateJemaahItemNumbering(evt.to);
                     debouncedUpdateAllCounts();
@@ -814,33 +850,143 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const action = jemaahActionBtn.dataset.action;
             const jemaahItem = jemaahActionBtn.closest('.jemaah-item');
+            const jemaahId = jemaahItem.dataset.id;
 
-            if (action === 'remove') {
-                if (jemaahItem) {
-                    const jemaahId = jemaahItem.dataset.id;
+            // Find the jemaah object from the master data
+            const jemaah = jemaahData.find(j => j.id === jemaahId);
 
-                    // If it's a "Jemaah Unknown" clone, just remove it.
-                    if (jemaahId === 'jemaah-unknown') {
-                        jemaahItem.remove();
-                        debouncedUpdateAllCounts();
-                        return;
-                    }
+            if (action === 'karom' || action === 'karu') {
+                if (!jemaah || jemaah.role === action) return; // Do nothing if no jemaah or role is already set
 
-                    // If it's a real jemaah, move it back to the main list.
-                    const jemaah = jemaahData.find(j => j.id === jemaahId);
-                    if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
+                // Update state
+                jemaah.role = action;
+
+                // Update view
+                // 1. Remove existing role badge
+                const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
+                if (existingRoleBadge) existingRoleBadge.remove();
+
+                // 2. Add new role badge
+                const statusBadge = jemaahItem.querySelector('.badge.bg-success');
+                if (statusBadge) {
+                    const newBadge = document.createElement('span');
+                    newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-warning text-dark' : 'bg-info text-dark'}`;
+                    newBadge.textContent = action.charAt(0).toUpperCase() + action.slice(1);
+                    statusBadge.insertAdjacentElement('afterend', newBadge);
+                }
+
+                // 3. Update dropdown disabled states
+                const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
+                const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
+                if (karomBtn) karomBtn.classList.toggle('disabled', action === 'karom');
+                if (karuBtn) karuBtn.classList.toggle('disabled', action === 'karu');
+
+                // 4. Show "Clear Set" option
+                const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
+                clearItems.forEach(item => item.style.display = 'list-item');
+
+            } else if (action === 'clear') {
+                if (!jemaah) return;
+
+                // Update state
+                jemaah.role = null;
+
+                // Update view
+                // 1. Remove role badge
+                const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
+                if (existingRoleBadge) existingRoleBadge.remove();
+
+                // 2. Enable Set Karom/Karu buttons
+                const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
+                const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
+                if (karomBtn) karomBtn.classList.remove('disabled');
+                if (karuBtn) karuBtn.classList.remove('disabled');
+
+                // 3. Hide "Clear Set" items
+                const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
+                clearItems.forEach(item => item.style.display = 'none');
+
+            } else if (action === 'remove') {
+                // If it's a "Jemaah Unknown" clone, just remove it.
+                if (jemaahId === 'jemaah-unknown') {
+                    jemaahItem.remove();
+                    debouncedUpdateAllCounts();
+                    return;
+                }
+
+                // If it's a real jemaah, move it back to the main list.
+                if (jemaah) {
+                    jemaah.role = null; // Reset the role
+                    if (!availableJemaah.some(aj => aj.id === jemaahId)) {
                         availableJemaah.push(jemaah);
                     }
-
-                    jemaahItem.remove(); // Remove from the regu list
-                    cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
-                    debouncedUpdateAllCounts();
                 }
-            } else if (action === 'details') {
-                alert('Aksi "Lihat Detail" untuk jemaah ' + jemaahItem.querySelector('.fw-bold').textContent);
+
+                jemaahItem.remove(); // Remove from the regu list
+                cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
+                debouncedUpdateAllCounts();
             }
         }
     });
 
     updateAllCountsOnPage();
 });
+
+// --- THEME SWITCHER ---
+(() => {
+    'use strict'
+
+    const getStoredTheme = () => localStorage.getItem('theme')
+    const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+    const getPreferredTheme = () => {
+        const storedTheme = getStoredTheme()
+        if (storedTheme) {
+            return storedTheme
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    }
+
+    const setTheme = theme => {
+        if (theme === 'auto') {
+            document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+    }
+
+    setTheme(getPreferredTheme())
+
+    const showActiveTheme = (theme) => {
+        const themeSwitcher = document.querySelector('#themeDropdown')
+        if (!themeSwitcher) return
+
+        const activeThemeIcon = themeSwitcher.querySelector('i')
+        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+        const iconOfActiveBtn = btnToActive.querySelector('i').className
+
+        document.querySelectorAll('[data-bs-theme-value]').forEach(element => element.classList.remove('active'))
+
+        btnToActive.classList.add('active')
+        activeThemeIcon.className = iconOfActiveBtn
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const storedTheme = getStoredTheme()
+        if (storedTheme !== 'light' && storedTheme !== 'dark') {
+            setTheme(getPreferredTheme())
+        }
+    })
+
+    window.addEventListener('DOMContentLoaded', () => {
+        showActiveTheme(getPreferredTheme())
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value')
+                setStoredTheme(theme)
+                setTheme(theme)
+                showActiveTheme(theme)
+            })
+        })
+    })
+})()
