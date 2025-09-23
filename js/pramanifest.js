@@ -214,6 +214,12 @@ document.addEventListener('DOMContentLoaded', function () {
         
     ];
 
+    // Update total jemaah count on the dashboard card
+    const totalJemaahCountElement = document.getElementById('totalJemaahCount');
+    if (totalJemaahCountElement) {
+        totalJemaahCountElement.textContent = jemaahData.length;
+    }
+
     const rombonganStyles = [
         { bg: '#EC2027', text: '#FFFFFF' }, // 1
         { bg: '#FCEE21', text: '#000000' }, // 2
@@ -355,6 +361,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             badge.textContent = count;
         });
+
+        // Total Manifest Count
+        const totalManifestCountElement = document.getElementById('totalManifestCount');
+        if (totalManifestCountElement) {
+            const kloterContainer = document.getElementById('kloterCardContainer');
+            if (kloterContainer) {
+                // Count all jemaah items, excluding the "unknown" placeholder
+                const count = kloterContainer.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                totalManifestCountElement.textContent = count;
+            }
+        }
     };
     // Use a timeout to let the DOM update after a drag operation
     const debouncedUpdateAllCounts = () => setTimeout(updateAllCountsOnPage, 50);
