@@ -355,7 +355,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const initJemaahDropzone = (container) => {
         if (container) {
             new Sortable(container, {
-                group: { name: 'jemaah-group', pull: true, put: true },
+                group: {
+                    name: 'jemaah-group',
+                    pull: true,
+                    put: function (to, from) {
+                        return from.options.group.name === 'jemaah-group';
+                    }
+                },
                 animation: 150,
                 ghostClass: 'sortable-ghost',
                 forceFallback: true,
@@ -459,10 +465,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const kloterCardContainer = document.getElementById('kloterCardContainer');
     const tambahKloterBtn = document.getElementById('tambahKloterBtn');
-    let kloterCounter = 1;
-    if (kloterCardContainer) {
-        kloterCounter = kloterCardContainer.children.length;
-    }
 
     // --- KLOTER MANAGEMENT ---
 
@@ -507,8 +509,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add new Kloter
     tambahKloterBtn.addEventListener('click', () => {
-        kloterCounter++;
-        const newKloter = createKloterElement(kloterCounter);
+        const newKloterNum = kloterCardContainer.children.length + 1;
+        const newKloter = createKloterElement(newKloterNum);
         kloterCardContainer.appendChild(newKloter);
 
         // Inisialisasi Sortable pada kontainer rombongan yang baru dibuat di kloter baru
