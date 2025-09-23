@@ -28,118 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
             status: "Aktif",
             gender: "P"
         },
-        {
-            id: "jemaah-4",
-            nama: "Dewi Anggraini",
-            alamat: "Jl. Mawar No. 22, Yogyakarta",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-5",
-            nama: "Eko Prasetyo",
-            alamat: "Jl. Sudirman Kav. 5, Semarang",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-6",
-            nama: "Fajar Nugroho",
-            alamat: "Jl. Gatot Subroto No. 15, Medan",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-7",
-            nama: "Gita Permata",
-            alamat: "Jl. Diponegoro No. 8, Makassar",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-8",
-            nama: "Hadi Wibowo",
-            alamat: "Jl. Imam Bonjol No. 3, Palembang",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-9",
-            nama: "Indah Sari",
-            alamat: "Jl. Ahmad Yani No. 12, Denpasar",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-10",
-            nama: "Joko Susilo",
-            alamat: "Jl. Teuku Umar No. 7, Balikpapan",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-11",
-            nama: "Kartika Dewi",
-            alamat: "Jl. Gajah Mada No. 9, Pontianak",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-12",
-            nama: "Lukman Hakim",
-            alamat: "Jl. Pangeran Antasari No. 2, Banjarmasin",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-13",
-            nama: "Maya Anggraini",
-            alamat: "Jl. Sam Ratulangi No. 11, Manado",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-14",
-            nama: "Nanda Pratama",
-            alamat: "Jl. Wolter Monginsidi No. 5, Jayapura",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-15",
-            nama: "Olivia Putri",
-            alamat: "Jl. Pattimura No. 1, Ambon",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        },
-        {
-            id: "jemaah-16",
-            nama: "Putra Wijaya",
-            alamat: "Jl. Sudirman No. 101, Pekanbaru",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L"
-        },
-        {
-            id: "jemaah-17",
-            nama: "Rina Marlina",
-            alamat: "Jl. Kartini No. 21, Bandar Lampung",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P"
-        }
+        
     ];
 
     // Buat salinan data jemaah yang bisa diubah untuk mengelola state jemaah yang tersedia
@@ -324,13 +213,33 @@ document.addEventListener('DOMContentLoaded', function () {
             group: {
                 name: 'jemaah-group',
                 pull: true,
-                put: true
+                // Izinkan drop dari grup jemaah (untuk mengembalikan) dan grup regu (untuk menghapus)
+                put: ['jemaah-group', 'shared-regu']
             },
             animation: 150,
             ghostClass: 'sortable-ghost',
             forceFallback: true,
             sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
             onAdd: function (evt) { // Item dropped INTO this list
+                const item = evt.item;
+                const fromList = evt.from;
+
+                // Kasus 1: Sebuah card regu dijatuhkan ke sini untuk dihapus
+                if (item.classList.contains('col-xl-3')) {
+                    if (confirm('Apakah Anda yakin ingin menghapus regu ini? Semua jemaah di dalamnya akan dikembalikan ke daftar utama.')) {
+                        returnJemaahToAvailableList(item);
+                        item.remove(); // Hapus elemen regu dari DOM
+                        reorderReguInContainer(fromList);
+                        debouncedUpdateAllCounts();
+                    } else {
+                        // Batalkan: kembalikan kartu regu ke kontainer asalnya
+                        fromList.appendChild(item);
+                        reorderReguInContainer(fromList);
+                    }
+                    return; // Hentikan proses lebih lanjut
+                }
+
+                // Kasus 2: Sebuah item jemaah dijatuhkan (logika yang sudah ada)
                 const jemaahId = evt.item.dataset.id;
                 if (jemaahId === 'jemaah-unknown') {
                     evt.item.remove(); // It's a clone, just remove it
