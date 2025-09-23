@@ -944,7 +944,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (storedTheme) {
             return storedTheme
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        return 'auto' // Set 'auto' as the default theme
     }
 
     const setTheme = theme => {
