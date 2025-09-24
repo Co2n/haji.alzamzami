@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col">
                     <span>Kloter ${kloterNum}</span>
-                    <span class="badge bg-success mb-1">Aktif</span>
+                    <span class="badge bg-success ms-2 kloter-title-bagde">Untitle</span>
                 </div>
                 <div class="col-md-auto"></div>
                 <div class="col col-lg-auto">
@@ -758,7 +758,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- EVENT DELEGATION FOR ROMBONGAN & REGU ---
 
+    const setupKloterModalEl = document.getElementById('setupKloterModal');
+    const setupKloterModal = new bootstrap.Modal(setupKloterModalEl);
+    const saveKloterSetupBtn = document.getElementById('saveKloterSetupBtn');
+    const kodeEmbarkasiInput = document.getElementById('kodeEmbarkasiInput');
+    const noKloterInput = document.getElementById('noKloterInput');
+    let currentEditingKloterCard = null;
+
+    // Handler untuk tombol simpan di modal
+    saveKloterSetupBtn.addEventListener('click', () => {
+        if (currentEditingKloterCard) {
+            const embarkasi = kodeEmbarkasiInput.value.trim().toUpperCase();
+            const noKloter = noKloterInput.value.trim();
+
+            if (embarkasi && noKloter) {
+                const titleBadge = currentEditingKloterCard.querySelector('.kloter-title-bagde');
+                if (titleBadge) {
+                    titleBadge.textContent = `${embarkasi}-${noKloter}`;
+                    titleBadge.classList.remove('bg-success');
+                    titleBadge.classList.add('bg-warning', 'text-dark');
+                }
+                setupKloterModal.hide();
+            } else {
+                alert('Kode Embarkasi dan No. Kloter harus diisi.');
+            }
+        }
+    });
+
+    // Reset form saat modal ditutup
+    setupKloterModalEl.addEventListener('hidden.bs.modal', () => {
+        currentEditingKloterCard = null;
+        document.getElementById('setupKloterForm').reset();
+    });
+
     kloterCardContainer.addEventListener('click', function (e) {
+        // Handle Kloter Edit
+        const editBtn = e.target.closest('.kloter-edit-btn');
+        if (editBtn) {
+            currentEditingKloterCard = editBtn.closest('.card.kloter');
+            setupKloterModal.show();
+            return;
+        }
+
         // Handle Hapus Kloter
         const hapusKloterBtn = e.target.closest('.kloter-hapus-btn');
         if (hapusKloterBtn) {
