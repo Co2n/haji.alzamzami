@@ -2,217 +2,371 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- JEMAAH LIST MANAGEMENT ---
 
     // Data ini mensimulasikan respons dari API JSON.
-    // Nanti, Anda bisa mengganti bagian ini dengan `fetch()` ke API sebenarnya.
     const jemaahData = [
         {
             id: "jemaah-1",
             nama: "Ahmad Subarjo",
             alamat: "Jl. Merdeka No. 1, Jakarta",
+            desa_kec: "Menteng - Jakarta Pusat",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Sastra II",
+            pekerjaan: "PNS"
+            
         },
         {
             id: "jemaah-2",
             nama: "Budi Santoso",
             alamat: "Jl. Pahlawan No. 10, Surabaya",
+            desa_kec: "Bubutan - Surabaya",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Wiraswasta"
+            
         },
         {
             id: "jemaah-3",
             nama: "Citra Lestari",
             alamat: "Jl. Kenanga No. 5, Bandung",
+            desa_kec: "Coblong - Bandung",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Karyawan Swasta"
+            
         },
         {
             id: "jemaah-4",
             nama: "Dewi Anggraini",
             alamat: "Jl. Mawar No. 22, Yogyakarta",
+            desa_kec: "Gondokusuman - Yogyakarta",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Mengurus Rumah Tangga"
+            
         },
         {
             id: "jemaah-5",
             nama: "Eko Prasetyo",
             alamat: "Jl. Sudirman Kav. 5, Semarang",
+            desa_kec: "Semarang Tengah - Semarang",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Karyawan BUMN"
+            
         },
         {
             id: "jemaah-6",
             nama: "Fajar Nugroho",
             alamat: "Jl. Gatot Subroto No. 15, Medan",
+            desa_kec: "Medan Petisah - Medan",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Wiraswasta"
+            
         },
         {
             id: "jemaah-7",
             nama: "Gita Permata",
             alamat: "Jl. Diponegoro No. 8, Makassar",
+            desa_kec: "Ujung Pandang - Makassar",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Sastra II",
+            pekerjaan: "Dokter"
+            
         },
         {
             id: "jemaah-8",
             nama: "Hadi Wibowo",
             alamat: "Jl. Imam Bonjol No. 3, Palembang",
+            desa_kec: "Ilir Timur I - Palembang",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTP / Sederajat",
+            pekerjaan: "Petani / Pekebun"
+            
         },
         {
             id: "jemaah-9",
             nama: "Indah Sari",
             alamat: "Jl. Ahmad Yani No. 12, Denpasar",
+            desa_kec: "Denpasar Selatan - Denpasar",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Guru"
+            
         },
         {
             id: "jemaah-10",
             nama: "Joko Susilo",
             alamat: "Jl. Teuku Umar No. 7, Balikpapan",
+            desa_kec: "Balikpapan Kota - Balikpapan",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Wiraswasta"
+            
         },
         {
             id: "jemaah-11",
             nama: "Kartika Dewi",
             alamat: "Jl. Gajah Mada No. 9, Pontianak",
+            desa_kec: "Pontianak Kota - Pontianak",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Sastra II",
+            pekerjaan: "PNS"
+            
         },
         {
             id: "jemaah-12",
             nama: "Lukman Hakim",
             alamat: "Jl. Pangeran Antasari No. 2, Banjarmasin",
+            desa_kec: "Banjarmasin Tengah - Banjarmasin",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Karyawan Swasta"
+            
         },
         {
             id: "jemaah-13",
             nama: "Maya Anggraini",
             alamat: "Jl. Sam Ratulangi No. 11, Manado",
+            desa_kec: "Wanea - Manado",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Mengurus Rumah Tangga"
+            
         },
         {
             id: "jemaah-14",
             nama: "Nanda Pratama",
             alamat: "Jl. Wolter Monginsidi No. 5, Jayapura",
+            desa_kec: "Jayapura Utara - Jayapura",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Tamat SD / Sederajat",
+            pekerjaan: "Pedagang"
+            
         },
         {
             id: "jemaah-15",
             nama: "Olivia Putri",
             alamat: "Jl. Pattimura No. 1, Ambon",
+            desa_kec: "Nusaniwe - Ambon",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Ibu Rumah Tangga"
+            
         },
         {
             id: "jemaah-16",
             nama: "Putra Wijaya",
             alamat: "Jl. Sudirman No. 101, Pekanbaru",
+            desa_kec: "Pekanbaru Kota - Pekanbaru",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Sastra II",
+            pekerjaan: "Dosen"
+            
         },
         {
             id: "jemaah-17",
             nama: "Rina Marlina",
             alamat: "Jl. Kartini No. 21, Bandar Lampung",
+            desa_kec: "Tanjung Karang Pusat - Bandar Lampung",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Pegawai Negeri Sipil"
+            
         },
         {
             id: "jemaah-18",
             nama: "Surya Adi",
             alamat: "Jl. Hasanuddin No. 4, Mataram",
+            desa_kec: "Cakranegara - Mataram",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Wiraswasta"
+            
         },
         {
             id: "jemaah-19",
             nama: "Tiara Anindya",
             alamat: "Jl. Sisingamangaraja No. 88, Kupang",
+            desa_kec: "Oebobo - Kupang",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "SLTP / Sederajat",
+            pekerjaan: "Mengurus Rumah Tangga"
+            
         },
         {
             id: "jemaah-20",
             nama: "Umar Zaki",
             alamat: "Jl. Jenderal Sudirman No. 12, Ternate",
+            desa_kec: "Ternate Tengah - Ternate",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "Tamat SD / Sederajat",
+            pekerjaan: "Nelayan"
+            
         },
         {
             id: "jemaah-21",
             nama: "Vina Septiani",
             alamat: "Jl. Diponegoro No. 30, Sorong",
+            desa_kec: "Sorong Manoi - Sorong",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
+            pendidikan: "Diploma IV / Sastra I",
+            pekerjaan: "Bidan"
+            
         },
         {
             id: "jemaah-22",
             nama: "Wahyu Hidayat",
             alamat: "Jl. Merdeka Timur No. 5, Manokwari",
+            desa_kec: "Manokwari Barat - Manokwari",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "L",
-            role: null,
+            pendidikan: "SLTA / Sederajat",
+            pekerjaan: "Karyawan Swasta"
+            
         },
         {
             id: "jemaah-23",
             nama: "Yulia Astuti",
             alamat: "Jl. Pahlawan Revolusi No. 1, Nabire",
+            desa_kec: "Nabire - Nabire",
             foto: "img/foto.jpg",
             status: "Aktif",
             gender: "P",
-            role: null,
-        },
-        
+            pendidikan: "Sastra II",
+            pekerjaan: "Dosen"
+            
+        }
     ];
+
+    // Data ini mensimulasikan respons dari API JSON untuk struktur manifest.
+    // Nanti, Anda bisa mengganti bagian ini dengan `fetch()` ke API sebenarnya.
+    const dataManifest = [
+        {
+            id: "kloter-1",
+            kodeEmbarkasi: "KJT",
+            noKloter: "01",
+            rombongan: [
+                {
+                    id: "rombongan-1-1",
+                    regu: [
+                        { id: "regu-1-1-1", jemaah: [{id: "jemaah-1", role: "karom"}, {id: "jemaah-2", role: "karu"}, {id: "jemaah-3", role: null}] },
+                        { id: "regu-1-1-2", jemaah: [{id: "jemaah-4", role: "karu"}, {id: "jemaah-5", role: null}] },
+                        { id: "regu-1-1-3", jemaah: [{id: "jemaah-6", role: "karu"}, {id: "jemaah-7", role: null}] },
+                        { id: "regu-1-1-4", jemaah: [{id: "jemaah-8", role: "karu"}, {id: "jemaah-9", role: null}] },
+                    ]
+                },
+                {
+                    id: "rombongan-1-2",
+                    regu: [
+                        { id: "regu-1-2-1", jemaah: [{id: "jemaah-10", role: "karom"}, {id: "jemaah-11", role: "karu"}] },
+                        { id: "regu-1-2-2", jemaah: [{id: "jemaah-12", role: "karu"}, {id: "jemaah-13", role: null}] },
+                        { id: "regu-1-2-3", jemaah: [{id: "jemaah-14", role: "karu"}, {id: "jemaah-15", role: null}] },
+                        { id: "regu-1-2-4", jemaah: [{id: "jemaah-16", role: "karu"}, {id: "jemaah-17"}] },
+                    ]
+                },
+                {
+                    id: "rombongan-1-3",
+                    regu: [] // Rombongan 3 kosong
+                }
+            ]
+        },
+        {
+            id: "kloter-2",
+            kodeEmbarkasi: "KJT",
+            noKloter: "02",
+            rombongan: [
+                {
+                    id: "rombongan-2-1",
+                    regu: [
+                        { id: "regu-2-1-1", jemaah: [{id: "jemaah-unknown", role: null}, {id: "jemaah-unknown", role: null}] },
+                        { id: "regu-2-1-2", jemaah: [{id: "jemaah-18", role: null}, {id: "jemaah-19", role: null}] },
+                        { id: "regu-2-1-3", jemaah: [{id: "jemaah-20", role: null}, {id: "jemaah-21", role: null}] },
+                    ]
+                }
+            ]
+        }
+    ];
+
+    // --- DATA VALIDATION ---
+    if (!dataManifest || !Array.isArray(dataManifest) || dataManifest.length === 0) {
+        console.warn("dataManifest bernilai null, kosong, atau bukan sebuah array. Inisialisasi manifest akan dilewati.");
+        // Kosongkan kontainer kloter jika tidak ada data
+        const kloterContainer = document.getElementById('kloterCardContainer');
+        if (kloterContainer) kloterContainer.innerHTML = `
+        <div id="kloterCardContainer">
+            <div class="card kloter mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="col">
+                        <span>Kloter 1</span>
+                        <span class="badge bg-success ms-2 kloter-title-bagde">Untitle</span>
+                    </div>
+                    <div class="col-md-auto"></div>
+                    <div class="col col-lg-auto">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="rombongan-card-container">
+                        <!-- Rombongan cards will be added here -->
+                    </div>
+                    <div class="text-end mt-3">
+                        <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
+                            <i class="bi bi-plus-circle"></i> Tambah Rombongan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
 
     // Update total jemaah count on the dashboard card
     const totalJemaahCountElement = document.getElementById('totalJemaahCount');
@@ -234,8 +388,22 @@ document.addEventListener('DOMContentLoaded', function () {
         { bg: '#7C7C7C', text: '#FFFFFF' }  // 11
     ];
 
-    // Buat salinan data jemaah yang bisa diubah untuk mengelola state jemaah yang tersedia
-    let availableJemaah = [...jemaahData];
+    // --- DYNAMIC CONTENT GENERATION ---
+
+    // Cari semua jemaah yang sudah ditempatkan
+    const placedJemaahIds = new Set();
+    if (dataManifest && Array.isArray(dataManifest)) {
+        dataManifest.forEach(kloter => {
+            kloter.rombongan.forEach(rombongan => {
+                rombongan.regu.forEach(regu => {
+                    regu.jemaah.forEach(jemaahObj => {
+                        const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
+                        if (jemaahId !== 'jemaah-unknown') placedJemaahIds.add(jemaahId);
+                    });
+                });
+            });
+        });
+    }
 
     // Fungsi untuk me-render daftar jemaah ke HTML
     const renderJemaahList = (data) => {
@@ -250,28 +418,24 @@ document.addEventListener('DOMContentLoaded', function () {
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaah.id;
 
-            const karomDisabled = jemaah.role === 'karom' ? 'disabled' : '';
-            const karuDisabled = jemaah.role === 'karu' ? 'disabled' : '';
-            const roleBadgeHTML = jemaah.role === 'karom'
-                ? '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karom</span>'
-                : jemaah.role === 'karu'
-                    ? '<span class="badge bg-info text-dark ms-1 jemaah-role-badge">Karu</span>'
-                    : '';
-
             listItem.innerHTML = `
                 <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
                 <div>
-                    <span class="badge bg-success mb-1">${jemaah.status}</span>${roleBadgeHTML}
+                    <span class="badge bg-success mb-1">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
-                    <small class="text-muted">${jemaah.alamat}</small>
+                    <small class="text-muted">
+                        ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
+                        ${jemaah.alamat}<br>
+                        ${jemaah.desa_kec}
+                    </small>
                 </div>
                 <div class="dropdown ms-auto jemaah-item-menu">
                     <button class="btn btn-sm btn-light py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item jemaah-action-btn ${karomDisabled}" href="#" data-action="karom">Set Karom</a></li>
-                        <li><a class="dropdown-item jemaah-action-btn ${karuDisabled}" href="#" data-action="karu">Set Karu</a></li>
+                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karom">Set Karom</a></li>
+                        <li><a class="dropdown-item jemaah-action-btn" href="#" data-action="karu">Set Karu</a></li>
                         <li class="clear-set-item" style="display: none;"><hr class="dropdown-divider"></li>
                         <li class="clear-set-item" style="display: none;"><a class="dropdown-item jemaah-action-btn" href="#" data-action="clear">Clear Set</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -283,6 +447,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         jemaahListContainer.appendChild(fragment);
     };
+
+    // Jemaah yang tersedia adalah yang tidak ada di `placedJemaahIds`
+    let availableJemaah = jemaahData.filter(j => !placedJemaahIds.has(j.id));
+
 
     // Panggil fungsi untuk memuat daftar jemaah saat halaman dimuat
     renderJemaahList(availableJemaah);
@@ -311,6 +479,128 @@ document.addEventListener('DOMContentLoaded', function () {
             cariJemaahInput.dispatchEvent(new Event('input'));
         }
     };
+
+    // Fungsi untuk membuat elemen HTML jemaah
+    const createJemaahItemElement = (jemaahObj) => {
+        const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
+        const role = typeof jemaahObj === 'object' ? jemaahObj.role : null;
+        const jemaah = jemaahData.find(j => j.id === jemaahId);
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
+        listItem.dataset.id = jemaahId;
+        if (role) listItem.dataset.role = role;
+        if (jemaahId === 'jemaah-unknown') {
+            listItem.innerHTML = `
+                <img src="img/unknown.jpg" height="50px" width="50px" class="rounded-circle me-3" alt="Foto Jemaah Unknown">
+                <div>
+                    <div class="fw-bold">Jemaah Unknown</div>
+                    <small class="text-muted">Placeholder</small>
+                </div>
+                <div class="dropdown ms-auto jemaah-item-menu">
+                    <button class="btn btn-sm btn-light py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
+                    </ul>
+                </div>`;
+            return listItem;
+        }
+
+        if (!jemaah) return null;
+
+        const karomDisabled = role === 'karom' ? 'disabled' : '';
+        const karuDisabled = role === 'karu' ? 'disabled' : '';
+        const roleBadgeHTML = role === 'karom'
+            ? '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karom</span>'
+            : role === 'karu' ?
+            '<span class="badge bg-info text-dark ms-1 jemaah-role-badge">Karu</span>' :
+            '';
+        const clearSetDisplay = role ? 'style="display: list-item;"' : 'style="display: none;"';
+
+        // Konten untuk popover
+        const popoverContent = `
+            <div class='popover-body-custom'>
+                <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
+                <div>${jemaah.alamat}</div>
+            </div>`;
+
+        listItem.innerHTML = `
+            <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
+            <div>
+                <span class="badge bg-success mb-1">${jemaah.status}</span>${roleBadgeHTML}
+                <div class="fw-bold" 
+                     data-bs-toggle="popover" 
+                     data-bs-trigger="hover" 
+                     data-bs-placement="top" 
+                     data-bs-html="true" 
+                     data-bs-content="${popoverContent}">
+                     ${jemaah.nama} 
+                     <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i>
+                </div>
+                <small class="text-muted">${jemaah.desa_kec}</small>
+            </div>
+            <div class="dropdown ms-auto jemaah-item-menu">
+                <button class="btn btn-sm btn-light py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item jemaah-action-btn ${karomDisabled}" href="#" data-action="karom">Set Karom</a></li>
+                    <li><a class="dropdown-item jemaah-action-btn ${karuDisabled}" href="#" data-action="karu">Set Karu</a></li>
+                    <li class="clear-set-item" ${clearSetDisplay}><hr class="dropdown-divider"></li>
+                    <li class="clear-set-item" ${clearSetDisplay}><a class="dropdown-item jemaah-action-btn" href="#" data-action="clear">Clear Set</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
+                </ul>
+            </div>`;
+        return listItem;
+    };
+
+    // Fungsi untuk me-render seluruh manifest dari data
+    const renderManifest = (manifestData) => {
+        const kloterContainer = document.getElementById('kloterCardContainer');
+        kloterContainer.innerHTML = ''; // Kosongkan kontainer
+
+        manifestData.forEach((kloter, kloterIndex) => {
+            const kloterEl = createKloterElement(kloterIndex + 1);
+            const titleBadge = kloterEl.querySelector('.kloter-title-bagde');
+            if (kloter.kodeEmbarkasi && kloter.noKloter) {
+                titleBadge.textContent = `${kloter.kodeEmbarkasi}-${kloter.noKloter}`;
+                titleBadge.classList.remove('bg-success');
+                titleBadge.classList.add('bg-warning', 'text-dark');
+            }
+
+            const rombonganContainer = kloterEl.querySelector('.rombongan-card-container');
+            kloter.rombongan.forEach((rombongan, rombonganIndex) => {
+                const rombonganEl = createRombonganElement(rombonganIndex + 1);
+                const reguContainer = rombonganEl.querySelector('.regu-container');
+
+                rombongan.regu.forEach((regu, reguIndex) => {
+                    const reguEl = createReguElement(reguIndex + 1);
+                    const reguContentArea = reguEl.querySelector('.regu-content-area');
+
+                    regu.jemaah.forEach(jemaahObj => {
+                        const jemaahEl = createJemaahItemElement(jemaahObj);
+                        if (jemaahEl) reguContentArea.appendChild(jemaahEl);
+                    });
+
+                    reguContainer.appendChild(reguEl);
+                    initJemaahDropzone(reguContentArea);
+                });
+
+                rombonganContainer.appendChild(rombonganEl);
+                initSortableRegu(reguContainer);
+            });
+
+            kloterContainer.appendChild(kloterEl);
+            initSortableRombongan(rombonganContainer);
+            reorderRombonganInContainer(rombonganContainer);
+        });
+
+        // Inisialisasi semua popover yang baru dirender
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        popoverTriggerList.map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+
+        reorderKloterCards();
+        debouncedUpdateAllCounts();
+    };
+
 
     // --- COUNTERS ---
     const updateAllCountsOnPage = () => {
@@ -507,18 +797,63 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Kasus 2: Sebuah item jemaah dijatuhkan (logika yang sudah ada)
-                const jemaahId = evt.item.dataset.id;
+                const itemEl = evt.item;
+                const jemaahId = itemEl.dataset.id;
+
                 if (jemaahId === 'jemaah-unknown') {
-                    evt.item.remove(); // It's a clone, just remove it
+                    itemEl.remove(); // Ini adalah klon, hapus saja
                     return;
                 }
-                // It's a real jemaah, add back to state
+
+                // Ini adalah jemaah asli, tambahkan kembali ke state
                 const jemaah = jemaahData.find(j => j.id === jemaahId);
                 if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
                     availableJemaah.push(jemaah);
                 }
-                // Re-render the list to respect search filter
-                cariJemaahInput.dispatchEvent(new Event('input'));
+
+                // Alih-alih me-render ulang seluruh daftar, kita ubah item yang ada.
+                // Ini akan mempertahankan posisi drop.
+                // 1. Hapus badge peran (karom/karu)
+                delete itemEl.dataset.role;
+
+                // 2. Perbarui detail jemaah ke format lengkap
+                const detailEl = itemEl.querySelector('small.text-muted');
+                if (detailEl && jemaah) {
+                    detailEl.innerHTML = `
+                        ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
+                        ${jemaah.alamat}<br>
+                        ${jemaah.desa_kec}
+                    `;
+                }
+                const karomBtn = itemEl.querySelector('[data-action="karom"]');
+                const karuBtn = itemEl.querySelector('[data-action="karu"]');
+                if (karomBtn) karomBtn.classList.remove('disabled');
+                if (karuBtn) karuBtn.classList.remove('disabled');
+
+                // Sembunyikan item "Clear Set"
+                const clearItems = itemEl.querySelectorAll('.clear-set-item');
+                clearItems.forEach(item => item.style.display = 'none');
+
+
+
+
+                const roleBadge = itemEl.querySelector('.jemaah-role-badge');
+                if (roleBadge) roleBadge.remove();
+
+                // 2. Hapus nomor urut
+                const numberSpan = itemEl.querySelector('.jemaah-number');
+                if (numberSpan) numberSpan.remove();
+
+                // 3. Sembunyikan menu dropdown
+                const menu = itemEl.querySelector('.jemaah-item-menu');
+                if (menu) menu.style.display = 'none';
+
+                // Jika ada filter pencarian aktif, item mungkin tidak seharusnya terlihat.
+                // Kita periksa apakah item yang dikembalikan cocok dengan filter.
+                const searchTerm = cariJemaahInput.value.toLowerCase();
+                if (!jemaah.nama.toLowerCase().includes(searchTerm) && !jemaah.alamat.toLowerCase().includes(searchTerm)) {
+                    itemEl.remove(); // Hapus dari DOM jika tidak cocok dengan filter
+                }
             },
             onRemove: function (evt) { // Item dragged OUT OF this list
                 // Remove from state
@@ -544,6 +879,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 handle: '.rounded-circle',
                 onAdd: (evt) => {
                     updateJemaahItemNumbering(evt.to);
+
+                    // Tampilkan kembali menu dropdown saat item ditambahkan ke regu
+                    const itemEl = evt.item;
+                    const menu = itemEl.querySelector('.jemaah-item-menu');
+                    if (menu) {
+                        menu.style.display = ''; // Menghapus inline style 'display: none'
+                    }
+
+                    // Perbarui detail jemaah ke format ringkas (hanya desa_kec)
+                    const jemaahId = itemEl.dataset.id;
+                    const jemaah = jemaahData.find(j => j.id === jemaahId);
+                    const detailEl = itemEl.querySelector('small.text-muted');
+                    if (detailEl && jemaah) {
+                        detailEl.innerHTML = jemaah.desa_kec;
+                    }
+
+                    // Inisialisasi popover untuk item yang baru ditambahkan
+                    const popoverTrigger = itemEl.querySelector('[data-bs-toggle="popover"]');
+                    if (popoverTrigger) new bootstrap.Popover(popoverTrigger);
                     debouncedUpdateAllCounts();
                 },
                 onRemove: (evt) => {
@@ -744,6 +1098,29 @@ document.addEventListener('DOMContentLoaded', function () {
         return kloterDiv;
     };
 
+    // Function to create HTML for a new Rombongan
+    const createRombonganElement = (rombonganNum) => {
+        const rombonganDiv = document.createElement('div');
+        rombonganDiv.className = 'card rombongan mb-3';
+        rombonganDiv.innerHTML = `
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="col"><span>Rombongan ${rombonganNum}</span></div>
+                <div class="col-md-auto"></div>
+                <div class="col col-lg-auto">
+                    <button class="btn btn-sm btn-outline-danger hapus-rombongan-btn"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row regu-container"></div>
+                <div class="text-end mt-2">
+                    <button class="btn btn-secondary btn-sm tambah-regu-btn"><i class="bi bi-plus-circle"></i> Tambah Regu</button>
+                </div>
+            </div>
+        `;
+        return rombonganDiv;
+    };
+
+
     // Add new Kloter
     tambahKloterBtn.addEventListener('click', () => {
         const newKloterNum = kloterCardContainer.children.length + 1;
@@ -755,6 +1132,27 @@ document.addEventListener('DOMContentLoaded', function () {
         initSortableRombongan(newRombonganContainer);
         debouncedUpdateAllCounts();
     });
+
+    // Function to create HTML for a new Regu
+    const createReguElement = (reguNum) => {
+        const reguCol = document.createElement('div');
+        reguCol.className = 'col-xl-3 col-md-4 col-sm-6 mb-3';
+        reguCol.innerHTML = `
+            <div class="card regu-card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="col"><span>Regu ${reguNum}</span></div>
+                    <div class="col-md-auto"></div>
+                    <div class="col col-lg-auto">
+                        <button class="btn btn-sm btn-outline-danger hapus-regu-btn"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush regu-content-area" style="min-height: 70px;"></ul>
+                </div>
+            </div>
+        `;
+        return reguCol;
+    };
 
 
     // --- EVENT DELEGATION FOR ROMBONGAN & REGU ---
@@ -848,32 +1246,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tambahRombonganBtn) {
             const rombonganContainer = tambahRombonganBtn.closest('.card-body').querySelector('.rombongan-card-container');
             const rombonganCount = rombonganContainer.children.length + 1;
+            const newRombonganCard = createRombonganElement(rombonganCount);
 
-            const newRombonganCard = document.createElement('div');
-            newRombonganCard.className = 'card rombongan mb-3';
-            newRombonganCard.innerHTML = `
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="col">
-                        <span>Rombongan ${rombonganCount}</span>
-                    </div>
-                    <div class="col-md-auto"></div>
-                    <div class="col col-lg-auto">
-                        <button class="btn btn-sm btn-outline-danger hapus-rombongan-btn">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row regu-container">
-                        <!-- Regu cards will be added here -->
-                    </div>
-                    <div class="text-end mt-2">
-                        <button class="btn btn-secondary btn-sm tambah-regu-btn">
-                            <i class="bi bi-plus-circle"></i> Tambah Regu
-                        </button>
-                    </div>
-                </div>
-            `;
             rombonganContainer.appendChild(newRombonganCard);
 
             // Inisialisasi Sortable pada kontainer regu yang baru dibuat
@@ -904,25 +1278,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tambahReguBtn) {
             const reguContainer = tambahReguBtn.closest('.card-body').querySelector('.regu-container');
             const reguCount = reguContainer.children.length + 1;
-
-            const newReguCol = document.createElement('div');
-            newReguCol.className = 'col-xl-3 col-md-4 col-sm-6 mb-3';
-            newReguCol.innerHTML = `
-                <div class="card regu-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div class="col">
-                            <span>Regu ${reguCount}</span>
-                        </div>
-                        <div class="col-md-auto"></div>
-                        <div class="col col-lg-auto">
-                            <button class="btn btn-sm btn-outline-danger hapus-regu-btn">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body p-0"><ul class="list-group list-group-flush regu-content-area" style="min-height: 70px;"></ul></div>
-                </div>
-            `;
+            const newReguCol = createReguElement(reguCount);
             reguContainer.appendChild(newReguCol);
 
             // Inisialisasi dropzone untuk regu yang baru dibuat
@@ -955,16 +1311,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const jemaahItem = jemaahActionBtn.closest('.jemaah-item');
             const jemaahId = jemaahItem.dataset.id;
 
-            // Find the jemaah object from the master data
-            const jemaah = jemaahData.find(j => j.id === jemaahId);
+            const currentRole = jemaahItem.dataset.role;
 
             if (action === 'karom' || action === 'karu') {
-                if (!jemaah || jemaah.role === action) return; // Do nothing if no jemaah or role is already set
-
-                // Update state
-                jemaah.role = action;
+                if (currentRole === action) return; // Do nothing if role is already set
 
                 // Update view
+                // 0. Update data-role attribute
+                jemaahItem.dataset.role = action;
                 // 1. Remove existing role badge
                 const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
                 if (existingRoleBadge) existingRoleBadge.remove();
@@ -989,12 +1343,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 clearItems.forEach(item => item.style.display = 'list-item');
 
             } else if (action === 'clear') {
-                if (!jemaah) return;
-
-                // Update state
-                jemaah.role = null;
+                if (!currentRole) return;
 
                 // Update view
+                delete jemaahItem.dataset.role;
                 // 1. Remove role badge
                 const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
                 if (existingRoleBadge) existingRoleBadge.remove();
@@ -1018,8 +1370,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // If it's a real jemaah, move it back to the main list.
+                const jemaah = jemaahData.find(j => j.id === jemaahId);
                 if (jemaah) {
-                    jemaah.role = null; // Reset the role
                     if (!availableJemaah.some(aj => aj.id === jemaahId)) {
                         availableJemaah.push(jemaah);
                     }
@@ -1032,7 +1384,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    updateAllCountsOnPage();
+    // --- INITIAL RENDER ---
+    // Hapus konten statis dan render dari data manifest
+    if (dataManifest && Array.isArray(dataManifest) && dataManifest.length > 0) {
+        renderManifest(dataManifest);
+    }
+
 });
 
 // --- THEME SWITCHER ---
