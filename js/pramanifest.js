@@ -918,7 +918,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             </div>`;
 
                         nameEl.setAttribute('data-bs-toggle', 'popover');
-                        nameEl.setAttribute('data-bs-trigger', 'hover');
+                        nameEl.setAttribute('data-bs-trigger', 'hover focus');
                         nameEl.setAttribute('data-bs-placement', 'top');
                         nameEl.setAttribute('data-bs-html', 'true');
                         nameEl.setAttribute('data-bs-content', popoverContent);
