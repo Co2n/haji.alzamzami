@@ -317,7 +317,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Regu Counts
         document.querySelectorAll('.regu-card > .card-header').forEach(header => {
             const card = header.closest('.regu-card');
-            const count = card.querySelectorAll('.jemaah-item').length;
+            // const count = card.querySelectorAll('.jemaah-item').length;
+            const count = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
             const titleSpan = header.querySelector('span');
             let badge = header.querySelector('.regu-count-badge');
             if (!badge) {
@@ -336,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const titleSpan = header.querySelector('span');
 
             // Badge yang sudah ada, untuk menghitung jemaah
-            const jemaahCount = card.querySelectorAll('.jemaah-item').length;
+            const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
             let jemaahBadge = header.querySelector('.rombongan-count-badge');
             if (!jemaahBadge) {
                 jemaahBadge = document.createElement('span');
