@@ -333,33 +333,61 @@ document.addEventListener('DOMContentLoaded', function () {
         // Rombongan Counts
         document.querySelectorAll('.rombongan > .card-header').forEach(header => {
             const card = header.closest('.rombongan');
-            const count = card.querySelectorAll('.jemaah-item').length;
             const titleSpan = header.querySelector('span');
-            let badge = header.querySelector('.rombongan-count-badge');
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'badge bg-secondary ms-2 rombongan-count-badge';
+
+            // Badge yang sudah ada, untuk menghitung jemaah
+            const jemaahCount = card.querySelectorAll('.jemaah-item').length;
+            let jemaahBadge = header.querySelector('.rombongan-count-badge');
+            if (!jemaahBadge) {
+                jemaahBadge = document.createElement('span');
+                jemaahBadge.className = 'badge bg-secondary ms-2 rombongan-count-badge';
                 if (titleSpan) {
-                    titleSpan.insertAdjacentElement('afterend', badge);
+                    titleSpan.insertAdjacentElement('afterend', jemaahBadge);
                 }
             }
-            badge.textContent = count;
+            jemaahBadge.textContent = jemaahCount;
+
+            // Badge baru untuk menghitung regu, disisipkan sebelum badge jemaah
+            const reguCount = card.querySelectorAll('.regu-card').length;
+            let reguBadge = header.querySelector('.rombongan-regu-count-badge');
+            if (!reguBadge) {
+                reguBadge = document.createElement('span');
+                reguBadge.className = 'badge bg-info text-dark ms-2 rombongan-regu-count-badge';
+                if (jemaahBadge) {
+                    jemaahBadge.insertAdjacentElement('beforebegin', reguBadge);
+                }
+            }
+            reguBadge.textContent = reguCount;
         });
 
         // Kloter Counts
         document.querySelectorAll('.kloter > .card-header').forEach(header => {
             const card = header.closest('.kloter');
-            const count = card.querySelectorAll('.jemaah-item').length;
             const titleSpan = header.querySelector('span');
-            let badge = header.querySelector('.kloter-count-badge');
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'badge bg-primary ms-2 kloter-count-badge';
+
+            // Badge yang sudah ada, sekarang untuk menghitung jemaah
+            const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+            let jemaahBadge = header.querySelector('.kloter-count-badge');
+            if (!jemaahBadge) {
+                jemaahBadge = document.createElement('span');
+                jemaahBadge.className = 'badge bg-primary ms-2 kloter-count-badge';
                 if (titleSpan) {
-                    titleSpan.insertAdjacentElement('afterend', badge);
+                    titleSpan.insertAdjacentElement('afterend', jemaahBadge);
                 }
             }
-            badge.textContent = count;
+            jemaahBadge.textContent = jemaahCount;
+
+            // Badge baru untuk menghitung rombongan, disisipkan sebelum badge jemaah
+            const rombonganCount = card.querySelectorAll('.rombongan').length;
+            let rombonganBadge = header.querySelector('.kloter-rombongan-count-badge');
+            if (!rombonganBadge) {
+                rombonganBadge = document.createElement('span');
+                rombonganBadge.className = 'badge bg-secondary ms-2 kloter-rombongan-count-badge';
+                if (jemaahBadge) {
+                    jemaahBadge.insertAdjacentElement('beforebegin', rombonganBadge);
+                }
+            }
+            rombonganBadge.textContent = rombonganCount;
         });
 
         // Total Manifest Count
@@ -687,12 +715,18 @@ document.addEventListener('DOMContentLoaded', function () {
         kloterDiv.className = 'card kloter mb-4';
         kloterDiv.innerHTML = `
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Kloter ${kloterNum}</span>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+                <div class="col">
+                    <span>Kloter ${kloterNum}</span>
+                    <span class="badge bg-success mb-1">Aktif</span>
+                </div>
+                <div class="col-md-auto"></div>
+                <div class="col col-lg-auto">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -777,10 +811,15 @@ document.addEventListener('DOMContentLoaded', function () {
             newRombonganCard.className = 'card rombongan mb-3';
             newRombonganCard.innerHTML = `
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Rombongan ${rombonganCount}</span>
-                    <button class="btn btn-sm btn-outline-danger hapus-rombongan-btn">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                    <div class="col">
+                        <span>Rombongan ${rombonganCount}</span>
+                    </div>
+                    <div class="col-md-auto"></div>
+                    <div class="col col-lg-auto">
+                        <button class="btn btn-sm btn-outline-danger hapus-rombongan-btn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row regu-container">
@@ -829,10 +868,15 @@ document.addEventListener('DOMContentLoaded', function () {
             newReguCol.innerHTML = `
                 <div class="card regu-card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Regu ${reguCount}</span>
-                        <button class="btn btn-sm btn-outline-danger hapus-regu-btn">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <div class="col">
+                            <span>Regu ${reguCount}</span>
+                        </div>
+                        <div class="col-md-auto"></div>
+                        <div class="col col-lg-auto">
+                            <button class="btn btn-sm btn-outline-danger hapus-regu-btn">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body p-0"><ul class="list-group list-group-flush regu-content-area" style="min-height: 70px;"></ul></div>
                 </div>
