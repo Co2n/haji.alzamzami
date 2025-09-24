@@ -816,6 +816,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 1. Hapus badge peran (karom/karu)
                 delete itemEl.dataset.role;
 
+                // 2. Hapus fungsionalitas Popover
+                const popoverTriggerEl = itemEl.querySelector('[data-bs-toggle="popover"]');
+                if (popoverTriggerEl) {
+                    const popoverInstance = bootstrap.Popover.getInstance(popoverTriggerEl);
+                    if (popoverInstance) {
+                        popoverInstance.dispose();
+                    }
+                    // Hapus semua atribut data-bs-* yang terkait dengan popover
+                    ['data-bs-toggle', 'data-bs-trigger', 'data-bs-placement', 'data-bs-html', 'data-bs-content', 'data-original-title', 'title'].forEach(attr => popoverTriggerEl.removeAttribute(attr));
+                }
+
+
+
                 // 2. Perbarui detail jemaah ke format lengkap
                 const detailEl = itemEl.querySelector('small.text-muted');
                 if (detailEl && jemaah) {
@@ -895,9 +908,24 @@ document.addEventListener('DOMContentLoaded', function () {
                         detailEl.innerHTML = jemaah.desa_kec;
                     }
 
-                    // Inisialisasi popover untuk item yang baru ditambahkan
-                    const popoverTrigger = itemEl.querySelector('[data-bs-toggle="popover"]');
-                    if (popoverTrigger) new bootstrap.Popover(popoverTrigger);
+                    // Tambahkan dan inisialisasi popover untuk item yang baru ditambahkan
+                    const nameEl = itemEl.querySelector('.fw-bold');
+                    if (nameEl && jemaah) {
+                        const popoverContent = `
+                            <div class='popover-body-custom'>
+                                <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
+                                <div>${jemaah.alamat}</div>
+                            </div>`;
+
+                        nameEl.setAttribute('data-bs-toggle', 'popover');
+                        nameEl.setAttribute('data-bs-trigger', 'hover');
+                        nameEl.setAttribute('data-bs-placement', 'top');
+                        nameEl.setAttribute('data-bs-html', 'true');
+                        nameEl.setAttribute('data-bs-content', popoverContent);
+
+                        // Inisialisasi popover yang baru ditambahkan
+                        new bootstrap.Popover(nameEl);
+                    }
                     debouncedUpdateAllCounts();
                 },
                 onRemove: (evt) => {
