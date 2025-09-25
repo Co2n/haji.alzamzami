@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="col">
                         <span>Kloter 1</span>
-                        <span class="badge bg-success ms-2 kloter-title-bagde">Untitle</span>
+                        <span class="badge bg-warning ms-2 kloter-title-bagde">Untitle</span>
                     </div>
                     <div class="col-md-auto"></div>
                     <div class="col col-lg-auto">
@@ -405,6 +405,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fungsi untuk memperbarui badge hitungan jemaah yang tersedia
+    const updateAvailableJemaahCount = () => {
+        const availableCount = availableJemaah.length;
+        const cardHeader = document.querySelector('.sticky-jemaah-card .card-header');
+        if (cardHeader) {
+            let badge = cardHeader.querySelector('#availableJemaahCount');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge bg-secondary ms-2';
+                badge.id = 'availableJemaahCount';
+                cardHeader.appendChild(badge);
+            }
+            badge.textContent = availableCount;
+        }
+    };
     // Fungsi untuk me-render daftar jemaah ke HTML
     const renderJemaahList = (data) => {
         const jemaahListContainer = document.getElementById('jemaahList');
@@ -421,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listItem.innerHTML = `
                 <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
                 <div>
-                    <span class="badge bg-success mb-1">${jemaah.status}</span>
+                    <span class="badge bg-secondary mb-1">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
                     <small class="text-muted">
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
@@ -454,6 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Panggil fungsi untuk memuat daftar jemaah saat halaman dimuat
     renderJemaahList(availableJemaah);
+    updateAvailableJemaahCount();
 
     // Fungsi untuk mengembalikan jemaah ke daftar utama saat kontainer dihapus
     const returnJemaahToAvailableList = (elementToRemove) => {
@@ -477,6 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (returned) {
             // Memicu event 'input' akan menjalankan ulang filter pencarian dan me-render ulang daftar
             cariJemaahInput.dispatchEvent(new Event('input'));
+            updateAvailableJemaahCount();
         }
     };
 
@@ -510,9 +527,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const karomDisabled = role === 'karom' ? 'disabled' : '';
         const karuDisabled = role === 'karu' ? 'disabled' : '';
         const roleBadgeHTML = role === 'karom'
-            ? '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karom</span>'
+            ? '<span class="badge bg-primary ms-1 jemaah-role-badge">Karom</span>'
             : role === 'karu' ?
-            '<span class="badge bg-info text-dark ms-1 jemaah-role-badge">Karu</span>' :
+            '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karu</span>' :
             '';
         const clearSetDisplay = role ? 'style="display: list-item;"' : 'style="display: none;"';
 
@@ -526,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function () {
         listItem.innerHTML = `
             <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
             <div>
-                <span class="badge bg-success mb-1">${jemaah.status}</span>${roleBadgeHTML}
+                <span class="badge bg-secondary mb-1">${jemaah.status}</span>${roleBadgeHTML}
                 <div class="fw-bold" 
                      data-bs-toggle="popover" 
                      data-bs-trigger="hover" 
@@ -562,8 +579,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const titleBadge = kloterEl.querySelector('.kloter-title-bagde');
             if (kloter.kodeEmbarkasi && kloter.noKloter) {
                 titleBadge.textContent = `${kloter.kodeEmbarkasi}-${kloter.noKloter}`;
-                titleBadge.classList.remove('bg-success');
-                titleBadge.classList.add('bg-warning', 'text-dark');
+                titleBadge.classList.remove('bg-warning');
+                titleBadge.classList.add('bg-primary');
             }
 
             const rombonganContainer = kloterEl.querySelector('.rombongan-card-container');
@@ -613,7 +630,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let badge = header.querySelector('.regu-count-badge');
             if (!badge) {
                 badge = document.createElement('span');
-                badge.className = 'badge bg-info text-dark ms-2 regu-count-badge';
+                badge.className = 'badge bg-secondary ms-2 regu-count-badge';
                 if (titleSpan) {
                     titleSpan.insertAdjacentElement('afterend', badge);
                 }
@@ -643,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let reguBadge = header.querySelector('.rombongan-regu-count-badge');
             if (!reguBadge) {
                 reguBadge = document.createElement('span');
-                reguBadge.className = 'badge bg-info text-dark ms-2 rombongan-regu-count-badge';
+                reguBadge.className = 'badge bg-secondary ms-2 rombongan-regu-count-badge';
                 if (jemaahBadge) {
                     jemaahBadge.insertAdjacentElement('beforebegin', reguBadge);
                 }
@@ -661,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let jemaahBadge = header.querySelector('.kloter-count-badge');
             if (!jemaahBadge) {
                 jemaahBadge = document.createElement('span');
-                jemaahBadge.className = 'badge bg-primary ms-2 kloter-count-badge';
+                jemaahBadge.className = 'badge bg-secondary ms-2 kloter-count-badge';
                 if (titleSpan) {
                     titleSpan.insertAdjacentElement('afterend', jemaahBadge);
                 }
@@ -867,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!jemaah.nama.toLowerCase().includes(searchTerm) && !jemaah.alamat.toLowerCase().includes(searchTerm)) {
                     itemEl.remove(); // Hapus dari DOM jika tidak cocok dengan filter
                 }
+                updateAvailableJemaahCount();
             },
             onRemove: function (evt) { // Item dragged OUT OF this list
                 // Remove from state
@@ -1100,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col">
                     <span>Kloter ${kloterNum}</span>
-                    <span class="badge bg-success ms-2 kloter-title-bagde">Untitle</span>
+                    <span class="badge bg-warning ms-2 kloter-title-bagde">Untitle</span>
                 </div>
                 <div class="col-md-auto"></div>
                 <div class="col col-lg-auto">
@@ -1202,8 +1220,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const titleBadge = currentEditingKloterCard.querySelector('.kloter-title-bagde');
                 if (titleBadge) {
                     titleBadge.textContent = `${embarkasi}-${noKloter}`;
-                    titleBadge.classList.remove('bg-success');
-                    titleBadge.classList.add('bg-warning', 'text-dark');
+                    titleBadge.classList.remove('bg-warning');
+                    titleBadge.classList.add('bg-primary');
                 }
                 setupKloterModal.hide();
             } else {
@@ -1355,7 +1373,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const statusBadge = jemaahItem.querySelector('.badge.bg-success');
                 if (statusBadge) {
                     const newBadge = document.createElement('span');
-                    newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-warning text-dark' : 'bg-info text-dark'}`;
+                    newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-primary' : 'bg-warning text-dark'}`;
                     newBadge.textContent = action.charAt(0).toUpperCase() + action.slice(1);
                     statusBadge.insertAdjacentElement('afterend', newBadge);
                 }
@@ -1407,6 +1425,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 jemaahItem.remove(); // Remove from the regu list
                 cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
+                updateAvailableJemaahCount();
                 debouncedUpdateAllCounts();
             }
         }
