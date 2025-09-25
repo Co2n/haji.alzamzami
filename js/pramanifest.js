@@ -1,40 +1,50 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    // --- JEMAAH LIST MANAGEMENT ---
+    const selectTahunEl = document.getElementById('selectTahun');
+    const reloadButton = document.getElementById('reloadButton');
 
-    async function fetchJemaahData() {
+    // --- DATA FETCHING ---
+    async function fetchJemaahData(musim) {
         try {
             const response = await fetch('json/jemaah.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return await response.json();
+            const allData = await response.json();
+            const seasonData = allData.find(d => d.musim === musim);
+            return seasonData ? seasonData.jemaah : [];
         } catch (error) {
-            console.error("Could not fetch jemaah data:", error);
+            console.error(`Could not fetch jemaah data for musim ${musim}:`, error);
             return []; // Return empty array on error
         }
     }
 
-    const jemaahData = await fetchJemaahData();
-
-    // --- DATA MANIFEST MANAGEMENT ---
-
-    async function fetchManifestData() {
+    async function fetchManifestData(musim) {
         try {
             const response = await fetch('json/manifest.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return await response.json();
+            const allData = await response.json();
+            const seasonData = allData.find(d => d.musim === musim);
+            return seasonData ? seasonData.manifest : [];
         } catch (error) {
-            console.error("Could not fetch manifest data:", error);
+            console.error(`Could not fetch manifest data for musim ${musim}:`, error);
             return []; // Return empty array on error
         }
     }
 
-    const dataManifest = await fetchManifestData();
+    // --- MAIN APP LOGIC ---
+    async function loadAndInitialize() {
+        const selectedMusim = selectTahunEl.value;
+        const jemaahData = await fetchJemaahData(selectedMusim);
+        const dataManifest = await fetchManifestData(selectedMusim);
+        initializeApp(jemaahData, dataManifest);
+    }
 
-function initializeApp(jemaahData, dataManifest) {
+    function initializeApp(jemaahData, dataManifest) {
     // --- DATA VALIDATION ---
+
+
     if (!dataManifest || !Array.isArray(dataManifest) || dataManifest.length === 0) {
         console.warn("dataManifest bernilai null, kosong, atau bukan sebuah array. Inisialisasi manifest akan dilewati.");
         // Kosongkan kontainer kloter jika tidak ada data
@@ -1144,11 +1154,14 @@ function initializeApp(jemaahData, dataManifest) {
         renderManifest(dataManifest);
     }
 }
+    // --- EVENT LISTENERS ---
+    if (reloadButton) {
+        reloadButton.addEventListener('click', loadAndInitialize);
+    }
 
-initializeApp(jemaahData, dataManifest);
-
+    // Initial load
+    loadAndInitialize();
 });
-
 // --- THEME SWITCHER ---
 (() => {
     'use strict'
