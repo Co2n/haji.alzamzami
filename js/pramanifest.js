@@ -45,7 +45,7 @@ function initializeApp(jemaahData, dataManifest) {
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="col">
                         <span>Kloter 1</span>
-                        <span class="badge bg-warning ms-2 kloter-title-bagde">Untitle</span>
+                        <span class="badge ms-2 kloter-title-bagde text-bg-warning">Belum ada kode embarkasi dan kloter -></span>
                     </div>
                     <div class="col-md-auto"></div>
                     <div class="col col-lg-auto">
@@ -61,11 +61,9 @@ function initializeApp(jemaahData, dataManifest) {
                     <div class="rombongan-card-container">
                         <!-- Rombongan cards will be added here -->
                     </div>
-                    <div class="text-end mt-3">
-                        <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
-                            <i class="bi bi-plus-circle"></i> Tambah Rombongan
-                        </button>
-                    </div>
+                    <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
+                        <i class="bi bi-plus-circle"></i> Tambah Rombongan
+                    </button>
                 </div>
             </div>
         </div>
@@ -283,8 +281,8 @@ function initializeApp(jemaahData, dataManifest) {
             const titleBadge = kloterEl.querySelector('.kloter-title-bagde');
             if (kloter.kodeEmbarkasi && kloter.noKloter) {
                 titleBadge.textContent = `${kloter.kodeEmbarkasi}-${kloter.noKloter}`;
-                titleBadge.classList.remove('bg-warning');
-                titleBadge.classList.add('bg-primary');
+                titleBadge.classList.remove('text-bg-warning');
+                titleBadge.classList.add('text-bg-primary');
             }
 
             const rombonganContainer = kloterEl.querySelector('.rombongan-card-container');
@@ -760,6 +758,14 @@ function initializeApp(jemaahData, dataManifest) {
                     }
                 }
 
+                // Style the "Tambah Regu" button
+                const tambahReguBtn = card.querySelector('.tambah-regu-btn');
+                if (tambahReguBtn) {
+                    tambahReguBtn.style.backgroundColor = style.bg;
+                    tambahReguBtn.style.color = style.text;
+                    tambahReguBtn.style.borderColor = style.text; // Optional: style the border as well
+                }
+
                 // Apply the same style to child Regu cards
                 const reguContainer = card.querySelector('.regu-container');
                 if (reguContainer) {
@@ -823,7 +829,7 @@ function initializeApp(jemaahData, dataManifest) {
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col">
                     <span>Kloter ${kloterNum}</span>
-                    <span class="badge bg-warning ms-2 kloter-title-bagde">Untitle</span>
+                    <span class="badge ms-2 kloter-title-bagde text-bg-warning">Belum ada kode embarkasi dan kloter -></span>
                 </div>
                 <div class="col-md-auto"></div>
                 <div class="col col-lg-auto">
@@ -839,11 +845,9 @@ function initializeApp(jemaahData, dataManifest) {
                 <div class="rombongan-card-container">
                     <!-- Rombongan cards will be added here -->
                 </div>
-                <div class="text-end mt-3">
-                    <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
-                        <i class="bi bi-plus-circle"></i> Tambah Rombongan
-                    </button>
-                </div>
+                <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
+                    <i class="bi bi-plus-circle"></i> Tambah Rombongan
+                </button>
             </div>
         `;
         return kloterDiv;
@@ -863,9 +867,7 @@ function initializeApp(jemaahData, dataManifest) {
             </div>
             <div class="card-body">
                 <div class="row regu-container"></div>
-                <div class="text-end mt-2">
-                    <button class="btn btn-secondary btn-sm tambah-regu-btn"><i class="bi bi-plus-circle"></i> Tambah Regu</button>
-                </div>
+                <button class="btn btn-secondary btn-sm tambah-regu-btn"><i class="bi bi-plus-circle"></i> Tambah Regu</button>
             </div>
         `;
         return rombonganDiv;
@@ -925,8 +927,8 @@ function initializeApp(jemaahData, dataManifest) {
                 const titleBadge = currentEditingKloterCard.querySelector('.kloter-title-bagde');
                 if (titleBadge) {
                     titleBadge.textContent = `${embarkasi}-${noKloter}`;
-                    titleBadge.classList.remove('bg-warning');
-                    titleBadge.classList.add('bg-primary');
+                    titleBadge.classList.remove('text-bg-warning');
+                    titleBadge.classList.add('text-bg-primary');
                 }
                 setupKloterModal.hide();
             } else {
