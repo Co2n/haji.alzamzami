@@ -1,335 +1,39 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     // --- JEMAAH LIST MANAGEMENT ---
 
-    // Data ini mensimulasikan respons dari API JSON.
-    const jemaahData = [
-        {
-            id: "jemaah-1",
-            nama: "Ahmad Subarjo",
-            alamat: "Jl. Merdeka No. 1, Jakarta",
-            desa_kec: "Menteng - Jakarta Pusat",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Sastra II",
-            pekerjaan: "PNS"
-            
-        },
-        {
-            id: "jemaah-2",
-            nama: "Budi Santoso",
-            alamat: "Jl. Pahlawan No. 10, Surabaya",
-            desa_kec: "Bubutan - Surabaya",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Wiraswasta"
-            
-        },
-        {
-            id: "jemaah-3",
-            nama: "Citra Lestari",
-            alamat: "Jl. Kenanga No. 5, Bandung",
-            desa_kec: "Coblong - Bandung",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Karyawan Swasta"
-            
-        },
-        {
-            id: "jemaah-4",
-            nama: "Dewi Anggraini",
-            alamat: "Jl. Mawar No. 22, Yogyakarta",
-            desa_kec: "Gondokusuman - Yogyakarta",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Mengurus Rumah Tangga"
-            
-        },
-        {
-            id: "jemaah-5",
-            nama: "Eko Prasetyo",
-            alamat: "Jl. Sudirman Kav. 5, Semarang",
-            desa_kec: "Semarang Tengah - Semarang",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Karyawan BUMN"
-            
-        },
-        {
-            id: "jemaah-6",
-            nama: "Fajar Nugroho",
-            alamat: "Jl. Gatot Subroto No. 15, Medan",
-            desa_kec: "Medan Petisah - Medan",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Wiraswasta"
-            
-        },
-        {
-            id: "jemaah-7",
-            nama: "Gita Permata",
-            alamat: "Jl. Diponegoro No. 8, Makassar",
-            desa_kec: "Ujung Pandang - Makassar",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Sastra II",
-            pekerjaan: "Dokter"
-            
-        },
-        {
-            id: "jemaah-8",
-            nama: "Hadi Wibowo",
-            alamat: "Jl. Imam Bonjol No. 3, Palembang",
-            desa_kec: "Ilir Timur I - Palembang",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTP / Sederajat",
-            pekerjaan: "Petani / Pekebun"
-            
-        },
-        {
-            id: "jemaah-9",
-            nama: "Indah Sari",
-            alamat: "Jl. Ahmad Yani No. 12, Denpasar",
-            desa_kec: "Denpasar Selatan - Denpasar",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Guru"
-            
-        },
-        {
-            id: "jemaah-10",
-            nama: "Joko Susilo",
-            alamat: "Jl. Teuku Umar No. 7, Balikpapan",
-            desa_kec: "Balikpapan Kota - Balikpapan",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Wiraswasta"
-            
-        },
-        {
-            id: "jemaah-11",
-            nama: "Kartika Dewi",
-            alamat: "Jl. Gajah Mada No. 9, Pontianak",
-            desa_kec: "Pontianak Kota - Pontianak",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Sastra II",
-            pekerjaan: "PNS"
-            
-        },
-        {
-            id: "jemaah-12",
-            nama: "Lukman Hakim",
-            alamat: "Jl. Pangeran Antasari No. 2, Banjarmasin",
-            desa_kec: "Banjarmasin Tengah - Banjarmasin",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Karyawan Swasta"
-            
-        },
-        {
-            id: "jemaah-13",
-            nama: "Maya Anggraini",
-            alamat: "Jl. Sam Ratulangi No. 11, Manado",
-            desa_kec: "Wanea - Manado",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Mengurus Rumah Tangga"
-            
-        },
-        {
-            id: "jemaah-14",
-            nama: "Nanda Pratama",
-            alamat: "Jl. Wolter Monginsidi No. 5, Jayapura",
-            desa_kec: "Jayapura Utara - Jayapura",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Tamat SD / Sederajat",
-            pekerjaan: "Pedagang"
-            
-        },
-        {
-            id: "jemaah-15",
-            nama: "Olivia Putri",
-            alamat: "Jl. Pattimura No. 1, Ambon",
-            desa_kec: "Nusaniwe - Ambon",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Ibu Rumah Tangga"
-            
-        },
-        {
-            id: "jemaah-16",
-            nama: "Putra Wijaya",
-            alamat: "Jl. Sudirman No. 101, Pekanbaru",
-            desa_kec: "Pekanbaru Kota - Pekanbaru",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Sastra II",
-            pekerjaan: "Dosen"
-            
-        },
-        {
-            id: "jemaah-17",
-            nama: "Rina Marlina",
-            alamat: "Jl. Kartini No. 21, Bandar Lampung",
-            desa_kec: "Tanjung Karang Pusat - Bandar Lampung",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Pegawai Negeri Sipil"
-            
-        },
-        {
-            id: "jemaah-18",
-            nama: "Surya Adi",
-            alamat: "Jl. Hasanuddin No. 4, Mataram",
-            desa_kec: "Cakranegara - Mataram",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Wiraswasta"
-            
-        },
-        {
-            id: "jemaah-19",
-            nama: "Tiara Anindya",
-            alamat: "Jl. Sisingamangaraja No. 88, Kupang",
-            desa_kec: "Oebobo - Kupang",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "SLTP / Sederajat",
-            pekerjaan: "Mengurus Rumah Tangga"
-            
-        },
-        {
-            id: "jemaah-20",
-            nama: "Umar Zaki",
-            alamat: "Jl. Jenderal Sudirman No. 12, Ternate",
-            desa_kec: "Ternate Tengah - Ternate",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "Tamat SD / Sederajat",
-            pekerjaan: "Nelayan"
-            
-        },
-        {
-            id: "jemaah-21",
-            nama: "Vina Septiani",
-            alamat: "Jl. Diponegoro No. 30, Sorong",
-            desa_kec: "Sorong Manoi - Sorong",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Diploma IV / Sastra I",
-            pekerjaan: "Bidan"
-            
-        },
-        {
-            id: "jemaah-22",
-            nama: "Wahyu Hidayat",
-            alamat: "Jl. Merdeka Timur No. 5, Manokwari",
-            desa_kec: "Manokwari Barat - Manokwari",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "L",
-            pendidikan: "SLTA / Sederajat",
-            pekerjaan: "Karyawan Swasta"
-            
-        },
-        {
-            id: "jemaah-23",
-            nama: "Yulia Astuti",
-            alamat: "Jl. Pahlawan Revolusi No. 1, Nabire",
-            desa_kec: "Nabire - Nabire",
-            foto: "img/foto.jpg",
-            status: "Aktif",
-            gender: "P",
-            pendidikan: "Sastra II",
-            pekerjaan: "Dosen"
-            
+    async function fetchJemaahData() {
+        try {
+            const response = await fetch('json/jemaah.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Could not fetch jemaah data:", error);
+            return []; // Return empty array on error
         }
-    ];
+    }
 
-    // Data ini mensimulasikan respons dari API JSON untuk struktur manifest.
-    // Nanti, Anda bisa mengganti bagian ini dengan `fetch()` ke API sebenarnya.
-    const dataManifest = [
-        {
-            id: "kloter-1",
-            kodeEmbarkasi: "KJT",
-            noKloter: "01",
-            rombongan: [
-                {
-                    id: "rombongan-1-1",
-                    regu: [
-                        { id: "regu-1-1-1", jemaah: [{id: "jemaah-1", role: "karom"}, {id: "jemaah-2", role: "karu"}, {id: "jemaah-3", role: null}] },
-                        { id: "regu-1-1-2", jemaah: [{id: "jemaah-4", role: "karu"}, {id: "jemaah-5", role: null}] },
-                        { id: "regu-1-1-3", jemaah: [{id: "jemaah-6", role: "karu"}, {id: "jemaah-7", role: null}] },
-                        { id: "regu-1-1-4", jemaah: [{id: "jemaah-8", role: "karu"}, {id: "jemaah-9", role: null}] },
-                    ]
-                },
-                {
-                    id: "rombongan-1-2",
-                    regu: [
-                        { id: "regu-1-2-1", jemaah: [{id: "jemaah-10", role: "karom"}, {id: "jemaah-11", role: "karu"}] },
-                        { id: "regu-1-2-2", jemaah: [{id: "jemaah-12", role: "karu"}, {id: "jemaah-13", role: null}] },
-                        { id: "regu-1-2-3", jemaah: [{id: "jemaah-14", role: "karu"}, {id: "jemaah-15", role: null}] },
-                        { id: "regu-1-2-4", jemaah: [{id: "jemaah-16", role: "karu"}, {id: "jemaah-17"}] },
-                    ]
-                },
-                {
-                    id: "rombongan-1-3",
-                    regu: [] // Rombongan 3 kosong
-                }
-            ]
-        },
-        {
-            id: "kloter-2",
-            kodeEmbarkasi: "KJT",
-            noKloter: "02",
-            rombongan: [
-                {
-                    id: "rombongan-2-1",
-                    regu: [
-                        { id: "regu-2-1-1", jemaah: [{id: "jemaah-unknown", role: null}, {id: "jemaah-unknown", role: null}] },
-                        { id: "regu-2-1-2", jemaah: [{id: "jemaah-18", role: null}, {id: "jemaah-19", role: null}] },
-                        { id: "regu-2-1-3", jemaah: [{id: "jemaah-20", role: null}, {id: "jemaah-21", role: null}] },
-                    ]
-                }
-            ]
+    const jemaahData = await fetchJemaahData();
+
+    // --- DATA MANIFEST MANAGEMENT ---
+
+    async function fetchManifestData() {
+        try {
+            const response = await fetch('json/manifest.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Could not fetch manifest data:", error);
+            return []; // Return empty array on error
         }
-    ];
+    }
 
+    const dataManifest = await fetchManifestData();
+
+function initializeApp(jemaahData, dataManifest) {
     // --- DATA VALIDATION ---
     if (!dataManifest || !Array.isArray(dataManifest) || dataManifest.length === 0) {
         console.warn("dataManifest bernilai null, kosong, atau bukan sebuah array. Inisialisasi manifest akan dilewati.");
@@ -1437,6 +1141,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dataManifest && Array.isArray(dataManifest) && dataManifest.length > 0) {
         renderManifest(dataManifest);
     }
+}
+
+initializeApp(jemaahData, dataManifest);
 
 });
 
@@ -1497,4 +1204,4 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
     })
-})()
+})();

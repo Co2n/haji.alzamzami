@@ -1,0 +1,46 @@
+[
+    {
+        "id": "kloter-1",
+        "kodeEmbarkasi": "KJT",
+        "noKloter": "01",
+        "rombongan": [
+            {
+                "id": "rombongan-1-1",
+                "regu": [
+                    { "id": "regu-1-1-1", "jemaah": [{ "id": "jemaah-1", "role": "karom" }, { "id": "jemaah-2", "role": "karu" }, { "id": "jemaah-3", "role": null }] },
+                    { "id": "regu-1-1-2", "jemaah": [{ "id": "jemaah-4", "role": "karu" }, { "id": "jemaah-5", "role": null }] },
+                    { "id": "regu-1-1-3", "jemaah": [{ "id": "jemaah-6", "role": "karu" }, { "id": "jemaah-7", "role": null }] },
+                    { "id": "regu-1-1-4", "jemaah": [{ "id": "jemaah-8", "role": "karu" }, { "id": "jemaah-9", "role": null }] }
+                ]
+            },
+            {
+                "id": "rombongan-1-2",
+                "regu": [
+                    { "id": "regu-1-2-1", "jemaah": [{ "id": "jemaah-10", "role": "karom" }, { "id": "jemaah-11", "role": "karu" }] },
+                    { "id": "regu-1-2-2", "jemaah": [{ "id": "jemaah-12", "role": "karu" }, { "id": "jemaah-13", "role": null }] },
+                    { "id": "regu-1-2-3", "jemaah": [{ "id": "jemaah-14", "role": "karu" }, { "id": "jemaah-15", "role": null }] },
+                    { "id": "regu-1-2-4", "jemaah": [{ "id": "jemaah-16", "role": "karu" }, { "id": "jemaah-17" }] }
+                ]
+            },
+            {
+                "id": "rombongan-1-3",
+                "regu": []
+            }
+        ]
+    },
+    {
+        "id": "kloter-2",
+        "kodeEmbarkasi": "KJT",
+        "noKloter": "02",
+        "rombongan": [
+            {
+                "id": "rombongan-2-1",
+                "regu": [
+                    { "id": "regu-2-1-1", "jemaah": [{ "id": "jemaah-unknown", "role": null }, { "id": "jemaah-unknown", "role": null }] },
+                    { "id": "regu-2-1-2", "jemaah": [{ "id": "jemaah-18", "role": null }, { "id": "jemaah-19", "role": null }] },
+                    { "id": "regu-2-1-3", "jemaah": [{ "id": "jemaah-20", "role": null }, { "id": "jemaah-21", "role": null }] }
+                ]
+            }
+        ]
+    }
+]
