@@ -889,6 +889,7 @@ document.addEventListener('DOMContentLoaded', function () {
             onRemove: function (evt) { // Item dragged OUT OF this list
                 // Remove from state
                 availableJemaah = availableJemaah.filter(j => j.id !== evt.item.dataset.id);
+                updateAvailableJemaahCount();
             }
         });
     }
