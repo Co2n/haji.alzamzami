@@ -1370,7 +1370,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (existingRoleBadge) existingRoleBadge.remove();
 
                 // 2. Add new role badge
-                const statusBadge = jemaahItem.querySelector('.badge.bg-success');
+                const statusBadge = jemaahItem.querySelector('.badge.bg-secondary'); // membidik badge status untuk set karu karom
                 if (statusBadge) {
                     const newBadge = document.createElement('span');
                     newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-primary' : 'bg-warning text-dark'}`;
