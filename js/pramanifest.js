@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function fetchManifestData(musim) {
         try {
-            const response = await fetch('json/manifest.json');
+            const response = await fetch('json/manifes.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <small class="text-muted">
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
                         ${jemaah.alamat}<br>
-                        ${jemaah.desa_kec}
+                        ${jemaah.desa} - ${jemaah.kecamatan}
                     </small>
                 </div>
                 <div class="dropdown ms-auto jemaah-item-menu">
@@ -248,6 +248,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Konten untuk popover
         const popoverContent = `
             <div class='popover-body-custom'>
+                <div>${jemaah.no_porsi}</div>
                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                 <div>${jemaah.alamat}</div>
             </div>`;
@@ -265,7 +266,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                      ${jemaah.nama} 
                      <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i>
                 </div>
-                <small class="text-muted">${jemaah.desa_kec}</small>
+                <small class="text-muted">${jemaah.desa} - ${jemaah.kecamatan}</small>
             </div>
             <div class="dropdown ms-auto jemaah-item-menu">
                 <button class="btn btn-sm btn-light py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
@@ -564,7 +565,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     detailEl.innerHTML = `
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
                         ${jemaah.alamat}<br>
-                        ${jemaah.desa_kec}
+                        ${jemaah.desa} - ${jemaah.kecamatan}
                     `;
                 }
                 const karomBtn = itemEl.querySelector('[data-action="karom"]');
@@ -631,12 +632,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                         menu.style.display = ''; // Menghapus inline style 'display: none'
                     }
 
-                    // Perbarui detail jemaah ke format ringkas (hanya desa_kec)
+                    // Perbarui detail jemaah ke format ringkas (hanya desa - kecamatan)
                     const jemaahId = itemEl.dataset.id;
                     const jemaah = jemaahData.find(j => j.id === jemaahId);
                     const detailEl = itemEl.querySelector('small.text-muted');
                     if (detailEl && jemaah) {
-                        detailEl.innerHTML = jemaah.desa_kec;
+                        detailEl.innerHTML = `${jemaah.desa} - ${jemaah.kecamatan}`;
                     }
 
                     // Tambahkan dan inisialisasi popover untuk item yang baru ditambahkan
@@ -644,6 +645,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     if (nameEl && jemaah) {
                         const popoverContent = `
                             <div class='popover-body-custom'>
+                                <div>${jemaah.no_porsi}</div>
                                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                                 <div>${jemaah.alamat}</div>
                             </div>`;
