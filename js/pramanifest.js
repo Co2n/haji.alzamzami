@@ -1,11 +1,25 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const selectTahunEl = document.getElementById('selectTahun');
     const reloadButton = document.getElementById('reloadButton');
+    const loadingContainer = document.getElementById('loading-container');
+    const progressBar = document.getElementById('loading-progress-bar');
+
+    // --- PROGRESS BAR UTILITIES ---
+    const showProgressBar = () => {
+        if (loadingContainer) loadingContainer.style.display = 'block';
+    };
+    const hideProgressBar = () => {
+        if (loadingContainer) loadingContainer.style.display = 'none';
+    };
+    const updateProgressBar = (percentage) => {
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+    };
 
     // --- DATA FETCHING ---
     async function fetchJemaahData(musim) {
         try {
             const response = await fetch('json/jemaah.json');
+            // const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -20,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function fetchManifestData(musim) {
         try {
-            const response = await fetch('json/manifes.json');
+            const response = await fetch('json/manifest.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -35,10 +49,28 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // --- MAIN APP LOGIC ---
     async function loadAndInitialize() {
-        const selectedMusim = selectTahunEl.value;
-        const jemaahData = await fetchJemaahData(selectedMusim);
-        const dataManifest = await fetchManifestData(selectedMusim);
-        initializeApp(jemaahData, dataManifest);
+        showProgressBar();
+        updateProgressBar(10); // Mulai loading
+        try {
+            const selectedMusim = selectTahunEl.value;
+
+            const jemaahData = await fetchJemaahData(selectedMusim);
+            updateProgressBar(50); // Setengah jalan setelah fetch pertama
+
+            const dataManifest = await fetchManifestData(selectedMusim);
+            updateProgressBar(90); // Hampir selesai setelah fetch kedua
+
+            initializeApp(jemaahData, dataManifest);
+            updateProgressBar(100); // Selesai
+        } catch (error) {
+            console.error("Gagal memuat data:", error);
+        } finally {
+            // Sembunyikan progress bar setelah sedikit jeda agar terlihat selesai
+            setTimeout(() => {
+                hideProgressBar();
+                updateProgressBar(0); // Reset untuk pemanggilan berikutnya
+            }, 500);
+        }
     }
 
     function initializeApp(jemaahData, dataManifest) {
@@ -144,9 +176,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaah.id;
+            const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
 
             listItem.innerHTML = `
-                <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
+                <img src="${fotoSrc}" height="60px" width="50px" class="rounded img-fluid me-3 zona-foto" alt="Foto ${jemaah.nama}">
                 <div>
                     <span class="badge bg-secondary mb-1">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
@@ -220,7 +253,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (role) listItem.dataset.role = role;
         if (jemaahId === 'jemaah-unknown') {
             listItem.innerHTML = `
-                <img src="img/unknown.jpg" height="50px" width="50px" class="rounded-circle me-3" alt="Foto Jemaah Unknown">
+                <img src="img/unknown.jpg" height="50px" width="50px" class="rounded img-fluid me-3 zona-foto" alt="Foto Jemaah Unknown">
                 <div>
                     <div class="fw-bold">Jemaah Unknown</div>
                     <small class="text-muted">Placeholder</small>
@@ -237,6 +270,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (!jemaah) return null;
 
         const karomDisabled = role === 'karom' ? 'disabled' : '';
+        const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
         const karuDisabled = role === 'karu' ? 'disabled' : '';
         const roleBadgeHTML = role === 'karom'
             ? '<span class="badge bg-primary ms-1 jemaah-role-badge">Karom</span>'
@@ -254,7 +288,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>`;
 
         listItem.innerHTML = `
-            <img src="${jemaah.foto}" height="50px" width="50px" class="rounded-circle me-3" alt="Foto ${jemaah.nama}">
+            <img src="${fotoSrc}" height="60px" width="50px" class="rounded me-3 img-fluid zona-foto" alt="Foto ${jemaah.nama}">
             <div>
                 <span class="badge bg-secondary mb-1">${jemaah.status}</span>${roleBadgeHTML}
                 <div class="fw-bold" 
@@ -488,7 +522,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             sort: false, // Disable sorting within this container
             ghostClass: 'sortable-ghost',
             forceFallback: true,
-            handle: '.rounded-circle',
+            handle: '.zona-foto',
         });
     }
 
@@ -506,7 +540,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             ghostClass: 'sortable-ghost',
             forceFallback: true,
             sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
-            handle: '.rounded-circle',
+            handle: '.zona-foto',
             onAdd: function (evt) { // Item dropped INTO this list
                 const item = evt.item;
                 const fromList = evt.from;
@@ -621,7 +655,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
                 forceFallback: true,
-                handle: '.rounded-circle',
+                handle: '.zona-foto',
                 onAdd: (evt) => {
                     updateJemaahItemNumbering(evt.to);
 
