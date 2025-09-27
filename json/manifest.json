@@ -2,8 +2,8 @@
   {
     "date": "2023-09-03T17:00:00.000Z",
     "timestamp": 1693743600000,
-    "versi": "v1",
     "musim": "1446",
+    "versi": "v1",
     "manifest": [
       {
         "id": "kloter-1",
@@ -110,8 +110,8 @@
   {
     "date": "2024-06-10T17:00:00.000Z",
     "timestamp": 1717988400000,
-    "versi": "v2",
     "musim": "1447",
+    "versi": "v2",
     "manifest": [
       {
         "id": "kloter-1",

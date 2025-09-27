@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     // --- DATA FETCHING ---
     async function fetchJemaahData(musim) {
         try {
-            const response = await fetch('json/jemaah.json');
-            // const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
+            // const response = await fetch('json/jemaah.json');
+            const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -500,7 +500,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             // Filter dari jemaah yang tersedia, bukan dari data master
             const filteredData = availableJemaah.filter(jemaah =>
                 jemaah.nama.toLowerCase().includes(searchTerm) ||
-                jemaah.alamat.toLowerCase().includes(searchTerm)
+                jemaah.status.toLowerCase().includes(searchTerm) ||
+                jemaah.pekerjaan.toLowerCase().includes(searchTerm) ||
+                jemaah.pendidikan.toLowerCase().includes(searchTerm) ||
+                jemaah.desa.toLowerCase().includes(searchTerm) ||
+                jemaah.kecamatan.toLowerCase().includes(searchTerm)
             );
             renderJemaahList(filteredData);
         });
