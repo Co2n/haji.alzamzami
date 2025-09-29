@@ -531,23 +531,23 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         };
 
-    // --- SEARCH JEMAAH ---
-    const cariJemaahInput = document.getElementById('cariJemaahInput');
-    if (cariJemaahInput) {
-        cariJemaahInput.addEventListener('input', () => {
-            const searchTerm = cariJemaahInput.value.toLowerCase();
-            // Filter dari jemaah yang tersedia, bukan dari data master
-            const filteredData = availableJemaah.filter(jemaah =>
-                jemaah.nama.toLowerCase().includes(searchTerm) ||
-                jemaah.status.toLowerCase().includes(searchTerm) ||
-                jemaah.pekerjaan.toLowerCase().includes(searchTerm) ||
-                jemaah.pendidikan.toLowerCase().includes(searchTerm) ||
-                jemaah.desa.toLowerCase().includes(searchTerm) ||
-                jemaah.kecamatan.toLowerCase().includes(searchTerm)
-            );
-            renderJemaahList(filteredData);
-        });
-    }
+        // --- SEARCH JEMAAH ---
+        const cariJemaahInput = document.getElementById('cariJemaahInput');
+        if (cariJemaahInput) {
+            cariJemaahInput.addEventListener('input', () => {
+                const searchTerm = cariJemaahInput.value.toLowerCase();
+                // Filter dari jemaah yang tersedia, bukan dari data master
+                const filteredData = availableJemaah.filter(jemaah =>
+                    jemaah.nama.toLowerCase().includes(searchTerm) ||
+                    jemaah.status.toLowerCase().includes(searchTerm) ||
+                    jemaah.pekerjaan.toLowerCase().includes(searchTerm) ||
+                    jemaah.pendidikan.toLowerCase().includes(searchTerm) ||
+                    jemaah.desa.toLowerCase().includes(searchTerm) ||
+                    jemaah.kecamatan.toLowerCase().includes(searchTerm)
+                );
+                renderJemaahList(filteredData);
+            });
+        }
 
 
         // --- SORTABLEJS INITIALIZATION ---
