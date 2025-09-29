@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const selectTahunEl = document.getElementById('selectTahun');
     const reloadButton = document.getElementById('reloadButton');
+    const selectVersiEl = document.getElementById('selectVersi');
     const loadingContainer = document.getElementById('loading-container');
     const progressBar = document.getElementById('loading-progress-bar');
 
@@ -18,8 +19,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     // --- DATA FETCHING ---
     async function fetchJemaahData(musim) {
         try {
-            // const response = await fetch('json/jemaah.json');
-            const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
+            const response = await fetch('json/jemaah.json');
+            // const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -32,17 +33,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    async function fetchManifestData(musim) {
+    async function fetchManifestData(musim, versi) {
         try {
             const response = await fetch('json/manifest.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const allData = await response.json();
-            const seasonData = allData.find(d => d.musim === musim);
+            const seasonData = allData.find(d => d.musim === musim && d.versi === versi);
             return seasonData ? seasonData.manifest : [];
         } catch (error) {
-            console.error(`Could not fetch manifest data for musim ${musim}:`, error);
+            console.error(`Could not fetch manifest data for musim ${musim} and versi ${versi}:`, error);
             return []; // Return empty array on error
         }
     }
@@ -53,11 +54,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         updateProgressBar(10); // Mulai loading
         try {
             const selectedMusim = selectTahunEl.value;
+            const selectedVersi = selectVersiEl.value;
 
             const jemaahData = await fetchJemaahData(selectedMusim);
             updateProgressBar(50); // Setengah jalan setelah fetch pertama
 
-            const dataManifest = await fetchManifestData(selectedMusim);
+            const dataManifest = await fetchManifestData(selectedMusim, selectedVersi);
             updateProgressBar(90); // Hampir selesai setelah fetch kedua
 
             initializeApp(jemaahData, dataManifest);
@@ -70,6 +72,31 @@ document.addEventListener('DOMContentLoaded', async function () {
                 hideProgressBar();
                 updateProgressBar(0); // Reset untuk pemanggilan berikutnya
             }, 500);
+        }
+    }
+
+    async function populateVersiDropdown() {
+        const selectedMusim = selectTahunEl.value;
+        selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
+
+        try {
+            const response = await fetch('json/manifest.json');
+            if (!response.ok) throw new Error('Failed to fetch manifest versions');
+            const allData = await response.json();
+
+            const versions = allData.filter(d => d.musim === selectedMusim);
+
+            if (versions.length > 0) {
+                versions.forEach(v => {
+                    const option = new Option(v.versi, v.versi);
+                    selectVersiEl.add(option);
+                });
+            } else {
+                selectVersiEl.add(new Option('Tidak ada versi', ''));
+            }
+        } catch (error) {
+            console.error("Gagal memuat versi manifest:", error);
+            selectVersiEl.add(new Option('Error', ''));
         }
     }
 
@@ -1198,8 +1225,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (reloadButton) {
         reloadButton.addEventListener('click', loadAndInitialize);
     }
+    if (selectTahunEl) {
+        selectTahunEl.addEventListener('change', async () => {
+            await populateVersiDropdown();
+            loadAndInitialize(); // Muat ulang data setelah versi di-populate
+        });
+    }
+    if (selectVersiEl) {
+        selectVersiEl.addEventListener('change', loadAndInitialize);
+    }
 
     // Initial load
+    await populateVersiDropdown();
     loadAndInitialize();
 });
 // --- THEME SWITCHER ---

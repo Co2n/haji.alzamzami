@@ -134,27 +134,26 @@
                 <div class="col-xl col-md-6 mb-4">
                     <div class="card bg-light-subtle text-light-emphasis h-100">
                         <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-2">
-                            Musim
-                            <select class="form-select" id="selectTahun" aria-label="Pilih Musim"
-                                style="width: auto; flex-grow: 1;">
-                                <option value="1447">1447</option>
-                                <option value="1446">1446</option>
-                                <option value="1445">1445</option>
-                            </select>
-                            Versi
-                            <select class="form-select" id="selectVersi" aria-label="Versi"
-                                style="width: auto; flex-grow: 1;"></select>
-                            <div class="btn-group" role="group" aria-label="Aksi Data">
-                                <button type="button" class="btn btn-secondary" id="reloadButton"
-                                    title="Muat Ulang Data">
-                                    <i class="bi bi-bootstrap-reboot"></i> Reload
-                                </button>
+                            <div class="input-group">
+                                <span class="input-group-text">Musim</span>
+                                <select class="form-select" id="selectTahun" aria-label="Pilih Musim"
+                                    style="width: auto; flex-grow: 1;">
+                                    <option value="1447">1447</option>
+                                    <option value="1446">1446</option>
+                                    <option value="1445">1445</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-2">
-                            <input type="text" name="versi" id="versi" placeholder="Masukkan Versi Baru"
-                                class="form-control" style="width: auto; flex-grow: 1;">
-                            <div class="btn-group" role="group" aria-label="Aksi Data">
+                            <div class="input-group">
+                                <span class="input-group-text">Versi</span>
+                                <select class="form-select" id="selectVersi" aria-label="Versi"
+                                    style="width: auto; flex-grow: 1;"></select>
+                            </div>
+                            <!-- <button type="button" class="btn btn-secondary" id="reloadButton" title="Muat Ulang Data">
+                                <i class="bi bi-bootstrap-reboot"></i> Reload
+                            </button> -->
+                            <div class="input-group">
+                                <input type="text" name="versi" id="versi" placeholder="Masukkan Versi Baru"
+                                    class="form-control" style="width: auto; flex-grow: 1;">
                                 <button type="button" class="btn btn-primary" title="Simpan Perubahan">
                                     <i class="bi bi-send"></i> Simpan
                                 </button>
