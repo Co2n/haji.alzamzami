@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const selectTahunEl = document.getElementById('selectTahun');
-    const reloadButton = document.getElementById('reloadButton');
     const selectVersiEl = document.getElementById('selectVersi');
     const loadingContainer = document.getElementById('loading-container');
     const progressBar = document.getElementById('loading-progress-bar');
+    const kloterCardContainer = document.getElementById('kloterCardContainer');
+    const tambahKloterBtn = document.getElementById('tambahKloterBtn');
+    const cariJemaahInput = document.getElementById('cariJemaahInput');
+    let jemaahData = []; // Store jemaah data globally within the scope
 
     // --- PROGRESS BAR UTILITIES ---
     const showProgressBar = () => {
@@ -56,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const selectedMusim = selectTahunEl.value;
             const selectedVersi = selectVersiEl.value;
 
-            const jemaahData = await fetchJemaahData(selectedMusim);
+            jemaahData = await fetchJemaahData(selectedMusim); // Assign to the outer scope variable
             updateProgressBar(50); // Setengah jalan setelah fetch pertama
 
             const dataManifest = await fetchManifestData(selectedMusim, selectedVersi);
@@ -73,6 +76,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 updateProgressBar(0); // Reset untuk pemanggilan berikutnya
             }, 500);
         }
+    }
+
+    function cleanup() {
+        // Hancurkan semua instance Popover yang ada
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        popoverTriggerList.map(popoverTriggerEl => {
+            const popover = bootstrap.Popover.getInstance(popoverTriggerEl);
+            if (popover) popover.dispose();
+        });
     }
 
     async function populateVersiDropdown() {
@@ -100,16 +112,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    function initializeApp(jemaahData, dataManifest) {
-    // --- DATA VALIDATION ---
+    function initializeApp(currentJemaahData, dataManifest) {
+        // Lakukan pembersihan sebelum render ulang
+        cleanup();
+        // --- DATA VALIDATION ---
 
 
-    if (!dataManifest || !Array.isArray(dataManifest) || dataManifest.length === 0) {
-        console.warn("dataManifest bernilai null, kosong, atau bukan sebuah array. Inisialisasi manifest akan dilewati.");
-        // Kosongkan kontainer kloter jika tidak ada data
-        const kloterContainer = document.getElementById('kloterCardContainer');
-        if (kloterContainer) kloterContainer.innerHTML = `
-        <div id="kloterCardContainer">
+        if (!dataManifest || !Array.isArray(dataManifest) || dataManifest.length === 0) {
+            console.warn("dataManifest bernilai null, kosong, atau bukan sebuah array. Inisialisasi manifest akan dilewati.");
+            // Kosongkan kontainer kloter jika tidak ada data
+            const kloterContainer = document.getElementById('kloterCardContainer');
+            if (kloterContainer) kloterContainer.innerHTML = `
             <div class="card kloter mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="col">
@@ -135,77 +148,76 @@ document.addEventListener('DOMContentLoaded', async function () {
                     </button>
                 </div>
             </div>
-        </div>
         `;
-    }
+        }
 
-    // Update total jemaah count on the dashboard card
-    const totalJemaahCountElement = document.getElementById('totalJemaahCount');
-    if (totalJemaahCountElement) {
-        totalJemaahCountElement.textContent = jemaahData.length;
-    }
+        // Update total jemaah count on the dashboard card
+        const totalJemaahCountElement = document.getElementById('totalJemaahCount');
+        if (totalJemaahCountElement) {
+            totalJemaahCountElement.textContent = currentJemaahData.length;
+        }
 
-    const rombonganStyles = [
-        { bg: '#EC2027', text: '#FFFFFF' }, // 1
-        { bg: '#FCEE21', text: '#000000' }, // 2
-        { bg: '#0000FF', text: '#FFFFFF' }, // 3
-        { bg: '#A65F27', text: '#FFFFFF' }, // 4
-        { bg: '#6ABD45', text: '#000000' }, // 5
-        { bg: '#FFFFFF', text: '#000000' }, // 6
-        { bg: '#F79520', text: '#000000' }, // 7
-        { bg: '#6B3180', text: '#FFFFFF' }, // 8
-        { bg: '#0A0A0A', text: '#FFFFFF' }, // 9
-        { bg: '#F8B4BA', text: '#000000' }, // 10
-        { bg: '#7C7C7C', text: '#FFFFFF' }  // 11
-    ];
+        const rombonganStyles = [
+            { bg: '#EC2027', text: '#FFFFFF' }, // 1
+            { bg: '#FCEE21', text: '#000000' }, // 2
+            { bg: '#0000FF', text: '#FFFFFF' }, // 3
+            { bg: '#A65F27', text: '#FFFFFF' }, // 4
+            { bg: '#6ABD45', text: '#000000' }, // 5
+            { bg: '#FFFFFF', text: '#000000' }, // 6
+            { bg: '#F79520', text: '#000000' }, // 7
+            { bg: '#6B3180', text: '#FFFFFF' }, // 8
+            { bg: '#0A0A0A', text: '#FFFFFF' }, // 9
+            { bg: '#F8B4BA', text: '#000000' }, // 10
+            { bg: '#7C7C7C', text: '#FFFFFF' }  // 11
+        ];
 
-    // --- DYNAMIC CONTENT GENERATION ---
+        // --- DYNAMIC CONTENT GENERATION ---
 
-    // Cari semua jemaah yang sudah ditempatkan
-    const placedJemaahIds = new Set();
-    if (dataManifest && Array.isArray(dataManifest)) {
-        dataManifest.forEach(kloter => {
-            kloter.rombongan.forEach(rombongan => {
-                rombongan.regu.forEach(regu => {
-                    regu.jemaah.forEach(jemaahObj => {
-                        const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
-                        if (jemaahId !== 'jemaah-unknown') placedJemaahIds.add(jemaahId);
+        // Cari semua jemaah yang sudah ditempatkan
+        const placedJemaahIds = new Set();
+        if (dataManifest && Array.isArray(dataManifest)) {
+            dataManifest.forEach(kloter => {
+                kloter.rombongan.forEach(rombongan => {
+                    rombongan.regu.forEach(regu => {
+                        regu.jemaah.forEach(jemaahObj => {
+                            const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
+                            if (jemaahId !== 'jemaah-unknown') placedJemaahIds.add(jemaahId);
+                        });
                     });
                 });
             });
-        });
-    }
-
-    // Fungsi untuk memperbarui badge hitungan jemaah yang tersedia
-    const updateAvailableJemaahCount = () => {
-        const availableCount = availableJemaah.length;
-        const cardHeader = document.querySelector('.sticky-jemaah-card .card-header');
-        if (cardHeader) {
-            let badge = cardHeader.querySelector('#availableJemaahCount');
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'badge bg-secondary ms-2';
-                badge.id = 'availableJemaahCount';
-                cardHeader.appendChild(badge);
-            }
-            badge.textContent = availableCount;
         }
-    };
-    // Fungsi untuk me-render daftar jemaah ke HTML
-    const renderJemaahList = (data) => {
-        const jemaahListContainer = document.getElementById('jemaahList');
-        if (!jemaahListContainer) return;
 
-        jemaahListContainer.innerHTML = ''; // Kosongkan daftar sebelum diisi ulang
+        // Fungsi untuk memperbarui badge hitungan jemaah yang tersedia
+        const updateAvailableJemaahCount = () => {
+            const availableCount = availableJemaah.length;
+            const cardHeader = document.querySelector('.sticky-jemaah-card .card-header');
+            if (cardHeader) {
+                let badge = cardHeader.querySelector('#availableJemaahCount');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge bg-secondary ms-2';
+                    badge.id = 'availableJemaahCount';
+                    cardHeader.appendChild(badge);
+                }
+                badge.textContent = availableCount;
+            }
+        };
+        // Fungsi untuk me-render daftar jemaah ke HTML
+        const renderJemaahList = (data) => {
+            const jemaahListContainer = document.getElementById('jemaahList');
+            if (!jemaahListContainer) return;
 
-        const fragment = document.createDocumentFragment();
-        data.forEach(jemaah => {
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
-            listItem.dataset.id = jemaah.id;
-            const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
+            jemaahListContainer.innerHTML = ''; // Kosongkan daftar sebelum diisi ulang
 
-            listItem.innerHTML = `
+            const fragment = document.createDocumentFragment();
+            data.forEach(jemaah => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
+                listItem.dataset.id = jemaah.id;
+                const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
+
+                listItem.innerHTML = `
                 <img src="${fotoSrc}" height="60px" width="50px" class="rounded img-fluid me-3 zona-foto" alt="Foto ${jemaah.nama}">
                 <div>
                     <span class="badge bg-secondary mb-1">${jemaah.status}</span>
@@ -230,56 +242,56 @@ document.addEventListener('DOMContentLoaded', async function () {
                     </ul>
                 </div>
             `;
-            fragment.appendChild(listItem);
-        });
-        jemaahListContainer.appendChild(fragment);
-    };
+                fragment.appendChild(listItem);
+            });
+            jemaahListContainer.appendChild(fragment);
+        };
 
-    // Jemaah yang tersedia adalah yang tidak ada di `placedJemaahIds`
-    let availableJemaah = jemaahData.filter(j => !placedJemaahIds.has(j.id));
+        // Jemaah yang tersedia adalah yang tidak ada di `placedJemaahIds`
+        let availableJemaah = currentJemaahData.filter(j => !placedJemaahIds.has(j.id));
 
 
-    // Panggil fungsi untuk memuat daftar jemaah saat halaman dimuat
-    renderJemaahList(availableJemaah);
-    updateAvailableJemaahCount();
+        // Panggil fungsi untuk memuat daftar jemaah saat halaman dimuat
+        renderJemaahList(availableJemaah);
+        updateAvailableJemaahCount();
 
-    // Fungsi untuk mengembalikan jemaah ke daftar utama saat kontainer dihapus
-    const returnJemaahToAvailableList = (elementToRemove) => {
-        const jemaahItems = elementToRemove.querySelectorAll('.jemaah-item');
-        let returned = false;
-        jemaahItems.forEach(item => {
-            const jemaahId = item.dataset.id;
+        // Fungsi untuk mengembalikan jemaah ke daftar utama saat kontainer dihapus
+        const returnJemaahToAvailableList = (elementToRemove) => {
+            const jemaahItems = elementToRemove.querySelectorAll('.jemaah-item');
+            let returned = false;
+            jemaahItems.forEach(item => {
+                const jemaahId = item.dataset.id;
 
-            // Jangan kembalikan jemaah unknown ke daftar
-            if (jemaahId === 'jemaah-unknown') return;
+                // Jangan kembalikan jemaah unknown ke daftar
+                if (jemaahId === 'jemaah-unknown') return;
 
-            const jemaah = jemaahData.find(j => j.id === jemaahId);
-            // Pastikan tidak ada duplikat dan jemaah ada
-            if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
-                availableJemaah.push(jemaah);
-                returned = true;
+                const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+                // Pastikan tidak ada duplikat dan jemaah ada
+                if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
+                    availableJemaah.push(jemaah);
+                    returned = true;
+                }
+            });
+
+            // Jika ada jemaah yang dikembalikan, perbarui daftar pencarian
+            if (returned) {
+                // Memicu event 'input' akan menjalankan ulang filter pencarian dan me-render ulang daftar
+                cariJemaahInput.dispatchEvent(new Event('input'));
+                updateAvailableJemaahCount();
             }
-        });
+        };
 
-        // Jika ada jemaah yang dikembalikan, perbarui daftar pencarian
-        if (returned) {
-            // Memicu event 'input' akan menjalankan ulang filter pencarian dan me-render ulang daftar
-            cariJemaahInput.dispatchEvent(new Event('input'));
-            updateAvailableJemaahCount();
-        }
-    };
-
-    // Fungsi untuk membuat elemen HTML jemaah
-    const createJemaahItemElement = (jemaahObj) => {
-        const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
-        const role = typeof jemaahObj === 'object' ? jemaahObj.role : null;
-        const jemaah = jemaahData.find(j => j.id === jemaahId);
-        const listItem = document.createElement('li');
-        listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
-        listItem.dataset.id = jemaahId;
-        if (role) listItem.dataset.role = role;
-        if (jemaahId === 'jemaah-unknown') {
-            listItem.innerHTML = `
+        // Fungsi untuk membuat elemen HTML jemaah
+        const createJemaahItemElement = (jemaahObj) => {
+            const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
+            const role = typeof jemaahObj === 'object' ? jemaahObj.role : null;
+            const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
+            listItem.dataset.id = jemaahId;
+            if (role) listItem.dataset.role = role;
+            if (jemaahId === 'jemaah-unknown') {
+                listItem.innerHTML = `
                 <img src="img/unknown.jpg" height="50px" width="50px" class="rounded img-fluid me-3 zona-foto" alt="Foto Jemaah Unknown">
                 <div>
                     <div class="fw-bold">Jemaah Unknown</div>
@@ -291,30 +303,30 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
                     </ul>
                 </div>`;
-            return listItem;
-        }
+                return listItem;
+            }
 
-        if (!jemaah) return null;
+            if (!jemaah) return null;
 
-        const karomDisabled = role === 'karom' ? 'disabled' : '';
-        const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
-        const karuDisabled = role === 'karu' ? 'disabled' : '';
-        const roleBadgeHTML = role === 'karom'
-            ? '<span class="badge bg-primary ms-1 jemaah-role-badge">Karom</span>'
-            : role === 'karu' ?
-            '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karu</span>' :
-            '';
-        const clearSetDisplay = role ? 'style="display: list-item;"' : 'style="display: none;"';
+            const karomDisabled = role === 'karom' ? 'disabled' : '';
+            const fotoSrc = jemaah.foto ? `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400` : 'img/foto.jpg';
+            const karuDisabled = role === 'karu' ? 'disabled' : '';
+            const roleBadgeHTML = role === 'karom'
+                ? '<span class="badge bg-primary ms-1 jemaah-role-badge">Karom</span>'
+                : role === 'karu' ?
+                    '<span class="badge bg-warning text-dark ms-1 jemaah-role-badge">Karu</span>' :
+                    '';
+            const clearSetDisplay = role ? 'style="display: list-item;"' : 'style="display: none;"';
 
-        // Konten untuk popover
-        const popoverContent = `
+            // Konten untuk popover
+            const popoverContent = `
             <div class='popover-body-custom'>
                 <div>${jemaah.no_porsi}</div>
                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                 <div>${jemaah.alamat}</div>
             </div>`;
 
-        listItem.innerHTML = `
+            listItem.innerHTML = `
             <img src="${fotoSrc}" height="60px" width="50px" class="rounded me-3 img-fluid zona-foto" alt="Foto ${jemaah.nama}">
             <div>
                 <span class="badge bg-secondary mb-1">${jemaah.status}</span>${roleBadgeHTML}
@@ -340,184 +352,184 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <li><a class="dropdown-item text-danger jemaah-action-btn" href="#" data-action="remove">Hapus dari regu</a></li>
                 </ul>
             </div>`;
-        return listItem;
-    };
+            return listItem;
+        };
 
-    // Fungsi untuk me-render seluruh manifest dari data
-    const renderManifest = (manifestData) => {
-        const kloterContainer = document.getElementById('kloterCardContainer');
-        kloterContainer.innerHTML = ''; // Kosongkan kontainer
+        // Fungsi untuk me-render seluruh manifest dari data
+        const renderManifest = (manifestData) => {
+            const kloterContainer = document.getElementById('kloterCardContainer');
+            kloterContainer.innerHTML = ''; // Kosongkan kontainer
 
-        manifestData.forEach((kloter, kloterIndex) => {
-            const kloterEl = createKloterElement(kloterIndex + 1);
-            const titleBadge = kloterEl.querySelector('.kloter-title-bagde');
-            if (kloter.kodeEmbarkasi && kloter.noKloter) {
-                titleBadge.textContent = `${kloter.kodeEmbarkasi}-${kloter.noKloter}`;
-                titleBadge.classList.remove('text-bg-warning');
-                titleBadge.classList.add('text-bg-primary');
-            }
+            manifestData.forEach((kloter, kloterIndex) => {
+                const kloterEl = createKloterElement(kloterIndex + 1);
+                const titleBadge = kloterEl.querySelector('.kloter-title-bagde');
+                if (kloter.kodeEmbarkasi && kloter.noKloter) {
+                    titleBadge.textContent = `${kloter.kodeEmbarkasi}-${kloter.noKloter}`;
+                    titleBadge.classList.remove('text-bg-warning');
+                    titleBadge.classList.add('text-bg-primary');
+                }
 
-            const rombonganContainer = kloterEl.querySelector('.rombongan-card-container');
-            kloter.rombongan.forEach((rombongan, rombonganIndex) => {
-                const rombonganEl = createRombonganElement(rombonganIndex + 1);
-                const reguContainer = rombonganEl.querySelector('.regu-container');
+                const rombonganContainer = kloterEl.querySelector('.rombongan-card-container');
+                kloter.rombongan.forEach((rombongan, rombonganIndex) => {
+                    const rombonganEl = createRombonganElement(rombonganIndex + 1);
+                    const reguContainer = rombonganEl.querySelector('.regu-container');
 
-                rombongan.regu.forEach((regu, reguIndex) => {
-                    const reguEl = createReguElement(reguIndex + 1);
-                    const reguContentArea = reguEl.querySelector('.regu-content-area');
+                    rombongan.regu.forEach((regu, reguIndex) => {
+                        const reguEl = createReguElement(reguIndex + 1);
+                        const reguContentArea = reguEl.querySelector('.regu-content-area');
 
-                    regu.jemaah.forEach(jemaahObj => {
-                        const jemaahEl = createJemaahItemElement(jemaahObj);
-                        if (jemaahEl) reguContentArea.appendChild(jemaahEl);
+                        regu.jemaah.forEach(jemaahObj => {
+                            const jemaahEl = createJemaahItemElement(jemaahObj);
+                            if (jemaahEl) reguContentArea.appendChild(jemaahEl);
+                        });
+
+                        reguContainer.appendChild(reguEl);
+                        initJemaahDropzone(reguContentArea);
                     });
 
-                    reguContainer.appendChild(reguEl);
-                    initJemaahDropzone(reguContentArea);
+                    rombonganContainer.appendChild(rombonganEl);
+                    initSortableRegu(reguContainer);
                 });
 
-                rombonganContainer.appendChild(rombonganEl);
-                initSortableRegu(reguContainer);
+                kloterContainer.appendChild(kloterEl);
+                initSortableRombongan(rombonganContainer);
+                reorderRombonganInContainer(rombonganContainer);
             });
 
-            kloterContainer.appendChild(kloterEl);
-            initSortableRombongan(rombonganContainer);
-            reorderRombonganInContainer(rombonganContainer);
-        });
+            // Inisialisasi semua popover yang baru dirender
+            const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            popoverTriggerList.map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
-        // Inisialisasi semua popover yang baru dirender
-        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        popoverTriggerList.map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
-
-        reorderKloterCards();
-        debouncedUpdateAllCounts();
-    };
+            reorderKloterCards();
+            debouncedUpdateAllCounts();
+        };
 
 
-    // --- COUNTERS ---
-    const updateAllCountsOnPage = () => {
-        // Regu Counts
-        document.querySelectorAll('.regu-card > .card-header').forEach(header => {
-            const card = header.closest('.regu-card');
-            // const count = card.querySelectorAll('.jemaah-item').length;
-            const count = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
-            const titleSpan = header.querySelector('span');
-            let badge = header.querySelector('.regu-count-badge');
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'badge bg-secondary ms-2 regu-count-badge';
-                if (titleSpan) {
-                    titleSpan.insertAdjacentElement('afterend', badge);
-                }
-            }
-            badge.textContent = count;
-        });
-
-        // Rombongan Counts
-        document.querySelectorAll('.rombongan > .card-header').forEach(header => {
-            const card = header.closest('.rombongan');
-            const titleSpan = header.querySelector('span');
-
-            // Badge yang sudah ada, untuk menghitung jemaah
-            const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
-            let jemaahBadge = header.querySelector('.rombongan-count-badge');
-            if (!jemaahBadge) {
-                jemaahBadge = document.createElement('span');
-                jemaahBadge.className = 'badge bg-secondary ms-2 rombongan-count-badge';
-                if (titleSpan) {
-                    titleSpan.insertAdjacentElement('afterend', jemaahBadge);
-                }
-            }
-            jemaahBadge.textContent = jemaahCount;
-
-            // Badge baru untuk menghitung regu, disisipkan sebelum badge jemaah
-            const reguCount = card.querySelectorAll('.regu-card').length;
-            let reguBadge = header.querySelector('.rombongan-regu-count-badge');
-            if (!reguBadge) {
-                reguBadge = document.createElement('span');
-                reguBadge.className = 'badge bg-secondary ms-2 rombongan-regu-count-badge';
-                if (jemaahBadge) {
-                    jemaahBadge.insertAdjacentElement('beforebegin', reguBadge);
-                }
-            }
-            reguBadge.textContent = reguCount;
-        });
-
-        // Kloter Counts
-        document.querySelectorAll('.kloter > .card-header').forEach(header => {
-            const card = header.closest('.kloter');
-            const titleSpan = header.querySelector('span');
-
-            // Badge yang sudah ada, sekarang untuk menghitung jemaah
-            const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
-            let jemaahBadge = header.querySelector('.kloter-count-badge');
-            if (!jemaahBadge) {
-                jemaahBadge = document.createElement('span');
-                jemaahBadge.className = 'badge bg-secondary ms-2 kloter-count-badge';
-                if (titleSpan) {
-                    titleSpan.insertAdjacentElement('afterend', jemaahBadge);
-                }
-            }
-            jemaahBadge.textContent = jemaahCount;
-
-            // Badge baru untuk menghitung rombongan, disisipkan sebelum badge jemaah
-            const rombonganCount = card.querySelectorAll('.rombongan').length;
-            let rombonganBadge = header.querySelector('.kloter-rombongan-count-badge');
-            if (!rombonganBadge) {
-                rombonganBadge = document.createElement('span');
-                rombonganBadge.className = 'badge bg-secondary ms-2 kloter-rombongan-count-badge';
-                if (jemaahBadge) {
-                    jemaahBadge.insertAdjacentElement('beforebegin', rombonganBadge);
-                }
-            }
-            rombonganBadge.textContent = rombonganCount;
-        });
-
-        // Total Manifest Count
-        const totalManifestCountElement = document.getElementById('totalManifestCount');
-        if (totalManifestCountElement) {
-            const kloterContainer = document.getElementById('kloterCardContainer');
-            if (kloterContainer) {
-                // Count all jemaah items, excluding the "unknown" placeholder
-                const count = kloterContainer.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
-                totalManifestCountElement.textContent = count;
-            }
-        }
-    };
-    // Use a timeout to let the DOM update after a drag operation
-    const debouncedUpdateAllCounts = () => setTimeout(updateAllCountsOnPage, 50);
-
-    // --- JEMAAH ITEM NUMBERING ---
-    const updateJemaahItemNumbering = (container) => {
-        if (!container) return;
-        const jemaahItems = container.querySelectorAll('.jemaah-item');
-
-        // Jika ini adalah daftar jemaah utama, hapus nomor
-        if (container.id === 'jemaahList') {
-            jemaahItems.forEach(item => {
-                const numberSpan = item.querySelector('.jemaah-number');
-                if (numberSpan) {
-                    numberSpan.remove();
-                }
-            });
-        }
-        // Jika ini adalah daftar di dalam regu, tambahkan/perbarui nomor
-        else if (container.classList.contains('regu-content-area')) {
-            jemaahItems.forEach((item, index) => {
-                let numberSpan = item.querySelector('.jemaah-number');
-                // Jika elemen nomor belum ada, buat dan sisipkan
-                if (!numberSpan) {
-                    numberSpan = document.createElement('span');
-                    numberSpan.className = 'jemaah-number me-2';
-                    const nameDiv = item.querySelector('.fw-bold');
-                    if (nameDiv) {
-                        nameDiv.prepend(numberSpan);
+        // --- COUNTERS ---
+        const updateAllCountsOnPage = () => {
+            // Regu Counts
+            document.querySelectorAll('.regu-card > .card-header').forEach(header => {
+                const card = header.closest('.regu-card');
+                // const count = card.querySelectorAll('.jemaah-item').length;
+                const count = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                const titleSpan = header.querySelector('span');
+                let badge = header.querySelector('.regu-count-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge bg-secondary ms-2 regu-count-badge';
+                    if (titleSpan) {
+                        titleSpan.insertAdjacentElement('afterend', badge);
                     }
                 }
-                // Perbarui nomor urut
-                numberSpan.textContent = `${index + 1}.`;
+                badge.textContent = count;
             });
-        }
-    };
+
+            // Rombongan Counts
+            document.querySelectorAll('.rombongan > .card-header').forEach(header => {
+                const card = header.closest('.rombongan');
+                const titleSpan = header.querySelector('span');
+
+                // Badge yang sudah ada, untuk menghitung jemaah
+                const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                let jemaahBadge = header.querySelector('.rombongan-count-badge');
+                if (!jemaahBadge) {
+                    jemaahBadge = document.createElement('span');
+                    jemaahBadge.className = 'badge bg-secondary ms-2 rombongan-count-badge';
+                    if (titleSpan) {
+                        titleSpan.insertAdjacentElement('afterend', jemaahBadge);
+                    }
+                }
+                jemaahBadge.textContent = jemaahCount;
+
+                // Badge baru untuk menghitung regu, disisipkan sebelum badge jemaah
+                const reguCount = card.querySelectorAll('.regu-card').length;
+                let reguBadge = header.querySelector('.rombongan-regu-count-badge');
+                if (!reguBadge) {
+                    reguBadge = document.createElement('span');
+                    reguBadge.className = 'badge bg-secondary ms-2 rombongan-regu-count-badge';
+                    if (jemaahBadge) {
+                        jemaahBadge.insertAdjacentElement('beforebegin', reguBadge);
+                    }
+                }
+                reguBadge.textContent = reguCount;
+            });
+
+            // Kloter Counts
+            document.querySelectorAll('.kloter > .card-header').forEach(header => {
+                const card = header.closest('.kloter');
+                const titleSpan = header.querySelector('span');
+
+                // Badge yang sudah ada, sekarang untuk menghitung jemaah
+                const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                let jemaahBadge = header.querySelector('.kloter-count-badge');
+                if (!jemaahBadge) {
+                    jemaahBadge = document.createElement('span');
+                    jemaahBadge.className = 'badge bg-secondary ms-2 kloter-count-badge';
+                    if (titleSpan) {
+                        titleSpan.insertAdjacentElement('afterend', jemaahBadge);
+                    }
+                }
+                jemaahBadge.textContent = jemaahCount;
+
+                // Badge baru untuk menghitung rombongan, disisipkan sebelum badge jemaah
+                const rombonganCount = card.querySelectorAll('.rombongan').length;
+                let rombonganBadge = header.querySelector('.kloter-rombongan-count-badge');
+                if (!rombonganBadge) {
+                    rombonganBadge = document.createElement('span');
+                    rombonganBadge.className = 'badge bg-secondary ms-2 kloter-rombongan-count-badge';
+                    if (jemaahBadge) {
+                        jemaahBadge.insertAdjacentElement('beforebegin', rombonganBadge);
+                    }
+                }
+                rombonganBadge.textContent = rombonganCount;
+            });
+
+            // Total Manifest Count
+            const totalManifestCountElement = document.getElementById('totalManifestCount');
+            if (totalManifestCountElement) {
+                const kloterContainer = document.getElementById('kloterCardContainer');
+                if (kloterContainer) {
+                    // Count all jemaah items, excluding the "unknown" placeholder
+                    const count = kloterContainer.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                    totalManifestCountElement.textContent = count;
+                }
+            }
+        };
+        // Use a timeout to let the DOM update after a drag operation
+        const debouncedUpdateAllCounts = () => setTimeout(updateAllCountsOnPage, 50);
+
+        // --- JEMAAH ITEM NUMBERING ---
+        const updateJemaahItemNumbering = (container) => {
+            if (!container) return;
+            const jemaahItems = container.querySelectorAll('.jemaah-item');
+
+            // Jika ini adalah daftar jemaah utama, hapus nomor
+            if (container.id === 'jemaahList') {
+                jemaahItems.forEach(item => {
+                    const numberSpan = item.querySelector('.jemaah-number');
+                    if (numberSpan) {
+                        numberSpan.remove();
+                    }
+                });
+            }
+            // Jika ini adalah daftar di dalam regu, tambahkan/perbarui nomor
+            else if (container.classList.contains('regu-content-area')) {
+                jemaahItems.forEach((item, index) => {
+                    let numberSpan = item.querySelector('.jemaah-number');
+                    // Jika elemen nomor belum ada, buat dan sisipkan
+                    if (!numberSpan) {
+                        numberSpan = document.createElement('span');
+                        numberSpan.className = 'jemaah-number me-2';
+                        const nameDiv = item.querySelector('.fw-bold');
+                        if (nameDiv) {
+                            nameDiv.prepend(numberSpan);
+                        }
+                    }
+                    // Perbarui nomor urut
+                    numberSpan.textContent = `${index + 1}.`;
+                });
+            }
+        };
 
     // --- SEARCH JEMAAH ---
     const cariJemaahInput = document.getElementById('cariJemaahInput');
@@ -538,403 +550,406 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
 
-    // --- SORTABLEJS INITIALIZATION ---
+        // --- SORTABLEJS INITIALIZATION ---
 
-    // Inisialisasi untuk Jemaah Unknown (clone only)
-    const jemaahUnknownContainer = document.getElementById('jemaahUnknownContainer');
-    if (jemaahUnknownContainer) {
-        new Sortable(jemaahUnknownContainer, {
-            group: {
-                name: 'jemaah-group',
-                pull: 'clone', // Clone the item, don't move it
-                put: false // Don't allow items to be dropped here
-            },
-            animation: 150,
-            sort: false, // Disable sorting within this container
-            ghostClass: 'sortable-ghost',
-            forceFallback: true,
-            handle: '.zona-foto',
-        });
-    }
+        // Inisialisasi untuk Jemaah Unknown (clone only)
+        const jemaahUnknownContainer = document.getElementById('jemaahUnknownContainer');
+        if (jemaahUnknownContainer) {
+            new Sortable(jemaahUnknownContainer, {
+                group: {
+                    name: 'jemaah-group',
+                    pull: 'clone', // Clone the item, don't move it
+                    put: false // Don't allow items to be dropped here
+                },
+                animation: 150,
+                sort: false, // Disable sorting within this container
+                ghostClass: 'sortable-ghost',
+                forceFallback: true,
+                handle: '.zona-foto',
+            });
+        }
 
-    // Inisialisasi untuk daftar jemaah utama
-    const jemaahList = document.getElementById('jemaahList');
-    if (jemaahList) {
-        new Sortable(jemaahList, {
-            group: {
-                name: 'jemaah-group',
-                pull: true,
-                // Izinkan drop dari grup jemaah (untuk mengembalikan) dan grup regu (untuk menghapus)
-                put: ['jemaah-group', 'shared-regu']
-            },
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            forceFallback: true,
-            sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
-            handle: '.zona-foto',
-            onAdd: function (evt) { // Item dropped INTO this list
-                const item = evt.item;
-                const fromList = evt.from;
-
-                // Kasus 1: Sebuah card regu dijatuhkan ke sini untuk dihapus
-                if (item.classList.contains('col-xl-3')) {
-                    if (confirm('Apakah Anda yakin ingin menghapus regu ini? Semua jemaah di dalamnya akan dikembalikan ke daftar utama.')) {
-                        returnJemaahToAvailableList(item);
-                        item.remove(); // Hapus elemen regu dari DOM
-                        reorderReguInContainer(fromList);
-                        debouncedUpdateAllCounts();
-                    } else {
-                        // Batalkan: kembalikan kartu regu ke kontainer asalnya
-                        fromList.appendChild(item);
-                        reorderReguInContainer(fromList);
-                    }
-                    return; // Hentikan proses lebih lanjut
-                }
-
-                // Kasus 2: Sebuah item jemaah dijatuhkan (logika yang sudah ada)
-                const itemEl = evt.item;
-                const jemaahId = itemEl.dataset.id;
-
-                if (jemaahId === 'jemaah-unknown') {
-                    itemEl.remove(); // Ini adalah klon, hapus saja
-                    return;
-                }
-
-                // Ini adalah jemaah asli, tambahkan kembali ke state
-                const jemaah = jemaahData.find(j => j.id === jemaahId);
-                if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
-                    availableJemaah.push(jemaah);
-                }
-
-                // Alih-alih me-render ulang seluruh daftar, kita ubah item yang ada.
-                // Ini akan mempertahankan posisi drop.
-                // 1. Hapus badge peran (karom/karu)
-                delete itemEl.dataset.role;
-
-                // 2. Hapus fungsionalitas Popover
-                const popoverTriggerEl = itemEl.querySelector('[data-bs-toggle="popover"]');
-                if (popoverTriggerEl) {
-                    const popoverInstance = bootstrap.Popover.getInstance(popoverTriggerEl);
-                    if (popoverInstance) {
-                        popoverInstance.dispose();
-                    }
-                    // Hapus semua atribut data-bs-* yang terkait dengan popover
-                    ['data-bs-toggle', 'data-bs-trigger', 'data-bs-placement', 'data-bs-html', 'data-bs-content', 'data-original-title', 'title'].forEach(attr => popoverTriggerEl.removeAttribute(attr));
-                }
-
-
-
-                // 2. Perbarui detail jemaah ke format lengkap
-                const detailEl = itemEl.querySelector('small.text-muted');
-                if (detailEl && jemaah) {
-                    detailEl.innerHTML = `
-                        ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
-                        ${jemaah.alamat}<br>
-                        ${jemaah.desa} - ${jemaah.kecamatan}
-                    `;
-                }
-                const karomBtn = itemEl.querySelector('[data-action="karom"]');
-                const karuBtn = itemEl.querySelector('[data-action="karu"]');
-                if (karomBtn) karomBtn.classList.remove('disabled');
-                if (karuBtn) karuBtn.classList.remove('disabled');
-
-                // Sembunyikan item "Clear Set"
-                const clearItems = itemEl.querySelectorAll('.clear-set-item');
-                clearItems.forEach(item => item.style.display = 'none');
-
-
-
-
-                const roleBadge = itemEl.querySelector('.jemaah-role-badge');
-                if (roleBadge) roleBadge.remove();
-
-                // 2. Hapus nomor urut
-                const numberSpan = itemEl.querySelector('.jemaah-number');
-                if (numberSpan) numberSpan.remove();
-
-                // 3. Sembunyikan menu dropdown
-                const menu = itemEl.querySelector('.jemaah-item-menu');
-                if (menu) menu.style.display = 'none';
-
-                // Jika ada filter pencarian aktif, item mungkin tidak seharusnya terlihat.
-                // Kita periksa apakah item yang dikembalikan cocok dengan filter.
-                const searchTerm = cariJemaahInput.value.toLowerCase();
-                if (!jemaah.nama.toLowerCase().includes(searchTerm) && !jemaah.alamat.toLowerCase().includes(searchTerm)) {
-                    itemEl.remove(); // Hapus dari DOM jika tidak cocok dengan filter
-                }
-                updateAvailableJemaahCount();
-            },
-            onRemove: function (evt) { // Item dragged OUT OF this list
-                // Remove from state
-                availableJemaah = availableJemaah.filter(j => j.id !== evt.item.dataset.id);
-                updateAvailableJemaahCount();
-            }
-        });
-    }
-
-    // Fungsi untuk membuat area konten regu menjadi dropzone
-    const initJemaahDropzone = (container) => {
-        if (container) {
-            new Sortable(container, {
+        // Inisialisasi untuk daftar jemaah utama
+        const jemaahList = document.getElementById('jemaahList');
+        if (jemaahList) {
+            new Sortable(jemaahList, {
                 group: {
                     name: 'jemaah-group',
                     pull: true,
-                    put: function (to, from) {
-                        return from.options.group.name === 'jemaah-group';
-                    }
+                    // Izinkan drop dari grup jemaah (untuk mengembalikan) dan grup regu (untuk menghapus)
+                    put: ['jemaah-group', 'shared-regu']
                 },
                 animation: 150,
                 ghostClass: 'sortable-ghost',
                 forceFallback: true,
+                sort: false, // Tidak mengizinkan sorting di dalam daftar jemaah utama
                 handle: '.zona-foto',
-                onAdd: (evt) => {
-                    updateJemaahItemNumbering(evt.to);
+                onAdd: function (evt) { // Item dropped INTO this list
+                    const item = evt.item;
+                    const fromList = evt.from;
 
-                    // Tampilkan kembali menu dropdown saat item ditambahkan ke regu
-                    const itemEl = evt.item;
-                    const menu = itemEl.querySelector('.jemaah-item-menu');
-                    if (menu) {
-                        menu.style.display = ''; // Menghapus inline style 'display: none'
+                    // Kasus 1: Sebuah card regu dijatuhkan ke sini untuk dihapus
+                    if (item.classList.contains('col-xl-3')) {
+                        if (confirm('Apakah Anda yakin ingin menghapus regu ini? Semua jemaah di dalamnya akan dikembalikan ke daftar utama.')) {
+                            returnJemaahToAvailableList(item);
+                            item.remove(); // Hapus elemen regu dari DOM
+                            reorderReguInContainer(fromList);
+                            debouncedUpdateAllCounts();
+                        } else {
+                            // Batalkan: kembalikan kartu regu ke kontainer asalnya
+                            fromList.appendChild(item);
+                            reorderReguInContainer(fromList);
+                        }
+                        return; // Hentikan proses lebih lanjut
                     }
 
-                    // Perbarui detail jemaah ke format ringkas (hanya desa - kecamatan)
+                    // Kasus 2: Sebuah item jemaah dijatuhkan (logika yang sudah ada)
+                    const itemEl = evt.item;
                     const jemaahId = itemEl.dataset.id;
-                    const jemaah = jemaahData.find(j => j.id === jemaahId);
+
+                    if (jemaahId === 'jemaah-unknown') {
+                        itemEl.remove(); // Ini adalah klon, hapus saja
+                        return;
+                    }
+
+                    // Ini adalah jemaah asli, tambahkan kembali ke state
+                    const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+                    if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
+                        availableJemaah.push(jemaah);
+                    }
+
+                    // Alih-alih me-render ulang seluruh daftar, kita ubah item yang ada.
+                    // Ini akan mempertahankan posisi drop.
+                    // 1. Hapus badge peran (karom/karu)
+                    delete itemEl.dataset.role;
+
+                    // 2. Hapus fungsionalitas Popover
+                    const popoverTriggerEl = itemEl.querySelector('[data-bs-toggle="popover"]');
+                    if (popoverTriggerEl) {
+                        const popoverInstance = bootstrap.Popover.getInstance(popoverTriggerEl);
+                        if (popoverInstance) {
+                            popoverInstance.dispose();
+                        }
+                        // Hapus semua atribut data-bs-* yang terkait dengan popover
+                        ['data-bs-toggle', 'data-bs-trigger', 'data-bs-placement', 'data-bs-html', 'data-bs-content', 'data-original-title', 'title'].forEach(attr => popoverTriggerEl.removeAttribute(attr));
+                    }
+
+
+
+                    // 2. Perbarui detail jemaah ke format lengkap
                     const detailEl = itemEl.querySelector('small.text-muted');
                     if (detailEl && jemaah) {
-                        detailEl.innerHTML = `${jemaah.desa} - ${jemaah.kecamatan}`;
+                        detailEl.innerHTML = `
+                        ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
+                        ${jemaah.alamat}<br>
+                        ${jemaah.desa} - ${jemaah.kecamatan}
+                    `;
                     }
+                    const karomBtn = itemEl.querySelector('[data-action="karom"]');
+                    const karuBtn = itemEl.querySelector('[data-action="karu"]');
+                    if (karomBtn) karomBtn.classList.remove('disabled');
+                    if (karuBtn) karuBtn.classList.remove('disabled');
 
-                    // Tambahkan dan inisialisasi popover untuk item yang baru ditambahkan
-                    const nameEl = itemEl.querySelector('.fw-bold');
-                    if (nameEl && jemaah) {
-                        const popoverContent = `
+                    // Sembunyikan item "Clear Set"
+                    const clearItems = itemEl.querySelectorAll('.clear-set-item');
+                    clearItems.forEach(item => item.style.display = 'none');
+
+
+
+
+                    const roleBadge = itemEl.querySelector('.jemaah-role-badge');
+                    if (roleBadge) roleBadge.remove();
+
+                    // 2. Hapus nomor urut
+                    const numberSpan = itemEl.querySelector('.jemaah-number');
+                    if (numberSpan) numberSpan.remove();
+
+                    // 3. Sembunyikan menu dropdown
+                    const menu = itemEl.querySelector('.jemaah-item-menu');
+                    if (menu) menu.style.display = 'none';
+
+                    // Jika ada filter pencarian aktif, item mungkin tidak seharusnya terlihat.
+                    // Kita periksa apakah item yang dikembalikan cocok dengan filter.
+                    const searchTerm = cariJemaahInput.value.toLowerCase();
+                    if (!jemaah.nama.toLowerCase().includes(searchTerm) && !jemaah.alamat.toLowerCase().includes(searchTerm)) {
+                        itemEl.remove(); // Hapus dari DOM jika tidak cocok dengan filter
+                    }
+                    updateAvailableJemaahCount();
+                },
+                onRemove: function (evt) { // Item dragged OUT OF this list
+                    // Remove from state
+                    availableJemaah = availableJemaah.filter(j => j.id !== evt.item.dataset.id);
+                    updateAvailableJemaahCount();
+                }
+            });
+        }
+
+        // Fungsi untuk membuat area konten regu menjadi dropzone
+        const initJemaahDropzone = (container) => {
+            if (container) {
+                new Sortable(container, {
+                    group: {
+                        name: 'jemaah-group',
+                        pull: true,
+                        put: function (to, from) {
+                            return from.options.group.name === 'jemaah-group';
+                        }
+                    },
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    forceFallback: true,
+                    handle: '.zona-foto',
+                    onAdd: (evt) => {
+                        updateJemaahItemNumbering(evt.to);
+
+                        // Tampilkan kembali menu dropdown saat item ditambahkan ke regu
+                        const itemEl = evt.item;
+                        const menu = itemEl.querySelector('.jemaah-item-menu');
+                        if (menu) {
+                            menu.style.display = ''; // Menghapus inline style 'display: none'
+                        }
+
+                        // Perbarui detail jemaah ke format ringkas (hanya desa - kecamatan)
+                        const jemaahId = itemEl.dataset.id;
+                        const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+                        const detailEl = itemEl.querySelector('small.text-muted');
+                        if (detailEl && jemaah) {
+                            detailEl.innerHTML = `${jemaah.desa} - ${jemaah.kecamatan}`;
+                        }
+
+                        // Tambahkan dan inisialisasi popover untuk item yang baru ditambahkan
+                        const nameEl = itemEl.querySelector('.fw-bold');
+                        if (nameEl && jemaah) {
+                            const popoverContent = `
                             <div class='popover-body-custom'>
                                 <div>${jemaah.no_porsi}</div>
                                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                                 <div>${jemaah.alamat}</div>
                             </div>`;
 
-                        nameEl.setAttribute('data-bs-toggle', 'popover');
-                        nameEl.setAttribute('data-bs-trigger', 'hover focus');
-                        nameEl.setAttribute('data-bs-placement', 'top');
-                        nameEl.setAttribute('data-bs-html', 'true');
-                        nameEl.setAttribute('data-bs-content', popoverContent);
+                            nameEl.setAttribute('data-bs-toggle', 'popover');
+                            nameEl.setAttribute('data-bs-trigger', 'hover focus');
+                            nameEl.setAttribute('data-bs-placement', 'top');
+                            nameEl.setAttribute('data-bs-html', 'true');
+                            nameEl.setAttribute('data-bs-content', popoverContent);
 
-                        // Inisialisasi popover yang baru ditambahkan
-                        new bootstrap.Popover(nameEl);
-                    }
-                    debouncedUpdateAllCounts();
-                },
-                onRemove: (evt) => {
-                    updateJemaahItemNumbering(evt.from);
-                    debouncedUpdateAllCounts();
-                },
-                onUpdate: (evt) => {
-                    updateJemaahItemNumbering(evt.from);
-                    debouncedUpdateAllCounts();
-                },
-            });
-        }
-    };
-
-    // Fungsi untuk menomori ulang kartu regu
-    const reorderReguInContainer = (reguContainer) => {
-        if (!reguContainer) return;
-
-        // Find parent rombongan and its style
-        const rombonganCard = reguContainer.closest('.card.rombongan');
-        if (!rombonganCard) return; // Exit if not inside a rombongan
-        const rombonganHeader = rombonganCard.querySelector('.card-header');
-        const style = {
-            bg: rombonganHeader.style.backgroundColor,
-            text: rombonganHeader.style.color
+                            // Inisialisasi popover yang baru ditambahkan
+                            new bootstrap.Popover(nameEl);
+                        }
+                        debouncedUpdateAllCounts();
+                    },
+                    onRemove: (evt) => {
+                        updateJemaahItemNumbering(evt.from);
+                        debouncedUpdateAllCounts();
+                    },
+                    onUpdate: (evt) => {
+                        updateJemaahItemNumbering(evt.from);
+                        debouncedUpdateAllCounts();
+                    },
+                });
+            }
         };
 
-        const reguCards = reguContainer.querySelectorAll('.regu-card');
-        reguCards.forEach((card, index) => {
-            const header = card.querySelector('.card-header');
-            if (header) {
-                // Mengambil span di dalam header untuk diubah
-                const titleSpan = header.querySelector('span');
-                if (titleSpan) titleSpan.textContent = `Regu ${index + 1}`;
+        // Fungsi untuk menomori ulang kartu regu
+        const reorderReguInContainer = (reguContainer) => {
+            if (!reguContainer) return;
 
-                // Apply style
-                header.style.backgroundColor = style.bg;
-                header.style.color = style.text;
+            // Find parent rombongan and its style
+            const rombonganCard = reguContainer.closest('.card.rombongan');
+            if (!rombonganCard) return; // Exit if not inside a rombongan
+            const rombonganHeader = rombonganCard.querySelector('.card-header');
+            const style = {
+                bg: rombonganHeader.style.backgroundColor,
+                text: rombonganHeader.style.color
+            };
 
-                // Adjust button color
-                const button = header.querySelector('.hapus-regu-btn');
-                if (button) {
-                    // The color from style is rgb() format, not hex.
-                    if (style.text === 'rgb(255, 255, 255)') { // #FFFFFF
-                        button.classList.remove('btn-outline-danger');
-                        button.classList.add('btn-outline-light');
-                    } else {
-                        button.classList.remove('btn-outline-light');
-                        button.classList.add('btn-outline-danger');
+            const reguCards = reguContainer.querySelectorAll('.regu-card');
+            reguCards.forEach((card, index) => {
+                const header = card.querySelector('.card-header');
+                if (header) {
+                    // Mengambil span di dalam header untuk diubah
+                    const titleSpan = header.querySelector('span');
+                    if (titleSpan) titleSpan.textContent = `Regu ${index + 1}`;
+
+                    // Apply style
+                    header.style.backgroundColor = style.bg;
+                    header.style.color = style.text;
+
+                    // Adjust button color
+                    const button = header.querySelector('.hapus-regu-btn');
+                    if (button) {
+                        // The color from style is rgb() format, not hex.
+                        if (style.text === 'rgb(255, 255, 255)') { // #FFFFFF
+                            button.classList.remove('btn-outline-danger');
+                            button.classList.add('btn-outline-light');
+                        } else {
+                            button.classList.remove('btn-outline-light');
+                            button.classList.add('btn-outline-danger');
+                        }
                     }
-                }
-            }
-        });
-    };
-
-    const initSortableRegu = (container) => {
-        if (container) {
-            new Sortable(container, {
-                group: 'shared-regu', // Nama grup yang sama memungkinkan perpindahan antar list
-                animation: 150,
-                draggable: '.col-xl-3', // Item yang bisa di-drag adalah kolomnya
-                handle: '.card-header', // Geser hanya bisa dimulai dari header card
-                ghostClass: 'sortable-ghost', // Class untuk placeholder saat item digeser
-                forceFallback: true,
-                onEnd: function (evt) {
-                    // Menomori ulang kontainer tujuan
-                    reorderReguInContainer(evt.to);
-
-                    // Jika kartu dipindahkan dari kontainer yang berbeda, nomori ulang juga kontainer asal
-                    if (evt.from !== evt.to) {
-                        reorderReguInContainer(evt.from);
-                    }
-                    debouncedUpdateAllCounts();
                 }
             });
-        }
-    };
+        };
 
-    // Inisialisasi untuk semua kontainer regu yang sudah ada saat halaman dimuat
-    document.querySelectorAll('.regu-container').forEach(initSortableRegu);
-    // Inisialisasi untuk semua area konten regu yang sudah ada
-    document.querySelectorAll('.regu-content-area').forEach(initJemaahDropzone);
+        const initSortableRegu = (container) => {
+            if (container) {
+                new Sortable(container, {
+                    group: 'shared-regu', // Nama grup yang sama memungkinkan perpindahan antar list
+                    animation: 150,
+                    draggable: '.col-xl-3', // Item yang bisa di-drag adalah kolomnya
+                    handle: '.card-header', // Geser hanya bisa dimulai dari header card
+                    ghostClass: 'sortable-ghost', // Class untuk placeholder saat item digeser
+                    forceFallback: true,
+                    onEnd: function (evt) {
+                        // Menomori ulang kontainer tujuan
+                        reorderReguInContainer(evt.to);
 
-    // Fungsi untuk menomori ulang kartu rombongan
-    const reorderRombonganInContainer = (rombonganContainer) => {
-        if (!rombonganContainer) return;
-        const rombonganCards = rombonganContainer.querySelectorAll('.card.rombongan');
-        rombonganCards.forEach((card, index) => {
-            const header = card.querySelector('.card-header');
-            if (header) {
-                const rombonganNumber = index + 1;
-                const titleSpan = header.querySelector('span');
-                if (titleSpan) titleSpan.textContent = `Rombongan ${rombonganNumber}`;
-
-                // Apply styles
-                const styleIndex = (rombonganNumber - 1) % rombonganStyles.length;
-                const style = rombonganStyles[styleIndex];
-                header.style.backgroundColor = style.bg;
-                header.style.color = style.text;
-
-                const button = header.querySelector('.hapus-rombongan-btn');
-                if (button) {
-                    if (style.text === '#FFFFFF') {
-                        button.classList.remove('btn-outline-danger');
-                        button.classList.add('btn-outline-light');
-                    } else {
-                        button.classList.remove('btn-outline-light');
-                        button.classList.add('btn-outline-danger');
+                        // Jika kartu dipindahkan dari kontainer yang berbeda, nomori ulang juga kontainer asal
+                        if (evt.from !== evt.to) {
+                            reorderReguInContainer(evt.from);
+                        }
+                        debouncedUpdateAllCounts();
                     }
-                }
-
-                // Style the "Tambah Regu" button
-                const tambahReguBtn = card.querySelector('.tambah-regu-btn');
-                if (tambahReguBtn) {
-                    tambahReguBtn.style.backgroundColor = style.bg;
-                    tambahReguBtn.style.color = style.text;
-                    tambahReguBtn.style.borderColor = style.text; // Optional: style the border as well
-                }
-
-                // Apply the same style to child Regu cards
-                const reguContainer = card.querySelector('.regu-container');
-                if (reguContainer) {
-                    reorderReguInContainer(reguContainer);
-                }
+                });
             }
-        });
-    };
+        };
 
-    const initSortableRombongan = (container) => {
-        if (container) {
-            new Sortable(container, {
-                group: 'shared-rombongan', // Memungkinkan perpindahan antar kloter
-                animation: 150,
-                draggable: '.card.rombongan',
-                handle: '.card-header',
-                ghostClass: 'sortable-ghost',
-                forceFallback: true,
-                onEnd: function (evt) {
-                    // Menomori ulang kontainer tujuan
-                    reorderRombonganInContainer(evt.to);
+        // Inisialisasi untuk semua kontainer regu yang sudah ada saat halaman dimuat
+        document.querySelectorAll('.regu-container').forEach(initSortableRegu);
+        // Inisialisasi untuk semua area konten regu yang sudah ada
+        document.querySelectorAll('.regu-content-area').forEach(initJemaahDropzone);
 
-                    // Jika kartu dipindahkan dari kloter yang berbeda, nomori ulang juga kontainer asal
-                    if (evt.from !== evt.to) {
-                        reorderRombonganInContainer(evt.from);
+        // Fungsi untuk menomori ulang kartu rombongan
+        const reorderRombonganInContainer = (rombonganContainer) => {
+            if (!rombonganContainer) return;
+            const rombonganCards = rombonganContainer.querySelectorAll('.card.rombongan');
+            rombonganCards.forEach((card, index) => {
+                const header = card.querySelector('.card-header');
+                if (header) {
+                    const rombonganNumber = index + 1;
+                    const titleSpan = header.querySelector('span');
+                    if (titleSpan) titleSpan.textContent = `Rombongan ${rombonganNumber}`;
+
+                    // Apply styles
+                    const styleIndex = (rombonganNumber - 1) % rombonganStyles.length;
+                    const style = rombonganStyles[styleIndex];
+                    header.style.backgroundColor = style.bg;
+                    header.style.color = style.text;
+
+                    const button = header.querySelector('.hapus-rombongan-btn');
+                    if (button) {
+                        if (style.text === '#FFFFFF') {
+                            button.classList.remove('btn-outline-danger');
+                            button.classList.add('btn-outline-light');
+                        } else {
+                            button.classList.remove('btn-outline-light');
+                            button.classList.add('btn-outline-danger');
+                        }
                     }
-                    debouncedUpdateAllCounts();
+
+                    // Style the "Tambah Regu" button
+                    const tambahReguBtn = card.querySelector('.tambah-regu-btn');
+                    if (tambahReguBtn) {
+                        tambahReguBtn.style.backgroundColor = style.bg;
+                        tambahReguBtn.style.color = style.text;
+                        tambahReguBtn.style.borderColor = style.text; // Optional: style the border as well
+                    }
+
+                    // Apply the same style to child Regu cards
+                    const reguContainer = card.querySelector('.regu-container');
+                    if (reguContainer) {
+                        reorderReguInContainer(reguContainer);
+                    }
                 }
             });
-        }
-    };
+        };
 
-    // Inisialisasi untuk semua kontainer rombongan yang sudah ada saat halaman dimuat
-    document.querySelectorAll('.rombongan-card-container').forEach(container => {
-        initSortableRombongan(container);
-        reorderRombonganInContainer(container);
-    });
+        const initSortableRombongan = (container) => {
+            if (container) {
+                new Sortable(container, {
+                    group: 'shared-rombongan', // Memungkinkan perpindahan antar kloter
+                    animation: 150,
+                    draggable: '.card.rombongan',
+                    handle: '.card-header',
+                    ghostClass: 'sortable-ghost',
+                    forceFallback: true,
+                    onEnd: function (evt) {
+                        // Menomori ulang kontainer tujuan
+                        reorderRombonganInContainer(evt.to);
 
-
-    const kloterCardContainer = document.getElementById('kloterCardContainer');
-    const tambahKloterBtn = document.getElementById('tambahKloterBtn');
-
-    // --- KLOTER MANAGEMENT ---
-
-    // Fungsi untuk menomori ulang kartu kloter
-    const reorderKloterCards = () => {
-        const kloterCards = kloterCardContainer.querySelectorAll('.card.kloter');
-        kloterCards.forEach((card, index) => {
-            const titleSpan = card.querySelector('.card-header span');
-            if (titleSpan) {
-                titleSpan.textContent = `Kloter ${index + 1}`;
+                        // Jika kartu dipindahkan dari kloter yang berbeda, nomori ulang juga kontainer asal
+                        if (evt.from !== evt.to) {
+                            reorderRombonganInContainer(evt.from);
+                        }
+                        debouncedUpdateAllCounts();
+                    }
+                });
             }
-        });
-    };
+        };
 
-    // Function to create HTML for a new Kloter
-    const createKloterElement = (kloterNum) => {
-        const kloterDiv = document.createElement('div');
-        kloterDiv.className = 'card kloter mb-4';
-        kloterDiv.innerHTML = `
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div class="col">
-                    <span>Kloter ${kloterNum}</span>
-                    <span class="badge ms-2 kloter-title-bagde text-bg-warning">Belum ada kode embarkasi dan kloter -></span>
-                </div>
-                <div class="col-md-auto"></div>
-                <div class="col col-lg-auto">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+        // Inisialisasi untuk semua kontainer rombongan yang sudah ada saat halaman dimuat
+        document.querySelectorAll('.rombongan-card-container').forEach(container => {
+            initSortableRombongan(container);
+            reorderRombonganInContainer(container);
+        });
+
+
+        const kloterCardContainer = document.getElementById('kloterCardContainer');
+        const tambahKloterBtn = document.getElementById('tambahKloterBtn');
+
+        // --- KLOTER MANAGEMENT ---
+
+        // Fungsi untuk menomori ulang kartu kloter
+        const reorderKloterCards = () => {
+            const kloterCards = kloterCardContainer.querySelectorAll('.card.kloter');
+            kloterCards.forEach((card, index) => {
+                const titleSpan = card.querySelector('.card-header span');
+                if (titleSpan) {
+                    titleSpan.textContent = `Kloter ${index + 1}`;
+                }
+            });
+        };
+
+        // Function to create HTML for a new Kloter
+        const createKloterElement = (kloterNum) => {
+            const kloterDiv = document.createElement('div');
+            kloterDiv.className = 'kloterCardContainer';
+            // kloterDiv.className = 'card kloter mb-4';
+            kloterDiv.innerHTML = `
+            <div class="card kloter mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="col">
+                        <span>Kloter ${kloterNum}</span>
+                        <span class="badge ms-2 kloter-title-bagde text-bg-warning">Belum ada kode embarkasi dan kloter -></span>
+                    </div>
+                    <div class="col-md-auto"></div>
+                    <div class="col col-lg-auto">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="rombongan-card-container">
-                    <!-- Rombongan cards will be added here -->
+                <div class="card-body">
+                    <div class="rombongan-card-container">
+                        <!-- Rombongan cards will be added here -->
+                    </div>
+                    <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
+                        <i class="bi bi-plus-circle"></i> Tambah Rombongan
+                    </button>
                 </div>
-                <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
-                    <i class="bi bi-plus-circle"></i> Tambah Rombongan
-                </button>
             </div>
         `;
-        return kloterDiv;
-    };
+            return kloterDiv;
+        };
 
-    // Function to create HTML for a new Rombongan
-    const createRombonganElement = (rombonganNum) => {
-        const rombonganDiv = document.createElement('div');
-        rombonganDiv.className = 'card rombongan mb-3';
-        rombonganDiv.innerHTML = `
+        // Function to create HTML for a new Rombongan
+        const createRombonganElement = (rombonganNum) => {
+            const rombonganDiv = document.createElement('div');
+            rombonganDiv.className = 'card rombongan mb-3';
+            rombonganDiv.innerHTML = `
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col"><span>Rombongan ${rombonganNum}</span></div>
                 <div class="col-md-auto"></div>
@@ -947,27 +962,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <button class="btn btn-secondary btn-sm tambah-regu-btn"><i class="bi bi-plus-circle"></i> Tambah Regu</button>
             </div>
         `;
-        return rombonganDiv;
-    };
+            return rombonganDiv;
+        };
 
-
-    // Add new Kloter
-    tambahKloterBtn.addEventListener('click', () => {
-        const newKloterNum = kloterCardContainer.children.length + 1;
-        const newKloter = createKloterElement(newKloterNum);
-        kloterCardContainer.appendChild(newKloter);
-
-        // Inisialisasi Sortable pada kontainer rombongan yang baru dibuat di kloter baru
-        const newRombonganContainer = newKloter.querySelector('.rombongan-card-container');
-        initSortableRombongan(newRombonganContainer);
-        debouncedUpdateAllCounts();
-    });
-
-    // Function to create HTML for a new Regu
-    const createReguElement = (reguNum) => {
-        const reguCol = document.createElement('div');
-        reguCol.className = 'col-xl-3 col-md-4 col-sm-6 mb-3';
-        reguCol.innerHTML = `
+        // Function to create HTML for a new Regu
+        const createReguElement = (reguNum) => {
+            const reguCol = document.createElement('div');
+            reguCol.className = 'col-xl-3 col-md-4 col-sm-6 mb-3';
+            reguCol.innerHTML = `
             <div class="card regu-card h-100">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="col"><span>Regu ${reguNum}</span></div>
@@ -981,263 +983,315 @@ document.addEventListener('DOMContentLoaded', async function () {
                 </div>
             </div>
         `;
-        return reguCol;
-    };
+            return reguCol;
+        };
 
+        const kodeEmbarkasiInput = document.getElementById('kodeEmbarkasiInput');
+        const noKloterInput = document.getElementById('noKloterInput');
+        let currentEditingKloterCard = null;
 
-    // --- EVENT DELEGATION FOR ROMBONGAN & REGU ---
+        // Handler untuk tombol simpan di modal
+        saveKloterSetupBtn.addEventListener('click', () => {
+            if (currentEditingKloterCard) {
+                const setupKloterModalEl = document.getElementById('setupKloterModal');
+                const setupKloterModal = bootstrap.Modal.getInstance(setupKloterModalEl);
 
-    const setupKloterModalEl = document.getElementById('setupKloterModal');
-    const setupKloterModal = new bootstrap.Modal(setupKloterModalEl);
-    const saveKloterSetupBtn = document.getElementById('saveKloterSetupBtn');
-    const kodeEmbarkasiInput = document.getElementById('kodeEmbarkasiInput');
-    const noKloterInput = document.getElementById('noKloterInput');
-    let currentEditingKloterCard = null;
+                const embarkasi = kodeEmbarkasiInput.value.trim().toUpperCase();
+                const noKloter = noKloterInput.value.trim();
 
-    // Handler untuk tombol simpan di modal
-    saveKloterSetupBtn.addEventListener('click', () => {
-        if (currentEditingKloterCard) {
-            const embarkasi = kodeEmbarkasiInput.value.trim().toUpperCase();
-            const noKloter = noKloterInput.value.trim();
-
-            if (embarkasi && noKloter) {
-                const titleBadge = currentEditingKloterCard.querySelector('.kloter-title-bagde');
-                if (titleBadge) {
-                    titleBadge.textContent = `${embarkasi}-${noKloter}`;
-                    titleBadge.classList.remove('text-bg-warning');
-                    titleBadge.classList.add('text-bg-primary');
+                if (embarkasi && noKloter) {
+                    const titleBadge = currentEditingKloterCard.querySelector('.kloter-title-bagde');
+                    if (titleBadge) {
+                        titleBadge.textContent = `${embarkasi}-${noKloter}`;
+                        titleBadge.classList.remove('text-bg-warning');
+                        titleBadge.classList.add('text-bg-primary');
+                    }
+                    setupKloterModal.hide();
+                } else {
+                    alert('Kode Embarkasi dan No. Kloter harus diisi.');
                 }
-                setupKloterModal.hide();
-            } else {
-                alert('Kode Embarkasi dan No. Kloter harus diisi.');
             }
-        }
-    });
+        });
 
-    // Reset form saat modal ditutup
-    setupKloterModalEl.addEventListener('hidden.bs.modal', () => {
-        currentEditingKloterCard = null;
-        document.getElementById('setupKloterForm').reset();
-    });
+        // Fungsi ini sekarang akan dipanggil dari event listener global
+        function handleKloterContainerClick(e) {
+            // Handle Kloter Edit
+            const editBtn = e.target.closest('.kloter-edit-btn');
+            if (editBtn) {
+                const setupKloterModalEl = document.getElementById('setupKloterModal');
+                const setupKloterModal = bootstrap.Modal.getOrCreateInstance(setupKloterModalEl);
 
-    kloterCardContainer.addEventListener('click', function (e) {
-        // Handle Kloter Edit
-        const editBtn = e.target.closest('.kloter-edit-btn');
-        if (editBtn) {
-            currentEditingKloterCard = editBtn.closest('.card.kloter');
-            setupKloterModal.show();
-            return;
-        }
+                // Reset form saat modal ditutup
+                // Pindahkan listener ini ke sini agar hanya ada satu
+                setupKloterModalEl.removeEventListener('hidden.bs.modal', resetKloterModal); // Hapus listener lama jika ada
+                setupKloterModalEl.addEventListener('hidden.bs.modal', resetKloterModal, { once: true });
+                function resetKloterModal() {
+                    currentEditingKloterCard = null;
+                    document.getElementById('setupKloterForm').reset();
+                }
 
-        // Handle Hapus Kloter
-        const hapusKloterBtn = e.target.closest('.kloter-hapus-btn');
-        if (hapusKloterBtn) {
-            if (kloterCardContainer.children.length > 1) {
-                const kloterCard = hapusKloterBtn.closest('.card.kloter');
-                // Add confirmation dialog before deleting
-                if (kloterCard && confirm('Apakah Anda yakin ingin menghapus kloter ini? Semua rombongan dan regu di dalamnya akan ikut terhapus.')) {
-                    // Kembalikan semua jemaah di dalam kloter ini ke daftar utama
-                    returnJemaahToAvailableList(kloterCard);
-                    kloterCard.remove();
+                currentEditingKloterCard = editBtn.closest('.card.kloter');
+                setupKloterModal.show();
+                return;
+            }
+
+            // Handle Hapus Kloter
+            const hapusKloterBtn = e.target.closest('.kloter-hapus-btn');
+            if (hapusKloterBtn) {
+                if (kloterCardContainer.children.length > 1) {
+                    const kloterCard = hapusKloterBtn.closest('.card.kloter');
+                    // Add confirmation dialog before deleting
+                    if (kloterCard && confirm('Apakah Anda yakin ingin menghapus kloter ini? Semua rombongan dan regu di dalamnya akan ikut terhapus.')) {
+                        // Kembalikan semua jemaah di dalam kloter ini ke daftar utama
+                        returnJemaahToAvailableList(kloterCard);
+                        kloterCard.remove();
+                        reorderKloterCards();
+                        debouncedUpdateAllCounts();
+                    }
+                } else {
+                    alert('Minimal harus ada satu kloter.');
+                }
+                return;
+            }
+
+            // Handle Kloter Up
+            const upBtn = e.target.closest('.kloter-up-btn');
+            if (upBtn) {
+                const kloterCard = upBtn.closest('.card.kloter');
+                const prevKloter = kloterCard.previousElementSibling;
+                if (prevKloter) {
+                    kloterCardContainer.insertBefore(kloterCard, prevKloter);
                     reorderKloterCards();
-                    debouncedUpdateAllCounts();
                 }
-            } else {
-                alert('Minimal harus ada satu kloter.');
             }
-            return;
-        }
 
-        // Handle Kloter Up
-        const upBtn = e.target.closest('.kloter-up-btn');
-        if (upBtn) {
-            const kloterCard = upBtn.closest('.card.kloter');
-            const prevKloter = kloterCard.previousElementSibling;
-            if (prevKloter) {
-                kloterCardContainer.insertBefore(kloterCard, prevKloter);
-                reorderKloterCards();
+            // Handle Kloter Down
+            const downBtn = e.target.closest('.kloter-down-btn');
+            if (downBtn) {
+                const kloterCard = downBtn.closest('.card.kloter');
+                const nextKloter = kloterCard.nextElementSibling;
+                if (nextKloter) {
+                    // Memasukkan elemen berikutnya sebelum elemen saat ini, secara efektif memindahkannya ke bawah
+                    kloterCardContainer.insertBefore(nextKloter, kloterCard);
+                    reorderKloterCards();
+                }
             }
-        }
 
-        // Handle Kloter Down
-        const downBtn = e.target.closest('.kloter-down-btn');
-        if (downBtn) {
-            const kloterCard = downBtn.closest('.card.kloter');
-            const nextKloter = kloterCard.nextElementSibling;
-            if (nextKloter) {
-                // Memasukkan elemen berikutnya sebelum elemen saat ini, secara efektif memindahkannya ke bawah
-                kloterCardContainer.insertBefore(nextKloter, kloterCard);
-                reorderKloterCards();
-            }
-        }
+            // Handle "Tambah Rombongan"
+            const tambahRombonganBtn = e.target.closest('.tambah-rombongan-btn');
+            if (tambahRombonganBtn) {
+                const rombonganContainer = tambahRombonganBtn.closest('.card-body').querySelector('.rombongan-card-container');
+                const rombonganCount = rombonganContainer.children.length + 1;
+                const newRombonganCard = createRombonganElement(rombonganCount);
 
-        // Handle "Tambah Rombongan"
-        const tambahRombonganBtn = e.target.closest('.tambah-rombongan-btn');
-        if (tambahRombonganBtn) {
-            const rombonganContainer = tambahRombonganBtn.closest('.card-body').querySelector('.rombongan-card-container');
-            const rombonganCount = rombonganContainer.children.length + 1;
-            const newRombonganCard = createRombonganElement(rombonganCount);
+                rombonganContainer.appendChild(newRombonganCard);
 
-            rombonganContainer.appendChild(newRombonganCard);
-
-            // Inisialisasi Sortable pada kontainer regu yang baru dibuat
-            const newReguContainer = newRombonganCard.querySelector('.regu-container');
-            initSortableRegu(newReguContainer);
-            // Panggil reorder untuk menerapkan nomor dan style
-            reorderRombonganInContainer(rombonganContainer);
-            debouncedUpdateAllCounts();
-        }
-
-        // Handle "Hapus Rombongan"
-        const hapusRombonganBtn = e.target.closest('.hapus-rombongan-btn');
-        if (hapusRombonganBtn) {
-            const rombonganCard = hapusRombonganBtn.closest('.card.rombongan');
-            // Add confirmation dialog before deleting
-            if (rombonganCard && confirm('Apakah Anda yakin ingin menghapus rombongan ini? Semua regu di dalamnya akan ikut terhapus.')) {
-                const rombonganContainer = rombonganCard.parentElement;
-                // Kembalikan semua jemaah di dalam rombongan ini ke daftar utama
-                returnJemaahToAvailableList(rombonganCard);
-                rombonganCard.remove();
+                // Inisialisasi Sortable pada kontainer regu yang baru dibuat
+                const newReguContainer = newRombonganCard.querySelector('.regu-container');
+                initSortableRegu(newReguContainer);
+                // Panggil reorder untuk menerapkan nomor dan style
                 reorderRombonganInContainer(rombonganContainer);
                 debouncedUpdateAllCounts();
             }
-        }
 
-        // Handle "Tambah Regu"
-        const tambahReguBtn = e.target.closest('.tambah-regu-btn');
-        if (tambahReguBtn) {
-            const reguContainer = tambahReguBtn.closest('.card-body').querySelector('.regu-container');
-            const reguCount = reguContainer.children.length + 1;
-            const newReguCol = createReguElement(reguCount);
-            reguContainer.appendChild(newReguCol);
+            // Handle "Hapus Rombongan"
+            const hapusRombonganBtn = e.target.closest('.hapus-rombongan-btn');
+            if (hapusRombonganBtn) {
+                const rombonganCard = hapusRombonganBtn.closest('.card.rombongan');
+                // Add confirmation dialog before deleting
+                if (rombonganCard && confirm('Apakah Anda yakin ingin menghapus rombongan ini? Semua regu di dalamnya akan ikut terhapus.')) {
+                    const rombonganContainer = rombonganCard.parentElement;
+                    // Kembalikan semua jemaah di dalam rombongan ini ke daftar utama
+                    returnJemaahToAvailableList(rombonganCard);
+                    rombonganCard.remove();
+                    reorderRombonganInContainer(rombonganContainer);
+                    debouncedUpdateAllCounts();
+                }
+            }
 
-            // Inisialisasi dropzone untuk regu yang baru dibuat
-            const newReguContentArea = newReguCol.querySelector('.regu-content-area');
-            initJemaahDropzone(newReguContentArea);
-            reorderReguInContainer(reguContainer);
-            debouncedUpdateAllCounts();
-        }
+            // Handle "Tambah Regu"
+            const tambahReguBtn = e.target.closest('.tambah-regu-btn');
+            if (tambahReguBtn) {
+                const reguContainer = tambahReguBtn.closest('.card-body').querySelector('.regu-container');
+                const reguCount = reguContainer.children.length + 1;
+                const newReguCol = createReguElement(reguCount);
+                reguContainer.appendChild(newReguCol);
 
-        // Handle "Hapus Regu"
-        const hapusReguBtn = e.target.closest('.hapus-regu-btn');
-        if (hapusReguBtn) {
-            const reguCol = hapusReguBtn.closest('.col-xl-3, .col-md-4, .col-sm-6');
-            // Add confirmation dialog before deleting
-            if (reguCol && confirm('Apakah Anda yakin ingin menghapus regu ini?')) {
-                const reguContainer = reguCol.parentElement;
-                // Kembalikan semua jemaah di dalam regu ini ke daftar utama
-                returnJemaahToAvailableList(reguCol);
-                reguCol.remove();
+                // Inisialisasi dropzone untuk regu yang baru dibuat
+                const newReguContentArea = newReguCol.querySelector('.regu-content-area');
+                initJemaahDropzone(newReguContentArea);
                 reorderReguInContainer(reguContainer);
                 debouncedUpdateAllCounts();
             }
-        }
 
-        // Handle Jemaah Item Dropdown Actions
-        const jemaahActionBtn = e.target.closest('.jemaah-action-btn');
-        if (jemaahActionBtn) {
-            e.preventDefault();
-            const action = jemaahActionBtn.dataset.action;
-            const jemaahItem = jemaahActionBtn.closest('.jemaah-item');
-            const jemaahId = jemaahItem.dataset.id;
-
-            const currentRole = jemaahItem.dataset.role;
-
-            if (action === 'karom' || action === 'karu') {
-                if (currentRole === action) return; // Do nothing if role is already set
-
-                // Update view
-                // 0. Update data-role attribute
-                jemaahItem.dataset.role = action;
-                // 1. Remove existing role badge
-                const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
-                if (existingRoleBadge) existingRoleBadge.remove();
-
-                // 2. Add new role badge
-                const statusBadge = jemaahItem.querySelector('.badge.bg-secondary'); // membidik badge status untuk set karu karom
-                if (statusBadge) {
-                    const newBadge = document.createElement('span');
-                    newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-primary' : 'bg-warning text-dark'}`;
-                    newBadge.textContent = action.charAt(0).toUpperCase() + action.slice(1);
-                    statusBadge.insertAdjacentElement('afterend', newBadge);
-                }
-
-                // 3. Update dropdown disabled states
-                const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
-                const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
-                if (karomBtn) karomBtn.classList.toggle('disabled', action === 'karom');
-                if (karuBtn) karuBtn.classList.toggle('disabled', action === 'karu');
-
-                // 4. Show "Clear Set" option
-                const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
-                clearItems.forEach(item => item.style.display = 'list-item');
-
-            } else if (action === 'clear') {
-                if (!currentRole) return;
-
-                // Update view
-                delete jemaahItem.dataset.role;
-                // 1. Remove role badge
-                const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
-                if (existingRoleBadge) existingRoleBadge.remove();
-
-                // 2. Enable Set Karom/Karu buttons
-                const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
-                const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
-                if (karomBtn) karomBtn.classList.remove('disabled');
-                if (karuBtn) karuBtn.classList.remove('disabled');
-
-                // 3. Hide "Clear Set" items
-                const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
-                clearItems.forEach(item => item.style.display = 'none');
-
-            } else if (action === 'remove') {
-                // If it's a "Jemaah Unknown" clone, just remove it.
-                if (jemaahId === 'jemaah-unknown') {
-                    jemaahItem.remove();
+            // Handle "Hapus Regu"
+            const hapusReguBtn = e.target.closest('.hapus-regu-btn');
+            if (hapusReguBtn) {
+                const reguCol = hapusReguBtn.closest('.col-xl-3, .col-md-4, .col-sm-6');
+                // Add confirmation dialog before deleting
+                if (reguCol && confirm('Apakah Anda yakin ingin menghapus regu ini?')) {
+                    const reguContainer = reguCol.parentElement;
+                    // Kembalikan semua jemaah di dalam regu ini ke daftar utama
+                    returnJemaahToAvailableList(reguCol);
+                    reguCol.remove();
+                    reorderReguInContainer(reguContainer);
                     debouncedUpdateAllCounts();
-                    return;
                 }
+            }
 
-                // If it's a real jemaah, move it back to the main list.
-                const jemaah = jemaahData.find(j => j.id === jemaahId);
-                if (jemaah) {
-                    if (!availableJemaah.some(aj => aj.id === jemaahId)) {
-                        availableJemaah.push(jemaah);
+            // Handle Jemaah Item Dropdown Actions
+            const jemaahActionBtn = e.target.closest('.jemaah-action-btn');
+            if (jemaahActionBtn) {
+                e.preventDefault();
+                const action = jemaahActionBtn.dataset.action;
+                const jemaahItem = jemaahActionBtn.closest('.jemaah-item');
+                const jemaahId = jemaahItem.dataset.id;
+
+                const currentRole = jemaahItem.dataset.role;
+
+                if (action === 'karom' || action === 'karu') {
+                    if (currentRole === action) return; // Do nothing if role is already set
+
+                    // Update view
+                    // 0. Update data-role attribute
+                    jemaahItem.dataset.role = action;
+                    // 1. Remove existing role badge
+                    const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
+                    if (existingRoleBadge) existingRoleBadge.remove();
+
+                    // 2. Add new role badge
+                    const statusBadge = jemaahItem.querySelector('.badge.bg-secondary'); // membidik badge status untuk set karu karom
+                    if (statusBadge) {
+                        const newBadge = document.createElement('span');
+                        newBadge.className = `badge ms-1 jemaah-role-badge ${action === 'karom' ? 'bg-primary' : 'bg-warning text-dark'}`;
+                        newBadge.textContent = action.charAt(0).toUpperCase() + action.slice(1);
+                        statusBadge.insertAdjacentElement('afterend', newBadge);
                     }
-                }
 
-                jemaahItem.remove(); // Remove from the regu list
-                cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
-                updateAvailableJemaahCount();
-                debouncedUpdateAllCounts();
+                    // 3. Update dropdown disabled states
+                    const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
+                    const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
+                    if (karomBtn) karomBtn.classList.toggle('disabled', action === 'karom');
+                    if (karuBtn) karuBtn.classList.toggle('disabled', action === 'karu');
+
+                    // 4. Show "Clear Set" option
+                    const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
+                    clearItems.forEach(item => item.style.display = 'list-item');
+
+                } else if (action === 'clear') {
+                    if (!currentRole) return;
+
+                    // Update view
+                    delete jemaahItem.dataset.role;
+                    // 1. Remove role badge
+                    const existingRoleBadge = jemaahItem.querySelector('.jemaah-role-badge');
+                    if (existingRoleBadge) existingRoleBadge.remove();
+
+                    // 2. Enable Set Karom/Karu buttons
+                    const karomBtn = jemaahItem.querySelector('[data-action="karom"]');
+                    const karuBtn = jemaahItem.querySelector('[data-action="karu"]');
+                    if (karomBtn) karomBtn.classList.remove('disabled');
+                    if (karuBtn) karuBtn.classList.remove('disabled');
+
+                    // 3. Hide "Clear Set" items
+                    const clearItems = jemaahItem.querySelectorAll('.clear-set-item');
+                    clearItems.forEach(item => item.style.display = 'none');
+
+                } else if (action === 'remove') {
+                    // If it's a "Jemaah Unknown" clone, just remove it.
+                    if (jemaahId === 'jemaah-unknown') {
+                        jemaahItem.remove();
+                        debouncedUpdateAllCounts();
+                        return;
+                    }
+
+                    // If it's a real jemaah, move it back to the main list.
+                    const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+                    if (jemaah) {
+                        if (!availableJemaah.some(aj => aj.id === jemaahId)) {
+                            availableJemaah.push(jemaah);
+                        }
+                    }
+
+                    jemaahItem.remove(); // Remove from the regu list
+                    cariJemaahInput.dispatchEvent(new Event('input')); // Re-render the main list
+                    updateAvailableJemaahCount();
+                    debouncedUpdateAllCounts();
+                }
             }
         }
-    });
 
-    // --- INITIAL RENDER ---
-    // Hapus konten statis dan render dari data manifest
-    if (dataManifest && Array.isArray(dataManifest) && dataManifest.length > 0) {
-        renderManifest(dataManifest);
+        // Attach the handler to the container
+        kloterCardContainer.onclick = handleKloterContainerClick;
+
+        // --- INITIAL RENDER ---
+        // Hapus konten statis dan render dari data manifest
+        if (dataManifest && Array.isArray(dataManifest) && dataManifest.length > 0) {
+            renderManifest(dataManifest);
+        }
     }
-}
+
     // --- EVENT LISTENERS ---
-    if (reloadButton) {
-        reloadButton.addEventListener('click', loadAndInitialize);
-    }
-    if (selectTahunEl) {
-        selectTahunEl.addEventListener('change', async () => {
-            await populateVersiDropdown();
-            loadAndInitialize(); // Muat ulang data setelah versi di-populate
-        });
-    }
-    if (selectVersiEl) {
-        selectVersiEl.addEventListener('change', loadAndInitialize);
+    let appEventListenersAttached = false; // Flag to prevent re-attaching listeners
+
+    function attachAppEventListeners() {
+        if (appEventListenersAttached) return; // Hanya pasang listener sekali
+
+        if (selectTahunEl) {
+            selectTahunEl.addEventListener('change', async () => {
+                await populateVersiDropdown();
+                loadAndInitialize(); // Muat ulang data setelah versi di-populate
+            });
+        }
+        if (selectVersiEl) {
+            selectVersiEl.addEventListener('change', loadAndInitialize);
+        }
+
+        if (tambahKloterBtn) {
+            tambahKloterBtn.addEventListener('click', () => {
+                const newKloterNum = kloterCardContainer.children.length + 1;
+                const kloterDiv = document.createElement('div');
+                kloterDiv.className = 'card kloter mb-4';
+                kloterDiv.innerHTML = `
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="col">
+                            <span>Kloter ${newKloterNum}</span>
+                            <span class="badge ms-2 kloter-title-bagde text-bg-warning">Belum ada kode embarkasi dan kloter -></span>
+                        </div>
+                        <div class="col-md-auto"></div>
+                        <div class="col col-lg-auto">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary kloter-edit-btn"><i class="bi bi-pencil"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary kloter-up-btn"><i class="bi bi-arrow-up"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary kloter-down-btn"><i class="bi bi-arrow-down"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger kloter-hapus-btn"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="rombongan-card-container"></div>
+                        <button class="btn btn-secondary btn-sm tambah-rombongan-btn" type="button">
+                            <i class="bi bi-plus-circle"></i> Tambah Rombongan
+                        </button>
+                    </div>`;
+                kloterCardContainer.appendChild(kloterDiv);
+                // setTimeout(() => updateAllCountsOnPage(), 50);
+            });
+        }
+
+        if (cariJemaahInput) {
+            cariJemaahInput.addEventListener('input', () => {
+                document.getElementById('jemaahList').dispatchEvent(new Event('filter'));
+            });
+        }
+
+        appEventListenersAttached = true;
     }
 
     // Initial load
     await populateVersiDropdown();
     loadAndInitialize();
+    attachAppEventListeners(); // Pasang event listener utama
 });
 // --- THEME SWITCHER ---
 (() => {
