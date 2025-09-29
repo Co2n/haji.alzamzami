@@ -2,7 +2,7 @@
   {
     "date": "2023-09-03T17:00:00.000Z",
     "timestamp": 1693743600000,
-    "musim": "1446",
+    "musim": "1447",
     "versi": "v1",
     "manifest": [
       {
@@ -188,39 +188,6 @@
           {
             "id": "rombongan-1-3",
             "regu": []
-          }
-        ]
-      },
-      {
-        "id": "kloter-2",
-        "kodeEmbarkasi": "KJT",
-        "noKloter": "02",
-        "rombongan": [
-          {
-            "id": "rombongan-2-1",
-            "regu": [
-              {
-                "id": "regu-2-1-1",
-                "jemaah": [
-                  { "id": "jemaah-unknown", "role": null },
-                  { "id": "jemaah-unknown", "role": null }
-                ]
-              },
-              {
-                "id": "regu-2-1-2",
-                "jemaah": [
-                  { "id": "jemaah-18", "role": null },
-                  { "id": "jemaah-19", "role": null }
-                ]
-              },
-              {
-                "id": "regu-2-1-3",
-                "jemaah": [
-                  { "id": "jemaah-20", "role": null },
-                  { "id": "jemaah-21", "role": null }
-                ]
-              }
-            ]
           }
         ]
       }
