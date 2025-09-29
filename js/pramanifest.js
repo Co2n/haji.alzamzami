@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function fetchManifestData(musim, versi) {
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbz_O6IBMUP_N2n5Pf91NaI-yr8cNIGuZWMGsq_HT_5QEe5KIh2l4SuS-c02YpNk14Cx/exec?musim=' + musim + '&versi=' + versi);
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec?musim=' + musim + '&versi=' + versi);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbz_O6IBMUP_N2n5Pf91NaI-yr8cNIGuZWMGsq_HT_5QEe5KIh2l4SuS-c02YpNk14Cx/exec?musim=' + selectedMusim);
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
