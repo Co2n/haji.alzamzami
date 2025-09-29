@@ -22,13 +22,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     // --- DATA FETCHING ---
     async function fetchJemaahData(musim) {
         try {
-            const response = await fetch('json/jemaah.json');
-            // const response = await fetch(`https://script.google.com/macros/s/AKfycbxVEP8jkH878yhDtxjPr5lIiGsr61g-Am2gTbuKcw9ylWGwHpqhjN63bV82kEhIXlGA/exec?musim=${musim}`);
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwjfC3NxZkTVD5KQGmUWLIQx2pF9BmZ6x8lKlmmO989u0Zwi6nspXiKLs5JNKzma8WA/exec?musim=' + musim);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const allData = await response.json();
-            const seasonData = allData.find(d => d.musim === musim);
+            const seasonData = allData.find(d => d.musim === parseInt(musim, 10));
             return seasonData ? seasonData.jemaah : [];
         } catch (error) {
             console.error(`Could not fetch jemaah data for musim ${musim}:`, error);
@@ -38,12 +37,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function fetchManifestData(musim, versi) {
         try {
-            const response = await fetch('json/manifest.json');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbz_O6IBMUP_N2n5Pf91NaI-yr8cNIGuZWMGsq_HT_5QEe5KIh2l4SuS-c02YpNk14Cx/exec?musim=' + musim + '&versi=' + versi);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const allData = await response.json();
-            const seasonData = allData.find(d => d.musim === musim && d.versi === versi);
+            const seasonData = allData.find(d => d.musim === parseInt(musim, 10) && d.versi === versi);
             return seasonData ? seasonData.manifest : [];
         } catch (error) {
             console.error(`Could not fetch manifest data for musim ${musim} and versi ${versi}:`, error);
@@ -92,11 +91,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            const response = await fetch('json/manifest.json');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbz_O6IBMUP_N2n5Pf91NaI-yr8cNIGuZWMGsq_HT_5QEe5KIh2l4SuS-c02YpNk14Cx/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
-            const versions = allData.filter(d => d.musim === selectedMusim);
+            const versions = allData.filter(d => d.musim === parseInt(selectedMusim, 10));
 
             if (versions.length > 0) {
                 versions.forEach(v => {
