@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchJemaahData(musim) {
-        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwjfC3NxZkTVD5KQGmUWLIQx2pF9BmZ6x8lKlmmO989u0Zwi6nspXiKLs5JNKzma8WA/exec', { musim });
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
         // Gunakan '==' untuk perbandingan longgar (string vs number) atau konversi keduanya
         const seasonData = allData.find(d => d.musim == musim);
         const jemaahList = seasonData ? seasonData.jemaah : [];
@@ -297,6 +297,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaahId;
+
+            // console.log(currentJemaahData.map(j => j.id)); // Log semua ID jemaah yang ada
+            //console.log("Membuat elemen jemaah untuk ID:", jemaahId);
+            //console.log("data jemaah:", jemaah);
+
             if (role) listItem.dataset.role = role;
             if (jemaahId === 'jemaah-unknown') {
                 listItem.innerHTML = `
@@ -365,6 +370,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Fungsi untuk me-render seluruh manifest dari data
         const renderManifest = (manifestData) => {
+            // console.log("Merender manifest dengan data:", manifestData);
             const kloterContainer = document.getElementById('kloterCardContainer');
             kloterContainer.innerHTML = ''; // Kosongkan kontainer
 
@@ -389,6 +395,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         regu.jemaah.forEach(jemaahObj => {
                             const jemaahEl = createJemaahItemElement(jemaahObj);
                             if (jemaahEl) reguContentArea.appendChild(jemaahEl);
+                            // console.log("Menambahkan jemaah ke regu:", jemaahObj, jemaahEl);
                         });
 
                         reguContainer.appendChild(reguEl);
@@ -1239,6 +1246,102 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
+    // --- DATA SAVING ---
+    function generateManifestFromDOM() {
+        const kloterContainer = document.getElementById('kloterCardContainer');
+        if (!kloterContainer) return [];
+
+        const manifestData = [];
+        const kloterCards = kloterContainer.querySelectorAll('.card.kloter');
+
+        kloterCards.forEach((kloterCard, kloterIndex) => {
+            const kloterObj = {
+                id: `kloter-${kloterIndex + 1}`,
+                kodeEmbarkasi: '',
+                noKloter: '',
+                rombongan: []
+            };
+
+            const titleBadge = kloterCard.querySelector('.kloter-title-bagde');
+            if (titleBadge && !titleBadge.classList.contains('text-bg-warning')) {
+                const [embarkasi, noKloter] = titleBadge.textContent.split('-');
+                kloterObj.kodeEmbarkasi = embarkasi || '';
+                kloterObj.noKloter = noKloter || '';
+            }
+
+            const rombonganCards = kloterCard.querySelectorAll('.card.rombongan');
+            rombonganCards.forEach((rombonganCard, rombonganIndex) => {
+                const rombonganObj = {
+                    id: `rombongan-${kloterIndex + 1}-${rombonganIndex + 1}`,
+                    regu: []
+                };
+
+                const reguCards = rombonganCard.querySelectorAll('.regu-card');
+                reguCards.forEach((reguCard, reguIndex) => {
+                    const reguObj = {
+                        id: `regu-${kloterIndex + 1}-${rombonganIndex + 1}-${reguIndex + 1}`,
+                        jemaah: []
+                    };
+
+                    const jemaahItems = reguCard.querySelectorAll('.jemaah-item');
+                    jemaahItems.forEach(jemaahItem => {
+                        const jemaahId = jemaahItem.dataset.id;
+                        const jemaahRole = jemaahItem.dataset.role || null;
+                        reguObj.jemaah.push({ id: jemaahId, role: jemaahRole });
+                    });
+                    rombonganObj.regu.push(reguObj);
+                });
+                kloterObj.rombongan.push(rombonganObj);
+            });
+            manifestData.push(kloterObj);
+        });
+
+        return manifestData;
+    }
+
+    async function handleSave() {
+        const versiInputEl = document.getElementById('versi');
+        const selectedMusim = selectTahunEl.value;
+        const selectedVersi = selectVersiEl.value;
+        const newVersi = versiInputEl.value.trim();
+
+        const manifestJSON = generateManifestFromDOM();
+        const minifiedManifest = JSON.stringify(manifestJSON);
+        const now = new Date();
+
+        let payload;
+        let action = '';
+
+        // Kondisi untuk UPDATE
+        if ((!newVersi && selectedVersi) || (newVersi === selectedVersi)) {
+            action = 'UPDATE';
+            payload = {
+                timestamp: now.getTime(),
+                manifest: minifiedManifest
+            };
+            console.log(`Aksi: ${action} (versi: ${selectedVersi})`);
+        }
+        // Kondisi untuk SAVE NEW
+        else if (newVersi && newVersi !== selectedVersi) {
+            action = 'SAVE_NEW';
+            payload = {
+                date: now.toISOString(),
+                timestamp: now.getTime(),
+                musim: selectedMusim,
+                versi: newVersi,
+                manifest: minifiedManifest
+            };
+            console.log(`Aksi: ${action} (versi baru: ${newVersi})`);
+        } else {
+            alert("Kondisi tidak valid untuk menyimpan. Tentukan versi baru atau pastikan versi yang ada sudah dipilih.");
+            return;
+        }
+
+        console.log("Payload yang akan dikirim:", payload);
+        alert(`Aksi '${action}' telah dicatat di console. Google Script belum diimplementasikan.`);
+        // TODO: Ganti console.log dengan fetch request ke Google Script saat sudah siap
+    }
+
     // --- EVENT LISTENERS ---
     let appEventListenersAttached = false; // Flag to prevent re-attaching listeners
 
@@ -1291,6 +1394,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             cariJemaahInput.addEventListener('input', () => {
                 document.getElementById('jemaahList').dispatchEvent(new Event('filter'));
             });
+        }
+
+        const simpanVersiBtn = document.getElementById('simpanVersiBtn');
+        if (simpanVersiBtn) {
+            simpanVersiBtn.addEventListener('click', handleSave);
         }
 
         appEventListenersAttached = true;
