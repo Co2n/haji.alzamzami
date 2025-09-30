@@ -20,34 +20,41 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 
     // --- DATA FETCHING ---
-    async function fetchJemaahData(musim) {
+    async function fetchGenericData(url, params) {
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwjfC3NxZkTVD5KQGmUWLIQx2pF9BmZ6x8lKlmmO989u0Zwi6nspXiKLs5JNKzma8WA/exec?musim=' + musim);
+            const fullUrl = new URL(url);
+            Object.keys(params).forEach(key => fullUrl.searchParams.append(key, params[key]));
+
+            const response = await fetch(fullUrl);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const allData = await response.json();
-            const seasonData = allData.find(d => d.musim === parseInt(musim, 10));
-            return seasonData ? seasonData.jemaah : [];
+            let data = await response.json();
+            // Handle jika API mengembalikan format { "data": [...] }
+            if (data && typeof data === 'object' && data.data) {
+                data = data.data;
+            }
+            return Array.isArray(data) ? data : [];
         } catch (error) {
-            console.error(`Could not fetch jemaah data for musim ${musim}:`, error);
+            console.error(`Could not fetch data from ${url}:`, error);
             return []; // Return empty array on error
         }
     }
 
+    async function fetchJemaahData(musim) {
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwjfC3NxZkTVD5KQGmUWLIQx2pF9BmZ6x8lKlmmO989u0Zwi6nspXiKLs5JNKzma8WA/exec', { musim });
+        // Gunakan '==' untuk perbandingan longgar (string vs number) atau konversi keduanya
+        const seasonData = allData.find(d => d.musim == musim);
+        const jemaahList = seasonData ? seasonData.jemaah : [];
+        // Normalisasi: pastikan semua ID jemaah adalah string
+        return jemaahList.map(j => ({ ...j, id: String(j.id) }));
+    }
+
     async function fetchManifestData(musim, versi) {
-        try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec?musim=' + musim + '&versi=' + versi);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const allData = await response.json();
-            const seasonData = allData.find(d => d.musim === parseInt(musim, 10) && d.versi === versi);
-            return seasonData ? seasonData.manifest : [];
-        } catch (error) {
-            console.error(`Could not fetch manifest data for musim ${musim} and versi ${versi}:`, error);
-            return []; // Return empty array on error
-        }
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec', { musim, versi });
+        // Gunakan '==' untuk perbandingan longgar (string vs number)
+        const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
+        return seasonData ? seasonData.manifest : [];
     }
 
     // --- MAIN APP LOGIC ---
@@ -282,9 +289,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Fungsi untuk membuat elemen HTML jemaah
         const createJemaahItemElement = (jemaahObj) => {
-            const jemaahId = typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id;
+            // Normalisasi: pastikan jemaahId selalu string
+            const jemaahId = String(typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id);
             const role = typeof jemaahObj === 'object' ? jemaahObj.role : null;
-            const jemaah = currentJemaahData.find(j => j.id === jemaahId);
+            // Cari menggunakan jemaahId yang sudah pasti string
+            const jemaah = currentJemaahData.find(j => j.id === jemaahId); 
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaahId;
