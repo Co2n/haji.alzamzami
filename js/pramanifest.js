@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchManifestData(musim, versi) {
-        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec', { musim, versi });
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwWCSgj4Vu23HT0Jd2XmoAZwmHqPktCgDCEBMIGVqRcR9Wyn-70KTMhOZXX1ku738XScQ/exec', { musim, versi });
         // Gunakan '==' untuk perbandingan longgar (string vs number)
         const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
         return seasonData ? seasonData.manifest : [];
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwj4TiA6kcAfwL0dhJX3h9kYul5HOXhvkZ7UmHs4bX_4XWJFt-wUw--im7Cps6-43aJ4Q/exec?musim=' + selectedMusim);
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwWCSgj4Vu23HT0Jd2XmoAZwmHqPktCgDCEBMIGVqRcR9Wyn-70KTMhOZXX1ku738XScQ/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const jemaahId = String(typeof jemaahObj === 'string' ? jemaahObj : jemaahObj.id);
             const role = typeof jemaahObj === 'object' ? jemaahObj.role : null;
             // Cari menggunakan jemaahId yang sudah pasti string
-            const jemaah = currentJemaahData.find(j => j.id === jemaahId); 
+            const jemaah = currentJemaahData.find(j => j.id === jemaahId);
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item d-flex align-items-center jemaah-item';
             listItem.dataset.id = jemaahId;
@@ -1300,6 +1300,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function handleSave() {
+
+        // URL Web App Google Script Anda (dapatkan setelah deploy)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWCSgj4Vu23HT0Jd2XmoAZwmHqPktCgDCEBMIGVqRcR9Wyn-70KTMhOZXX1ku738XScQ/exec";
+
         const versiInputEl = document.getElementById('versi');
         const selectedMusim = selectTahunEl.value;
         const selectedVersi = selectVersiEl.value;
@@ -1311,6 +1315,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         let payload;
         let action = '';
+        let dataToSend = {};
+
+        // Tambahkan dialog konfirmasi sebelum melanjutkan
+        if (!confirm("Apakah Anda yakin ingin menyimpan perubahan ini?")) {
+            console.log("Penyimpanan dibatalkan oleh pengguna.");
+            return; // Hentikan fungsi jika pengguna memilih 'Tidak'
+        }
+
 
         // Kondisi untuk UPDATE
         if ((!newVersi && selectedVersi) || (newVersi === selectedVersi)) {
@@ -1319,10 +1331,18 @@ document.addEventListener('DOMContentLoaded', async function () {
                 timestamp: now.getTime(),
                 manifest: minifiedManifest
             };
+            dataToSend = { action, payload, selectedMusim, selectedVersi };
             console.log(`Aksi: ${action} (versi: ${selectedVersi})`);
         }
         // Kondisi untuk SAVE NEW
         else if (newVersi && newVersi !== selectedVersi) {
+            const existingVersions = Array.from(selectVersiEl.options).map(opt => opt.value);
+            if (existingVersions.includes(newVersi)) {
+                alert(`Nama versi "${newVersi}" sudah ada. Silakan gunakan nama lain.`);
+                versiInputEl.focus();
+                return;
+            }
+
             action = 'SAVE_NEW';
             payload = {
                 date: now.toISOString(),
@@ -1331,15 +1351,53 @@ document.addEventListener('DOMContentLoaded', async function () {
                 versi: newVersi,
                 manifest: minifiedManifest
             };
+            dataToSend = { action, payload };
             console.log(`Aksi: ${action} (versi baru: ${newVersi})`);
         } else {
             alert("Kondisi tidak valid untuk menyimpan. Tentukan versi baru atau pastikan versi yang ada sudah dipilih.");
             return;
         }
 
-        console.log("Payload yang akan dikirim:", payload);
-        alert(`Aksi '${action}' telah dicatat di console. Google Script belum diimplementasikan.`);
+        console.log("Payload yang akan dikirim:", dataToSend);
+        //alert(`Aksi '${action}' telah dicatat di console. Google Script belum diimplementasikan.`);
+
         // TODO: Ganti console.log dengan fetch request ke Google Script saat sudah siap
+
+        // Nonaktifkan tombol simpan untuk mencegah klik ganda
+        const simpanVersiBtn = document.getElementById('simpanVersiBtn');
+        simpanVersiBtn.disabled = true;
+        simpanVersiBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyimpan...';
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                // mode: 'cors', // Diperlukan untuk request cross-origin
+                body: JSON.stringify(dataToSend)
+            });
+
+            // Cek jika respon OK sebelum parsing JSON
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(`Sukses: ${result.message}`);
+                // Opsional: Muat ulang data atau perbarui UI setelah berhasil
+                // location.reload(); 
+            } else {
+                throw new Error(result.error);
+            }
+
+        } catch (error) {
+            console.error("Terjadi error saat mengirim data:", error);
+            alert(`Gagal menyimpan: ${error.message}`);
+        } finally {
+            // Aktifkan kembali tombol simpan
+            simpanVersiBtn.disabled = false;
+            simpanVersiBtn.innerHTML = '<i class="bi bi-send"></i> Simpan';
+        }
     }
 
     // --- EVENT LISTENERS ---
