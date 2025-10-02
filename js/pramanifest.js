@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     badge.id = 'availableJemaahCount';
                     cardHeader.appendChild(badge);
                 }
-                badge.textContent = availableCount;
+                badge.textContent = availableCount + ' tersedia';
             }
         };
         // Fungsi untuk me-render daftar jemaah ke HTML
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         titleSpan.insertAdjacentElement('afterend', badge);
                     }
                 }
-                badge.textContent = count;
+                badge.textContent = count + '  Org';
             });
 
             // Rombongan Counts
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         titleSpan.insertAdjacentElement('afterend', jemaahBadge);
                     }
                 }
-                jemaahBadge.textContent = jemaahCount;
+                jemaahBadge.textContent = jemaahCount + ' jemaah';
 
                 // Badge baru untuk menghitung regu, disisipkan sebelum badge jemaah
                 const reguCount = card.querySelectorAll('.regu-card').length;
@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         jemaahBadge.insertAdjacentElement('beforebegin', reguBadge);
                     }
                 }
-                reguBadge.textContent = reguCount;
+                reguBadge.textContent = reguCount + ' regu';
             });
 
             // Kloter Counts
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         titleSpan.insertAdjacentElement('afterend', jemaahBadge);
                     }
                 }
-                jemaahBadge.textContent = jemaahCount;
+                jemaahBadge.textContent = jemaahCount + ' jemaah';
 
                 // Badge baru untuk menghitung rombongan, disisipkan sebelum badge jemaah
                 const rombonganCount = card.querySelectorAll('.rombongan').length;
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         jemaahBadge.insertAdjacentElement('beforebegin', rombonganBadge);
                     }
                 }
-                rombonganBadge.textContent = rombonganCount;
+                rombonganBadge.textContent = rombonganCount + ' rombongan';
             });
 
             // Total Manifest Count
