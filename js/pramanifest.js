@@ -102,9 +102,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
-
-            const versions = allData.filter(d => d.musim === parseInt(selectedMusim, 10));
-
+ 
+            // Pastikan kita bekerja dengan array, bahkan jika API mengembalikan { "data": [...] }
+            const dataArray = (allData && allData.data && Array.isArray(allData.data)) ? allData.data : (Array.isArray(allData) ? allData : []);
+ 
+            // Filter versi berdasarkan musim yang dipilih
+            const versions = dataArray.filter(d => String(d.musim) === selectedMusim);
+ 
             if (versions.length > 0) {
                 versions.forEach(v => {
                     const option = new Option(v.versi, v.versi);
@@ -1346,9 +1350,14 @@ document.addEventListener('DOMContentLoaded', async function () {
             return; // Hentikan fungsi jika pengguna memilih 'Tidak'
         }
 
-
-        // Kondisi untuk UPDATE
-        if ((!newVersi && selectedVersi) || (newVersi === selectedVersi)) {
+        // Kondisi baru: Jika tidak ada versi yang dipilih DAN tidak ada versi baru yang diketik
+        if (!selectedVersi && !newVersi) {
+            alert("Silakan masukkan nama untuk versi baru di kolom 'Versi Baru' sebelum menyimpan.");
+            versiInputEl.focus(); // Fokuskan ke input agar pengguna mudah mengisinya
+            return; // Hentikan eksekusi
+        }
+        // Kondisi untuk UPDATE (diubah dari if menjadi else if)
+        else if ((!newVersi && selectedVersi) || (newVersi === selectedVersi)) {
             action = 'UPDATE';
             payload = {
                 timestamp: now.getTime(),
