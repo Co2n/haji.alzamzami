@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const kloterCardContainer = document.getElementById('kloterCardContainer');
     const tambahKloterBtn = document.getElementById('tambahKloterBtn');
     const cariJemaahInput = document.getElementById('cariJemaahInput');
+    const kontakModalEl = document.getElementById('kontakModal');
+    const kontakModalTitle = document.querySelector('#kontakModal .modal-title');
+    const kontakWhatsappJemaahLink = document.getElementById('kontakWhatsappJemaah');
+    const kontakWhatsappKeluargaLink = document.getElementById('kontakWhatsappKeluarga');
+    const kontakKosongJemaahLink = document.getElementById('kosongKontak');
+    const screenBlocker = document.getElementById('screenBlocker');
     let jemaahData = []; // Store jemaah data globally within the scope
     let availableJemaah = []; // Store available jemaah globally
 
@@ -18,6 +24,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
     const updateProgressBar = (percentage) => {
         if (progressBar) progressBar.style.width = `${percentage}%`;
+    };
+
+    // --- SCREEN BLOCKER UTILITIES ---
+    const showBlocker = () => {
+        if (screenBlocker) screenBlocker.style.display = 'flex';
+    };
+    const hideBlocker = () => {
+        if (screenBlocker) screenBlocker.style.display = 'none';
     };
 
     // --- DATA FETCHING ---
@@ -60,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // --- MAIN APP LOGIC ---
     async function loadAndInitialize() {
+        showBlocker();
         showProgressBar();
         updateProgressBar(10); // Mulai loading
         try {
@@ -79,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         } finally {
             // Sembunyikan progress bar setelah sedikit jeda agar terlihat selesai
             setTimeout(() => {
+                hideBlocker();
                 hideProgressBar();
                 updateProgressBar(0); // Reset untuk pemanggilan berikutnya
             }, 500);
@@ -102,16 +118,22 @@ document.addEventListener('DOMContentLoaded', async function () {
             const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
- 
+
             // Pastikan kita bekerja dengan array, bahkan jika API mengembalikan { "data": [...] }
             const dataArray = (allData && allData.data && Array.isArray(allData.data)) ? allData.data : (Array.isArray(allData) ? allData : []);
- 
+
             // Filter versi berdasarkan musim yang dipilih
             const versions = dataArray.filter(d => String(d.musim) === selectedMusim);
- 
+
+            // Urutkan versi berdasarkan timestamp, dari yang terbaru ke yang terlama
+            versions.sort((a, b) => b.timestamp - a.timestamp);
+
             if (versions.length > 0) {
-                versions.forEach(v => {
+                versions.forEach((v, index) => {
                     const option = new Option(v.versi, v.versi);
+                    if (index === 0) {
+                        option.selected = true; // Pilih opsi pertama (yang terbaru) secara default
+                    }
                     selectVersiEl.add(option);
                 });
             } else {
@@ -231,7 +253,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 listItem.innerHTML = `
                 <img src="${fotoSrc}" height="60px" width="50px" class="rounded img-fluid me-3 zona-foto" alt="Foto ${jemaah.nama}">
                 <div>
-                    <span class="badge bg-secondary mb-1">${jemaah.status}</span>
+                    <span class="badge bg-secondary mb-1" data-bs-toggle="modal" data-bs-target="#kontakModal" style="cursor: pointer;">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
                     <small class="text-muted">
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
@@ -347,7 +369,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             listItem.innerHTML = `
             <img src="${fotoSrc}" height="60px" width="50px" class="rounded me-3 img-fluid zona-foto" alt="Foto ${jemaah.nama}">
             <div>
-                <span class="badge bg-secondary mb-1">${jemaah.status}</span>${roleBadgeHTML}
+                <span class="badge bg-secondary mb-1" data-bs-toggle="modal" data-bs-target="#kontakModal" style="cursor: pointer;">${jemaah.status}</span>${roleBadgeHTML}
                 <div class="fw-bold" 
                      data-bs-toggle="popover" 
                      data-bs-trigger="hover" 
@@ -561,17 +583,25 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (rawSearchTerm.includes(':')) {
                     const parts = rawSearchTerm.split(':');
                     const key = parts[0].trim();
-                    const value = parts[1].trim();
+                    const valueString = parts[1].trim();
 
-                    if (key && value) {
-                        filteredData = availableJemaah.filter(jemaah => {
-                            // Pastikan properti ada di objek jemaah dan bukan null/undefined
-                            if (jemaah.hasOwnProperty(key) && jemaah[key] != null) {
-                                // Ubah nilai properti ke string dan lowercase untuk perbandingan
-                                return String(jemaah[key]).toLowerCase().includes(value);
-                            }
-                            return false;
-                        });
+                    if (key && valueString) {
+                        // Pisahkan nilai pencarian berdasarkan koma, trim spasi, dan hapus entri kosong
+                        const searchValues = valueString.split(',').map(v => v.trim()).filter(v => v);
+
+                        if (searchValues.length > 0) {
+                            filteredData = availableJemaah.filter(jemaah => {
+                                // Pastikan properti ada di objek jemaah dan bukan null/undefined
+                                if (jemaah.hasOwnProperty(key) && jemaah[key] != null) {
+                                    const jemaahValue = String(jemaah[key]).toLowerCase();
+                                    // Kembalikan true jika salah satu dari searchValues cocok
+                                    return searchValues.some(searchValue => jemaahValue.includes(searchValue));
+                                }
+                                return false;
+                            });
+                        } else {
+                            filteredData = availableJemaah; // Jika value kosong (misal: "desa:,"), tampilkan semua
+                        }
                     } else {
                         // Jika formatnya tidak benar (misal, "desa:"), tampilkan semua
                         filteredData = availableJemaah;
@@ -587,7 +617,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         (jemaah.kecamatan && jemaah.kecamatan.toLowerCase().includes(rawSearchTerm))
                     );
                 }
-                 renderJemaahList(filteredData);
+                renderJemaahList(filteredData);
             });
         }
 
@@ -1396,6 +1426,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         // TODO: Ganti console.log dengan fetch request ke Google Script saat sudah siap
 
         // Nonaktifkan tombol simpan untuk mencegah klik ganda
+
+        // Tampilkan screen blocker
+        showBlocker();
         const simpanVersiBtn = document.getElementById('simpanVersiBtn');
         simpanVersiBtn.disabled = true;
         simpanVersiBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyimpan...';
@@ -1429,9 +1462,64 @@ document.addEventListener('DOMContentLoaded', async function () {
             alert(`Gagal menyimpan: ${error.message}`);
         } finally {
             // Aktifkan kembali tombol simpan
+            hideBlocker();
             simpanVersiBtn.disabled = false;
             simpanVersiBtn.innerHTML = '<i class="bi bi-send"></i> Simpan';
         }
+    }
+
+    // --- MODAL KONTAK JEMAAH LOGIC ---
+    if (kontakModalEl) {
+        kontakModalEl.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Find the closest jemaah-item to get its ID
+            const jemaahItem = button.closest('.jemaah-item');
+            if (!jemaahItem) {
+                console.error("Could not find jemaah-item for the clicked status badge.");
+                return;
+            }
+            const jemaahId = jemaahItem.dataset.id;
+
+            // Find the jemaah data from the global jemaahData array
+            const jemaah = jemaahData.find(j => j.id === jemaahId);
+
+            if (jemaah) {
+                kontakModalTitle.textContent = `Kontak ${jemaah.nama}`;
+
+                // Jika salah satu atau kedua nomor WA ada
+                if (jemaah.wa_jemaah || jemaah.wa_keluarga) {
+                    kontakKosongJemaahLink.style.display = 'none'; // Sembunyikan pesan tidak ada kontak
+                    // WA Jemaah
+                    if (jemaah.wa_jemaah) {
+                        kontakWhatsappJemaahLink.href = `https://wa.me/62${jemaah.wa_jemaah.slice(1).replace(/\D/g, '')}`;
+                        kontakWhatsappJemaahLink.textContent = `WA Jemaah : (${jemaah.wa_jemaah})`;
+                        kontakWhatsappJemaahLink.style.display = 'block'; // Tampilkan link
+                    } else {
+                        kontakWhatsappJemaahLink.style.display = 'none'; // Sembunyikan jika tidak ada nomor
+                    }
+                    // WA Keluarga
+                    if (jemaah.wa_keluarga) {
+                        kontakWhatsappKeluargaLink.href = `https://wa.me/62${jemaah.wa_keluarga.slice(1).replace(/\D/g, '')}`;
+                        kontakWhatsappKeluargaLink.textContent = `WA Keluarga : (${jemaah.wa_keluarga})`;
+                        kontakWhatsappKeluargaLink.style.display = 'block'; // Tampilkan link
+                    } else {
+                        kontakWhatsappKeluargaLink.style.display = 'none'; // Sembunyikan jika tidak ada nomor
+                    }
+                } else {
+                    // Jika kedua nomor WA tidak ada
+                    kontakWhatsappJemaahLink.style.display = 'none';
+                    kontakWhatsappKeluargaLink.style.display = 'none';
+                    kontakModalTitle.textContent = `Kontak ${jemaah.nama} tidak tersedia`;
+                    kontakKosongJemaahLink.style.display = 'block';
+                }
+            } else {
+                kontakModalTitle.textContent = 'Kontak Jemaah';
+                kontakWhatsappJemaahLink.style.display = 'none';
+                kontakWhatsappKeluargaLink.style.display = 'none';
+                console.warn(`Jemaah with ID ${jemaahId} not found.`);
+            }
+        });
     }
 
     // --- EVENT LISTENERS ---
