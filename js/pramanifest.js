@@ -551,17 +551,39 @@ document.addEventListener('DOMContentLoaded', async function () {
         const cariJemaahInput = document.getElementById('cariJemaahInput');
         if (cariJemaahInput) {
             cariJemaahInput.addEventListener('input', () => {
-                const searchTerm = cariJemaahInput.value.toLowerCase();
-                // Filter dari jemaah yang tersedia, bukan dari data master
-                const filteredData = availableJemaah.filter(jemaah =>
-                    jemaah.nama.toLowerCase().includes(searchTerm) ||
-                    jemaah.status.toLowerCase().includes(searchTerm) ||
-                    jemaah.pekerjaan.toLowerCase().includes(searchTerm) ||
-                    jemaah.pendidikan.toLowerCase().includes(searchTerm) ||
-                    jemaah.desa.toLowerCase().includes(searchTerm) ||
-                    jemaah.kecamatan.toLowerCase().includes(searchTerm)
-                );
-                renderJemaahList(filteredData);
+                const rawSearchTerm = cariJemaahInput.value.toLowerCase();
+                let filteredData;
+
+                if (rawSearchTerm.includes(':')) {
+                    const parts = rawSearchTerm.split(':');
+                    const key = parts[0].trim();
+                    const value = parts[1].trim();
+
+                    if (key && value) {
+                        filteredData = availableJemaah.filter(jemaah => {
+                            // Pastikan properti ada di objek jemaah dan bukan null/undefined
+                            if (jemaah.hasOwnProperty(key) && jemaah[key] != null) {
+                                // Ubah nilai properti ke string dan lowercase untuk perbandingan
+                                return String(jemaah[key]).toLowerCase().includes(value);
+                            }
+                            return false;
+                        });
+                    } else {
+                        // Jika formatnya tidak benar (misal, "desa:"), tampilkan semua
+                        filteredData = availableJemaah;
+                    }
+                } else {
+                    // Logika pencarian global (seperti sebelumnya) jika tidak ada ':'
+                    filteredData = availableJemaah.filter(jemaah =>
+                        jemaah.nama.toLowerCase().includes(rawSearchTerm) ||
+                        (jemaah.status && jemaah.status.toLowerCase().includes(rawSearchTerm)) ||
+                        (jemaah.pekerjaan && jemaah.pekerjaan.toLowerCase().includes(rawSearchTerm)) ||
+                        (jemaah.pendidikan && jemaah.pendidikan.toLowerCase().includes(rawSearchTerm)) ||
+                        (jemaah.desa && jemaah.desa.toLowerCase().includes(rawSearchTerm)) ||
+                        (jemaah.kecamatan && jemaah.kecamatan.toLowerCase().includes(rawSearchTerm))
+                    );
+                }
+                 renderJemaahList(filteredData);
             });
         }
 
