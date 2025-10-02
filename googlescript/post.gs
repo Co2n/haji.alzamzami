@@ -130,6 +130,7 @@ function doPost(e) {
         // 3. Kirim respon berhasil kembali ke JavaScript
         response.success = true;
         response.message = `Versi baru "${payload.versi}" berhasil disimpan.`;
+        break; // <-- TAMBAHKAN INI
 
       case 'UPDATE':
         // Untuk update, kita perlu mencari baris yang sesuai
