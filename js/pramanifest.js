@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchManifestData(musim, versi) {
-        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbxab0k9kwnxzXTuU6FZcVaohqUClph-8ZhzGsNPdiweZKJ50DyPF_ug4U6ZRPOpu7t_vA/exec', { musim, versi });
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycby0WXsOsyUdCnuCmHjcpKk-RZIME1jr6Nr3KXkp-3RBxrNR5A-oO6Nj8Snbo0XCfdmzLg/exec', { musim, versi });
         // Gunakan '==' untuk perbandingan longgar (string vs number)
         const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
         return seasonData ? seasonData.manifest : [];
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbxab0k9kwnxzXTuU6FZcVaohqUClph-8ZhzGsNPdiweZKJ50DyPF_ug4U6ZRPOpu7t_vA/exec?musim=' + selectedMusim);
+            const response = await fetch('https://script.google.com/macros/s/AKfycby0WXsOsyUdCnuCmHjcpKk-RZIME1jr6Nr3KXkp-3RBxrNR5A-oO6Nj8Snbo0XCfdmzLg/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
@@ -1302,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     async function handleSave() {
 
         // URL Web App Google Script Anda (dapatkan setelah deploy)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxab0k9kwnxzXTuU6FZcVaohqUClph-8ZhzGsNPdiweZKJ50DyPF_ug4U6ZRPOpu7t_vA/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0WXsOsyUdCnuCmHjcpKk-RZIME1jr6Nr3KXkp-3RBxrNR5A-oO6Nj8Snbo0XCfdmzLg/exec";
 
         const versiInputEl = document.getElementById('versi');
         const selectedMusim = selectTahunEl.value;
