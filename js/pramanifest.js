@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const tambahKloterBtn = document.getElementById('tambahKloterBtn');
     const cariJemaahInput = document.getElementById('cariJemaahInput');
     let jemaahData = []; // Store jemaah data globally within the scope
+    let availableJemaah = []; // Store available jemaah globally
 
     // --- PROGRESS BAR UTILITIES ---
     const showProgressBar = () => {
@@ -254,7 +255,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         };
 
         // Jemaah yang tersedia adalah yang tidak ada di `placedJemaahIds`
-        let availableJemaah = currentJemaahData.filter(j => !placedJemaahIds.has(j.id));
+        availableJemaah = currentJemaahData.filter(j => !placedJemaahIds.has(j.id));
 
 
         // Panggil fungsi untuk memuat daftar jemaah saat halaman dimuat
