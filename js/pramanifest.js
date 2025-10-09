@@ -34,7 +34,36 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (screenBlocker) screenBlocker.style.display = 'none';
     };
 
-    // --- DATA FETCHING ---
+    // --- DATA FETCHING VIA FILE ---
+    async function fetchLocalJsonData(filePath) {
+        try {
+            // Langsung gunakan filePath dengan fetch
+            const response = await fetch(filePath);
+
+            // Cek jika response tidak berhasil (misalnya file tidak ditemukan, 404)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}, could not fetch ${filePath}`);
+            }
+
+            // Parse response sebagai JSON
+            let data = await response.json();
+
+            // (Opsional) Tetap handle jika format JSON adalah { "data": [...] }
+            // Ini membuat fungsi Anda lebih fleksibel
+            if (data && typeof data === 'object' && !Array.isArray(data) && data.data) {
+                data = data.data;
+            }
+
+            // Pastikan output selalu berupa array
+            return Array.isArray(data) ? data : [];
+
+        } catch (error) {
+            console.error(`Could not fetch data from ${filePath}:`, error);
+            return []; // Kembalikan array kosong jika ada error
+        }
+    }
+
+    // --- DATA FETCHING VIA WEB ---
     async function fetchGenericData(url, params) {
         try {
             const fullUrl = new URL(url);
@@ -57,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchJemaahData(musim) {
+        // const allData = await fetchLocalJsonData('json/jemaah.json');
         const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
         // Gunakan '==' untuk perbandingan longgar (string vs number) atau konversi keduanya
         const seasonData = allData.find(d => d.musim == musim);
@@ -66,6 +96,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchManifestData(musim, versi) {
+        // const allData = await fetchLocalJsonData('json/manifest.json');
         const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec', { musim, versi });
         // Gunakan '==' untuk perbandingan longgar (string vs number)
         const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
@@ -115,6 +146,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
+            // const response = await fetch('json/manifest.json');
             const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
@@ -256,6 +288,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <span class="badge bg-secondary mb-1" data-bs-toggle="modal" data-bs-target="#kontakModal" style="cursor: pointer;">${jemaah.status}</span>
                     <div class="fw-bold">${jemaah.nama} <i class="bi ${jemaah.gender === 'L' ? 'bi-gender-male text-primary' : 'bi-gender-female text-danger'}"></i></div>
                     <small class="text-muted">
+                        Absen:${jemaah.absen} - Usia:${jemaah.usia}<br>
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
                         ${jemaah.alamat}<br>
                         ${jemaah.desa} - ${jemaah.kecamatan}
@@ -361,6 +394,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // Konten untuk popover
             const popoverContent = `
             <div class='popover-body-custom'>
+                <div>Absen:${jemaah.absen} - Usia:${jemaah.usia}</div>
                 <div>${jemaah.no_porsi}</div>
                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                 <div>${jemaah.alamat}</div>
@@ -610,6 +644,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // Logika pencarian global (seperti sebelumnya) jika tidak ada ':'
                     filteredData = availableJemaah.filter(jemaah =>
                         jemaah.nama.toLowerCase().includes(rawSearchTerm) ||
+                        (jemaah.absen && jemaah.absen.toLowerCase().includes(rawSearchTerm)) ||
+                        (jemaah.usia && jemaah.usia.toLowerCase().includes(rawSearchTerm)) ||
                         (jemaah.status && jemaah.status.toLowerCase().includes(rawSearchTerm)) ||
                         (jemaah.pekerjaan && jemaah.pekerjaan.toLowerCase().includes(rawSearchTerm)) ||
                         (jemaah.pendidikan && jemaah.pendidikan.toLowerCase().includes(rawSearchTerm)) ||
@@ -712,6 +748,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     const detailEl = itemEl.querySelector('small.text-muted');
                     if (detailEl && jemaah) {
                         detailEl.innerHTML = `
+                        Absen:${jemaah.absen} - Usia:${jemaah.usia}<br>
                         ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
                         ${jemaah.alamat}<br>
                         ${jemaah.desa} - ${jemaah.kecamatan}
@@ -794,6 +831,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         if (nameEl && jemaah) {
                             const popoverContent = `
                             <div class='popover-body-custom'>
+                                <div>Absen:${jemaah.absen} - Usia:${jemaah.usia}</div>
                                 <div>${jemaah.no_porsi}</div>
                                 <div>${jemaah.pendidikan} - ${jemaah.pekerjaan}</div>
                                 <div>${jemaah.alamat}</div>
