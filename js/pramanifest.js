@@ -223,17 +223,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
 
         const rombonganStyles = [
-            { bg: '#EC2027', text: '#FFFFFF' }, // 1
-            { bg: '#FCEE21', text: '#000000' }, // 2
-            { bg: '#0000FF', text: '#FFFFFF' }, // 3
-            { bg: '#A65F27', text: '#FFFFFF' }, // 4
-            { bg: '#6ABD45', text: '#000000' }, // 5
-            { bg: '#FFFFFF', text: '#000000' }, // 6
-            { bg: '#F79520', text: '#000000' }, // 7
-            { bg: '#6B3180', text: '#FFFFFF' }, // 8
-            { bg: '#0A0A0A', text: '#FFFFFF' }, // 9
-            { bg: '#F8B4BA', text: '#000000' }, // 10
-            { bg: '#7C7C7C', text: '#FFFFFF' }  // 11
+            { bg: '#EC2027', text: '#FFFFFF', romb: 40 }, // 1
+            { bg: '#FCEE21', text: '#000000', romb: 40 }, // 2
+            { bg: '#0000FF', text: '#FFFFFF', romb: 40 }, // 3
+            { bg: '#A65F27', text: '#FFFFFF', romb: 40 }, // 4
+            { bg: '#6ABD45', text: '#000000', romb: 40 }, // 5
+            { bg: '#FFFFFF', text: '#000000', romb: 40 }, // 6
+            { bg: '#F79520', text: '#000000', romb: 40 }, // 7
+            { bg: '#6B3180', text: '#FFFFFF', romb: 40 }, // 8
+            { bg: '#0A0A0A', text: '#FFFFFF', romb: 40 }, // 9
+            { bg: '#F8B4BA', text: '#000000', romb: 40 }, // 10
+            { bg: '#7C7C7C', text: '#FFFFFF', romb: 40 }  // 11
         ];
 
         // --- DYNAMIC CONTENT GENERATION ---
@@ -1394,8 +1394,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         return manifestData;
     }
 
-    async function handleSave() {
-
+    // Fungsi ini akan dieksekusi setelah kode izin diverifikasi
+    async function executeSave() {
         // URL Web App Google Script Anda (dapatkan setelah deploy)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec";
 
@@ -1411,12 +1411,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         let payload;
         let action = '';
         let dataToSend = {};
-
-        // Tambahkan dialog konfirmasi sebelum melanjutkan
-        if (!confirm("Apakah Anda yakin ingin menyimpan perubahan ini?")) {
-            console.log("Penyimpanan dibatalkan oleh pengguna.");
-            return; // Hentikan fungsi jika pengguna memilih 'Tidak'
-        }
 
         // Kondisi baru: Jika tidak ada versi yang dipilih DAN tidak ada versi baru yang diketik
         if (!selectedVersi && !newVersi) {
@@ -1566,6 +1560,33 @@ document.addEventListener('DOMContentLoaded', async function () {
     function attachAppEventListeners() {
         if (appEventListenersAttached) return; // Hanya pasang listener sekali
 
+        // Definisikan variabel yang dibutuhkan di dalam fungsi ini
+        const saveKloterSetupBtn = document.getElementById('saveKloterSetupBtn');
+        const simpanVersiBtn = document.getElementById('simpanVersiBtn');
+        const setupKloterModalEl = document.getElementById('setupKloterModal');
+        const confirmSimpanBtn = document.getElementById('confirmSimpanBtn');
+        const simpanIzinModalEl = document.getElementById('simpanIzinModal');
+
+        // Event listener untuk tombol 'Simpan' di dalam modal izin
+        if (confirmSimpanBtn) {
+            confirmSimpanBtn.addEventListener('click', () => {
+                const kodeSimpanInput = document.getElementById('kodeSimpanIzinInput');
+                if (!kodeSimpanInput) return;
+
+                // Gunakan .trim() untuk menghapus spasi yang tidak disengaja
+                if (kodeSimpanInput.value.trim() === '99az') {
+                    // Kode benar, tutup modal dan jalankan penyimpanan
+                    const modalInstance = bootstrap.Modal.getInstance(simpanIzinModalEl);
+                    modalInstance.hide();
+                    executeSave(); // Panggil fungsi penyimpanan yang sebenarnya
+                } else {
+                    alert('Kode Penyimpanan salah!');
+                    kodeSimpanInput.focus();
+                }
+            });
+        }
+
+
         if (selectTahunEl) {
             selectTahunEl.addEventListener('change', async () => {
                 await populateVersiDropdown();
@@ -1576,6 +1597,22 @@ document.addEventListener('DOMContentLoaded', async function () {
             selectVersiEl.addEventListener('change', loadAndInitialize);
         }
 
+        // Listener untuk membersihkan input saat modal izin ditutup
+        if (simpanIzinModalEl) {
+            simpanIzinModalEl.addEventListener('hidden.bs.modal', () => {
+                const kodeSimpanInput = document.getElementById('kodeSimpanIzinInput');
+                if (kodeSimpanInput) {
+                    kodeSimpanInput.value = '';
+                }
+            });
+        }
+
+        // Handler untuk tombol simpan di modal setup kloter
+        if (saveKloterSetupBtn && setupKloterModalEl) {
+            saveKloterSetupBtn.addEventListener('click', () => {
+                // Logika untuk menyimpan setup kloter (jika ada)
+            });
+        }
         if (tambahKloterBtn) {
             tambahKloterBtn.addEventListener('click', () => {
                 const newKloterNum = kloterCardContainer.children.length + 1;
@@ -1612,11 +1649,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             cariJemaahInput.addEventListener('input', () => {
                 document.getElementById('jemaahList').dispatchEvent(new Event('filter'));
             });
-        }
-
-        const simpanVersiBtn = document.getElementById('simpanVersiBtn');
-        if (simpanVersiBtn) {
-            simpanVersiBtn.addEventListener('click', handleSave);
         }
 
         appEventListenersAttached = true;
