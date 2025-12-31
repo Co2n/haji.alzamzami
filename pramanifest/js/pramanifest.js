@@ -462,6 +462,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                             if (jemaahEl) reguContentArea.appendChild(jemaahEl);
                             // console.log("Menambahkan jemaah ke regu:", jemaahObj, jemaahEl);
                         });
+                        updateJemaahItemNumbering(reguContentArea);
 
                         reguContainer.appendChild(reguEl);
                         initJemaahDropzone(reguContentArea);
@@ -1816,7 +1817,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                         </div>
                         ${tablesContainer.innerHTML}
                         <script>
-                            window.onload = function() { window.print(); window.close(); }
+                            window.onload = function() {
+                                setTimeout(function() {
+                                    window.print();
+                                }, 500);
+                            };
+                            window.onafterprint = function() { window.close(); };
                         </script>
                     </body>
                     </html>
