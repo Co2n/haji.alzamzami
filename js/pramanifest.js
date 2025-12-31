@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     let jemaahData = []; // Store jemaah data globally within the scope
     let availableJemaah = []; // Store available jemaah globally
 
+    // --- COPYRIGHT YEAR ---
+    const copyrightYearEl = document.getElementById('copyrightYear');
+    if (copyrightYearEl) copyrightYearEl.textContent = new Date().getFullYear();
+
     // --- PROGRESS BAR UTILITIES ---
     const showProgressBar = () => {
         if (loadingContainer) loadingContainer.style.display = 'block';
@@ -146,8 +150,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            // const response = await fetch('json/manifest.json');
-            const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
+            const response = await fetch('json/manifest.json');
+            // const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
@@ -480,6 +484,115 @@ document.addEventListener('DOMContentLoaded', async function () {
             debouncedUpdateAllCounts();
         };
 
+        // --- TABLE GENERATION ---
+        const renderTablesFromManifest = () => {
+            const tablesContainer = document.getElementById('tablesContainer');
+            if (!tablesContainer) return;
+            tablesContainer.innerHTML = '';
+
+            const kloterCards = document.querySelectorAll('#kloterCardContainer .card.kloter');
+
+            kloterCards.forEach((kloterCard, index) => {
+                // Get Kloter Title
+                const headerCol = kloterCard.querySelector('.card-header .col');
+                const kloterNameSpan = headerCol.querySelector('span:first-child');
+                const kloterName = kloterNameSpan ? kloterNameSpan.textContent : `Kloter ${index + 1}`;
+                
+                const kloterBadgeSpan = headerCol.querySelector('.kloter-title-bagde');
+                const kloterBadge = kloterBadgeSpan ? kloterBadgeSpan.textContent : '';
+                
+                // Construct title for the card header
+                let fullKloterTitle = kloterName;
+                if (kloterBadge && !kloterBadge.includes('Belum ada') && kloterBadge !== 'Untitle') {
+                    fullKloterTitle += ` - ${kloterBadge}`;
+                }
+
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'col-lg-12 mb-4';
+
+                let tableRows = '';
+                const jemaahItems = kloterCard.querySelectorAll('.jemaah-item');
+
+                jemaahItems.forEach((item, jIndex) => {
+                    const id = item.dataset.id;
+                    let jemaah = currentJemaahData.find(j => j.id == id);
+
+                    if (id === 'jemaah-unknown') {
+                        jemaah = { no_porsi: '-', nama: 'Jemaah Unknown', desa: '-', kecamatan: '-' };
+                    } else if (!jemaah) {
+                        jemaah = { no_porsi: '?', nama: 'Data Missing', desa: '?', kecamatan: '?' };
+                    }
+
+                    let role = item.dataset.role || '';
+                    if (role) role = role.charAt(0).toUpperCase() + role.slice(1);
+
+                    const statusBadge = item.querySelector('.badge.bg-secondary');
+                    const status = statusBadge ? statusBadge.textContent : '';
+
+                    let groupInfo = '';
+                    const reguCard = item.closest('.regu-card');
+                    const rombonganCard = item.closest('.card.rombongan');
+
+                    if (reguCard && rombonganCard) {
+                        const reguTitle = reguCard.querySelector('.card-header span')?.textContent || '';
+                        const rombonganTitle = rombonganCard.querySelector('.card-header span')?.textContent || '';
+
+                        const reguNum = reguTitle.replace(/\D/g, '');
+                        const rombonganNum = rombonganTitle.replace(/\D/g, '');
+
+                        if (reguNum && rombonganNum) {
+                            groupInfo = `${rombonganNum} - ${reguNum}`;
+                        }
+                    }
+
+                    tableRows += `
+                        <tr>
+                            <td>${kloterBadge}</td>
+                            <td>${groupInfo}</td>
+                            <td>${jIndex + 1}</td>
+                            <td>${jemaah.no_porsi || '-'}</td>
+                            <td>${jemaah.nama}</td>
+                            <td>${jemaah.desa}</td>
+                            <td>${jemaah.kecamatan}</td>
+                            <td>${role}</td>
+                            <td>${status}</td>
+                        </tr>
+                    `;
+                });
+
+                cardDiv.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="bi bi-table me-1"></i>
+                            Tabel Jemaah - ${fullKloterTitle}
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Kloter</th>
+                                            <th>Grup</th>
+                                            <th>No</th>
+                                            <th>Porsi</th>
+                                            <th>Nama</th>
+                                            <th>Desa</th>
+                                            <th>Kecamatan</th>
+                                            <th>Sebagai</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${tableRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                tablesContainer.appendChild(cardDiv);
+            });
+        };
 
         // --- COUNTERS ---
         const updateAllCountsOnPage = () => {
@@ -570,6 +683,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                     totalManifestCountElement.textContent = count;
                 }
             }
+
+            // Update Tables whenever counts are updated (which implies structure change)
+            renderTablesFromManifest();
         };
         // Use a timeout to let the DOM update after a drag operation
         const debouncedUpdateAllCounts = () => setTimeout(updateAllCountsOnPage, 50);
@@ -1648,6 +1764,116 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (cariJemaahInput) {
             cariJemaahInput.addEventListener('input', () => {
                 document.getElementById('jemaahList').dispatchEvent(new Event('filter'));
+            });
+        }
+
+        // --- PRINT & EXPORT FUNCTIONALITY ---
+        const printBtn = document.getElementById('printBtn');
+        if (printBtn) {
+            printBtn.addEventListener('click', () => {
+                const tablesContainer = document.getElementById('tablesContainer');
+                if (!tablesContainer || tablesContainer.innerHTML.trim() === '') {
+                    alert('Tidak ada data tabel untuk dicetak.');
+                    return;
+                }
+
+                const printWindow = window.open('', '_blank');
+                const now = new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'long' });
+
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Cetak Manifest - KBIHU AL-ZAMZAMI</title>
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <style>
+                            body { padding: 20px; font-family: sans-serif; }
+                            .card { border: none !important; box-shadow: none !important; margin-bottom: 20px; }
+                            .card-header { background-color: white !important; border-bottom: 2px solid #000 !important; font-weight: bold; font-size: 1.2em; padding-left: 0; margin-bottom: 10px; }
+                            .table { width: 100%; margin-bottom: 1rem; color: #212529; border-collapse: collapse; font-size: 0.9em; }
+                            .table th, .table td { padding: 0.5rem; vertical-align: middle; border: 1px solid #dee2e6; }
+                            .table thead th { vertical-align: bottom; border-bottom: 2px solid #dee2e6; background-color: #f8f9fa; }
+                            @media print {
+                                @page { size: landscape; }
+                                .no-print { display: none; }
+                                table { page-break-inside: auto; }
+                                tr { page-break-inside: avoid; page-break-after: auto; }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="text-center mb-4">
+                            <h1>KBIHU AL-ZAMZAMI</h1>
+                            <p class="lead">${now}</p>
+                        </div>
+                        ${tablesContainer.innerHTML}
+                        <script>
+                            window.onload = function() { window.print(); window.close(); }
+                        </script>
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+            });
+        }
+
+        const exportExcelBtn = document.getElementById('exportExcelBtn');
+        if (exportExcelBtn) {
+            exportExcelBtn.addEventListener('click', () => {
+                const tablesContainer = document.getElementById('tablesContainer');
+                if (!tablesContainer || tablesContainer.innerHTML.trim() === '') {
+                    alert('Tidak ada data tabel untuk diekspor.');
+                    return;
+                }
+
+                if (typeof XLSX === 'undefined') {
+                    alert('Library SheetJS belum dimuat. Periksa koneksi internet Anda.');
+                    return;
+                }
+
+                const wb = XLSX.utils.book_new();
+                const ws_data = [];
+                const now = new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'long' });
+
+                // Header Utama
+                ws_data.push(["KBIHU AL-ZAMZAMI"]);
+                ws_data.push([now]);
+                ws_data.push([]); // Spacer
+
+                // Iterate cards untuk mengambil setiap tabel
+                const cards = tablesContainer.querySelectorAll('.card');
+                cards.forEach(card => {
+                    // Gunakan header card sebagai judul bagian
+                    const headerText = card.querySelector('.card-header').textContent.trim();
+                    ws_data.push([headerText]);
+                    
+                    // Ambil tabel
+                    const table = card.querySelector('table');
+                    if (table) {
+                        const tableData = XLSX.utils.sheet_to_json(XLSX.utils.table_to_sheet(table), { header: 1 });
+                        tableData.forEach(row => ws_data.push(row));
+                    }
+                    ws_data.push([]); // Spacer antar tabel
+                });
+
+                const ws = XLSX.utils.aoa_to_sheet(ws_data);
+                
+                // Estimasi lebar kolom agar lebih rapi
+                const wscols = [
+                    {wch: 20}, // Kloter
+                    {wch: 10}, // Group
+                    {wch: 5},  // No
+                    {wch: 15}, // Porsi
+                    {wch: 30}, // Nama
+                    {wch: 20}, // Desa
+                    {wch: 20}, // Kecamatan
+                    {wch: 15}, // Sebagai
+                    {wch: 15}  // Status
+                ];
+                ws['!cols'] = wscols;
+
+                XLSX.utils.book_append_sheet(wb, ws, "Manifest");
+                XLSX.writeFile(wb, `Manifest_Jemaah_${new Date().toISOString().slice(0,10)}.xlsx`);
             });
         }
 

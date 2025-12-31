@@ -191,11 +191,11 @@
                     <div class="card bg-light-subtle text-light-emphasis h-100">
                         <div class="card-body d-flex justify-content-start align-items-center gap-2">
                             <div class="fs-4 fw-bold">
-                                <button type="button" class="btn btn-secondary" title="Cetak">
+                                <button type="button" class="btn btn-secondary" title="Cetak" id="printBtn">
                                     <i class="bi bi-printer fs-1"></i>
                                 </button>
-                                <button type="button" class="btn btn-secondary" title="Ekspor ke PDF">
-                                    <i class="bi bi-file-pdf fs-1"></i>
+                                <button type="button" class="btn btn-secondary" title="Ekspor ke Excel" id="exportExcelBtn">
+                                    <i class="bi bi-file-excel fs-1"></i>
                                 </button>
                             </div>
                         </div>
@@ -330,7 +330,7 @@
                     </div>
 
                     <div class="text-start mt-3">
-                        copyright 2024 - haji.alzamzami
+                        copyright <span id="copyrightYear">2024</span> - haji.alzamzami.co.id
                     </div>
                 </div>
             </div>
@@ -338,35 +338,8 @@
         </div>
 
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="bi bi-table me-1"></i>
-                            Tabel Jemaah
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered" id="jemaahTable">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Porsi</th>
-                                            <th>Nama</th>
-                                            <th>Desa</th>
-                                            <th>Kecamatan</th>
-                                            <th>Sebagai</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="jemaahTableBody">
-                                        <!-- Data jemaah akan dimuat di sini oleh JavaScript -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row" id="tablesContainer">
+                <!-- Tabel Jemaah per Kloter akan dimuat di sini oleh JavaScript -->
             </div>
         </div>
 
@@ -463,6 +436,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <script src="js/pramanifest.js"></script>
 
 </body>
