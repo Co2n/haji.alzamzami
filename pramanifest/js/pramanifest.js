@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchJemaahData(musim) {
-        const allData = await fetchLocalJsonData('json/jemaah.json');
-        // const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
+        // const allData = await fetchLocalJsonData('json/jemaah.json');
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
         // Gunakan '==' untuk perbandingan longgar (string vs number) atau konversi keduanya
         const seasonData = allData.find(d => d.musim == musim);
         const jemaahList = seasonData ? seasonData.jemaah : [];
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchManifestData(musim, versi) {
-        const allData = await fetchLocalJsonData('json/manifest.json');
-        // const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec', { musim, versi });
+        // const allData = await fetchLocalJsonData('json/manifest.json');
+        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec', { musim, versi });
         // Gunakan '==' untuk perbandingan longgar (string vs number)
         const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
         return seasonData ? seasonData.manifest : [];
