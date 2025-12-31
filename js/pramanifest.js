@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchJemaahData(musim) {
-        // const allData = await fetchLocalJsonData('json/jemaah.json');
-        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
+        const allData = await fetchLocalJsonData('json/jemaah.json');
+        // const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbwrSDFc9p7zKLBIQaegqkaGMOrjlcU4bOHNtCezNKL0B3tAD-rygOnVv4jQ_J9a-bM/exec', { musim });
         // Gunakan '==' untuk perbandingan longgar (string vs number) atau konversi keduanya
         const seasonData = allData.find(d => d.musim == musim);
         const jemaahList = seasonData ? seasonData.jemaah : [];
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function fetchManifestData(musim, versi) {
-        // const allData = await fetchLocalJsonData('json/manifest.json');
-        const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec', { musim, versi });
+        const allData = await fetchLocalJsonData('json/manifest.json');
+        // const allData = await fetchGenericData('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec', { musim, versi });
         // Gunakan '==' untuk perbandingan longgar (string vs number)
         const seasonData = allData.find(d => d.musim == musim && d.versi === versi);
         return seasonData ? seasonData.manifest : [];
@@ -545,9 +545,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                         }
                     }
 
+                    let fotoSrc = 'img/foto.jpg';
+                    if (id === 'jemaah-unknown') {
+                        fotoSrc = 'img/unknown.jpg';
+                    } else if (jemaah.foto) {
+                        fotoSrc = `https://drive.google.com/thumbnail?id=${jemaah.foto}&sz=s400`;
+                    }
+
                     tableRows += `
                         <tr>
-                            <td>${kloterBadge}</td>
+                            <td><img src="${fotoSrc}" height="50px" width="40px" class="rounded" alt="Foto"></td>
                             <td>${groupInfo}</td>
                             <td>${jIndex + 1}</td>
                             <td>${jemaah.no_porsi || '-'}</td>
@@ -564,14 +571,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <div class="card">
                         <div class="card-header">
                             <i class="bi bi-table me-1"></i>
-                            Tabel Jemaah - ${fullKloterTitle}
+                            ${fullKloterTitle}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Kloter</th>
+                                            <th>Foto</th>
                                             <th>Grup</th>
                                             <th>No</th>
                                             <th>Porsi</th>
@@ -1231,6 +1238,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         titleBadge.textContent = `${embarkasi}-${noKloter}`;
                         titleBadge.classList.remove('text-bg-warning');
                         titleBadge.classList.add('text-bg-primary');
+                        debouncedUpdateAllCounts();
                     }
                     setupKloterModal.hide();
                 } else {
@@ -1804,7 +1812,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <body>
                         <div class="text-center mb-4">
                             <h1>KBIHU AL-ZAMZAMI</h1>
-                            <p class="lead">${now}</p>
+                            <p class="lead">Manifest Update: ${now}</p>
                         </div>
                         ${tablesContainer.innerHTML}
                         <script>
@@ -1837,7 +1845,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 // Header Utama
                 ws_data.push(["KBIHU AL-ZAMZAMI"]);
-                ws_data.push([now]);
+                ws_data.push(["Manifest Update: " + now]);
                 ws_data.push([]); // Spacer
 
                 // Iterate cards untuk mengambil setiap tabel
@@ -1851,7 +1859,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                     const table = card.querySelector('table');
                     if (table) {
                         const tableData = XLSX.utils.sheet_to_json(XLSX.utils.table_to_sheet(table), { header: 1 });
-                        tableData.forEach(row => ws_data.push(row));
+                        //tableData.forEach(row => ws_data.push(row));
+                        // Hapus kolom pertama (Foto) dari setiap baris sebelum ditambahkan
+                        const filteredData = tableData.map(row => row.slice(1));
+                        filteredData.forEach(row => ws_data.push(row));
                     }
                     ws_data.push([]); // Spacer antar tabel
                 });
@@ -1860,7 +1871,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 
                 // Estimasi lebar kolom agar lebih rapi
                 const wscols = [
-                    {wch: 20}, // Kloter
+                    // {wch: 20}, // Foto (Excluded)
                     {wch: 10}, // Group
                     {wch: 5},  // No
                     {wch: 15}, // Porsi
