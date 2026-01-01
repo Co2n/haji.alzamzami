@@ -1507,7 +1507,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                     jemaahItems.forEach(jemaahItem => {
                         const jemaahId = jemaahItem.dataset.id;
                         const jemaahRole = jemaahItem.dataset.role || null;
-                        reguObj.jemaah.push({ id: jemaahId, role: jemaahRole });
+
+                        const jemaahInfo = jemaahData.find(j => j.id === jemaahId);
+                        const absen = jemaahInfo ? jemaahInfo.absen : null;
+                        const no_porsi = jemaahInfo ? jemaahInfo.no_porsi : null;
+
+                        reguObj.jemaah.push({ id: jemaahId, role: jemaahRole, absen: absen, no_porsi: no_porsi });
                     });
                     rombonganObj.regu.push(reguObj);
                 });
@@ -1530,6 +1535,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const newVersi = versiInputEl.value.trim();
 
         const manifestJSON = generateManifestFromDOM();
+        //console.log("Data Manifest yang akan disimpan:", manifestJSON);
         const minifiedManifest = JSON.stringify(manifestJSON);
         const now = new Date();
 
@@ -1551,7 +1557,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 manifest: minifiedManifest
             };
             dataToSend = { action, payload, selectedMusim, selectedVersi };
-            console.log(`Aksi: ${action} (versi: ${selectedVersi})`);
+            //console.log(`Aksi: ${action} (versi: ${selectedVersi})`);
         }
         // Kondisi untuk SAVE NEW
         else if (newVersi && newVersi !== selectedVersi) {
@@ -1571,13 +1577,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 manifest: minifiedManifest
             };
             dataToSend = { action, payload };
-            console.log(`Aksi: ${action} (versi baru: ${newVersi})`);
+            //console.log(`Aksi: ${action} (versi baru: ${newVersi})`);
         } else {
             alert("Kondisi tidak valid untuk menyimpan. Tentukan versi baru atau pastikan versi yang ada sudah dipilih.");
             return;
         }
 
-        console.log("Payload yang akan dikirim:", dataToSend);
+        //console.log("Payload yang akan dikirim:", dataToSend);
         //alert(`Aksi '${action}' telah dicatat di console. Google Script belum diimplementasikan.`);
 
         // TODO: Ganti console.log dengan fetch request ke Google Script saat sudah siap
