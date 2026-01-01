@@ -150,8 +150,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         selectVersiEl.innerHTML = ''; // Kosongkan opsi sebelumnya
 
         try {
-            const response = await fetch('json/manifest.json');
-            // const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
+            // const response = await fetch('json/manifest.json');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbz6JYHcF11bZm2-2XM1HXr2aCABe5XYgOs9PM6eALw1qb7fyII3eTv7Sovn1bbRlMwvnw/exec?musim=' + selectedMusim);
             if (!response.ok) throw new Error('Failed to fetch manifest versions');
             const allData = await response.json();
 
