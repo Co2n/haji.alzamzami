@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                     tableRows += `
                         <tr>
-                            <td><img src="${fotoSrc}" height="50px" width="40px" class="rounded" alt="Foto"></td>
+                            <td><img src="${fotoSrc}" height="60px" width="42px" class="rounded" alt="Foto"></td>
                             <td>${groupInfo}</td>
                             <td>${jIndex + 1}</td>
                             <td>${jemaah.no_porsi || '-'}</td>
