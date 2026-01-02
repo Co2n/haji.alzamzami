@@ -1971,6 +1971,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     {wch: 5},  // No
                     {wch: 15}, // Porsi
                     {wch: 30}, // Nama
+                    {wch: 5},  // Gender
                     {wch: 20}, // Desa
                     {wch: 20}, // Kecamatan
                     {wch: 15}, // Sebagai
@@ -1978,8 +1979,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 ];
                 ws['!cols'] = wscols;
 
-                XLSX.utils.book_append_sheet(wb, ws, "Manifest");
-                XLSX.writeFile(wb, `Manifest_Jemaah_${new Date().toISOString().slice(0,10)}.xlsx`);
+                XLSX.utils.book_append_sheet(wb, ws, "Manifest_AZ");
+                XLSX.writeFile(wb, `Manifest_AZ_Update_${new Date().toISOString().slice(0,10)}.xlsx`);
             });
         }
 
