@@ -1949,6 +1949,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // Gunakan header card sebagai judul bagian
                     const headerText = card.querySelector('.card-header').textContent.trim();
                     ws_data.push([headerText]);
+                    ws_data.push([]); // Spacer
                     
                     // Ambil tabel
                     const table = card.querySelector('table');
@@ -1964,17 +1965,41 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 const ws = XLSX.utils.aoa_to_sheet(ws_data);
                 
+                // --- STYLING ---
+                // 1. Style Main Title (A1) - Besar dan Tebal
+                if (ws['A1']) {
+                    ws['A1'].s = { font: { sz: 18, bold: true } };
+                }
+
+                // 2. Style Column Headers - Tebal
+                // Kita iterasi semua baris untuk mencari baris header (yang kolom pertamanya 'GRUP')
+                const range = XLSX.utils.decode_range(ws['!ref']);
+                for (let R = range.s.r; R <= range.e.r; ++R) {
+                    const firstColAddress = XLSX.utils.encode_cell({ r: R, c: 0 });
+                    const cell = ws[firstColAddress];
+
+                    // Identifikasi baris header
+                    if (cell && cell.v === 'GRUP') {
+                        for (let C = range.s.c; C <= range.e.c; ++C) {
+                            const address = XLSX.utils.encode_cell({ r: R, c: C });
+                            if (ws[address]) {
+                                ws[address].s = { font: { bold: true }, alignment: { horizontal: "center" } };
+                            }
+                        }
+                    }
+                }
+
                 // Estimasi lebar kolom agar lebih rapi
                 const wscols = [
                     // {wch: 20}, // Foto (Excluded)
-                    {wch: 10}, // Group
+                    {wch: 7},  // Group
                     {wch: 5},  // No
-                    {wch: 15}, // Porsi
+                    {wch: 12}, // Porsi
                     {wch: 30}, // Nama
                     {wch: 5},  // Gender
                     {wch: 20}, // Desa
                     {wch: 20}, // Kecamatan
-                    {wch: 15}, // Sebagai
+                    {wch: 10}, // Sebagai
                     {wch: 15}  // Status
                 ];
                 ws['!cols'] = wscols;
