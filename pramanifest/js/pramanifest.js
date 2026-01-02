@@ -513,16 +513,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 let tableRows = '';
                 const jemaahItems = kloterCard.querySelectorAll('.jemaah-item');
+                let maleCount = 0;
+                let femaleCount = 0;
 
                 jemaahItems.forEach((item, jIndex) => {
                     const id = item.dataset.id;
                     let jemaah = currentJemaahData.find(j => j.id == id);
 
                     if (id === 'jemaah-unknown') {
-                        jemaah = { no_porsi: '-', nama: 'Jemaah Unknown', desa: '-', kecamatan: '-' };
+                        jemaah = { no_porsi: '-', nama: 'Jemaah Unknown', desa: '-', kecamatan: '-', gender: '-' };
                     } else if (!jemaah) {
-                        jemaah = { no_porsi: '?', nama: 'Data Missing', desa: '?', kecamatan: '?' };
+                        jemaah = { no_porsi: '?', nama: 'Data Missing', desa: '?', kecamatan: '?', gender: '?' };
                     }
+
+                    if (jemaah.gender === 'L') maleCount++;
+                    else if (jemaah.gender === 'P') femaleCount++;
 
                     let role = item.dataset.role || '';
                     if (role) role = role.charAt(0).toUpperCase() + role.slice(1);
@@ -560,6 +565,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                             <td>${jIndex + 1}</td>
                             <td>${jemaah.no_porsi || '-'}</td>
                             <td>${jemaah.nama}</td>
+                            <td>${jemaah.gender || ''}</td>
                             <td>${jemaah.desa}</td>
                             <td>${jemaah.kecamatan}</td>
                             <td>${role}</td>
@@ -573,6 +579,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="card-header">
                             <i class="bi bi-table me-1"></i>
                             ${fullKloterTitle}
+                            <span class="badge bg-info text-dark ms-2">${maleCount + femaleCount} Jemaah | L ${maleCount} - P ${femaleCount}</span>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -584,6 +591,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                                             <th>No</th>
                                             <th>Porsi</th>
                                             <th>Nama</th>
+                                            <th>LP</th>
                                             <th>Desa</th>
                                             <th>Kecamatan</th>
                                             <th>Sebagai</th>
@@ -607,8 +615,21 @@ document.addEventListener('DOMContentLoaded', async function () {
             // Regu Counts
             document.querySelectorAll('.regu-card > .card-header').forEach(header => {
                 const card = header.closest('.regu-card');
-                // const count = card.querySelectorAll('.jemaah-item').length;
-                const count = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                const jemaahItems = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])');
+                const count = jemaahItems.length;
+
+                // Hitung Gender
+                let maleCount = 0;
+                let femaleCount = 0;
+                jemaahItems.forEach(item => {
+                    const id = item.dataset.id;
+                    const jemaah = currentJemaahData.find(j => j.id === id);
+                    if (jemaah) {
+                        if (jemaah.gender === 'L') maleCount++;
+                        else if (jemaah.gender === 'P') femaleCount++;
+                    }
+                });
+
                 const titleSpan = header.querySelector('span');
                 let badge = header.querySelector('.regu-count-badge');
                 if (!badge) {
@@ -619,6 +640,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                     }
                 }
                 badge.textContent = count + '  Org';
+
+                // Badge Gender Info
+                let genderBadge = header.querySelector('.regu-gender-badge');
+                if (!genderBadge) {
+                    genderBadge = document.createElement('span');
+                    genderBadge.className = 'badge bg-info text-dark ms-2 regu-gender-badge';
+                    if (badge) {
+                        badge.insertAdjacentElement('afterend', genderBadge);
+                    }
+                }
+                genderBadge.innerHTML = `<i class="bi bi-gender-male"></i> ${maleCount} <i class="bi bi-gender-female"></i> ${femaleCount}`;
             });
 
             // Rombongan Counts
@@ -627,7 +659,21 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const titleSpan = header.querySelector('span');
 
                 // Badge yang sudah ada, untuk menghitung jemaah
-                const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                const jemaahItems = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])');
+                const jemaahCount = jemaahItems.length;
+
+                // Hitung Gender
+                let maleCount = 0;
+                let femaleCount = 0;
+                jemaahItems.forEach(item => {
+                    const id = item.dataset.id;
+                    const jemaah = currentJemaahData.find(j => j.id === id);
+                    if (jemaah) {
+                        if (jemaah.gender === 'L') maleCount++;
+                        else if (jemaah.gender === 'P') femaleCount++;
+                    }
+                });
+
                 let jemaahBadge = header.querySelector('.rombongan-count-badge');
                 if (!jemaahBadge) {
                     jemaahBadge = document.createElement('span');
@@ -637,6 +683,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                     }
                 }
                 jemaahBadge.textContent = jemaahCount + ' jemaah';
+
+                // Badge Gender Info
+                let genderBadge = header.querySelector('.rombongan-gender-badge');
+                if (!genderBadge) {
+                    genderBadge = document.createElement('span');
+                    genderBadge.className = 'badge bg-info text-dark ms-2 rombongan-gender-badge';
+                    if (jemaahBadge) {
+                        jemaahBadge.insertAdjacentElement('afterend', genderBadge);
+                    }
+                }
+                genderBadge.innerHTML = `<i class="bi bi-gender-male"></i> ${maleCount} <i class="bi bi-gender-female"></i> ${femaleCount}`;
 
                 // Badge baru untuk menghitung regu, disisipkan sebelum badge jemaah
                 const reguCount = card.querySelectorAll('.regu-card').length;
@@ -657,7 +714,21 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const titleSpan = header.querySelector('span');
 
                 // Badge yang sudah ada, sekarang untuk menghitung jemaah
-                const jemaahCount = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])').length;
+                const jemaahItems = card.querySelectorAll('.jemaah-item:not([data-id="jemaah-unknown"])');
+                const jemaahCount = jemaahItems.length;
+
+                // Hitung Gender
+                let maleCount = 0;
+                let femaleCount = 0;
+                jemaahItems.forEach(item => {
+                    const id = item.dataset.id;
+                    const jemaah = currentJemaahData.find(j => j.id === id);
+                    if (jemaah) {
+                        if (jemaah.gender === 'L') maleCount++;
+                        else if (jemaah.gender === 'P') femaleCount++;
+                    }
+                });
+
                 let jemaahBadge = header.querySelector('.kloter-count-badge');
                 if (!jemaahBadge) {
                     jemaahBadge = document.createElement('span');
@@ -667,6 +738,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                     }
                 }
                 jemaahBadge.textContent = jemaahCount + ' jemaah';
+
+                // Badge Gender Info
+                let genderBadge = header.querySelector('.kloter-gender-badge');
+                if (!genderBadge) {
+                    genderBadge = document.createElement('span');
+                    genderBadge.className = 'badge bg-info text-dark ms-2 kloter-gender-badge';
+                    if (jemaahBadge) {
+                        jemaahBadge.insertAdjacentElement('afterend', genderBadge);
+                    }
+                }
+                genderBadge.innerHTML = `<i class="bi bi-gender-male"></i> ${maleCount} <i class="bi bi-gender-female"></i> ${femaleCount}`;
 
                 // Badge baru untuk menghitung rombongan, disisipkan sebelum badge jemaah
                 const rombonganCount = card.querySelectorAll('.rombongan').length;
@@ -1504,15 +1586,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                     };
 
                     const jemaahItems = reguCard.querySelectorAll('.jemaah-item');
-                    jemaahItems.forEach(jemaahItem => {
+                    jemaahItems.forEach((jemaahItem, index) => {
                         const jemaahId = jemaahItem.dataset.id;
                         const jemaahRole = jemaahItem.dataset.role || null;
 
                         const jemaahInfo = jemaahData.find(j => j.id === jemaahId);
                         const absen = jemaahInfo ? jemaahInfo.absen : null;
                         const no_porsi = jemaahInfo ? jemaahInfo.no_porsi : null;
+                        const no_urut = index + 1;
 
-                        reguObj.jemaah.push({ id: jemaahId, role: jemaahRole, absen: absen, no_porsi: no_porsi });
+                        reguObj.jemaah.push({ id: jemaahId, role: jemaahRole, absen: absen, no_porsi: no_porsi, no_urut: no_urut });
                     });
                     rombonganObj.regu.push(reguObj);
                 });
@@ -1609,7 +1692,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             const result = await response.json();
-            console.log("Hasil parsing JSON:", result);
+            //console.log("Hasil parsing JSON:", result);
 
 
             if (result.success) {
