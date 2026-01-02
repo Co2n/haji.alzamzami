@@ -586,16 +586,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Foto</th>
-                                            <th>Grup</th>
-                                            <th>No</th>
-                                            <th>Porsi</th>
-                                            <th>Nama</th>
+                                            <th>FOTO</th>
+                                            <th>GRUP</th>
+                                            <th>NO</th>
+                                            <th>PORSI</th>
+                                            <th>NAMA</th>
                                             <th>LP</th>
-                                            <th>Desa</th>
-                                            <th>Kecamatan</th>
-                                            <th>Sebagai</th>
-                                            <th>Status</th>
+                                            <th>DESA</th>
+                                            <th>KECAMATAN</th>
+                                            <th>SEBAGAI</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
