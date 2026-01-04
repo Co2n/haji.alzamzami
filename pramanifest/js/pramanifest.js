@@ -96,7 +96,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         const seasonData = allData.find(d => d.musim == musim);
         const jemaahList = seasonData ? seasonData.jemaah : [];
         // Normalisasi: pastikan semua ID jemaah adalah string
-        return jemaahList.map(j => ({ ...j, id: String(j.id) }));
+        return jemaahList
+            .map(j => ({ ...j, id: String(j.id) }))
+            .sort((a, b) => String(a.no_porsi || '').localeCompare(String(b.no_porsi || ''), undefined, { numeric: true }));
     }
 
     async function fetchManifestData(musim, versi) {
@@ -345,6 +347,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             // Jika ada jemaah yang dikembalikan, perbarui daftar pencarian
             if (returned) {
+                availableJemaah.sort((a, b) => String(a.no_porsi || '').localeCompare(String(b.no_porsi || ''), undefined, { numeric: true }));
                 // Memicu event 'input' akan menjalankan ulang filter pencarian dan me-render ulang daftar
                 cariJemaahInput.dispatchEvent(new Event('input'));
                 updateAvailableJemaahCount();
@@ -930,65 +933,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                     const jemaah = currentJemaahData.find(j => j.id === jemaahId);
                     if (jemaah && !availableJemaah.some(aj => aj.id === jemaahId)) {
                         availableJemaah.push(jemaah);
+                        availableJemaah.sort((a, b) => String(a.no_porsi || '').localeCompare(String(b.no_porsi || ''), undefined, { numeric: true }));
                     }
 
-                    // Alih-alih me-render ulang seluruh daftar, kita ubah item yang ada.
-                    // Ini akan mempertahankan posisi drop.
-                    // 1. Hapus badge peran (karom/karu)
-                    delete itemEl.dataset.role;
-
-                    // 2. Hapus fungsionalitas Popover
-                    const popoverTriggerEl = itemEl.querySelector('[data-bs-toggle="popover"]');
-                    if (popoverTriggerEl) {
-                        const popoverInstance = bootstrap.Popover.getInstance(popoverTriggerEl);
-                        if (popoverInstance) {
-                            popoverInstance.dispose();
-                        }
-                        // Hapus semua atribut data-bs-* yang terkait dengan popover
-                        ['data-bs-toggle', 'data-bs-trigger', 'data-bs-placement', 'data-bs-html', 'data-bs-content', 'data-original-title', 'title'].forEach(attr => popoverTriggerEl.removeAttribute(attr));
-                    }
-
-
-
-                    // 2. Perbarui detail jemaah ke format lengkap
-                    const detailEl = itemEl.querySelector('small.text-muted');
-                    if (detailEl && jemaah) {
-                        detailEl.innerHTML = `
-                        Absen:${jemaah.absen} - Usia:${jemaah.usia}<br>
-                        ${jemaah.pendidikan} - ${jemaah.pekerjaan}<br>
-                        ${jemaah.alamat}<br>
-                        ${jemaah.desa} - ${jemaah.kecamatan}
-                    `;
-                    }
-                    const karomBtn = itemEl.querySelector('[data-action="karom"]');
-                    const karuBtn = itemEl.querySelector('[data-action="karu"]');
-                    if (karomBtn) karomBtn.classList.remove('disabled');
-                    if (karuBtn) karuBtn.classList.remove('disabled');
-
-                    // Sembunyikan item "Clear Set"
-                    const clearItems = itemEl.querySelectorAll('.clear-set-item');
-                    clearItems.forEach(item => item.style.display = 'none');
-
-
-
-
-                    const roleBadge = itemEl.querySelector('.jemaah-role-badge');
-                    if (roleBadge) roleBadge.remove();
-
-                    // 2. Hapus nomor urut
-                    const numberSpan = itemEl.querySelector('.jemaah-number');
-                    if (numberSpan) numberSpan.remove();
-
-                    // 3. Sembunyikan menu dropdown
-                    const menu = itemEl.querySelector('.jemaah-item-menu');
-                    if (menu) menu.style.display = 'none';
-
-                    // Jika ada filter pencarian aktif, item mungkin tidak seharusnya terlihat.
-                    // Kita periksa apakah item yang dikembalikan cocok dengan filter.
-                    const searchTerm = cariJemaahInput.value.toLowerCase();
-                    if (!jemaah.nama.toLowerCase().includes(searchTerm) && !jemaah.alamat.toLowerCase().includes(searchTerm)) {
-                        itemEl.remove(); // Hapus dari DOM jika tidak cocok dengan filter
-                    }
+                    // Render ulang daftar untuk memastikan urutan sort yang benar
+                    cariJemaahInput.dispatchEvent(new Event('input'));
                     updateAvailableJemaahCount();
                 },
                 onRemove: function (evt) { // Item dragged OUT OF this list
@@ -1527,6 +1476,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     if (jemaah) {
                         if (!availableJemaah.some(aj => aj.id === jemaahId)) {
                             availableJemaah.push(jemaah);
+                            availableJemaah.sort((a, b) => String(a.no_porsi || '').localeCompare(String(b.no_porsi || ''), undefined, { numeric: true }));
                         }
                     }
 
