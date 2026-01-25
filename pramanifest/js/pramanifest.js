@@ -501,10 +501,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const headerCol = kloterCard.querySelector('.card-header .col');
                 const kloterNameSpan = headerCol.querySelector('span:first-child');
                 const kloterName = kloterNameSpan ? kloterNameSpan.textContent : `Kloter ${index + 1}`;
-                
+
                 const kloterBadgeSpan = headerCol.querySelector('.kloter-title-bagde');
                 const kloterBadge = kloterBadgeSpan ? kloterBadgeSpan.textContent : '';
-                
+
                 // Construct title for the card header
                 let fullKloterTitle = kloterName;
                 if (kloterBadge && !kloterBadge.includes('Belum ada') && kloterBadge !== 'Untitle') {
@@ -1630,24 +1630,26 @@ document.addEventListener('DOMContentLoaded', async function () {
         simpanVersiBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyimpan...';
 
         try {
+            // --- PERBAIKAN DI SINI ---
+            // Kita gunakan 'text/plain' agar tidak terkena CORS Preflight (OPTIONS request)
+            // Google Apps Script tetap bisa membacanya sebagai JSON string.
             const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'cors', // Diperlukan untuk request cross-origin
-                body: JSON.stringify(dataToSend)
+                body: JSON.stringify(dataToSend),
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8",
+                },
             });
+            // -------------------------
 
-            // Cek jika respon OK sebelum parsing JSON
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
 
             const result = await response.json();
-            //console.log("Hasil parsing JSON:", result);
-
 
             if (result.success) {
                 alert(`Sukses: ${result.message}`);
-                // Opsional: Muat ulang data atau perbarui UI setelah berhasil
                 // location.reload(); 
             } else {
                 throw new Error(result.error);
@@ -1657,7 +1659,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error("Terjadi error saat mengirim data:", error);
             alert(`Gagal menyimpan: ${error.message}`);
         } finally {
-            // Aktifkan kembali tombol simpan
             hideBlocker();
             simpanVersiBtn.disabled = false;
             simpanVersiBtn.innerHTML = '<i class="bi bi-send"></i> Simpan';
@@ -1900,7 +1901,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     const headerText = card.querySelector('.card-header').textContent.trim();
                     ws_data.push([headerText]);
                     ws_data.push([]); // Spacer
-                    
+
                     // Ambil tabel
                     const table = card.querySelector('table');
                     if (table) {
@@ -1914,7 +1915,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 });
 
                 const ws = XLSX.utils.aoa_to_sheet(ws_data);
-                
+
                 // --- STYLING ---
                 // 1. Style Main Title (A1) - Besar dan Tebal
                 if (ws['A1']) {
@@ -1942,20 +1943,20 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Estimasi lebar kolom agar lebih rapi
                 const wscols = [
                     // {wch: 20}, // Foto (Excluded)
-                    {wch: 7},  // Group
-                    {wch: 5},  // No
-                    {wch: 12}, // Porsi
-                    {wch: 30}, // Nama
-                    {wch: 5},  // Gender
-                    {wch: 20}, // Desa
-                    {wch: 20}, // Kecamatan
-                    {wch: 10}, // Sebagai
-                    {wch: 15}  // Status
+                    { wch: 7 },  // Group
+                    { wch: 5 },  // No
+                    { wch: 12 }, // Porsi
+                    { wch: 30 }, // Nama
+                    { wch: 5 },  // Gender
+                    { wch: 20 }, // Desa
+                    { wch: 20 }, // Kecamatan
+                    { wch: 10 }, // Sebagai
+                    { wch: 15 }  // Status
                 ];
                 ws['!cols'] = wscols;
 
                 XLSX.utils.book_append_sheet(wb, ws, "Manifest_AZ");
-                XLSX.writeFile(wb, `Manifest_AZ_Update_${new Date().toISOString().slice(0,10)}.xlsx`);
+                XLSX.writeFile(wb, `Manifest_AZ_Update_${new Date().toISOString().slice(0, 10)}.xlsx`);
             });
         }
 

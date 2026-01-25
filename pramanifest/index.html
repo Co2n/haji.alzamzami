@@ -3,6 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel Responsif (Diperbaiki)</title>
 
@@ -41,6 +44,9 @@
             font-size: 1.5rem;
         }
     </style>
+    <script>
+      document.write('<style>/* ' + new Date().getTime() + ' */</style>');
+   </script>
 
 </head>
 
@@ -179,8 +185,8 @@
                             <div class="input-group mb-2">
                                 <input type="text" name="versi" id="versi" placeholder="Versi Baru" class="form-control"
                                     style="width: auto; flex-grow: 1;">
-                                <button type="button" class="btn btn-primary" id="simpanVersiBtn" title="Simpan Perubahan"
-                                    data-bs-toggle="modal" data-bs-target="#simpanIzinModal">
+                                <button type="button" class="btn btn-primary" id="simpanVersiBtn"
+                                    title="Simpan Perubahan" data-bs-toggle="modal" data-bs-target="#simpanIzinModal">
                                     <i class="bi bi-send"></i> Simpan
                                 </button>
                             </div>
@@ -194,7 +200,8 @@
                                 <button type="button" class="btn btn-secondary" title="Cetak" id="printBtn">
                                     <i class="bi bi-printer fs-1"></i>
                                 </button>
-                                <button type="button" class="btn btn-secondary" title="Ekspor ke Excel" id="exportExcelBtn">
+                                <button type="button" class="btn btn-secondary" title="Ekspor ke Excel"
+                                    id="exportExcelBtn">
                                     <i class="bi bi-file-excel fs-1"></i>
                                 </button>
                             </div>
@@ -370,7 +377,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal Setup Kloter -->
     <div class="modal fade" id="setupKloterModal" tabindex="-1" aria-labelledby="setupKloterModalLabel"
         aria-hidden="true">
