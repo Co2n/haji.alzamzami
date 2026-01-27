@@ -322,7 +322,7 @@
               <a href="https://www.tiktok.com/@haji.alzamzami" target="_blank"><i class="bi bi-tiktok"></i></a>
             </li>
           </ul>
-          <small class="block">&copy; 2024 Co2n. All Rights Reserved.</small>
+          <small class="block">&copy; <span id="copyrightYear">2024</span> Co2n. All Rights Reserved.</small>
           <small class="block">Design by
             <a href="https://www.instagram.com/kokon_koswanto/">Co2n</a>.</small>
 
@@ -463,6 +463,10 @@
         alert("Nomor rekening berhasil di salin")
       }
     }
+  </script>
+  <script>
+    // Set copyright year
+    document.getElementById("copyrightYear").textContent = new Date().getFullYear();
   </script>
 </body>
 
