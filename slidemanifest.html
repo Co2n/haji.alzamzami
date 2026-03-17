@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifest AL-ZAMZAMI</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, #1CB5E0 0%, #000851 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            perspective: 1000px;
+        }
+
+        h1 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #00d2ff;
+            position: absolute;
+            top: 5%;
+            z-index: 100;
+            text-align: center;
+        }
+
+        /* --- CONTAINER SLIDER --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            cursor: pointer; /* Menandakan bisa diklik */
+        }
+
+        /* --- KARTU --- */
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 420px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, rgba(0,0,0,0.3));
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+            background-color: #000;
+        }
+
+        .card-content {
+            height: 30%;
+            padding: 10px 15px;
+            color: white;
+            background: rgba(0,0,0,0.6); /* Lebih gelap agar teks terbaca */
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00d2ff;
+            margin-bottom: 5px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            line-height: 1.2;
+            color: #eee;
+        }
+
+        /* --- UI CONTROLS --- */
+        .counter {
+            position: absolute;
+            top: 15%;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 100;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .controls-hint {
+            position: absolute;
+            bottom: 5%;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .key-badge {
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Tombol Pause/Play Besar */
+        #pause-btn {
+            background: none;
+            border: 2px solid #00d2ff;
+            color: #00d2ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        #pause-btn:hover {
+            background: #00d2ff;
+            color: #000;
+        }
+
+        /* Status Pause Overlay */
+        #status-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 200;
+            pointer-events: none; /* Klik tembus */
+            display: none; /* Default sembunyi */
+            text-shadow: 0 0 20px black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Manifest AL-ZAMZAMI</h1>
+    
+    <div id="status-indicator">⏸</div>
+
+    <div class="slider-container" id="slider">
+        </div>
+
+    <div class="counter" id="counter">Loading...</div>
+
+    <div class="controls-hint">
+        <button id="pause-btn" onclick="togglePlay()">PAUSE</button>
+        <span><span class="key-badge" style="display: none;">Space</span></span>
+        <span><span class="key-badge">←</span> <span class="key-badge">→</span></span>
+    </div>
+
+    <script>
+        // --- KONFIGURASI ---
+        const sliderContainer = document.getElementById('slider');
+        const counterDisplay = document.getElementById('counter');
+        const pauseBtn = document.getElementById('pause-btn');
+        const statusIndicator = document.getElementById('status-indicator');
+        
+        let cardsData = []; 
+        let cardElements = [];
+        let activeIndex = 0;
+        let intervalId = null;
+        let isPlaying = true; // Status apakah sedang play
+        let isHovering = false; // Status apakah mouse sedang di atas kartu
+
+        // --- 1. LOAD DATA ---
+        async function loadData() {
+            try {
+                const response = await fetch('data.txt');
+                if (!response.ok) throw new Error("Gagal load data.txt");
+                const text = await response.text();
+                
+                const lines = text.split('\n');
+                lines.forEach((line) => {
+                    const cleanLine = line.trim();
+                    if (cleanLine.length > 0) {
+                        const parts = cleanLine.split(',');
+                        if (parts.length >= 4) {
+                            cardsData.push({
+                                no: parts[0].trim(),
+                                nama: parts[1].trim(),
+                                keterangan: parts[2].trim(),
+                                image: parts[3].trim()
+                            });
+                        }
+                    }
+                });
+
+                if (cardsData.length > 0) createCards();
+            } catch (error) {
+                console.error(error);
+                counterDisplay.innerText = "Error: Buka pakai Live Server!";
+            }
+        }
+
+        // --- 2. CREATE CARDS ---
+        function createCards() {
+            sliderContainer.innerHTML = ''; 
+            cardElements = [];
+
+            cardsData.forEach((data, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                
+                // Tambahkan event click pada kartu (opsional: klik kartu untuk pause)
+                card.onclick = togglePlay;
+
+                card.innerHTML = `
+                    <img src="images/${data.image}" onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'">
+                    <div class="card-content">
+                        <div class="card-title">${data.nama}</div>
+                        <div class="card-desc">${data.keterangan}</div>
+                    </div>
+                `;
+                
+                sliderContainer.appendChild(card);
+                cardElements.push(card);
+            });
+
+            updateSlider();
+            startAutoplay();
+        }
+
+        // --- 3. ANIMASI 3D ---
+        function updateSlider() {
+            counterDisplay.innerText = `${activeIndex + 1} / ${cardsData.length}`;
+
+            cardElements.forEach((card, index) => {
+                const offset = index - activeIndex;
+                
+                // Optimasi Rendering
+                if (Math.abs(offset) > 3) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateZ(-500px)';
+                    return; 
+                }
+
+                let xTranslate = offset * 200;
+                let zTranslate = -150 - (Math.abs(offset) * 50);
+                let rotateY = offset > 0 ? -40 : 40;
+                let opacity = 0.6;
+                let zIndex = 100 - Math.abs(offset);
+
+                if (offset === 0) {
+                    xTranslate = 0;
+                    zTranslate = 0;
+                    rotateY = 0;
+                    opacity = 1;
+                    zIndex = 100;
+                    card.style.boxShadow = "0 0 30px rgba(0, 210, 255, 0.6)";
+                } else {
+                    card.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+                }
+
+                card.style.transform = `translateX(${xTranslate}px) translateZ(${zTranslate}px) rotateY(${rotateY}deg)`;
+                card.style.opacity = opacity;
+                card.style.zIndex = zIndex;
+            });
+        }
+
+        // --- 4. LOGIKA NAVIGASI & AUTOPLAY ---
+        function nextSlide() {
+            activeIndex = (activeIndex < cardsData.length - 1) ? activeIndex + 1 : 0;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            activeIndex = (activeIndex > 0) ? activeIndex - 1 : cardsData.length - 1;
+            updateSlider();
+        }
+
+        function startAutoplay() {
+            // Hanya jalankan interval jika: Sedang Play DAN Mouse tidak sedang Hover
+            if (isPlaying && !isHovering) {
+                if (intervalId) clearInterval(intervalId);
+                intervalId = setInterval(nextSlide, 3000); // 3 Detik
+            }
+        }
+
+        function stopAutoplay() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }
+
+        // --- 5. FITUR PAUSE (BARU) ---
+        
+        // Fungsi Toggle Utama
+        function togglePlay() {
+            isPlaying = !isPlaying; // Balik status (True jadi False, False jadi True)
+            
+            if (isPlaying) {
+                pauseBtn.innerText = "PAUSE";
+                pauseBtn.style.borderColor = "#00d2ff";
+                pauseBtn.style.color = "#00d2ff";
+                statusIndicator.style.display = "none"; // Sembunyikan ikon pause besar
+                startAutoplay();
+            } else {
+                pauseBtn.innerText = "PLAY";
+                pauseBtn.style.borderColor = "#ff4757"; // Merah saat pause
+                pauseBtn.style.color = "#ff4757";
+                statusIndicator.style.display = "block"; // Munculkan ikon pause besar
+                stopAutoplay();
+            }
+        }
+
+        // A. Event Listener: Hover Mouse (Otomatis Pause saat baca)
+        sliderContainer.addEventListener('mouseenter', () => {
+            isHovering = true;
+            stopAutoplay(); // Berhenti sementara
+        });
+
+        sliderContainer.addEventListener('mouseleave', () => {
+            isHovering = false;
+            // Lanjut lagi HANYA JIKA status utamanya masih PLAY
+            if (isPlaying) startAutoplay(); 
+        });
+
+        // B. Event Listener: Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                // Reset timer sebentar agar tidak langsung loncat
+                stopAutoplay();
+                if(isPlaying && !isHovering) startAutoplay();
+            } 
+            else if (e.key === 'ArrowLeft') {
+                prevSlide();
+                stopAutoplay();
+                if(isPlaying && !isHovering) startAutoplay();
+            }
+            else if (e.code === 'Space') {
+                e.preventDefault(); // Mencegah scroll halaman ke bawah
+                togglePlay();
+            }
+        });
+
+        // Jalankan awal
+        loadData();
+
+    </script>
+</body>
+</html>
