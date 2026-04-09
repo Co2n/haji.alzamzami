@@ -1,3 +1,5 @@
+#target indesign
+
 // --- FUNGSI KONVERSI MASEHI KE HIJRIYAH ---
 // Catatan: Ini adalah kalkulasi matematis (Algoritma Kuwaiti yang disederhanakan). 
 // Secara realita, penanggalan Hijriyah bisa meleset +/- 1 hari tergantung rukyatul hilal lokal.
