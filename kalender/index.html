@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalender Masehi & Hijriyah</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --hijri-text: #16a34a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        .months-selection {
+            display: none;
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-top: 10px;
+        }
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .calendar-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .month-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .month-header {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .days-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background: #f1f5f9;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            padding: 10px;
+            gap: 5px;
+        }
+        .day-cell {
+            aspect-ratio: 1;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: white;
+        }
+        .day-cell.empty {
+            background: transparent;
+            border: none;
+        }
+        .masehi-date {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .hijri-date {
+            font-size: 0.7rem;
+            color: var(--hijri-text);
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            font-weight: bold;
+        }
+        .sunday {
+            color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="controls">
+        <h2>Pengaturan Kalender</h2>
+        
+        <div class="form-group">
+            <label>Pilih Tahun (Masehi):</label>
+            <input type="number" id="yearInput" min="1900" max="2100" value="2026" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+        </div>
+
+        <div class="form-group">
+            <label>Mode Tampilan:</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="displayMode" value="12" checked onchange="toggleMonthSelection()"> 12 Bulan (Setahun Penuh)
+                </label>
+                <label>
+                    <input type="radio" name="displayMode" value="3" onchange="toggleMonthSelection()"> 3 Bulan Pilihan
+                </label>
+            </div>
+        </div>
+
+        <div class="months-selection" id="monthsSelection">
+            <label>Pilih tepat 3 bulan:</label>
+            <div class="months-grid" id="checkboxContainer">
+                </div>
+            <small style="color: #64748b; margin-top: 10px; display: block;">Maksimal 3 bulan yang bisa dicentang.</small>
+        </div>
+
+        <button onclick="generateCalendar()">Tampilkan Kalender</button>
+    </div>
+
+    <div class="calendar-wrapper" id="calendarWrapper">
+        </div>
+</div>
+
+<script>
+    const namaBulan = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    const namaHari = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+
+    // Setup awal untuk checkbox bulan
+    function setupCheckboxes() {
+        const container = document.getElementById('checkboxContainer');
+        namaBulan.forEach((bulan, index) => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" class="month-checkbox" value="${index}"> ${bulan}`;
+            container.appendChild(label);
+        });
+
+        // Logika untuk membatasi maksimal 3 checkbox yang dipilih
+        const checkboxes = document.querySelectorAll('.month-checkbox');
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const checkedCount = document.querySelectorAll('.month-checkbox:checked').length;
+                if (checkedCount >= 3) {
+                    checkboxes.forEach(box => {
+                        if (!box.checked) box.disabled = true;
+                    });
+                } else {
+                    checkboxes.forEach(box => box.disabled = false);
+                }
+            });
+        });
+    }
+
+    // Menampilkan/menyembunyikan panel pilihan 3 bulan
+    function toggleMonthSelection() {
+        const mode = document.querySelector('input[name="displayMode"]:checked').value;
+        const selectionPanel = document.getElementById('monthsSelection');
+        if (mode === "3") {
+            selectionPanel.style.display = "block";
+        } else {
+            selectionPanel.style.display = "none";
+        }
+    }
+
+    // Mengambil tanggal Hijriyah menggunakan Intl API
+    function getHijriDay(date) {
+        try {
+            const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', { day: 'numeric' });
+            return formatter.format(date);
+        } catch (e) {
+            return "-"; // Fallback jika browser tidak support
+        }
+    }
+
+    // Membuat satu block bulan
+    function createMonthCard(year, monthIndex) {
+        const firstDay = new Date(year, monthIndex, 1).getDay();
+        const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+        let html = `
+            <div class="month-card">
+                <div class="month-header">${namaBulan[monthIndex]} ${year}</div>
+                <div class="days-header">
+                    ${namaHari.map((hari, i) => `<div class="${i === 0 ? 'sunday' : ''}">${hari}</div>`).join('')}
+                </div>
+                <div class="days-grid">
+        `;
+
+        // Kotak kosong untuk hari sebelum tanggal 1
+        for (let i = 0; i < firstDay; i++) {
+            html += `<div class="day-cell empty"></div>`;
+        }
+
+        // Tanggal
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateObj = new Date(year, monthIndex, day);
+            const currentDayOfWeek = dateObj.getDay();
+            const hijriDay = getHijriDay(dateObj);
+            const isSunday = currentDayOfWeek === 0 ? 'sunday' : '';
+
+            html += `
+                <div class="day-cell">
+                    <span class="masehi-date ${isSunday}">${day}</span>
+                    <span class="hijri-date">${hijriDay}</span>
+                </div>
+            `;
+        }
+
+        html += `</div></div>`;
+        return html;
+    }
+
+    // Logika utama saat tombol ditekan
+    function generateCalendar() {
+        const year = parseInt(document.getElementById('yearInput').value);
+        const mode = document.querySelector('input[name="displayMode"]:checked').value;
+        const wrapper = document.getElementById('calendarWrapper');
+        wrapper.innerHTML = ""; // Bersihkan kalender sebelumnya
+
+        let selectedMonths = [];
+
+        if (mode === "12") {
+            for (let i = 0; i < 12; i++) {
+                selectedMonths.push(i);
+            }
+        } else if (mode === "3") {
+            const checkedBoxes = document.querySelectorAll('.month-checkbox:checked');
+            if (checkedBoxes.length !== 3) {
+                alert("Mohon pilih tepat 3 bulan!");
+                return;
+            }
+            checkedBoxes.forEach(box => {
+                selectedMonths.push(parseInt(box.value));
+            });
+            // Urutkan bulan dari Januari ke Desember
+            selectedMonths.sort((a, b) => a - b);
+        }
+
+        // Render bulan yang dipilih
+        selectedMonths.forEach(monthIndex => {
+            wrapper.innerHTML += createMonthCard(year, monthIndex);
+        });
+    }
+
+    // Inisialisasi saat pertama kali load
+    setupCheckboxes();
+    generateCalendar(); // Render default 12 bulan
+</script>
+
+</body>
+</html>
