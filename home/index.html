@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Hamburger Ala Nusuk</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Latar belakang gelap agar desain putih/emas terlihat jelas */
+            background-color: #0a221c; 
+            color: #fff;
+            height: 200vh; /* Agar bisa discroll ke bawah */
+        }
+
+        /* --- STYLING HEADER --- */
+        header {
+            position: fixed; /* Agar navigasi tetap di atas saat discroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(10, 34, 28, 0.95); /* Hijau gelap transparan */
+            backdrop-filter: blur(10px); /* Efek blur ala Apple/Web Modern */
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: #d4af37; /* Warna Emas */
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            z-index: 101; /* Harus lebih tinggi dari menu mobile agar tetap di atas */
+        }
+
+        /* --- STYLING MENU (DESKTOP) --- */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* --- STYLING IKON HAMBURGER --- */
+        .hamburger {
+            display: none; /* Disembunyikan di layar besar (Laptop) */
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 101; /* Tetap di atas menu mobile */
+        }
+
+        /* Garis-garis hamburger */
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- RESPONSIVE UNTUK HP (Maksimal lebar layar 768px) --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            /* 1. Munculkan ikon hamburger */
+            .hamburger {
+                display: flex;
+            }
+
+            /* 2. Ubah menu menjadi panel samping (Sidebar) */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Sembunyikan jauh di sebelah kanan layar */
+                width: 70%;
+                height: 100vh;
+                background-color: #0a221c; /* Background panel mobile */
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transition: right 0.4s ease; /* Animasi mulus saat bergeser */
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            }
+
+            .nav-links a {
+                font-size: 20px;
+            }
+
+            /* 3. Class ini akan ditambahkan oleh JavaScript saat hamburger diklik */
+            .nav-links.aktif {
+                right: 0; /* Tarik menu ke dalam layar */
+            }
+
+            /* --- Animasi Hamburger Menjadi Tanda Silang (X) --- */
+            .hamburger.aktif span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+                background-color: #d4af37;
+            }
+            .hamburger.aktif span:nth-child(2) {
+                opacity: 0; /* Hilangkan garis tengah */
+            }
+            .hamburger.aktif span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+                background-color: #d4af37;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">NUSUK</a>
+        
+        <nav class="nav-links" id="menuNav">
+            <a href="#">Beranda</a>
+            <a href="#">Panduan Umrah</a>
+            <a href="#">Paket Ziarah</a>
+            <a href="#">Kontak Kami</a>
+        </nav>
+
+        <div class="hamburger" id="tombolHamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div style="padding-top: 100px; text-align: center;">
+        <h2>Geser/kecilkan layar browsermu untuk melihat menu HP!</h2>
+    </div>
+
+    <script>
+        // Mengambil elemen HTML berdasarkan ID
+        const tombolHamburger = document.getElementById('tombolHamburger');
+        const menuNav = document.getElementById('menuNav');
+
+        // Memberikan perintah saat tombol diklik
+        tombolHamburger.addEventListener('click', () => {
+            // Toggle = Jika tidak ada class 'aktif', maka tambahkan. Jika ada, maka hapus.
+            menuNav.classList.toggle('aktif');
+            tombolHamburger.classList.toggle('aktif');
+        });
+    </script>
+
+</body>
+</html>
