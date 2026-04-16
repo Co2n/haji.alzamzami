@@ -1,0 +1,26 @@
+:root {
+    /* Warna Dominan */
+    --bs-primary: #1869A0;
+    --bs-primary-rgb: 24, 105, 160;
+    
+    /* Warna Sekunder */
+    --bs-secondary: #696B6D;
+    --bs-secondary-rgb: 105, 107, 109;
+    
+    /* Warna Pemanis (kita petakan ke Warning atau Info) */
+    --bs-warning: #A67536;
+    --bs-warning-rgb: 166, 117, 54;
+
+    /* Warna Dark Custom */
+    --bs-dark: #383C3E;
+}
+
+/* Penyesuaian tombol agar teks tetap terbaca */
+.btn-primary { --bs-btn-color: #fff; }
+.btn-warning { --bs-btn-color: #fff; }
+
+/* Kustomisasi khusus mode gelap jika diperlukan */
+[data-bs-theme="dark"] {
+    --bs-body-bg: #1a1c1d;
+    --bs-card-bg: #383C3E;
+}
