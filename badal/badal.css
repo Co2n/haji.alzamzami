@@ -1,0 +1,88 @@
+.daftar::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url(img/bg-prewed-4.jpg);
+   background-size: cover;
+   background-position: center;
+   z-index: -1;
+   /* filter: blur(); */
+ }
+  
+  .daftar h2 {
+    color: var(--blue);
+    font-family: "Berkshire Swash", serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  
+  .daftar h3 {
+    color: var(--blue);
+    font-family: "Berkshire Swash", serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .daftar .box-daftar {
+    background-color: rgba(255, 255, 255, 0.834) !important;
+    /* color: white; */
+    padding: 50px;
+    border-radius: 10px;
+  }
+ 
+  .daftar p {
+    font-size: 1.3rem;
+    /* color: #666; */
+  }
+  
+  .daftar iframe {
+    width: 100%;
+  }
+  
+  .daftar .couple {
+    margin-top: 30px;
+  }
+  
+  .daftar .couple h3 {
+    font-family: "Berkshire Swash", serif;
+    font-size: 2rem;
+    color: var(--blue);
+  }
+  
+  .daftar .couple img {
+    width: 100%;
+  }
+  
+  .daftar .heart {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(65px);
+  }
+  
+  .daftar .heart i {
+    margin: auto;
+    color: var(--blue);
+  }
+  .daftar a {
+    width: 300px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: var(--blue);
+    box-shadow: var(--shadow);
+  }
+  
+  .daftar a:hover {
+    background-color: white;
+    color: var(--blue);
+    font-weight: bold;
+  }

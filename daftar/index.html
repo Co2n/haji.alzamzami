@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+   <meta http-equiv="Pragma" content="no-cache">
+   <meta http-equiv="Expires" content="0">
+
+   <title>KBIHU Al-Zamzami</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <style>
+      :root {
+         --bs-primary: #1869A0;
+         --bs-primary-rgb: 24, 105, 160;
+         --bs-secondary: #696B6D;
+         --bs-secondary-rgb: 105, 107, 109;
+         --bs-warning: #A67536;
+         --bs-warning-rgb: 166, 117, 54;
+         --bs-dark: #383C3E;
+      }
+
+      .lead {
+         font-weight: 350;
+         /* Ukuran font untuk teks utama */
+      }
+
+      @font-face {
+         font-family: 'LPMQ Isep Misbah';
+         src: url('./files/LPMQIsepMisbah.ttf') format('truetype');
+      }
+
+      .quran-text {
+         font-family: 'LPMQ Isep Misbah', serif;
+      }
+
+
+      .force-rtl {
+         direction: rtl !important;
+         unicode-bidi: embed;
+         /* Memastikan teks di dalamnya mengikuti aturan RTL */
+         text-align: right !important;
+         font-size: 1em !important;
+         font-weight: 600 !important;
+         line-height: 2em !important;
+         /* Memastikan perataan tetap di kanan */
+      }
+
+
+      /* Kustomisasi Tombol Primary */
+      .btn-primary {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #135480;
+         --bs-btn-hover-border-color: #114a70;
+         --bs-btn-active-bg: #114a70;
+         --bs-btn-active-border-color: #0e3f60;
+      }
+
+      /* Kustomisasi Tombol Warning */
+      .btn-warning {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #8a612d;
+         --bs-btn-hover-border-color: #7a5628;
+      }
+
+      /* Mode Gelap */
+      [data-bs-theme="dark"] {
+         --bs-body-bg: #1a1c1d;
+         --bs-card-bg: #383C3E;
+      }
+
+      /* Kustomisasi Dropdown Tema */
+      #bd-theme {
+         color: var(--bs-primary);
+         font-weight: bold;
+      }
+
+      .dropdown-item:hover,
+      .dropdown-item:focus {
+         background-color: rgba(24, 105, 160, 0.1);
+         color: var(--bs-primary);
+      }
+
+      .dropdown-item.active,
+      .dropdown-item:active {
+         background-color: var(--bs-primary);
+         color: #fff;
+      }
+
+      /* Kustomisasi Menu Utama */
+      .nav-custom .nav-link {
+         position: relative;
+         padding: 10px 16px 20px !important;
+         margin: 0 4px;
+         border-radius: 5px;
+         font-weight: 500;
+         color: var(--bs-secondary);
+         transition: all 0.3s ease;
+      }
+
+      /* Menyembunyikan panah dropdown bawaan Bootstrap tanpa membunuh animasi kapsul kita */
+      .nav-custom .dropdown-toggle::after {
+         border: none !important;
+         /* Cukup hapus garis pembentuk panahnya */
+         /* JANGAN gunakan display: none; di sini */
+      }
+
+      /* Sedikit penyesuaian untuk sub-menu dropdown agar lebih estetik */
+      .nav-custom .dropdown-menu {
+         padding: 8px;
+      }
+
+      .nav-custom .dropdown-item {
+         border-radius: 6px;
+         color: var(--bs-secondary);
+         font-weight: 500;
+         margin-bottom: 2px;
+      }
+
+      /* Penyesuaian jarak di mode HP */
+      @media (max-width: 991px) {
+         .nav-custom .nav-link {
+            padding: 12px 16px !important;
+            margin-bottom: 8px;
+         }
+
+         .nav-custom .nav-link::after {
+            bottom: 2px !important;
+         }
+      }
+
+      .nav-custom .nav-link::after {
+         content: '';
+         position: absolute;
+         bottom: 8px;
+         left: 50%;
+         transform: translateX(-50%);
+         width: 0;
+         height: 4px;
+         border-radius: 10px;
+         background-color: transparent;
+         transition: all 0.3s ease;
+      }
+
+      .nav-custom .nav-link.active {
+         background-color: var(--bs-primary) !important;
+         color: #ffffff !important;
+      }
+
+      .nav-custom .nav-link.active::after {
+         background-color: rgba(255, 255, 255, 0.8);
+         width: 35px;
+      }
+
+      .nav-custom .nav-link:hover:not(.active) {
+         background-color: rgba(0, 0, 0, 0.06);
+         color: var(--bs-secondary);
+      }
+
+      .nav-custom .nav-link:hover:not(.active)::after {
+         background-color: var(--bs-warning);
+         width: 35px;
+      }
+
+      [data-bs-theme="dark"] .nav-custom .nav-link:hover:not(.active) {
+         background-color: rgba(255, 255, 255, 0.1);
+         color: #ffffff;
+      }
+
+      /* Kustomisasi Heading Global */
+      h1,
+      .h1 {
+         color: var(--bs-primary);
+      }
+
+      h2,
+      .h2 {
+         color: var(--bs-dark);
+      }
+
+      h3,
+      .h3 {
+         color: var(--bs-primary);
+      }
+
+      h4,
+      .h4 {
+         color: var(--bs-secondary);
+      }
+
+      h5,
+      .h5 {
+         color: var(--bs-warning);
+      }
+
+      [data-bs-theme="dark"] h1,
+      [data-bs-theme="dark"] .h1,
+      [data-bs-theme="dark"] h3,
+      [data-bs-theme="dark"] .h3 {
+         color: #5ab1ea;
+      }
+
+      [data-bs-theme="dark"] h2,
+      [data-bs-theme="dark"] .h2 {
+         color: #ffffff;
+      }
+
+      [data-bs-theme="dark"] h4,
+      [data-bs-theme="dark"] .h4 {
+         color: #adb5bd;
+      }
+
+      [data-bs-theme="dark"] h5,
+      [data-bs-theme="dark"] .h5 {
+         color: #e0c193;
+      }
+
+      /* --- KUSTOMISASI FOOTER DOMINAN --- */
+      .footer-link {
+         color: #ffffff !important;
+         /* Putih Solid */
+         transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+         color: var(--bs-warning) !important;
+         /* Berubah jadi Emas saat di-hover */
+      }
+
+      /* Trik mengubah logo menjadi putih murni */
+      .logo-putih {
+         filter: brightness(0) invert(1);
+      }
+
+      /* Garis bawah (underline) untuk judul Footer */
+      .footer-heading {
+         margin-bottom: 5px !important;
+         color: #ffffff !important;
+         /* Memaksa judul jadi putih solid */
+
+      }
+
+      /* --- KUSTOMISASI CAROUSEL TESTIMONI --- */
+      .carousel-indicators {
+         bottom: -40px;
+         /* Menurunkan posisi titik-titik agar tidak menabrak kartu */
+      }
+
+      .carousel-indicators [data-bs-target] {
+         background-color: var(--bs-secondary);
+         /* Warna abu-abu saat tidak aktif */
+         width: 22px;
+         height: 4px;
+         margin: 0 6px;
+         transition: all 0.3s ease;
+      }
+
+      .carousel-indicators .active {
+         background-color: var(--bs-warning);
+         /* Berubah menjadi Emas saat aktif */
+         transform: scale(1.3);
+         /* Sedikit membesar saat aktif */
+      }
+   </style>
+   <script>
+      /**
+       * Memaksa penghapusan cookies setiap kali halaman dimuat
+       */
+      function clearCookies() {
+         const cookies = document.cookie.split(";");
+         for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            // Set masa berlaku ke masa lalu agar terhapus
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+         }
+      }
+
+      // Jalankan saat halaman dibuka
+      clearCookies();
+
+   </script>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#menuUtama" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
+   tabindex="0">
+
+   <section id="daftar" class="py-5 bg-body-tertiary">
+      <div class="container py-4">
+         <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+
+               <div class="card border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+
+                  <div class="p-4 p-lg-5 text-white text-center"
+                     style="background: linear-gradient(160deg, var(--bs-primary) 0%, black 100%);">
+                     <i class="bi bi-ui-checks-grid display-4 mb-3 d-inline-block text-warning"></i>
+                     <h2 class="fw-bold mb-2 text-white">Pendaftaran Bimbingan</h2>
+                     <p class="mb-0 text-white-80 lead fs-6">Manasik Haji KBIHU Al-Zamzami</p>
+                  </div>
+
+                  <div class="card-body p-4 p-lg-5 bg-body relative">
+
+                     <div id="step1" class="step-container">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-primary px-3 py-2 rounded-pill mb-3" style="font-size: 17px;">Langkah 1
+                              dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Syarat & Ketentuan</h4>
+                        </div>
+
+                        <div class="p-4 bg-body-tertiary rounded-4 shadow-sm mb-4"
+                           style="max-height: 250px; overflow-y: auto;">
+                           <p class="text-secondary">Puji syukur kehadirat Allah SWT. Sebelum Anda mengisi formulir
+                              pendaftaran, mohon pahami komitmen berikut:</p>
+                           <ol class="text-secondary">
+                              <li class="mb-2">Calon jamaah bersedia mengikuti seluruh rangkaian bimbingan manasik haji
+                                 yang diselenggarakan oleh KBIHU Al-Zamzami sesuai jadwal.</li>
+                              <li class="mb-2">Calon jamaah mengisi data dengan jujur dan sesuai dengan dokumen resmi
+                                 (KTP/KK).</li>
+                              <li class="mb-2">KBIHU Al-Zamzami berkomitmen menjaga kerahasiaan data pribadi calon
+                                 jamaah dan hanya menggunakannya untuk keperluan ibadah haji.</li>
+                           </ol>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                           <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
+                              onclick="goToStep(2)">
+                              Saya Mengerti & Lanjutkan <i class="bi bi-arrow-right ms-2"></i>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div id="step2" class="step-container d-none">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-warning px-3 py-2 rounded-pill mb-3 text-dark"
+                              style="font-size: 17px;">Langkah 2 dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Kode Referral</h4>
+                           <p class="text-muted">Jika ada, masukan Kode Referral (Opsional) yang ada pada Brosur di
+                              bawah ini : </p>
+                        </div>
+
+                        <div class="row justify-content-center mb-5 mt-4">
+                           <div class="col-md-8 col-lg-6">
+                              <input type="text" id="inputReferral" oninput="cekReferral()"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm text-center fw-bold"
+                                 placeholder="" style="letter-spacing: 2px; text-transform: uppercase;">
+                           </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                           <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold"
+                              onclick="goToStep(3, false)">
+                              Lewati Saja
+                           </button>
+                           <button type="button" id="btnGunakanKode"
+                              class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
+                              onclick="goToStep(3, true)" disabled>
+                              Gunakan Kode & Lanjut <i class="bi bi-arrow-right ms-2"></i>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div id="step3" class="step-container d-none">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-primary px-3 py-2 rounded-pill mb-3">Langkah 3 dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Lengkapi Data Diri Anda</h4>
+                        </div>
+
+                        <form class="row g-4 needs-validation" id="formPendaftaran">
+
+                           <input type="hidden" name="REFERRAL" id="finalReferral" value="">
+
+                           <div class="col-12 mt-4">
+                              <h5 class="fw-bold text-primary border-bottom pb-2"><i
+                                    class="bi bi-briefcase-fill me-2 text-warning"></i>Data Keberangkatan</h5>
+                           </div>
+                           <div class="col-md-6">
+                              <label for="porsi" class="form-label fw-bold text-body-emphasis">No. Porsi <span
+                                    class="text-danger">*</span></label>
+                              <input name="PORSI" min="1000614429" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="porsi"
+                                 placeholder="Contoh: 1000..." required />
+                           </div>
+                           <div class="col-md-6">
+                              <label for="spph" class="form-label fw-bold text-body-emphasis">No. SPPH</label>
+                              <input name="SPPH" min="102305516" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="spph"
+                                 placeholder="Nomor SPPH" />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="estimasi" class="form-label fw-bold text-body-emphasis">Estimasi Berangkat
+                                 <span class="text-danger">*</span></label>
+                              <input name="TAHUN" min="2025" max="2100" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="estimasi"
+                                 placeholder="Tahun" required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="tglDaftar" class="form-label fw-bold text-body-emphasis">Tanggal Daftar <span
+                                    class="text-danger">*</span></label>
+                              <input name="DAFTAR" type="date"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="tglDaftar"
+                                 required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="bank" class="form-label fw-bold text-body-emphasis">Nama Bank <span
+                                    class="text-danger">*</span></label>
+                              <input name="BANK" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="bank"
+                                 placeholder="Contoh: BSI" required />
+                           </div>
+
+                           <div class="col-12 mt-5">
+                              <h5 class="fw-bold text-primary border-bottom pb-2"><i
+                                    class="bi bi-person-vcard-fill me-2 text-warning"></i>Data Diri</h5>
+                           </div>
+                           <div class="col-md-12">
+                              <label for="namalengkap" class="form-label fw-bold text-body-emphasis">Nama Lengkap
+                                 (Sesuai KTP) <span class="text-danger">*</span></label>
+                              <input name="NAMA" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm"
+                                 id="namalengkap" placeholder="Masukkan nama lengkap" required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="tmpLahir" class="form-label fw-bold text-body-emphasis">Tempat Lahir <span
+                                    class="text-danger">*</span></label>
+                              <input name="TMP_LHR" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="tmpLahir"
+                                 required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="tglLahir" class="form-label fw-bold text-body-emphasis">Tanggal Lahir <span
+                                    class="text-danger">*</span></label>
+                              <input name="TGL_LHR" type="date"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="tglLahir"
+                                 required />
+                           </div>
+                           <div class="col-md-4">
+                              <label class="form-label fw-bold text-body-emphasis d-block">Jenis Kelamin <span
+                                    class="text-danger">*</span></label>
+                              <div class="d-flex gap-3 mt-2">
+                                 <div class="form-check">
+                                    <input type="radio" class="form-check-input border-secondary" id="pria"
+                                       name="GENDER" value="L" required>
+                                    <label class="form-check-label" for="pria">Pria</label>
+                                 </div>
+                                 <div class="form-check">
+                                    <input type="radio" class="form-check-input border-secondary" id="wanita"
+                                       name="GENDER" value="P" required>
+                                    <label class="form-check-label" for="wanita">Wanita</label>
+                                 </div>
+                              </div>
+                              <input type="hidden" name="GENDER" id="gender">
+                           </div>
+                           <div class="col-md-12">
+                              <label for="namaayah" class="form-label fw-bold text-body-emphasis">Nama Ayah Kandung
+                                 <span class="text-danger">*</span></label>
+                              <input name="AYAH" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="namaayah"
+                                 placeholder="Sesuai KK" required />
+                           </div>
+
+                           <div class="col-12 mt-5">
+                              <h5 class="fw-bold text-primary border-bottom pb-2"><i
+                                    class="bi bi-geo-alt-fill me-2 text-warning"></i>Kontak & Domisili</h5>
+                           </div>
+                           <div class="col-md-12">
+                              <label for="hp" class="form-label fw-bold text-body-emphasis">No. Handphone / WA <span
+                                    class="text-danger">*</span></label>
+                              <input name="HP" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="hp"
+                                 placeholder="08..." required />
+                           </div>
+                           <div class="col-md-12">
+                              <label for="alamat" class="form-label fw-bold text-body-emphasis">Alamat Lengkap <span
+                                    class="text-danger">*</span></label>
+                              <input name="ALAMAT" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="alamat"
+                                 placeholder="Jalan, Blok, Perumahan" required />
+                           </div>
+                           <div class="col-md-2 col-6">
+                              <label for="rt" class="form-label fw-bold text-body-emphasis">RT <span
+                                    class="text-danger">*</span></label>
+                              <input name="RT" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="rt"
+                                 placeholder="000" required />
+                           </div>
+                           <div class="col-md-2 col-6">
+                              <label for="rw" class="form-label fw-bold text-body-emphasis">RW <span
+                                    class="text-danger">*</span></label>
+                              <input name="RW" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="rw"
+                                 placeholder="000" required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="desa" class="form-label fw-bold text-body-emphasis">Desa/Kel. <span
+                                    class="text-danger">*</span></label>
+                              <input name="DESA" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="desa"
+                                 required />
+                           </div>
+                           <div class="col-md-4">
+                              <label for="kec" class="form-label fw-bold text-body-emphasis">Kecamatan <span
+                                    class="text-danger">*</span></label>
+                              <input name="KECAMATAN" type="text"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="kec"
+                                 required />
+                           </div>
+                           <div class="col-md-12">
+                              <label for="kodepos" class="form-label fw-bold text-body-emphasis">Kode Pos</label>
+                              <input name="KODE_POS" type="number"
+                                 class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm"
+                                 id="kodepos" />
+                           </div>
+
+                           <input type="hidden" id="lok" name="LOKASI" />
+                           <input type="hidden" name="REG" value="TRUE" />
+                           <input type="hidden" id="getNamaPendaftar">
+
+                           <div class="col-12 mt-5">
+                              <div class="form-check p-4 rounded-4"
+                                 style="background-color: rgba(166, 117, 54, 0.1); border: 1px solid var(--bs-warning);">
+                                 <input class="form-check-input ms-1 me-3 border-secondary" type="checkbox" value="1"
+                                    id="invalidCheck" required style="transform: scale(1.5);" />
+                                 <label class="form-check-label text-body-emphasis fw-bold mt-1" for="invalidCheck">
+                                    Bismillah, dengan ini saya mendaftarkan diri bimbingan Manasik Haji di KBIHU
+                                    Al-Zamzami.
+                                 </label>
+                              </div>
+                           </div>
+
+                           <div
+                              class="col-12 mt-4 text-center d-flex justify-content-between gap-3 flex-column flex-md-row">
+                              <button class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold" type="button"
+                                 onclick="goToStep(2)">
+                                 <i class="bi bi-arrow-left me-2"></i> Kembali
+                              </button>
+                              <button class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm flex-grow-1"
+                                 type="submit">
+                                 <i class="bi bi-send-fill me-2"></i> DAFTAR SEKARANG
+                              </button>
+                           </div>
+                        </form>
+                     </div>
+
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      function goToStep(stepNumber, useReferral = false) {
+         // Sembunyikan semua langkah
+         document.getElementById('step1').classList.add('d-none');
+         document.getElementById('step2').classList.add('d-none');
+         document.getElementById('step3').classList.add('d-none');
+
+         // Jika dari langkah 2 menekan tombol "Gunakan Kode"
+         if (useReferral) {
+            // Ambil nilainya, lalu paksa menjadi huruf besar (uppercase) semua
+            const refValue = document.getElementById('inputReferral').value.toUpperCase();
+            document.getElementById('finalReferral').value = refValue;
+         }
+
+         // Tampilkan langkah yang dituju
+         document.getElementById('step' + stepNumber).classList.remove('d-none');
+
+         // Gulir halaman sedikit ke atas kartu agar fokus
+         document.getElementById('daftar').scrollIntoView({ behavior: 'smooth' });
+      }
+   </script>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      // SCRIPT 1: Mode Gelap/Terang
+      const setTheme = theme => {
+         if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')
+         } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+         }
+      }
+
+      document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+         toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value')
+            localStorage.setItem('theme', theme)
+            setTheme(theme)
+         })
+      })
+      setTheme(localStorage.getItem('theme') || 'auto')
+
+      // Mengatur nyala/mati tombol referral
+      function cekReferral() {
+         const input = document.getElementById('inputReferral').value;
+         const btn = document.getElementById('btnGunakanKode');
+         // Jika kosong, tombol mati (true). Jika ada isi, tombol nyala (false).
+         btn.disabled = input.trim() === '';
+      }
+
+      // MENGIRIM DATA KE GOOGLE SHEET TANPA PINDAH HALAMAN
+      document.getElementById('formPendaftaran').addEventListener('submit', function (e) {
+         e.preventDefault(); // Mencegah browser pindah halaman ke link Google
+
+         const btnSubmit = this.querySelector('button[type="submit"]');
+         const originalText = btnSubmit.innerHTML;
+
+         // 1. Ubah tombol jadi "Memproses" agar tidak di-klik 2 kali
+         btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim...';
+         btnSubmit.disabled = true;
+
+         // 2. Kumpulkan semua data form
+         const formData = new FormData(this);
+
+         // 3. Kirim data ke Google Apps Script
+         fetch("https://script.google.com/macros/s/AKfycbwzlDMpcMBVZtCEEDXRE6QnXL2odLfSVTCFlZ07MGOeHCpLP0qL4jNKxP_hLsJ44kPV/exec", {
+            method: 'POST',
+            body: formData
+         })
+            .then(response => {
+               // 4. Jika berhasil, tampilkan pesan
+               alert("Alhamdulillah, pendaftaran berhasil! Tim kami akan segera menghubungi Anda.");
+
+               // 5. Coba tutup Tab
+               window.close();
+
+               // (Fallback) Jika browser memblokir penutupan tab, arahkan ke beranda
+               window.location.href = "index.html"; // Ubah sesuai nama file beranda Anda
+            })
+            .catch(error => {
+               // Jika terjadi koneksi error
+               alert("Mohon maaf, terjadi kesalahan jaringan. Silakan coba klik Daftar lagi.");
+               btnSubmit.innerHTML = originalText;
+               btnSubmit.disabled = false;
+            });
+      });
+   </script>
+</body>
+
+</html>
