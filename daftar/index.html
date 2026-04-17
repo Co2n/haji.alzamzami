@@ -346,7 +346,8 @@
                            <span class="badge bg-warning px-3 py-2 rounded-pill mb-3 text-dark"
                               style="font-size: 17px;">Langkah 2 dari 3</span>
                            <h4 class="fw-bold text-body-emphasis">Kode Referral</h4>
-                           <p class="text-muted">Jika ada, masukan Kode Referral (Opsional) yang ada pada Brosur di
+                           <p class="text-muted">Jika ada Kode Referral pada Brosur kami, silakan masukan kode tersebut
+                              di
                               bawah ini : </p>
                         </div>
 
@@ -527,6 +528,26 @@
                            <input type="hidden" name="REG" value="TRUE" />
                            <input type="hidden" id="getNamaPendaftar">
 
+                           <div class="col-12 mt-4">
+                              <div
+                                 class="p-3 bg-body-tertiary rounded-4 border border-secondary border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-3 shadow-sm">
+                                 <div>
+                                    <label class="form-label fw-bold mb-0 text-body-emphasis">Verifikasi Keamanan <span
+                                          class="text-danger">*</span></label>
+                                    <p class="text-muted small mb-0">Buktikan Anda manusia dengan menjawab soal
+                                       matematika ini:</p>
+                                 </div>
+                                 <div class="d-flex align-items-center gap-2">
+                                    <span id="captchaSoal"
+                                       class="fs-4 fw-bold text-primary bg-primary bg-opacity-10 px-3 py-1 rounded border border-primary border-opacity-25">?
+                                       + ?</span>
+                                    <span class="fs-4 fw-bold text-secondary">=</span>
+                                    <input type="number" id="captchaJawaban"
+                                       class="form-control form-control-lg text-center fw-bold border-secondary"
+                                       style="width: 100px;" required placeholder="...">
+                                 </div>
+                              </div>
+                           </div>
                            <div class="col-12 mt-5">
                               <div class="form-check p-4 rounded-4"
                                  style="background-color: rgba(166, 117, 54, 0.1); border: 1px solid var(--bs-warning);">
@@ -612,41 +633,65 @@
       }
 
       // MENGIRIM DATA KE GOOGLE SHEET TANPA PINDAH HALAMAN
-      document.getElementById('formPendaftaran').addEventListener('submit', function (e) {
-         e.preventDefault(); // Mencegah browser pindah halaman ke link Google
+      document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
+         e.preventDefault(); 
 
          const btnSubmit = this.querySelector('button[type="submit"]');
          const originalText = btnSubmit.innerHTML;
 
-         // 1. Ubah tombol jadi "Memproses" agar tidak di-klik 2 kali
+         // CEK CAPTCHA DULU SEBELUM MENGIRIM DATA
+         const jawabanUser = parseInt(document.getElementById('captchaJawaban').value);
+         
+         if (jawabanUser !== jawabanCaptchaBenar) {
+            alert("Mohon maaf, jawaban perhitungan matematika Anda salah. Silakan coba lagi untuk membuktikan Anda bukan robot.");
+            buatCaptchaBaru(); // Ganti soal dengan yang baru
+            document.getElementById('captchaJawaban').focus(); // Arahkan kursor ke kotak jawaban
+            return; // BERHENTIKAN PROSES, jangan kirim data!
+         }
+
+         // Jika CAPTCHA benar, ubah tombol jadi "Mengirim..."
          btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim...';
          btnSubmit.disabled = true;
 
-         // 2. Kumpulkan semua data form
          const formData = new FormData(this);
 
-         // 3. Kirim data ke Google Apps Script
          fetch("https://script.google.com/macros/s/AKfycbwzlDMpcMBVZtCEEDXRE6QnXL2odLfSVTCFlZ07MGOeHCpLP0qL4jNKxP_hLsJ44kPV/exec", {
             method: 'POST',
             body: formData
          })
-            .then(response => {
-               // 4. Jika berhasil, tampilkan pesan
-               alert("Alhamdulillah, pendaftaran berhasil! Tim kami akan segera menghubungi Anda.");
-
-               // 5. Coba tutup Tab
-               window.close();
-
-               // (Fallback) Jika browser memblokir penutupan tab, arahkan ke beranda
-               window.location.href = "index.html"; // Ubah sesuai nama file beranda Anda
-            })
-            .catch(error => {
-               // Jika terjadi koneksi error
-               alert("Mohon maaf, terjadi kesalahan jaringan. Silakan coba klik Daftar lagi.");
-               btnSubmit.innerHTML = originalText;
-               btnSubmit.disabled = false;
-            });
+         .then(response => {
+            alert("Alhamdulillah, pendaftaran berhasil! Tim kami akan segera menghubungi Anda.");
+            window.close();
+            window.location.href = "index.html"; 
+         })
+         .catch(error => {
+            alert("Mohon maaf, terjadi kesalahan jaringan. Silakan coba klik Daftar lagi.");
+            btnSubmit.innerHTML = originalText;
+            btnSubmit.disabled = false;
+         });
       });
+
+      // ==========================================
+      // SISTEM CAPTCHA MATEMATIKA ANTI-BOT
+      // ==========================================
+      let jawabanCaptchaBenar = 0;
+
+      function buatCaptchaBaru() {
+         // Membuat dua angka acak antara 1 sampai 10
+         const angka1 = Math.floor(Math.random() * 10) + 1;
+         const angka2 = Math.floor(Math.random() * 10) + 1;
+         
+         // Simpan jawaban benarnya secara rahasia di sistem
+         jawabanCaptchaBenar = angka1 + angka2;
+         
+         // Tampilkan soalnya ke layar
+         document.getElementById('captchaSoal').innerText = `${angka1} + ${angka2}`;
+         // Kosongkan kotak input agar user harus mengisi ulang jika salah
+         document.getElementById('captchaJawaban').value = ''; 
+      }
+
+      // Jalankan fungsi saat halaman pertama kali dibuka
+      buatCaptchaBaru();
    </script>
 </body>
 
