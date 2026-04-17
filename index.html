@@ -249,20 +249,27 @@
          /* Memaksa judul jadi putih solid */
 
       }
+
       /* --- KUSTOMISASI CAROUSEL TESTIMONI --- */
       .carousel-indicators {
-         bottom: -40px; /* Menurunkan posisi titik-titik agar tidak menabrak kartu */
+         bottom: -40px;
+         /* Menurunkan posisi titik-titik agar tidak menabrak kartu */
       }
+
       .carousel-indicators [data-bs-target] {
-         background-color: var(--bs-secondary); /* Warna abu-abu saat tidak aktif */
+         background-color: var(--bs-secondary);
+         /* Warna abu-abu saat tidak aktif */
          width: 22px;
          height: 4px;
          margin: 0 6px;
          transition: all 0.3s ease;
       }
+
       .carousel-indicators .active {
-         background-color: var(--bs-warning); /* Berubah menjadi Emas saat aktif */
-         transform: scale(1.3); /* Sedikit membesar saat aktif */
+         background-color: var(--bs-warning);
+         /* Berubah menjadi Emas saat aktif */
+         transform: scale(1.3);
+         /* Sedikit membesar saat aktif */
       }
    </style>
    <script>
@@ -359,7 +366,8 @@
                         </ul>
                      </li>
                      <li class="nav-item"><a href="daftar"
-                           class="btn btn-primary py-2 px-4 w-100 rounded-pill fw-bold shadow-sm" target="_blank">Pendaftaran</a></li>
+                           class="btn btn-primary py-2 px-4 w-100 rounded-pill fw-bold shadow-sm"
+                           target="_blank">Pendaftaran</a></li>
                   </ul>
                </div>
             </div>
@@ -548,10 +556,14 @@
                               tetapi juga ilmu tentangnya mestilah dipelajari dengan baik agar syarat dan rukunnya tepat
                               sempurna, sah dan batalnya dapat dijaga, serta amalan hajinya tidak sia-sia.
                            </p>
-                           <a href="daftar"
-                              class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm" target="_blank">Pendaftaran</a>
-                           <!-- <a class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</a> -->
-                           <button onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.'); return false;" class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</button>
+                           <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+                              <a href="daftar" class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm"
+                                 target="_blank">Pendaftaran</a>
+                              <!-- <a class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</a> -->
+                              <button
+                                 onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.'); return false;"
+                                 class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</button>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -597,7 +609,10 @@
                                  atau sakit kronis sehingga tidak mampu berhaji sendiri.</p>
                               <p class="lead mb-4 text-white-50">Kuota terbatas !</p>
                               <!-- <a href="#" class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm">Lihat Biaya & Pesan</a> -->
-                              <a href="#" onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.'); return false;" class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm">Lihat Biaya & Pesan</a>
+                              <a href="#"
+                                 onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.'); return false;"
+                                 class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm">Lihat Biaya &
+                                 Pesan</a>
                            </div>
                            <div class="col-6 col-lg-5 text-center">
                               <img src="images/badal.png" class="img-fluid">
@@ -682,7 +697,10 @@
                               adalah
                               sunnah muakkadah (yang dikuatkan) yang mampu finansialnya.</p>
                            <!-- <a href="#" class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm" type="button">Lihat Harga & Pesan Qurban</a> -->
-                           <button type="button" onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm">Lihat Harga & Pesan</button>
+                           <button type="button"
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm">Lihat Harga &
+                              Pesan</button>
                         </div>
                      </div>
                   </div>
@@ -706,7 +724,10 @@
                               jutaan jamaah dari seluruh dunia, menjamin keberkahan tempat suci dan pahala abadi yang
                               terus mengalir meskipun wakif telah meninggal dunia.</p>
                            <!-- <a href="#" class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm" type="button">Lihat Harga & Pesan Wakaf Quran</a> -->
-                           <button type="button" onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm">Lihat Harga & Pesan</button>
+                           <button type="button"
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow-sm">Lihat Harga &
+                              Pesan</button>
                         </div>
                      </div>
                   </div>
@@ -724,17 +745,23 @@
 
          <div id="carouselTestimoni" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner pb-4">
-               
+
                <div class="carousel-item active">
                   <div class="row g-4">
                      <div class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 20px;">
                            <div class="text-warning mb-3 fs-5">
-                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-fill"></i>
                            </div>
-                           <p class="text-muted fst-italic flex-grow-1">"Assalamualaikum, saya H.Didin Samsudin Asal Desa Bayuning Kadugede Alumni jamaah Haji 2025 Pertama kali daftar, jujur sempat bingung pilih KBIH. Tapi setelah menjalani rangkaian ibadah bersama KBIH ALZAMZAMI, saya hanya bisa bilang: masyaallah, pilihannya tepat"</p>
+                           <p class="text-muted fst-italic flex-grow-1">"Assalamualaikum, saya H.Didin Samsudin Asal
+                              Desa Bayuning Kadugede Alumni jamaah Haji 2025 Pertama kali daftar, jujur sempat bingung
+                              pilih KBIH. Tapi setelah menjalani rangkaian ibadah bersama KBIH ALZAMZAMI, saya hanya
+                              bisa bilang: masyaallah, pilihannya tepat"</p>
                            <div class="d-flex align-items-center mt-3">
-                              <img src="images/didin.png" alt="H. Didin Samsudin" class="rounded-circle me-3 shadow-sm" style="width: 55px; height: 55px; object-fit: cover;">
+                              <img src="images/didin.png" alt="H. Didin Samsudin" class="rounded-circle me-3 shadow-sm"
+                                 style="width: 55px; height: 55px; object-fit: cover;">
                               <div>
                                  <h5 class="mb-0 fs-6 text-body-emphasis fw-bold">H. Didin Samsudin</h5>
                                  <small class="text-muted">Nakes dan Alumni Haji 2025</small>
@@ -746,11 +773,18 @@
                      <div class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 20px;">
                            <div class="text-warning mb-3 fs-5">
-                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-fill"></i>
                            </div>
-                           <p class="text-muted fst-italic flex-grow-1">"Saya berangkat Haji Tahun 2012 bersama KBIH Al Zamzami.... Kami sekeluarga disaat ada kesempatan utk kembali bisa berangkat utk Umroh pada tahun 2017, 2020 dan 2023 tidak ragu2 lagi mempercayakan pada KBIH Al Zamzami sebagai pembimbing kami disana....<br><br> Pokoknya KBIH Al Zamzami mantap.... Dengan selogan SAJUTA nya...."</p>
+                           <p class="text-muted fst-italic flex-grow-1">"Saya berangkat Haji Tahun 2012 bersama KBIH Al
+                              Zamzami.... Kami sekeluarga disaat ada kesempatan utk kembali bisa berangkat utk Umroh
+                              pada tahun 2017, 2020 dan 2023 tidak ragu2 lagi mempercayakan pada KBIH Al Zamzami sebagai
+                              pembimbing kami disana....<br><br> Pokoknya KBIH Al Zamzami mantap.... Dengan selogan
+                              SAJUTA nya...."</p>
                            <div class="d-flex align-items-center mt-3">
-                              <img src="images/yudi.png" alt="H. Yudi Setiawan" class="rounded-circle me-3 shadow-sm" style="width: 55px; height: 55px; object-fit: cover;">
+                              <img src="images/yudi.png" alt="H. Yudi Setiawan" class="rounded-circle me-3 shadow-sm"
+                                 style="width: 55px; height: 55px; object-fit: cover;">
                               <div>
                                  <h5 class="mb-0 fs-6 text-body-emphasis fw-bold">H. Yudi Setiawan</h5>
                                  <small class="text-muted">Nakes dan Alumni Haji 2012</small>
@@ -762,11 +796,17 @@
                      <div class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 20px;">
                            <div class="text-warning mb-3 fs-5">
-                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                 class="bi bi-star-half"></i>
                            </div>
-                           <p class="text-muted fst-italic flex-grow-1">"Pengurusan visa dan dokumen sangat cepat. Fasilitas bus selama city tour di Madinah juga sangat nyaman. Insya Allah tahun depan akan berangkat lagi bersama keluarga besar."</p>
+                           <p class="text-muted fst-italic flex-grow-1">"Pengurusan visa dan dokumen sangat cepat.
+                              Fasilitas bus selama city tour di Madinah juga sangat nyaman. Insya Allah tahun depan akan
+                              berangkat lagi bersama keluarga besar."</p>
                            <div class="d-flex align-items-center mt-3">
-                              <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5 me-3" style="width: 55px; height: 55px;">B</div>
+                              <div
+                                 class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5 me-3"
+                                 style="width: 55px; height: 55px;">B</div>
                               <div>
                                  <h5 class="mb-0 fs-6 text-body-emphasis fw-bold">Bpk. Budi Santoso</h5>
                                  <small class="text-muted">Jamaah Umrah Plus 2024</small>
@@ -776,11 +816,12 @@
                      </div>
                   </div>
                </div>
-               
+
             </div>
-            
+
             <div class="carousel-indicators position-relative m-0 mt-4">
-               <button type="button" data-bs-target="#carouselTestimoni" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+               <button type="button" data-bs-target="#carouselTestimoni" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
                <!-- <button type="button" data-bs-target="#carouselTestimoni" data-bs-slide-to="1" aria-label="Slide 2"></button> -->
             </div>
          </div>
@@ -808,9 +849,15 @@
                      <h5 class="fw-bold footer-heading">Tentang Kami</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Profil KBIHU</a></li>
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Galeri</a></li>
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Karir</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Profil KBIHU</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Galeri</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Karir</a></li>
                      </ul>
                   </div>
 
@@ -818,12 +865,20 @@
                      <h5 class="fw-bold footer-heading">Bantuan</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
                         </li>
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">Kebijakan Privasi</a>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Kebijakan Privasi</a>
                         </li>
-                        <li class="nav-item mb-2"><a onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');" class="nav-link p-0 footer-link">FAQ</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">FAQ</a></li>
                      </ul>
                   </div>
 
@@ -836,7 +891,8 @@
                            <label for="newsletter1" class="visually-hidden">Nomor Whatsapp</label>
                            <input id="newsletter1" type="tel" class="form-control rounded-pill px-3 border-0 shadow-sm"
                               placeholder="Nomor Whatsapp Anda">
-                           <button onclick="alert('Belum di fungsikan, silakan kembali lagi nanti.');" class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm"
+                           <button onclick="alert('Belum di fungsikan, silakan kembali lagi nanti.');"
+                              class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm"
                               type="button">Subscribe</button>
                         </div>
                      </form>
@@ -846,7 +902,9 @@
                      <ul class="nav flex-column">
                         <li class="nav-item mb-2">Email : kbihualzamzami@gmail.com</li>
                         <li class="nav-item mb-2">Telp : +62 813-2207-9374</li>
-                        <li class="nav-item mb-2"><a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank" rel="noopener noreferrer"><i class="bi bi-geo-alt-fill"></i>Lokasi</a> Jl. Cut Nyak Dhien, Kab. Kuningan, Jawa Barat, Indonesia</li>
+                        <li class="nav-item mb-2"><a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank"
+                              rel="noopener noreferrer"><i class="bi bi-geo-alt-fill"></i>Lokasi</a> Jl. Cut Nyak Dhien,
+                           Kab. Kuningan, Jawa Barat, Indonesia</li>
                      </ul>
 
                   </div>
