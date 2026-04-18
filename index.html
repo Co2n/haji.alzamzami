@@ -102,6 +102,47 @@
          --bs-btn-active-border-color: var(--bs-warning);
       }
 
+      /* ==========================================
+         KUSTOMISASI LINK (TAG A) GLOBAL
+      ========================================== */
+      
+      /* Targetkan HANYA tag 'a' yang TIDAK memiliki class btn, nav-link, atau dropdown-item */
+      a:not(.btn):not(.nav-link):not(.dropdown-item) {
+         color: var(--bs-warning-rgb); /* Warna dasar biru tema */
+         text-decoration: none; /* Hilangkan garis bawah default yang kaku */
+         transition: all 0.3s ease-in-out; /* Transisi warna yang lembut */
+         font-weight: 500; /* Sedikit ditebalkan agar link menonjol di antara teks biasa */
+      }
+
+      a:not(.btn):not(.nav-link):not(.dropdown-item):hover,
+      a:not(.btn):not(.nav-link):not(.dropdown-item):focus {
+         color: var(--bs-warning); /* Berubah jadi Emas saat disorot */
+      }
+
+      /* ------------------------------------------
+         OPSI TAMBAHAN: Efek Garis Bawah Premium 
+         (Garis Emas meluncur dari kiri ke kanan saat disorot)
+      ------------------------------------------ */
+      a.link-animasi {
+         position: relative;
+         display: d-inline-block;
+      }
+
+      a.link-animasi::after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 2px;
+         bottom: -2px;
+         left: 0;
+         background-color: var(--bs-warning);
+         transition: width 0.3s ease-in-out;
+      }
+
+      a.link-animasi:hover::after {
+         width: 100%; /* Garis penuh saat di-hover */
+      }
+
       /* Mode Gelap */
       [data-bs-theme="dark"] {
          --bs-body-bg: #1a1c1d;
@@ -1030,7 +1071,7 @@
                   </div>
 
                   <div class="col-lg-5 offset-lg-1 mb-3 mt-4 mt-lg-0 text-center text-lg-start">
-                     <form>
+                     <!-- <form>
                         <h5 class="fw-bold footer-heading">Berlangganan Info</h5>
                         <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                         <p class="text-white mb-3">Join Komunitas Whatsapp</p>
@@ -1042,16 +1083,23 @@
                               class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm"
                               type="button">Subscribe</button>
                         </div>
-                     </form>
+                     </form> -->
 
                      <h5 class="fw-bold footer-heading">Kontak</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
                         <li class="nav-item mb-2">Email : kbihualzamzami@gmail.com</li>
-                        <li class="nav-item mb-2">Telp : +62 813-2207-9374</li>
-                        <li class="nav-item mb-2"><a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank"
-                              rel="noopener noreferrer"><i class="bi bi-geo-alt-fill"></i>Lokasi</a> Jl. Cut Nyak Dhien,
-                           Kab. Kuningan, Jawa Barat, Indonesia</li>
+                        <li class="nav-item mb-2">Telp : +62 813-2207-9374 <a href="https://wa.me/6281322079374" target="_blank" rel="noopener noreferrer" class="link-animasi">Klik Chat via WhatsApp</a></li>
+                        <li class="nav-item mb-2">Alamat : Jl. Cut Nyak Dhien, Kel. Windusengkahan Kab. Kuningan, Jawa Barat, Indonesia</li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank"
+                              rel="noopener noreferrer" class="link-animasi">Klik Map Lokasi Kantor</a>
+                        </li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/C5oPGFPvDPUgUBHXA" target="_blank"
+                              rel="noopener noreferrer" class="link-animasi">Klik Map Lokasi Manasik</a>
+
+                        </li>
                      </ul>
 
                   </div>
