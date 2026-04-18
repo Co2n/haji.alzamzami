@@ -271,6 +271,35 @@
          transform: scale(1.3);
          /* Sedikit membesar saat aktif */
       }
+
+      /* --- WIDGET TANAH SUCI RESPONSIVE --- */
+      .widget-tanah-suci {
+         height: 48px;
+         width: 100%; 
+         max-width: 460px; /* Dikit dilonggarkan untuk HP */
+         background-color: var(--bs-body-bg);
+         position: relative;
+      }
+      
+      .widget-teks {
+         font-size: 12.5px; /* NAIK: Sebelumnya 11px */
+      }
+      .widget-teks-lokasi {
+         font-size: 14.5px; /* NAIK: Sebelumnya 13px */
+      }
+
+      /* Saat dibuka di layar Tablet/Laptop (lebar min 576px) */
+      @media (min-width: 576px) {
+         .widget-tanah-suci {
+            width: 430px; /* NAIK: Sebelumnya 390px agar teks lega */
+         }
+         .widget-teks {
+            font-size: 14px; /* NAIK: Sebelumnya 13px */
+         }
+         .widget-teks-lokasi {
+            font-size: 16px; /* NAIK: Sebelumnya 14px */
+         }
+      }
    </style>
    <script>
       /**
@@ -375,18 +404,51 @@
          </div>
       </nav>
 
-      <header class="py-4 border-bottom bg-body d-none d-lg-block">
-         <div class="container d-flex flex-wrap justify-content-center align-items-center">
+      <header class="py-3 border-bottom bg-body">
+         
+         <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
 
-            <a href="/"
-               class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+            <a href="/" class="d-none d-lg-flex align-items-center link-body-emphasis text-decoration-none">
                <img src="images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
             </a>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-               <input type="search" class="form-control form-control-lg rounded-pill px-4 shadow-sm"
-                  placeholder="Cari layanan ibadah..." style="width: 300px;">
-            </form>
+            <div class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0" >
+               
+               <div id="sliderTanahSuci" class="w-100" style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
+                  
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
+                        <i class="bi bi-geo-alt-fill"></i> <span>Makkah</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks">
+                        <i id="iconCuacaMakkah" class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks d-none d-sm-flex">
+                        <span id="tglMakkah">--/--/--</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
+                        <span id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMakkah">--:--</span>
+                     </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
+                        <i class="bi bi-geo-alt-fill"></i> <span>Madinah</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks">
+                        <i id="iconCuacaMadinah" class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks d-none d-sm-flex">
+                        <span id="tglMadinah">--/--/--</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
+                        <span id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMadinah">--:--</span>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+
          </div>
       </header>
 
@@ -998,6 +1060,103 @@
             tombolLayanan.classList.remove('active');
          }
       });
+
+      // ==========================================
+      // WIDGET INFO TANAH SUCI (LIVE UPDATE)
+      // ==========================================
+      
+      // 1. Animasi Carousel Vertikal
+      let isMakkah = true;
+      setInterval(() => {
+         const slider = document.getElementById('sliderTanahSuci');
+         // Tinggi 1 item adalah 48px. Jika Madinah, geser ke atas (-48px)
+         slider.style.transform = isMakkah ? 'translateY(-48px)' : 'translateY(0)';
+         isMakkah = !isMakkah;
+      }, 4000); // Berganti setiap 4 detik
+
+      // 2. Fungsi Pembantu: Mengubah Kode Cuaca menjadi Ikon Bootstrap
+      function getIkonCuaca(weatherCode) {
+         if (weatherCode <= 1) return 'bi-sun-fill text-warning'; // Cerah
+         if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info'; // Berawan
+         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-secondary'; // Berkabut
+         if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary'; // Hujan
+         return 'bi-cloud-fill text-secondary'; // Default
+      }
+
+      // 3. Fungsi Menentukan Jadwal Shalat Berikutnya (Berdasarkan Waktu Arab Saudi)
+      function tentukanShalatBerikutnya(jadwal) {
+         // Ambil waktu Arab Saudi saat ini (WIB - 4 jam)
+         const waktuArab = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"}));
+         const jamSekarang = waktuArab.getHours();
+         const menitSekarang = waktuArab.getMinutes();
+         const waktuSekarangInt = jamSekarang * 60 + menitSekarang;
+
+         const daftarShalat = [
+            { nama: 'Subuh', waktu: jadwal.Fajr },
+            { nama: 'Dzuhur', waktu: jadwal.Dhuhr },
+            { nama: 'Ashar', waktu: jadwal.Asr },
+            { nama: 'Maghrib', waktu: jadwal.Maghrib },
+            { nama: 'Isya', waktu: jadwal.Isha }
+         ];
+
+         for (let shalat of daftarShalat) {
+            let [jam, menit] = shalat.waktu.split(':').map(Number);
+            let waktuShalatInt = jam * 60 + menit;
+            // Jika waktu shalat ini lebih besar dari waktu sekarang, ini adalah shalat berikutnya!
+            if (waktuShalatInt > waktuSekarangInt) {
+               return shalat;
+            }
+         }
+         // Jika sudah lewat Isya, tampilkan Subuh besoknya
+         return { nama: 'Subuh', waktu: daftarShalat[0].waktu };
+      }
+
+      // 4. Fungsi Utama Penarik Data API
+      async function updateDataTanahSuci() {
+         try {
+            // --- A. UPDATE CUACA (Open-Meteo) ---
+            // Makkah: 21.4225, 39.8262 | Madinah: 24.4686, 39.6142
+            const resCuaca = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.4225,24.4686&longitude=39.8262,39.6142&current_weather=true');
+            const dataCuaca = await resCuaca.json();
+
+            // Terapkan ke UI Makkah
+            document.getElementById('suhuMakkah').innerText = Math.round(dataCuaca[0].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMakkah').className = 'bi ' + getIkonCuaca(dataCuaca[0].current_weather.weathercode);
+            
+            // Terapkan ke UI Madinah
+            document.getElementById('suhuMadinah').innerText = Math.round(dataCuaca[1].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMadinah').className = 'bi ' + getIkonCuaca(dataCuaca[1].current_weather.weathercode);
+
+
+            // --- B. UPDATE TANGGAL & JADWAL SHALAT (Aladhan API) ---
+            const resShalatMakkah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4');
+            const dataShalatMakkah = await resShalatMakkah.json();
+            
+            const resShalatMadinah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Madinah&country=Saudi%20Arabia&method=4');
+            const dataShalatMadinah = await resShalatMadinah.json();
+
+            // Set Tanggal (Format: DD-MMM-YYYY)
+            const tgl = dataShalatMakkah.data.date.readable; 
+            document.getElementById('tglMakkah').innerText = tgl;
+            document.getElementById('tglMadinah').innerText = tgl;
+
+            // Kalkulasi Shalat Berikutnya
+            const nextMakkah = tentukanShalatBerikutnya(dataShalatMakkah.data.timings);
+            document.getElementById('namaShalatMakkah').innerText = nextMakkah.nama;
+            document.getElementById('waktuShalatMakkah').innerText = nextMakkah.waktu;
+
+            const nextMadinah = tentukanShalatBerikutnya(dataShalatMadinah.data.timings);
+            document.getElementById('namaShalatMadinah').innerText = nextMadinah.nama;
+            document.getElementById('waktuShalatMadinah').innerText = nextMadinah.waktu;
+
+         } catch (error) {
+            console.log("Gagal memuat data Tanah Suci", error);
+         }
+      }
+
+      // Jalankan saat web dibuka, dan perbarui otomatis setiap 1 jam
+      updateDataTanahSuci();
+      setInterval(updateDataTanahSuci, 3600000);
    </script>
 </body>
 
