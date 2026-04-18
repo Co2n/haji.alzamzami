@@ -275,29 +275,38 @@
       /* --- WIDGET TANAH SUCI RESPONSIVE --- */
       .widget-tanah-suci {
          height: 48px;
-         width: 100%; 
-         max-width: 460px; /* Dikit dilonggarkan untuk HP */
+         width: 100%;
+         max-width: 460px;
+         /* Dikit dilonggarkan untuk HP */
          background-color: var(--bs-body-bg);
          position: relative;
       }
-      
+
       .widget-teks {
-         font-size: 12.5px; /* NAIK: Sebelumnya 11px */
+         font-size: 12.5px;
+         /* NAIK: Sebelumnya 11px */
       }
+
       .widget-teks-lokasi {
-         font-size: 14.5px; /* NAIK: Sebelumnya 13px */
+         font-size: 14.5px;
+         /* NAIK: Sebelumnya 13px */
       }
 
       /* Saat dibuka di layar Tablet/Laptop (lebar min 576px) */
       @media (min-width: 576px) {
          .widget-tanah-suci {
-            width: 430px; /* NAIK: Sebelumnya 390px agar teks lega */
+            width: 430px;
+            /* NAIK: Sebelumnya 390px agar teks lega */
          }
+
          .widget-teks {
-            font-size: 14px; /* NAIK: Sebelumnya 13px */
+            font-size: 14px;
+            /* NAIK: Sebelumnya 13px */
          }
+
          .widget-teks-lokasi {
-            font-size: 16px; /* NAIK: Sebelumnya 14px */
+            font-size: 16px;
+            /* NAIK: Sebelumnya 14px */
          }
       }
    </style>
@@ -405,18 +414,22 @@
       </nav>
 
       <header class="py-3 border-bottom bg-body">
-         
-         <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
+
+         <div
+            class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
 
             <a href="/" class="d-none d-lg-flex align-items-center link-body-emphasis text-decoration-none">
                <img src="images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
             </a>
 
-            <div class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0" >
-               
-               <div id="sliderTanahSuci" class="w-100" style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
-                  
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
+            <div
+               class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
+
+               <div id="sliderTanahSuci" class="w-100"
+                  style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
+
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Makkah</span>
                      </div>
@@ -427,11 +440,13 @@
                         <span id="tglMakkah">--/--/--</span>
                      </div>
                      <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
-                        <span id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMakkah">--:--</span>
+                        <span id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i>
+                        <span id="waktuShalatMakkah">--:--</span>
                      </div>
                   </div>
 
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Madinah</span>
                      </div>
@@ -442,7 +457,8 @@
                         <span id="tglMadinah">--/--/--</span>
                      </div>
                      <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
-                        <span id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMadinah">--:--</span>
+                        <span id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i>
+                        <span id="waktuShalatMadinah">--:--</span>
                      </div>
                   </div>
 
@@ -452,29 +468,34 @@
          </div>
       </header>
 
-      <div id="beranda" class="container py-5">
-         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-10 col-sm-8 col-lg-6 mx-auto mb-4 mb-lg-0">
-               <img src="images/banner.png" class="d-block mx-lg-auto img-fluid" alt="Haji Reguler" width="700"
-                  height="500" loading="lazy">
-            </div>
-            <div class="col-lg-6 text-center text-lg-start">
-               <h1 class="display-4 fw-bold lh-1 mb-3">Haji Reguler Bimbingan KBIHU</h1>
-               <h2 class="fs-3 text-warning mb-4">Gerbang Anda Menuju Perjalanan Seumur Hidup</h2>
-               <p class="lead mb-4 text-secondary">KBIHU Al-Zamzami merupakan lembaga resmi mitra Kementerian Haji dan
-                  Umrah yang bertugas memberikan bimbingan, manasik, dan pendampingan bagi jemaah haji reguler dan
-                  umrah. Kami hadir menemani persiapan Anda mulai dari Tanah Air, Tanah Suci hingga kembali lagi ke
-                  Tanah Air.</p>
-               <div class="d-grid gap-3 d-md-flex justify-content-md-start">
-                  <a href="#bimbingan" type="button"
-                     class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">Bergabunglah
-                     Sekarang!</a>
-                  <a href="files/Brosur-KBIHU-AL-ZAMZAMI.jpg" target="_blank"
-                     class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm"><i
-                        class="bi bi-download me-2"></i>Download Brosur</a>
+      <div id="beranda">
+         <div class="container py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+               <div class="col-10 col-sm-8 col-lg-6 mx-auto mb-4 mb-lg-0">
+                  <img src="images/banner.png" class="d-block mx-lg-auto img-fluid" alt="Haji Reguler" width="700"
+                     height="500" loading="lazy">
+               </div>
+               <div class="col-lg-6 text-center text-lg-start">
+                  <h1 class="display-4 fw-bold lh-1 mb-3">Haji Reguler Bimbingan KBIHU</h1>
+                  <h2 class="fs-3 text-warning mb-4">Gerbang Anda Menuju Perjalanan Seumur Hidup</h2>
+                  <p class="lead mb-4 text-secondary">KBIHU Al-Zamzami merupakan lembaga resmi mitra Kementerian Haji
+                     dan
+                     Umrah yang bertugas memberikan bimbingan, manasik, dan pendampingan bagi jemaah haji reguler dan
+                     umrah. Kami hadir menemani persiapan Anda mulai dari Tanah Air, Tanah Suci hingga kembali lagi ke
+                     Tanah Air.</p>
+                  <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+                     <a href="#bimbingan" type="button"
+                        class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">Bergabunglah
+                        Sekarang!</a>
+                     <a href="files/Brosur-KBIHU-AL-ZAMZAMI.jpg" target="_blank"
+                        class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm"><i
+                           class="bi bi-download me-2"></i>Download Brosur</a>
+                  </div>
                </div>
             </div>
          </div>
+
+         
       </div>
 
       <div id="panduan" class="container py-5">
@@ -1064,7 +1085,7 @@
       // ==========================================
       // WIDGET INFO TANAH SUCI (LIVE UPDATE)
       // ==========================================
-      
+
       // 1. Animasi Carousel Vertikal
       let isMakkah = true;
       setInterval(() => {
@@ -1086,7 +1107,7 @@
       // 3. Fungsi Menentukan Jadwal Shalat Berikutnya (Berdasarkan Waktu Arab Saudi)
       function tentukanShalatBerikutnya(jadwal) {
          // Ambil waktu Arab Saudi saat ini (WIB - 4 jam)
-         const waktuArab = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"}));
+         const waktuArab = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
          const jamSekarang = waktuArab.getHours();
          const menitSekarang = waktuArab.getMinutes();
          const waktuSekarangInt = jamSekarang * 60 + menitSekarang;
@@ -1122,7 +1143,7 @@
             // Terapkan ke UI Makkah
             document.getElementById('suhuMakkah').innerText = Math.round(dataCuaca[0].current_weather.temperature) + '°C';
             document.getElementById('iconCuacaMakkah').className = 'bi ' + getIkonCuaca(dataCuaca[0].current_weather.weathercode);
-            
+
             // Terapkan ke UI Madinah
             document.getElementById('suhuMadinah').innerText = Math.round(dataCuaca[1].current_weather.temperature) + '°C';
             document.getElementById('iconCuacaMadinah').className = 'bi ' + getIkonCuaca(dataCuaca[1].current_weather.weathercode);
@@ -1131,12 +1152,12 @@
             // --- B. UPDATE TANGGAL & JADWAL SHALAT (Aladhan API) ---
             const resShalatMakkah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4');
             const dataShalatMakkah = await resShalatMakkah.json();
-            
+
             const resShalatMadinah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Madinah&country=Saudi%20Arabia&method=4');
             const dataShalatMadinah = await resShalatMadinah.json();
 
             // Set Tanggal (Format: DD-MMM-YYYY)
-            const tgl = dataShalatMakkah.data.date.readable; 
+            const tgl = dataShalatMakkah.data.date.readable;
             document.getElementById('tglMakkah').innerText = tgl;
             document.getElementById('tglMadinah').innerText = tgl;
 
