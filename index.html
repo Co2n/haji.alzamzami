@@ -71,6 +71,35 @@
          --bs-btn-hover-color: #fff;
          --bs-btn-hover-bg: #8a612d;
          --bs-btn-hover-border-color: #7a5628;
+         --bs-btn-active-color: #fff;
+         --bs-btn-active-bg: #8b6430;
+         --bs-btn-active-border-color: #6d4d23;
+      }
+
+      /* Kustomisasi Tombol Outline Primary */
+      .btn-outline-primary {
+         --bs-btn-color: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: var(--bs-primary);
+         --bs-btn-hover-border-color: var(--bs-primary);
+         --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+         --bs-btn-active-color: #fff;
+         --bs-btn-active-bg: var(--bs-primary);
+         --bs-btn-active-border-color: var(--bs-primary);
+      }
+
+      /* Kustomisasi Tombol Outline Warning (Emas) */
+      .btn-outline-warning {
+         --bs-btn-color: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: var(--bs-warning);
+         --bs-btn-hover-border-color: var(--bs-warning);
+         --bs-btn-focus-shadow-rgb: var(--bs-warning-rgb);
+         --bs-btn-active-color: #fff;
+         --bs-btn-active-bg: var(--bs-warning);
+         --bs-btn-active-border-color: var(--bs-warning);
       }
 
       /* Mode Gelap */
@@ -309,6 +338,25 @@
             /* NAIK: Sebelumnya 14px */
          }
       }
+
+      /* --- ANIMASI BERKEDIP UNTUK JADWAL LIVE --- */
+      @keyframes blink-animation {
+         0% {
+            opacity: 1;
+         }
+
+         50% {
+            opacity: 0;
+         }
+
+         100% {
+            opacity: 1;
+         }
+      }
+
+      .blink-live {
+         animation: blink-animation 1.5s infinite;
+      }
    </style>
    <script>
       /**
@@ -495,7 +543,21 @@
             </div>
          </div>
 
-         
+         <div class="container pb-5">
+            <div class="col-12 col-xl-12">
+               <div class="card border-0 bg-body-tertiary overflow-hidden shadow-sm" style="border-radius: 20px;">
+
+                  <div class="card-body p-0" id="tempat-notif-jadwal">
+                     <div class="p-4 p-lg-5 text-center text-muted">
+                        <span class="spinner-border spinner-border-sm me-2" role="status"></span> Memuat informasi
+                        jadwal...
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+
       </div>
 
       <div id="panduan" class="container py-5">
@@ -1177,7 +1239,140 @@
 
       // Jalankan saat web dibuka, dan perbarui otomatis setiap 1 jam
       updateDataTanahSuci();
-      setInterval(updateDataTanahSuci, 3600000);
+      // setInterval(updateDataTanahSuci, 3600000);
+
+      // ==========================================
+      // FITUR NOTIFIKASI JADWAL DINAMIS (FIX TANGGAL INDONESIA)
+      // ==========================================
+      async function muatNotifikasiJadwal() {
+         try {
+            const urlJadwal = 'https://script.google.com/macros/s/AKfycbw_Y7YVjyNYliz7P99pr-6rfX2KdlYET3w3eXwb9aj5k3vJLG4EaV_DQO1XSGZMxLFP/exec';
+            const response = await fetch(urlJadwal);
+            const result = await response.json();
+            
+            if (!result.status || !result.data) return;
+
+            const jadwalData = result.data;
+            const waktuSekarang = new Date();
+            
+            let statusJadwal = 'LEWAT';
+            let eventTerpilih = null;
+            let sisaHari = 0;
+
+            for (let i = 0; i < jadwalData.length; i++) {
+               const event = jadwalData[i];
+               
+               // 1. MENGATASI FORMAT TANGGAL DD/MM/YYYY
+               // Pecah "19/04/2026" menjadi array ["19", "04", "2026"]
+               const tglParts = event.tanggal.split('/'); 
+               
+               // Jika formatnya benar ada 3 bagian, rakit jadi YYYY/MM/DD ("2026/04/19")
+               let tglValid = event.tanggal; // Default (jaga-jaga jika bukan format DD/MM/YYYY)
+               if (tglParts.length === 3) {
+                  tglValid = `${tglParts[2]}/${tglParts[1]}/${tglParts[0]}`;
+               } else if (event.tanggal.includes('T')) {
+                  // Fallback jika tiba-tiba data kembali ke format ISO yang lama
+                  tglValid = event.tanggal.split('T')[0].replace(/-/g, '/');
+               }
+
+               // 2. Ambil Jam Mulai & Selesai
+               const bagianWaktu = event.waktu.split(' - '); 
+               const jamMulai = bagianWaktu[0].trim();
+               let jamSelesaiLengkap = bagianWaktu[1].trim();
+               let isPlus1 = jamSelesaiLengkap.includes('+1');
+               let jamSelesai = isPlus1 ? jamSelesaiLengkap.split(' ')[0] : jamSelesaiLengkap;
+
+               // 3. Rakit menjadi Objek Waktu Lokal Browser
+               const waktuMulai = new Date(`${tglValid} ${jamMulai}`);
+               const waktuSelesai = new Date(`${tglValid} ${jamSelesai}`);
+
+               if (isPlus1) {
+                  waktuSelesai.setDate(waktuSelesai.getDate() + 1);
+               }
+
+               // --- LOGIKA PERBANDINGAN ---
+               if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
+                  statusJadwal = 'LIVE';
+                  eventTerpilih = event;
+                  break; 
+               } 
+               else if (waktuSekarang < waktuMulai) {
+                  statusJadwal = 'SEGERA';
+                  eventTerpilih = event;
+                  
+                  // Hitung sisa hari secara presisi (mengabaikan jam)
+                  const d1 = new Date(waktuSekarang.getFullYear(), waktuSekarang.getMonth(), waktuSekarang.getDate());
+                  const d2 = new Date(waktuMulai.getFullYear(), waktuMulai.getMonth(), waktuMulai.getDate());
+                  sisaHari = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                  break; 
+               }
+            }
+
+            if (statusJadwal === 'LEWAT') {
+               eventTerpilih = jadwalData[jadwalData.length - 1]; 
+            }
+
+            renderKeLayar(statusJadwal, eventTerpilih, sisaHari);
+
+         } catch (error) {
+            console.error("Error UI:", error);
+         }
+      }
+
+      function renderKeLayar(status, event, sisaHari) {
+         const wadah = document.getElementById('tempat-notif-jadwal');
+         let ikon, judul, deskripsi, warnaGaris, tombolAksi;
+
+         // Set tombol default (muncul)
+         tombolAksi = `
+            <div class="text-md-end ms-md-4 flex-shrink-0">
+               <a href="#" onclick="alert('Halaman Jadwal Lengkap sedang disiapkan.'); return false;" class="btn btn-outline-warning btn-lg rounded-pill fw-bold shadow-sm px-4">
+                  <i class="bi bi-calendar-check me-2"></i>Lihat Jadwal
+               </a>
+            </div>
+         `;
+
+         if (status === 'LIVE') {
+            ikon = '<i class="bi bi-broadcast text-danger fs-1 blink-live"></i>';
+            judul = '<span class="text-danger">Sedang Berlangsung!</span>';
+            // .replace untuk merapikan teks +1 jika ditampilkan ke jamaah
+            deskripsi = `Saat ini sedang berlangsung <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong>. (${event.waktu.replace('+1', 'Hari Berikutnya')})`;
+            warnaGaris = 'border-danger';
+         }
+         else if (status === 'SEGERA') {
+            ikon = '<i class="bi bi-calendar-star text-warning fs-1"></i>';
+            let teksHari = sisaHari === 0 ? "Hari ini" : (sisaHari === 1 ? "Besok" : `${sisaHari} hari lagi`);
+            judul = 'Jadwal Terdekat';
+            deskripsi = `Insya Allah, <strong>${teksHari}</strong> (${event.longdate}) akan dilangsungkan <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong> pada jam ${event.waktu.replace(' +1', '')} WIB.`;
+            warnaGaris = 'border-warning';
+         }
+         else {
+            ikon = '<i class="bi bi-clock-history text-secondary fs-1"></i>';
+            judul = 'Kegiatan Terakhir';
+            // PERUBAHAN: Menambahkan informasi Hari dan Tanggal (longdate)
+            deskripsi = `Kegiatan bimbingan sebelumnya adalah <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong> pada hari <strong>${event.longdate}</strong> lalu. <br><span class="text-muted mt-2 d-inline-block"><i class="bi bi-info-circle me-1"></i>Jadwal bimbingan berikutnya belum dirilis.</span>`;
+            warnaGaris = 'border-secondary';
+
+            // PERUBAHAN: Sembunyikan tombol jika jadwal berikutnya belum dirilis
+            tombolAksi = '';
+         }
+
+         wadah.innerHTML = `
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center p-4 p-lg-5 border-start border-5 ${warnaGaris}">
+               <div class="d-flex align-items-center gap-4 mb-4 mb-md-0">
+                  <div>${ikon}</div>
+                  <div>
+                     <h4 class="fw-bold mb-2">${judul}</h4>
+                     <p class="mb-0 text-body-emphasis" style="font-size: 1.1rem; line-height: 1.6;">${deskripsi}</p>
+                  </div>
+               </div>
+               ${tombolAksi}
+            </div>
+         `;
+      }
+
+      // Jalankan fungsi saat web dibuka
+      muatNotifikasiJadwal();
    </script>
 </body>
 
