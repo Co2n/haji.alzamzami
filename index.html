@@ -1298,6 +1298,7 @@
       async function muatNotifikasiJadwal() {
          try {
             const urlJadwal = 'https://script.google.com/macros/s/AKfycbw_Y7YVjyNYliz7P99pr-6rfX2KdlYET3w3eXwb9aj5k3vJLG4EaV_DQO1XSGZMxLFP/exec';
+            // const response = await fetch('jadwal.json');
             const response = await fetch(urlJadwal);
             const result = await response.json();
             
@@ -1401,7 +1402,7 @@
             ikon = '<i class="bi bi-clock-history text-secondary fs-1"></i>';
             judul = 'Kegiatan Terakhir';
             // PERUBAHAN: Menambahkan informasi Hari dan Tanggal (longdate)
-            deskripsi = `Kegiatan bimbingan sebelumnya adalah <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong> pada hari <strong>${event.longdate}</strong> lalu. <br><span class="text-muted mt-2 d-inline-block"><i class="bi bi-info-circle me-1"></i>Jadwal bimbingan berikutnya belum dirilis.</span>`;
+            deskripsi = `Kegiatan sebelumnya adalah <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong> pada hari <strong>${event.longdate}</strong>. <br><span class="text-muted mt-2 d-inline-block"><i class="bi bi-info-circle me-1"></i>Jadwal berikutnya akan segera dirilis. Silakan kembali lagi nanti.</span>`;
             warnaGaris = 'border-secondary';
 
             // PERUBAHAN: Sembunyikan tombol jika jadwal berikutnya belum dirilis
