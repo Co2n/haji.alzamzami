@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+   <meta http-equiv="Pragma" content="no-cache">
+   <meta http-equiv="Expires" content="0">
+
+   <title>KBIHU Al-Zamzami - Profil KBIHU AL-ZAMZAMI</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   <style>
+      :root {
+         --bs-primary: #1869A0;
+         --bs-primary-rgb: 24, 105, 160;
+         --bs-secondary: #696B6D;
+         --bs-secondary-rgb: 105, 107, 109;
+         --bs-warning: #A67536;
+         --bs-warning-rgb: 166, 117, 54;
+         --bs-dark: #383C3E
+      }
+
+      .lead {
+         font-weight: 350
+      }
+
+      .btn-primary {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #135480;
+         --bs-btn-hover-border-color: #114a70
+      }
+
+      .btn-warning {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #8a612d;
+         --bs-btn-hover-border-color: #7a5628
+      }
+
+      .btn-outline-primary {
+         --bs-btn-color: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: var(--bs-primary)
+      }
+
+      .btn-outline-warning {
+         --bs-btn-color: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: var(--bs-warning)
+      }
+
+      a:not(.btn):not(.nav-link):not(.dropdown-item) {
+         color: var(--bs-warning-rgb);
+         text-decoration: none;
+         transition: all .3s ease-in-out;
+         font-weight: 500
+      }
+
+      a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+         color: var(--bs-warning)
+      }
+
+      .link-hover-primary:hover {
+         color: var(--bs-primary) !important
+      }
+
+      [data-bs-theme=dark] {
+         --bs-body-bg: #1a1c1d;
+         --bs-card-bg: #383C3E
+      }
+
+      .footer-link {
+         color: #fff !important;
+         transition: color .3s ease
+      }
+
+      .footer-link:hover {
+         color: var(--bs-warning) !important
+      }
+
+      .logo-putih {
+         filter: brightness(0) invert(1)
+      }
+
+      .footer-heading {
+         margin-bottom: 5px !important;
+         color: #fff !important
+      }
+
+      .widget-tanah-suci {
+         height: 48px;
+         width: 100%;
+         max-width: 460px;
+         background-color: var(--bs-body-bg);
+         position: relative
+      }
+
+      .widget-teks {
+         font-size: 12.5px
+      }
+
+      .widget-teks-lokasi {
+         font-size: 14.5px
+      }
+
+      @media (min-width:576px) {
+         .widget-tanah-suci {
+            width: 430px
+         }
+
+         .widget-teks {
+            font-size: 14px
+         }
+
+         .widget-teks-lokasi {
+            font-size: 16px
+         }
+      }
+   </style>
+</head>
+
+<body>
+
+   <main>
+      <nav class="navbar navbar-expand-lg py-2 bg-body-tertiary border-bottom sticky-top shadow-sm">
+         <div class="container justify-content-center justify-content-lg-between">
+            <a href="/" class="navbar-brand p-2 d-lg-none text-decoration-none mx-auto">
+               <img src="../../images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
+            </a>
+         </div>
+      </nav>
+
+      <header class="py-3 border-bottom bg-body">
+         <div
+            class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
+            <a href="/" class="d-none d-lg-flex align-items-center link-body-emphasis text-decoration-none">
+               <img src="../../images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
+            </a>
+
+            <div
+               class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
+               <div id="sliderTanahSuci" class="w-100"
+                  style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Makkah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMakkah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMakkah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMakkah">--:--</span></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Madinah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMadinah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMadinah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMadinah">--:--</span></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <div class="bg-body-tertiary border-bottom">
+         <div class="container py-3 d-flex flex-column flex-md-row justify-content-md-between align-items-center gap-3">
+            <nav aria-label="breadcrumb">
+               <ol class="breadcrumb mb-0 justify-content-center" style="font-size: 15px;">
+                  <li class="breadcrumb-item"><a href="/"
+                        class="text-decoration-none text-muted transition-all link-hover-primary"><i
+                           class="bi bi-house-door-fill me-1"></i>Beranda</a></li>
+                  <li class="breadcrumb-item"><a href="/#tentang"
+                        class="text-decoration-none text-muted transition-all link-hover-primary">Tentang Kami</a></li>
+                  <li class="breadcrumb-item active fw-bold text-primary" aria-current="page">Profil KBIHU</li>
+               </ol>
+            </nav>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+               <div class="dropdown">
+                  <button
+                     class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all text-muted"
+                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                     data-bs-display="static"><i class="bi bi-circle-half fs-5"></i></button>
+                  <ul class="dropdown-menu dropdown-menu-center dropdown-menu-md-end shadow border-0"
+                     aria-labelledby="bd-theme" style="border-radius: 12px;">
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>Light</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-muted"></i>Dark</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2 active"
+                           data-bs-theme-value="auto"><i class="bi bi-circle-half me-2 text-primary"></i>Auto</button>
+                     </li>
+                  </ul>
+               </div>
+               <a href="/daftar" class="btn btn-primary py-2 px-4 rounded-pill fw-bold shadow-sm"
+                  target="_blank">Pendaftaran</a>
+            </div>
+         </div>
+      </div>
+
+      <div class="text-center text-white position-relative"
+         style="background: linear-gradient(170deg, rgba(24, 105, 160, 0.85) 0%, rgba(0, 0, 0, 0.9) 100%), url('../../images/bg-profile.png') center/cover no-repeat;">
+         <div class="container py-5">
+            <h1 class="display-5 fw-bold text-white mb-3">Profil KBIHU Al-Zamzami</h1>
+            <p class="col-lg-8 mx-auto lead text-white-50 mb-0" style="font-size: 1.1rem;">
+               Mengenal lebih dekat sejarah, visi, misi, dan dedikasi kami dalam melayani tamu-tamu Allah dari Kabupaten
+               Kuningan dan sekitarnya.
+            </p>
+         </div>
+      </div>
+
+      <div class="container pt-5">
+         <div class="row featurette align-items-center text-center text-sm-start">
+            <div class="col-md-12 order-md-2">
+               <h2 class="featurette-heading fw-bold lh-1 mb-3 text-body-emphasis">
+                  Melayani Sepenuh Hati. <span class="text-primary">Sejak Tahun 2004.</span>
+               </h2>
+               <p class="lead text-muted" style="line-height: 1.8;">
+                  KBIHU Al-Zamzami didirikan atas dasar kepedulian terhadap umat Islam di Kabupaten Kuningan yang
+                  merindukan pembimbingan ibadah haji yang terstruktur dan mendalam. Diprakarsai oleh almarhum KH. Ikin
+                  Sodikin (muthoif Mekkah Al Mukaromah selama 28 tahun lebih), lembaga ini awalnya merupakan majelis
+                  taklim kecil yang kemudian berkembang menjadi Kelompok
+                  Bimbingan Ibadah Haji berizin resmi.
+               </p>
+               <p class="lead text-muted" style="line-height: 1.8;">
+                  Hingga saat ini, dengan izin Allah, kami telah mendampingi dan membimbing ribuan jemaah haji,
+                  memfasilitasi perjalanan spiritual mereka dari mulai niat di Tanah Air hingga menyelesaikan tawaf wada
+                  di Masjidil Haram.
+               </p>
+            </div>
+         </div>
+      </div>
+
+      <div class="container py-5 my-3">
+         <div class="row align-items-md-stretch g-4">
+            <div class="col-md-5">
+               <div
+                  class="h-100 p-4 p-md-5 rounded-4 text-white position-relative overflow-hidden shadow-sm d-flex flex-column justify-content-center text-center"
+                  style="background: linear-gradient(180deg, var(--bs-primary) 0%, black 100%);">
+                  <i class="bi bi-crosshair position-absolute text-white"
+                     style="font-size: 150px; left: -20px; top: -30px; opacity: 0.1;"></i>
+                  <div class="position-relative" style="z-index: 2;">
+                     <h5 class="fw-bold text-warning mb-2">VISI KAMI</h5>
+                     <h2 class="fw-bold mb-0 text-white" style="line-height: 1.6;">
+                        "Memberikan bimbingan yang multiservice demi mencapai ibadah haji yang terarah dan sempurna
+                        menuju haji yang Mabrur dan Maqbul."
+                     </h2>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-md-7">
+               <div class="h-100 p-4 p-md-5 bg-body border rounded-4 position-relative overflow-hidden shadow-sm"
+                  style="border-color: rgba(0,0,0,0.08) !important;">
+                  <i class="bi bi-list-check position-absolute opacity-10"
+                     style="color: var(--bs-warning); font-size: 150px; right: -20px; bottom: -30px; opacity: 0.1;"></i>
+                  <div class="position-relative" style="z-index: 2;">
+                     <h5 class="fw-bold text-primary mb-4">MISI KAMI</h5>
+                     <ul class="list-unstyled text-muted" style="font-size: 1.1rem; line-height: 1.8;">
+                        <li class="mb-3 d-flex"><i class="bi bi-check-circle-fill text-warning me-3 mt-1"></i>
+                           Wawasan para calon Jama’ah Haji dalam tata cara pelaksanaan ibadah haji sesuai dengan
+                           ketentuan syari’ah.</li>
+                        <li class="mb-3 d-flex"><i class="bi bi-check-circle-fill text-warning me-3 mt-1"></i>
+                           Amaliah para calon Jama’ah Haji selama pelaksanaan kegiatan ibadah haji di tanah suci.</li>
+                        <li class="mb-3 d-flex"><i class="bi bi-check-circle-fill text-warning me-3 mt-1"></i>
+                           Rasa persaudaraan dan kebersamaan di antara para calon Jama’ah haji sebelum dan sesudah
+                           pelaksanaan ibadah haj.</li>
+                        <li class="mb-0 d-flex"><i class="bi bi-check-circle-fill text-warning me-3 mt-1"></i>
+                           Ibadah haji secara berkualitas di tanah suci sesuai dengan ketentuan tahapan-tahapan
+                           pelaksanaan yang digariskan.</li>
+                        <li class="mb-0 d-flex"><i class="bi bi-check-circle-fill text-warning me-3 mt-1"></i>
+                           Semangat hidup para Jama’ah untuk menerapkan nilai haji dalam kehidupan sehari-hari.</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+      <div class="container py-5 mb-5">
+
+         <div class="text-center mb-5 mt-4">
+            <h5 class="fw-bold text-warning mb-2">STRUKTUR ORGANISASI</h5>
+            <h2 class="display-6 fw-bold text-body-emphasis">Pengurus KBIHU Al-Zamzami</h2>
+            <div class="mx-auto mt-3"
+               style="width: 60px; height: 4px; background-color: var(--bs-primary); border-radius: 10px;"></div>
+         </div>
+
+         <div class="row justify-content-center g-4 mb-4">
+
+            <div class="col-12 col-md-5 col-lg-4">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 py-5"
+                  style="border-top: 5px solid var(--bs-warning) !important;">
+                  <div class="mx-auto mb-3" style="width: 150px; height: 150px;">
+                     <img src="../images/penanggungjawab.png" alt="H. Kokon Koswanto" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <span class="badge bg-warning px-3 py-2 rounded-pill mb-3" style="font-size: 0.85rem;">Penanggung
+                     Jawab</span>
+                  <h4 class="fw-bold text-body-emphasis mb-0">H. Moh Faisal, S.E.</h4>
+               </div>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-4">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 py-5"
+                  style="border-top: 5px solid var(--bs-primary) !important;">
+                  <div class="mx-auto mb-3" style="width: 150px; height: 150px;">
+                     <img src="../images/ketua-kbihu.png" alt="H. Kokon Koswanto" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <span class="badge bg-primary px-3 py-2 rounded-pill mb-3" style="font-size: 0.85rem;">Ketua
+                     KBIHU</span>
+                  <h4 class="fw-bold text-body-emphasis mb-0">H. Ahmad Zamzami, S.S.</h4>
+               </div>
+            </div>
+
+         </div>
+
+         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center g-4">
+
+            <div class="col">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 transition-all">
+                  <div class="mx-auto mb-3" style="width: 100px; height: 100px;">
+                     <img src="../images/sekretaris-1.png" alt="H. Kokon Koswanto" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <h6 class="text-primary fw-bold mb-2">Sekretaris 1</h6>
+                  <h5 class="fw-bold text-body-emphasis mb-0 fs-6">H. Kokon Koswanto, S.Kom.</h5>
+               </div>
+            </div>
+
+            <div class="col">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 transition-all">
+                  <div class="mx-auto mb-3" style="width: 100px; height: 100px;">
+                     <img src="../images/sekretaris-2.png" alt="H. Kokon Koswanto" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <h6 class="text-primary fw-bold mb-2">Sekretaris 2</h6>
+                  <h5 class="fw-bold text-body-emphasis mb-0 fs-6">Hana Hafidzatunna'imah</h5>
+               </div>
+            </div>
+
+            <div class="col">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 transition-all">
+                  <div class="mx-auto mb-3" style="width: 100px; height: 100px;">
+                     <img src="../images/bendahara-1.png" alt="H. Ayat Hidayatullah" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <h6 class="text-primary fw-bold mb-2">Bendahara</h6>
+                  <h5 class="fw-bold text-body-emphasis mb-0 fs-6">Hj. Muna Faridah, S.Pd.I.</h5>
+               </div>
+            </div>
+
+            <div class="col">
+               <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4 transition-all">
+                  <div class="mx-auto mb-3" style="width: 100px; height: 100px;">
+                     <img src="../images/bendahara-2.png" alt="H. Ayat Hidayatullah" class="rounded-circle shadow-sm"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <h6 class="text-primary fw-bold mb-2">Bendahara</h6>
+                  <h5 class="fw-bold text-body-emphasis mb-0 fs-6">H. Ayat Hidayatullah</h5>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+      <div class="container pb-5 mb-5 text-center">
+         <h5 class="fw-bold text-warning mb-2">LEGALITAS LEMBAGA</h5>
+         <h2 class="display-6 fw-bold text-body-emphasis mb-5">Izin & Terakreditasi Resmi</h2>
+
+         <div class="row justify-content-center g-4">
+            <div class="col-6 col-md-3">
+               <div class="p-4 bg-body-tertiary rounded-4 shadow-sm h-100">
+                  <i class="bi bi-shield-fill-check text-primary display-4 mb-3 d-block"></i>
+                  <h5 class="fw-bold">Kementerian Agama RI</h5>
+                  <p class="text-muted small mb-0">Izin Operasional Resmi KBIHU</p>
+                  <p class="text-muted small mb-0">Izin SK Menteri Agama RI No. 811 Provinsi Jawa Barat
+                     No. Urut 196 No. Keputusan 326 Tahun 2020
+                  </p>
+               </div>
+            </div>
+            <div class="col-6 col-md-3">
+               <div class="p-4 bg-body-tertiary rounded-4 shadow-sm h-100">
+                  <i class="bi bi-award-fill text-warning display-4 mb-3 d-block"></i>
+                  <h5 class="fw-bold">Akreditasi A</h5>
+                  <p class="text-muted small mb-0">SK. NO. 1011 Tahun 2023 Tanggal 15/11/2025:
+                     Telah Terakreditasi dan Mendapat Predikat
+                     Sangat Baik (Grade A)
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="tentang" class="bg-primary text-white mt-5 pt-5 pb-4 w-100">
+         <div class="container">
+            <footer>
+               <div class="row">
+
+                  <div class="col-3 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Layanan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="/#bimbingan" class="nav-link p-0 footer-link">Bimbingan
+                              Manasik</a></li>
+                        <li class="nav-item mb-2"><a href="/#badalhaji" class="nav-link p-0 footer-link">Badal Haji</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/#qurban" class="nav-link p-0 footer-link">Qurban</a></li>
+                        <li class="nav-item mb-2"><a href="/#wakaf" class="nav-link p-0 footer-link">Wakaf Quran</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-6 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Tentang Kami</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a
+                              href="#"
+                              class="nav-link p-0 footer-link">Profil KBIHU</a></li>
+                        <li class="nav-item mb-2"><a
+                              href="/karir"
+                              class="nav-link p-0 footer-link">Karir</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-3 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Bantuan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="https://haji.go.id/estimasi-keberangkatan" target="_blank"
+                              class="nav-link p-0 footer-link">Cek Porsi Haji</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
+                        </li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Kebijakan Privasi</a>
+                        </li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">FAQ</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-lg-5 offset-lg-1 mb-3 mt-4 mt-lg-0 text-center text-lg-start">
+                     <!-- <form>
+                        <h5 class="fw-bold footer-heading">Berlangganan Info</h5>
+                        <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                        <p class="text-white mb-3">Join Komunitas Whatsapp</p>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2 mb-4">
+                           <label for="newsletter1" class="visually-hidden">Nomor Whatsapp</label>
+                           <input id="newsletter1" type="tel" class="form-control rounded-pill px-3 border-0 shadow-sm"
+                              placeholder="Nomor Whatsapp Anda">
+                           <button onclick="alert('Belum di fungsikan, silakan kembali lagi nanti.');"
+                              class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm"
+                              type="button">Subscribe</button>
+                        </div>
+                     </form> -->
+
+                     <h5 class="fw-bold footer-heading">Kontak</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2">Email : kbihualzamzami@gmail.com</li>
+                        <li class="nav-item mb-2">Telp : +62 813-2207-9374 <a href="https://wa.me/6281322079374"
+                              target="_blank" rel="noopener noreferrer" class="link-animasi">Klik Chat via WhatsApp</a>
+                        </li>
+                        <li class="nav-item mb-2">Alamat : Jl. Cut Nyak Dhien, Kel. Windusengkahan Kab. Kuningan, Jawa
+                           Barat, Indonesia</li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Kantor</a>
+                        </li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/C5oPGFPvDPUgUBHXA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Manasik</a>
+
+                        </li>
+                     </ul>
+
+                  </div>
+               </div>
+
+               <div class="row">
+
+                  <div class="col-lg-6 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Kemitraan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <a href="https://kemenag.go.id/" target="_blank">
+                        <img src="../../images/kemenag.svg" alt="Kementerian Agama RI" height="70" class="me-4">
+                     </a>
+                     <a href="https://haji.go.id/estimasi-keberangkatan" target="_blank">
+                        <img src="../../images/kemenhaj.svg" alt="Kementerian Haji dan Umrah RI" height="70">
+                     </a>
+                  </div>
+                  <div class="col-lg-5 offset-lg-1 mb-3 mt-4 mt-lg-0 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Sosial Media</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="list-unstyled d-flex justify-content-center justify-content-lg-start mb-0">
+                        <li class="me-4"><a class="footer-link" href="https://www.youtube.com/@haji.alzamzami"
+                              target="_blank"><i class="bi bi-youtube fs-3"></i></a></li>
+                        <li class="me-4"><a class="footer-link" href="https://www.instagram.com/haji.alzamzami"
+                              target="_blank"><i class="bi bi-instagram fs-4"></i></a></li>
+                        <li><a class="footer-link" href="https://www.tiktok.com/@haji.alzamzami" target="_blank"><i
+                                 class="bi bi-tiktok fs-4"></i></a></li>
+                     </ul>
+                  </div>
+
+               </div>
+
+               <div
+                  class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-5 border-top"
+                  style="border-color: rgba(255,255,255,0.2) !important;">
+                  <p class="text-white text-center text-sm-start mb-3 mb-sm-0">© <span id="currentYear"></span> KBIHU
+                     Al-Zamzami. All rights reserved.</p>
+
+                  <div>
+                     <img src="../../images/alzamzami.svg" alt="Logo KBIHU Al-Zamzami" height="30" class="logo-putih">
+                  </div>
+               </div>
+            </footer>
+         </div>
+      </div>
+   </main>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      // 1. Dark Mode
+      const setTheme = theme => {
+         if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')
+         } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+         }
+      }
+      document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+         toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value')
+            localStorage.setItem('theme', theme)
+            setTheme(theme)
+         })
+      })
+      setTheme(localStorage.getItem('theme') || 'auto')
+
+      // 2. Tahun Copyright
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+      // 3. Widget Tanah Suci (Cuaca & Shalat)
+      let isMakkah = true;
+      setInterval(() => {
+         const slider = document.getElementById('sliderTanahSuci');
+         slider.style.transform = isMakkah ? 'translateY(-48px)' : 'translateY(0)';
+         isMakkah = !isMakkah;
+      }, 4000);
+
+      function getIkonCuaca(weatherCode) {
+         if (weatherCode <= 1) return 'bi-sun-fill text-warning';
+         if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info';
+         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-muted';
+         if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary';
+         return 'bi-cloud-fill text-muted';
+      }
+
+      function tentukanShalatBerikutnya(jadwal) {
+         const waktuArab = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
+         const jamSekarang = waktuArab.getHours();
+         const menitSekarang = waktuArab.getMinutes();
+         const waktuSekarangInt = jamSekarang * 60 + menitSekarang;
+
+         const daftarShalat = [
+            { nama: 'Subuh', waktu: jadwal.Fajr }, { nama: 'Dzuhur', waktu: jadwal.Dhuhr },
+            { nama: 'Ashar', waktu: jadwal.Asr }, { nama: 'Maghrib', waktu: jadwal.Maghrib },
+            { nama: 'Isya', waktu: jadwal.Isha }
+         ];
+
+         for (let shalat of daftarShalat) {
+            let [jam, menit] = shalat.waktu.split(':').map(Number);
+            let waktuShalatInt = jam * 60 + menit;
+            if (waktuShalatInt > waktuSekarangInt) return shalat;
+         }
+         return { nama: 'Subuh', waktu: daftarShalat[0].waktu };
+      }
+
+      async function updateDataTanahSuci() {
+         try {
+            const resCuaca = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.4225,24.4686&longitude=39.8262,39.6142&current_weather=true');
+            const dataCuaca = await resCuaca.json();
+            document.getElementById('suhuMakkah').innerText = Math.round(dataCuaca[0].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMakkah').className = 'bi ' + getIkonCuaca(dataCuaca[0].current_weather.weathercode);
+            document.getElementById('suhuMadinah').innerText = Math.round(dataCuaca[1].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMadinah').className = 'bi ' + getIkonCuaca(dataCuaca[1].current_weather.weathercode);
+
+            const resShalatMakkah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4');
+            const dataShalatMakkah = await resShalatMakkah.json();
+            const resShalatMadinah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Madinah&country=Saudi%20Arabia&method=4');
+            const dataShalatMadinah = await resShalatMadinah.json();
+
+            const tgl = dataShalatMakkah.data.date.readable;
+            document.getElementById('tglMakkah').innerText = tgl;
+            document.getElementById('tglMadinah').innerText = tgl;
+
+            const nextMakkah = tentukanShalatBerikutnya(dataShalatMakkah.data.timings);
+            document.getElementById('namaShalatMakkah').innerText = nextMakkah.nama;
+            document.getElementById('waktuShalatMakkah').innerText = nextMakkah.waktu;
+            const nextMadinah = tentukanShalatBerikutnya(dataShalatMadinah.data.timings);
+            document.getElementById('namaShalatMadinah').innerText = nextMadinah.nama;
+            document.getElementById('waktuShalatMadinah').innerText = nextMadinah.waktu;
+         } catch (error) {
+            console.log("Gagal memuat data", error);
+         }
+      }
+      updateDataTanahSuci();
+   </script>
+</body>
+
+</html>
