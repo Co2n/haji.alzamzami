@@ -322,21 +322,21 @@
                      <h5 class="fw-bold footer-heading">Bantuan</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" 
+                        <li class="nav-item mb-2"><a href="/cekporsi" 
                               class="nav-link p-0 footer-link">Cek Porsi Haji</a></li>
                         <li class="nav-item mb-2"><a
-                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              href="#"
                               class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
                         <li class="nav-item mb-2"><a
-                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              href="/sdk"
                               class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
                         </li>
                         <li class="nav-item mb-2"><a
-                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              href="/kp"
                               class="nav-link p-0 footer-link">Kebijakan Privasi</a>
                         </li>
                         <li class="nav-item mb-2"><a
-                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              href="/faq"
                               class="nav-link p-0 footer-link">FAQ</a></li>
                      </ul>
                   </div>
@@ -537,39 +537,6 @@
          });
       }
 
-      // Fungsi Pembantu: Membuat Toast Notifikasi (Tanpa HTML tambahan)
-      function tampilkanToastSederhana(pesan) {
-         // Cek apakah sudah ada toast lama, jika ada hapus dulu
-         let toastLama = document.getElementById('toastSalin');
-         if (toastLama) toastLama.remove();
-
-         // Buat elemen div untuk Toast
-         const div = document.createElement('div');
-         div.id = 'toastSalin';
-         div.className = 'position-fixed bottom-0 start-50 translate-middle-x p-3';
-         div.style.zIndex = '9999';
-
-         // Isi HTML Toast (Menggunakan desain Bootstrap 5)
-         div.innerHTML = `
-            <div class="toast align-items-center text-bg-success border-0 show shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
-               <div class="d-flex">
-                  <div class="toast-body">
-                     <i class="bi bi-check-circle-fill me-2"></i> ${pesan}
-                  </div>
-                  <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.parentElement.parentElement.remove()"></button>
-               </div>
-            </div>
-         `;
-
-         document.body.appendChild(div);
-
-         // Hilangkan otomatis setelah 3 detik
-         setTimeout(() => {
-            if (document.getElementById('toastSalin')) {
-               document.getElementById('toastSalin').remove();
-            }
-         }, 3000);
-      }
    </script>
 </body>
 
