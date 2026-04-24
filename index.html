@@ -21,37 +21,31 @@
          --bs-secondary-rgb: 105, 107, 109;
          --bs-warning: #A67536;
          --bs-warning-rgb: 166, 117, 54;
-         --bs-dark: #383C3E;
+         --bs-dark: #383C3E
       }
 
       .lead {
-         font-weight: 350;
-         /* Ukuran font untuk teks utama */
+         font-weight: 350
       }
 
       @font-face {
          font-family: 'LPMQ Isep Misbah';
-         src: url('./files/LPMQIsepMisbah.ttf') format('truetype');
+         src: url(files/LPMQIsepMisbah.ttf) format('truetype')
       }
 
       .quran-text {
-         font-family: 'LPMQ Isep Misbah', serif;
+         font-family: 'LPMQ Isep Misbah', serif
       }
-
 
       .force-rtl {
          direction: rtl !important;
          unicode-bidi: embed;
-         /* Memastikan teks di dalamnya mengikuti aturan RTL */
          text-align: right !important;
          font-size: 1em !important;
          font-weight: 600 !important;
-         line-height: 2em !important;
-         /* Memastikan perataan tetap di kanan */
+         line-height: 2em !important
       }
 
-
-      /* Kustomisasi Tombol Primary */
       .btn-primary {
          --bs-btn-color: #fff;
          --bs-btn-bg: var(--bs-primary);
@@ -60,10 +54,9 @@
          --bs-btn-hover-bg: #135480;
          --bs-btn-hover-border-color: #114a70;
          --bs-btn-active-bg: #114a70;
-         --bs-btn-active-border-color: #0e3f60;
+         --bs-btn-active-border-color: #0e3f60
       }
 
-      /* Kustomisasi Tombol Warning */
       .btn-warning {
          --bs-btn-color: #fff;
          --bs-btn-bg: var(--bs-warning);
@@ -73,10 +66,9 @@
          --bs-btn-hover-border-color: #7a5628;
          --bs-btn-active-color: #fff;
          --bs-btn-active-bg: #8b6430;
-         --bs-btn-active-border-color: #6d4d23;
+         --bs-btn-active-border-color: #6d4d23
       }
 
-      /* Kustomisasi Tombol Outline Primary */
       .btn-outline-primary {
          --bs-btn-color: var(--bs-primary);
          --bs-btn-border-color: var(--bs-primary);
@@ -86,10 +78,9 @@
          --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
          --bs-btn-active-color: #fff;
          --bs-btn-active-bg: var(--bs-primary);
-         --bs-btn-active-border-color: var(--bs-primary);
+         --bs-btn-active-border-color: var(--bs-primary)
       }
 
-      /* Kustomisasi Tombol Outline Warning (Emas) */
       .btn-outline-warning {
          --bs-btn-color: var(--bs-warning);
          --bs-btn-border-color: var(--bs-warning);
@@ -99,33 +90,24 @@
          --bs-btn-focus-shadow-rgb: var(--bs-warning-rgb);
          --bs-btn-active-color: #fff;
          --bs-btn-active-bg: var(--bs-warning);
-         --bs-btn-active-border-color: var(--bs-warning);
+         --bs-btn-active-border-color: var(--bs-warning)
       }
 
-      /* ==========================================
-         KUSTOMISASI LINK (TAG A) GLOBAL
-      ========================================== */
-      
-      /* Targetkan HANYA tag 'a' yang TIDAK memiliki class btn, nav-link, atau dropdown-item */
       a:not(.btn):not(.nav-link):not(.dropdown-item) {
-         color: var(--bs-warning-rgb); /* Warna dasar biru tema */
-         text-decoration: none; /* Hilangkan garis bawah default yang kaku */
-         transition: all 0.3s ease-in-out; /* Transisi warna yang lembut */
-         font-weight: 500; /* Sedikit ditebalkan agar link menonjol di antara teks biasa */
+         color: var(--bs-warning-rgb);
+         text-decoration: none;
+         transition: all .3s ease-in-out;
+         font-weight: 500
       }
 
-      a:not(.btn):not(.nav-link):not(.dropdown-item):hover,
-      a:not(.btn):not(.nav-link):not(.dropdown-item):focus {
-         color: var(--bs-warning); /* Berubah jadi Emas saat disorot */
+      a:not(.btn):not(.nav-link):not(.dropdown-item):focus,
+      a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+         color: var(--bs-warning)
       }
 
-      /* ------------------------------------------
-         OPSI TAMBAHAN: Efek Garis Bawah Premium 
-         (Garis Emas meluncur dari kiri ke kanan saat disorot)
-      ------------------------------------------ */
       a.link-animasi {
          position: relative;
-         display: d-inline-block;
+         display: d-inline-block
       }
 
       a.link-animasi::after {
@@ -136,38 +118,35 @@
          bottom: -2px;
          left: 0;
          background-color: var(--bs-warning);
-         transition: width 0.3s ease-in-out;
+         transition: width .3s ease-in-out
       }
 
       a.link-animasi:hover::after {
-         width: 100%; /* Garis penuh saat di-hover */
+         width: 100%
       }
 
-      /* Mode Gelap */
-      [data-bs-theme="dark"] {
+      [data-bs-theme=dark] {
          --bs-body-bg: #1a1c1d;
-         --bs-card-bg: #383C3E;
+         --bs-card-bg: #383C3E
       }
 
-      /* Kustomisasi Dropdown Tema */
       #bd-theme {
          color: var(--bs-primary);
-         font-weight: bold;
+         font-weight: 700
       }
 
-      .dropdown-item:hover,
-      .dropdown-item:focus {
-         background-color: rgba(24, 105, 160, 0.1);
-         color: var(--bs-primary);
+      .dropdown-item:focus,
+      .dropdown-item:hover {
+         background-color: rgba(24, 105, 160, .1);
+         color: var(--bs-primary)
       }
 
       .dropdown-item.active,
       .dropdown-item:active {
          background-color: var(--bs-primary);
-         color: #fff;
+         color: #fff
       }
 
-      /* Kustomisasi Menu Utama */
       .nav-custom .nav-link {
          position: relative;
          padding: 10px 16px 20px !important;
@@ -175,37 +154,32 @@
          border-radius: 5px;
          font-weight: 500;
          color: var(--bs-secondary);
-         transition: all 0.3s ease;
+         transition: all .3s ease
       }
 
-      /* Menyembunyikan panah dropdown bawaan Bootstrap tanpa membunuh animasi kapsul kita */
       .nav-custom .dropdown-toggle::after {
-         border: none !important;
-         /* Cukup hapus garis pembentuk panahnya */
-         /* JANGAN gunakan display: none; di sini */
+         border: none !important
       }
 
-      /* Sedikit penyesuaian untuk sub-menu dropdown agar lebih estetik */
       .nav-custom .dropdown-menu {
-         padding: 8px;
+         padding: 8px
       }
 
       .nav-custom .dropdown-item {
          border-radius: 6px;
-         color: var(--bs-secondary);
+         /* color: var(--bs-secondary); */
          font-weight: 500;
-         margin-bottom: 2px;
+         margin-bottom: 2px
       }
 
-      /* Penyesuaian jarak di mode HP */
-      @media (max-width: 991px) {
+      @media (max-width:991px) {
          .nav-custom .nav-link {
             padding: 12px 16px !important;
-            margin-bottom: 8px;
+            margin-bottom: 8px
          }
 
          .nav-custom .nav-link::after {
-            bottom: 2px !important;
+            bottom: 2px !important
          }
       }
 
@@ -219,184 +193,162 @@
          height: 4px;
          border-radius: 10px;
          background-color: transparent;
-         transition: all 0.3s ease;
+         transition: all .3s ease
       }
 
       .nav-custom .nav-link.active {
          background-color: var(--bs-primary) !important;
-         color: #ffffff !important;
+         color: #fff !important
       }
 
       .nav-custom .nav-link.active::after {
-         background-color: rgba(255, 255, 255, 0.8);
-         width: 35px;
+         background-color: rgba(255, 255, 255, .8);
+         width: 35px
       }
 
       .nav-custom .nav-link:hover:not(.active) {
-         background-color: rgba(0, 0, 0, 0.06);
-         color: var(--bs-secondary);
+         background-color: rgba(0, 0, 0, .06);
+         color: var(--bs-secondary)
       }
 
       .nav-custom .nav-link:hover:not(.active)::after {
          background-color: var(--bs-warning);
-         width: 35px;
+         width: 35px
       }
 
-      [data-bs-theme="dark"] .nav-custom .nav-link:hover:not(.active) {
-         background-color: rgba(255, 255, 255, 0.1);
-         color: #ffffff;
+      [data-bs-theme=dark] .nav-custom .nav-link:hover:not(.active) {
+         background-color: rgba(255, 255, 255, .1);
+         color: #fff
       }
 
-      /* Kustomisasi Heading Global */
-      h1,
-      .h1 {
-         color: var(--bs-primary);
+      .h1,
+      h1 {
+         color: var(--bs-primary)
       }
 
-      h2,
-      .h2 {
-         color: var(--bs-dark);
+      .h2,
+      h2 {
+         color: var(--bs-dark)
       }
 
-      h3,
-      .h3 {
-         color: var(--bs-primary);
+      .h3,
+      h3 {
+         color: var(--bs-primary)
       }
 
-      h4,
-      .h4 {
-         color: var(--bs-secondary);
+      .h4,
+      h4 {
+         color: var(--bs-secondary)
       }
 
-      h5,
-      .h5 {
-         color: var(--bs-warning);
+      .h5,
+      h5 {
+         color: var(--bs-warning)
       }
 
-      [data-bs-theme="dark"] h1,
-      [data-bs-theme="dark"] .h1,
-      [data-bs-theme="dark"] h3,
-      [data-bs-theme="dark"] .h3 {
-         color: #5ab1ea;
+      [data-bs-theme=dark] .h1,
+      [data-bs-theme=dark] .h3,
+      [data-bs-theme=dark] h1,
+      [data-bs-theme=dark] h3 {
+         color: #5ab1ea
       }
 
-      [data-bs-theme="dark"] h2,
-      [data-bs-theme="dark"] .h2 {
-         color: #ffffff;
+      [data-bs-theme=dark] .h2,
+      [data-bs-theme=dark] h2 {
+         color: #fff
       }
 
-      [data-bs-theme="dark"] h4,
-      [data-bs-theme="dark"] .h4 {
-         color: #adb5bd;
+      [data-bs-theme=dark] .h4,
+      [data-bs-theme=dark] h4 {
+         color: #adb5bd
       }
 
-      [data-bs-theme="dark"] h5,
-      [data-bs-theme="dark"] .h5 {
-         color: #e0c193;
+      [data-bs-theme=dark] .h5,
+      [data-bs-theme=dark] h5 {
+         color: #e0c193
       }
 
-      /* --- KUSTOMISASI FOOTER DOMINAN --- */
       .footer-link {
-         color: #ffffff !important;
-         /* Putih Solid */
-         transition: color 0.3s ease;
+         color: #fff !important;
+         transition: color .3s ease
       }
 
       .footer-link:hover {
-         color: var(--bs-warning) !important;
-         /* Berubah jadi Emas saat di-hover */
+         color: var(--bs-warning) !important
       }
 
-      /* Trik mengubah logo menjadi putih murni */
       .logo-putih {
-         filter: brightness(0) invert(1);
+         filter: brightness(0) invert(1)
       }
 
-      /* Garis bawah (underline) untuk judul Footer */
       .footer-heading {
          margin-bottom: 5px !important;
-         color: #ffffff !important;
-         /* Memaksa judul jadi putih solid */
-
+         color: #fff !important
       }
 
-      /* --- KUSTOMISASI CAROUSEL TESTIMONI --- */
       .carousel-indicators {
-         bottom: -40px;
-         /* Menurunkan posisi titik-titik agar tidak menabrak kartu */
+         bottom: -40px
       }
 
       .carousel-indicators [data-bs-target] {
          background-color: var(--bs-secondary);
-         /* Warna abu-abu saat tidak aktif */
          width: 22px;
          height: 4px;
          margin: 0 6px;
-         transition: all 0.3s ease;
+         transition: all .3s ease
       }
 
       .carousel-indicators .active {
          background-color: var(--bs-warning);
-         /* Berubah menjadi Emas saat aktif */
-         transform: scale(1.3);
-         /* Sedikit membesar saat aktif */
+         transform: scale(1.3)
       }
 
-      /* --- WIDGET TANAH SUCI RESPONSIVE --- */
       .widget-tanah-suci {
          height: 48px;
          width: 100%;
          max-width: 460px;
-         /* Dikit dilonggarkan untuk HP */
          background-color: var(--bs-body-bg);
-         position: relative;
+         position: relative
       }
 
       .widget-teks {
-         font-size: 12.5px;
-         /* NAIK: Sebelumnya 11px */
+         font-size: 12.5px
       }
 
       .widget-teks-lokasi {
-         font-size: 14.5px;
-         /* NAIK: Sebelumnya 13px */
+         font-size: 14.5px
       }
 
-      /* Saat dibuka di layar Tablet/Laptop (lebar min 576px) */
-      @media (min-width: 576px) {
+      @media (min-width:576px) {
          .widget-tanah-suci {
-            width: 430px;
-            /* NAIK: Sebelumnya 390px agar teks lega */
+            width: 430px
          }
 
          .widget-teks {
-            font-size: 14px;
-            /* NAIK: Sebelumnya 13px */
+            font-size: 14px
          }
 
          .widget-teks-lokasi {
-            font-size: 16px;
-            /* NAIK: Sebelumnya 14px */
+            font-size: 16px
          }
       }
 
-      /* --- ANIMASI BERKEDIP UNTUK JADWAL LIVE --- */
       @keyframes blink-animation {
          0% {
-            opacity: 1;
+            opacity: 1
          }
 
          50% {
-            opacity: 0;
+            opacity: 0
          }
 
          100% {
-            opacity: 1;
+            opacity: 1
          }
       }
 
       .blink-live {
-         animation: blink-animation 1.5s infinite;
+         animation: blink-animation 1.5s infinite
       }
    </style>
    <script>
@@ -449,12 +401,13 @@
 
                <div class="offcanvas-body align-items-center">
                   <ul class="navbar-nav me-auto nav-custom w-100" id="menuUtama">
-                     <li class="nav-item"><a href="#beranda" class="nav-link active" aria-current="page">Beranda</a>
+                     <li class="nav-item"><a href="#beranda" class="text-muted nav-link active"
+                           aria-current="page">Beranda</a>
                      </li>
-                     <li class="nav-item"><a href="#panduan" class="nav-link">Panduan</a></li>
+                     <li class="nav-item"><a href="#panduan" class="text-muted nav-link">Panduan</a></li>
                      <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="layananDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="nav-link text-muted dropdown-toggle d-flex align-items-center"
+                           id="layananDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Layanan <i class="bi bi-chevron-down ms-1" style="font-size: 12px; stroke-width: 2px;"></i>
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="layananDropdown"
@@ -467,29 +420,46 @@
                            </li>
                         </ul>
                      </li>
-                     <li class="nav-item"><a href="#testimoni" class="nav-link">Testimoni</a></li>
-                     <li class="nav-item"><a href="#tentang" class="nav-link">Tentang Kami</a></li>
+                     <li class="nav-item"><a href="#testimoni" class="text-muted nav-link">Testimoni</a></li>
+                     <li class="nav-item dropdown">
+                        <a href="#" class="nav-link text-muted dropdown-toggle d-flex align-items-center"
+                           id="tentangKamiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           Tentang Kami <i class="bi bi-chevron-down ms-1"
+                              style="font-size: 12px; stroke-width: 2px;"></i>
+                        </a>
+                        <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="tentangKamiDropdown"
+                           style="border-radius: 12px;">
+                           <li style="display: none;"><a class="dropdown-item py-2 transition-all"
+                                 href="#tentang">Tentang Kami</a></li>
+                           <li><a class="dropdown-item py-2 transition-all" href="#">Profil KBIHU</a></li>
+                           <li><a class="dropdown-item py-2 transition-all" href="#">Karir</a></li>
+                     </li>
+                  </ul>
+                  </li>
                   </ul>
 
                   <ul class="navbar-nav align-items-center gap-3 mt-4 mt-lg-0">
                      <li class="nav-item dropdown">
                         <button
-                           class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all"
+                           class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all text-muted"
                            id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
                            data-bs-display="static">
                            <i class="bi bi-circle-half fs-5"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="bd-theme"
-                           style="border-radius: 12px;">
+                        <ul class="dropdown-menu dropdown-menu-center dropdown-menu-md-end shadow border-0"
+                           aria-labelledby="bd-theme" style="border-radius: 12px;">
                            <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
-                                 data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>
-                                 Light</button></li>
+                                 data-bs-theme-value="light">
+                                 <i class="bi bi-sun-fill me-2 text-warning"></i>Light</button>
+                           </li>
                            <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
-                                 data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-secondary"></i>
-                                 Dark</button></li>
+                                 data-bs-theme-value="dark">
+                                 <i class="bi bi-moon-stars-fill me-2 text-muted"></i>Dark</button>
+                           </li>
                            <li><button type="button" class="dropdown-item d-flex align-items-center py-2 active"
-                                 data-bs-theme-value="auto"><i class="bi bi-circle-half me-2 text-primary"></i>
-                                 Auto</button></li>
+                                 data-bs-theme-value="auto">
+                                 <i class="bi bi-circle-half me-2 text-primary"></i>Auto</button>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item"><a href="daftar"
@@ -522,10 +492,10 @@
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Makkah</span>
                      </div>
-                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks">
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks">
                         <i id="iconCuacaMakkah" class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span>
                      </div>
-                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks d-none d-sm-flex">
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex">
                         <span id="tglMakkah">--/--/--</span>
                      </div>
                      <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
@@ -539,10 +509,10 @@
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Madinah</span>
                      </div>
-                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks">
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks">
                         <i id="iconCuacaMadinah" class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span>
                      </div>
-                     <div class="d-flex align-items-center gap-1 text-secondary widget-teks d-none d-sm-flex">
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex">
                         <span id="tglMadinah">--/--/--</span>
                      </div>
                      <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
@@ -567,7 +537,7 @@
                <div class="col-lg-6 text-center text-lg-start">
                   <h1 class="display-4 fw-bold lh-1 mb-3">Haji Reguler Bimbingan KBIHU</h1>
                   <h2 class="fs-3 text-warning mb-4">Gerbang Anda Menuju Perjalanan Seumur Hidup</h2>
-                  <p class="lead mb-4 text-secondary">KBIHU Al-Zamzami merupakan lembaga resmi mitra Kementerian Haji
+                  <p class="lead mb-4 text-muted">KBIHU Al-Zamzami merupakan lembaga resmi mitra Kementerian Haji
                      dan
                      Umrah yang bertugas memberikan bimbingan, manasik, dan pendampingan bagi jemaah haji reguler dan
                      umrah. Kami hadir menemani persiapan Anda mulai dari Tanah Air, Tanah Suci hingga kembali lagi ke
@@ -576,9 +546,10 @@
                      <a href="#bimbingan" type="button"
                         class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">Bergabunglah
                         Sekarang!</a>
-                     <a href="files/Brosur-KBIHU-AL-ZAMZAMI.jpg" target="_blank"
-                        class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm"><i
-                           class="bi bi-download me-2"></i>Download Brosur</a>
+                     <a href="files/Brosur-KBIHU-AL-ZAMZAMI.jpg" download="Brosur_KBIHU_Al-Zamzami.jpg"
+                        class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm">
+                        <i class="bi bi-download me-2"></i>Download Brosur
+                     </a>
                   </div>
                </div>
             </div>
@@ -743,11 +714,9 @@
                               sempurna, sah dan batalnya dapat dijaga, serta amalan hajinya tidak sia-sia.
                            </p>
                            <div class="d-grid gap-3 d-md-flex justify-content-md-start">
-                              <a href="daftar" class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm"
-                                 target="_blank">Pendaftaran</a>
-                              <!-- <a class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</a> -->
-                              <button
-                                 onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.'); return false;"
+                              <button onclick="window.open('/daftar', '_blank');"
+                                 class="btn btn-warning btn-lg px-5 rounded-pill fw-bold shadow-sm">Pendaftaran</button>
+                              <button onclick="window.location.href='/detail/bimbingan'; return false;"
                                  class="btn btn-secondary btn-lg px-5 rounded-pill fw-bold shadow-sm">Detail</button>
                            </div>
                         </div>
@@ -766,9 +735,9 @@
                               lansia,
                               pendampingan, kursi roda atau kebutuhan khusus lainnya?
                               Jangan ragu untuk bertanya, tim kami siap membantu Anda dengan sepenuh hati.</p>
-                           <a href="https://wa.me/6281322079374" target="_blank"
+                           <button onclick="window.open('https://wa.me/6281322079374', '_blank');"
                               class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm"><i
-                                 class="bi bi-whatsapp me-2"></i>Hubungi Kami</a>
+                                 class="bi bi-whatsapp me-2"></i>Hubungi Kami</button>
                         </div>
                      </div>
                   </div>
@@ -1042,9 +1011,6 @@
                               class="nav-link p-0 footer-link">Profil KBIHU</a></li>
                         <li class="nav-item mb-2"><a
                               onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
-                              class="nav-link p-0 footer-link">Galeri</a></li>
-                        <li class="nav-item mb-2"><a
-                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
                               class="nav-link p-0 footer-link">Karir</a></li>
                      </ul>
                   </div>
@@ -1053,8 +1019,7 @@
                      <h5 class="fw-bold footer-heading">Bantuan</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a
-                              href="https://haji.go.id/estimasi-keberangkatan" target="_blank"
+                        <li class="nav-item mb-2"><a href="https://haji.go.id/estimasi-keberangkatan" target="_blank"
                               class="nav-link p-0 footer-link">Cek Porsi Haji</a></li>
                         <li class="nav-item mb-2"><a
                               onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
@@ -1092,15 +1057,18 @@
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
                         <li class="nav-item mb-2">Email : kbihualzamzami@gmail.com</li>
-                        <li class="nav-item mb-2">Telp : +62 813-2207-9374 <a href="https://wa.me/6281322079374" target="_blank" rel="noopener noreferrer" class="link-animasi">Klik Chat via WhatsApp</a></li>
-                        <li class="nav-item mb-2">Alamat : Jl. Cut Nyak Dhien, Kel. Windusengkahan Kab. Kuningan, Jawa Barat, Indonesia</li>
+                        <li class="nav-item mb-2">Telp : +62 813-2207-9374 <a href="https://wa.me/6281322079374"
+                              target="_blank" rel="noopener noreferrer" class="link-animasi">Klik Chat via WhatsApp</a>
+                        </li>
+                        <li class="nav-item mb-2">Alamat : Jl. Cut Nyak Dhien, Kel. Windusengkahan Kab. Kuningan, Jawa
+                           Barat, Indonesia</li>
                         <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
-                           <a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank"
-                              rel="noopener noreferrer" class="link-animasi">Klik Map Lokasi Kantor</a>
+                           <a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Kantor</a>
                         </li>
                         <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
-                           <a href="https://maps.app.goo.gl/C5oPGFPvDPUgUBHXA" target="_blank"
-                              rel="noopener noreferrer" class="link-animasi">Klik Map Lokasi Manasik</a>
+                           <a href="https://maps.app.goo.gl/C5oPGFPvDPUgUBHXA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Manasik</a>
 
                         </li>
                      </ul>
@@ -1194,6 +1162,26 @@
             tombolLayanan.classList.remove('active');
          }
       });
+      // SCRIPT 3: Paksaan Active untuk Induk Dropdown (Tentang Kami) - FINAL REVISI
+      window.addEventListener('activate.bs.scrollspy', function (event) {
+         // Pastikan ada elemen yang ditangkap
+         if (!event.relatedTarget) return;
+
+         // KUNCI PERBAIKAN: Ambil teks href dari menu yang sedang menyala (misal: "#bimbingan")
+         const seksiAktif = event.relatedTarget.getAttribute('href');
+
+         const tombolTentangKami = document.getElementById('tentangKamiDropdown');
+
+         // Daftar ID seksi yang masuk kategori Tentang Kami
+         const daftarTentangKami = ['#tentang'];
+
+         // Jika teks href yang menyala ada di dalam daftar, nyalakan menu Tentang Kami!
+         if (seksiAktif && daftarTentangKami.includes(seksiAktif)) {
+            tombolTentangKami.classList.add('active');
+         } else {
+            tombolTentangKami.classList.remove('active');
+         }
+      });
 
       // ==========================================
       // WIDGET INFO TANAH SUCI (LIVE UPDATE)
@@ -1212,9 +1200,9 @@
       function getIkonCuaca(weatherCode) {
          if (weatherCode <= 1) return 'bi-sun-fill text-warning'; // Cerah
          if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info'; // Berawan
-         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-secondary'; // Berkabut
+         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-muted'; // Berkabut
          if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary'; // Hujan
-         return 'bi-cloud-fill text-secondary'; // Default
+         return 'bi-cloud-fill text-muted'; // Default
       }
 
       // 3. Fungsi Menentukan Jadwal Shalat Berikutnya (Berdasarkan Waktu Arab Saudi)
@@ -1301,23 +1289,23 @@
             // const response = await fetch('jadwal.json');
             const response = await fetch(urlJadwal);
             const result = await response.json();
-            
+
             if (!result.status || !result.data) return;
 
             const jadwalData = result.data;
             const waktuSekarang = new Date();
-            
+
             let statusJadwal = 'LEWAT';
             let eventTerpilih = null;
             let sisaHari = 0;
 
             for (let i = 0; i < jadwalData.length; i++) {
                const event = jadwalData[i];
-               
+
                // 1. MENGATASI FORMAT TANGGAL DD/MM/YYYY
                // Pecah "19/04/2026" menjadi array ["19", "04", "2026"]
-               const tglParts = event.tanggal.split('/'); 
-               
+               const tglParts = event.tanggal.split('/');
+
                // Jika formatnya benar ada 3 bagian, rakit jadi YYYY/MM/DD ("2026/04/19")
                let tglValid = event.tanggal; // Default (jaga-jaga jika bukan format DD/MM/YYYY)
                if (tglParts.length === 3) {
@@ -1328,7 +1316,7 @@
                }
 
                // 2. Ambil Jam Mulai & Selesai
-               const bagianWaktu = event.waktu.split(' - '); 
+               const bagianWaktu = event.waktu.split(' - ');
                const jamMulai = bagianWaktu[0].trim();
                let jamSelesaiLengkap = bagianWaktu[1].trim();
                let isPlus1 = jamSelesaiLengkap.includes('+1');
@@ -1346,22 +1334,22 @@
                if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
                   statusJadwal = 'LIVE';
                   eventTerpilih = event;
-                  break; 
-               } 
+                  break;
+               }
                else if (waktuSekarang < waktuMulai) {
                   statusJadwal = 'SEGERA';
                   eventTerpilih = event;
-                  
+
                   // Hitung sisa hari secara presisi (mengabaikan jam)
                   const d1 = new Date(waktuSekarang.getFullYear(), waktuSekarang.getMonth(), waktuSekarang.getDate());
                   const d2 = new Date(waktuMulai.getFullYear(), waktuMulai.getMonth(), waktuMulai.getDate());
                   sisaHari = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
-                  break; 
+                  break;
                }
             }
 
             if (statusJadwal === 'LEWAT') {
-               eventTerpilih = jadwalData[jadwalData.length - 1]; 
+               eventTerpilih = jadwalData[jadwalData.length - 1];
             }
 
             renderKeLayar(statusJadwal, eventTerpilih, sisaHari);
@@ -1399,7 +1387,7 @@
             warnaGaris = 'border-warning';
          }
          else {
-            ikon = '<i class="bi bi-clock-history text-secondary fs-1"></i>';
+            ikon = '<i class="bi bi-clock-history text-muted fs-1"></i>';
             judul = 'Kegiatan Terakhir';
             // PERUBAHAN: Menambahkan informasi Hari dan Tanggal (longdate)
             deskripsi = `Kegiatan sebelumnya adalah <strong>${event.kegiatan}</strong> bersama <strong>${event.tutor}</strong> pada hari <strong>${event.longdate}</strong>. <br><span class="text-muted mt-2 d-inline-block"><i class="bi bi-info-circle me-1"></i>Jadwal berikutnya akan segera dirilis. Silakan kembali lagi nanti.</span>`;
