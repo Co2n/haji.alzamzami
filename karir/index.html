@@ -44,6 +44,42 @@
 
 <body>
 
+   <div class="modal fade" id="modalWaspada" tabindex="-1" aria-labelledby="modalWaspadaLabel" aria-hidden="true" data-bs-backdrop="static">
+         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+               
+               <div class="modal-header bg-warning border-0 px-4 py-3">
+                  <h5 class="modal-title fw-bold text-dark d-flex align-items-center" id="modalWaspadaLabel">
+                     <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i> Peringatan Penting!
+                  </h5>
+                  </div>
+               
+               <div class="modal-body px-4 py-4 text-center">
+                  <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 75px; height: 75px;">
+                     <i class="bi bi-shield-lock-fill display-5"></i>
+                  </div>
+                  <h4 class="fw-bold text-body-emphasis mb-3">Waspada Penipuan</h4>
+                  <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1.05rem;">
+                     Kami menghimbau kepada seluruh pengunjung untuk berhati-hati terhadap oknum yang mengatasnamakan <strong>Agen Representatif</strong> maupun <strong>Tim Rekrutmen</strong> KBIHU Al-Zamzami.
+                  </p>
+                  
+                  <div class="bg-body-tertiary rounded-3 p-3 mt-4 text-start border border-warning-subtle shadow-sm">
+                     <p class="small text-muted mb-0">
+                        <i class="bi bi-info-circle-fill text-primary me-2"></i> Agen resmi kami <strong>HANYA</strong> nama-nama yang tercantum secara sah pada halaman ini. Seluruh transaksi pembayaran yang sah hanya ditujukan ke Rekening a.n. Muna Faridah (Bendahara KBIHU Al-Zamzami).<br><br>    
+                     </p>
+                  </div>
+               </div>
+               
+               <div class="modal-footer border-0 px-4 py-4 justify-content-center bg-body">
+                  <button type="button" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm" data-bs-dismiss="modal">
+                     Saya Mengerti <i class="bi bi-check2-circle ms-1"></i>
+                  </button>
+               </div>
+
+            </div>
+         </div>
+      </div>
+
    <main>
       <nav class="navbar navbar-expand-lg py-2 bg-body-tertiary border-bottom sticky-top shadow-sm">
          <div class="container justify-content-center justify-content-lg-between">
@@ -136,9 +172,9 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">Ust. Budi Rahmat, S.Ag.</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Kec. Kuningan Kota</p>
-                        <button type="button" onclick="salinKode('ALZ-001', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                        <button type="button" onclick="salinKode('ALZ001', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
                            <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ-001</span>
+                           <span class="text-warning fw-bold me-2">ALZ001</span>
                            <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
@@ -155,9 +191,9 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">Hj. Siti Aminah</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Kec. Ciawigebang</p>
-                        <button type="button" onclick="salinKode('ALZ-002', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                        <button type="button" onclick="salinKode('ALZ002', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
                            <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ-002</span>
+                           <span class="text-warning fw-bold me-2">ALZ002</span>
                            <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
@@ -174,9 +210,9 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Ahmad Mubarok</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Kec. Cilimus</p>
-                        <button type="button" onclick="salinKode('ALZ-003', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                        <button type="button" onclick="salinKode('ALZ003', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
                            <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ-003</span>
+                           <span class="text-warning fw-bold me-2">ALZ003</span>
                            <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
@@ -193,8 +229,8 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">Ustz. Nurhayati, S.Pd.</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Kec. Darma</p>
-                        <button type="button" onclick="salinKode('ALZ-004', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ-004</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
+                        <button type="button" onclick="salinKode('ALZ004', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ004</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
                   </div>
@@ -210,8 +246,8 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Sudin Sofiudin</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Dusun 02 RT/RW. 006/003 Desa Walaharcageur Kec. Luragung</p>
-                        <button type="button" onclick="salinKode('ALZ-005', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ-005</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
+                        <button type="button" onclick="salinKode('ALZ005', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ005</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
                   </div>
@@ -227,8 +263,8 @@
                      <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1 text-body-emphasis fs-6">Kyai Hasanudin</h5>
                         <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Kec. Jalaksana</p>
-                        <button type="button" onclick="salinKode('ALZ-006', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ-006</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
+                        <button type="button" onclick="salinKode('ALZ006', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ006</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
                         </button>
                      </div>
                   </div>
@@ -237,37 +273,6 @@
 
          </div>
       </div>
-
-      <!-- <div class="container py-5 mt-4">
-         <div class="text-center mb-5">
-            <h5 class="fw-bold text-warning mb-2">BUDAYA KERJA</h5>
-            <h2 class="display-6 fw-bold text-body-emphasis">Mengapa Memilih Kami?</h2>
-         </div>
-
-         <div class="row row-cols-1 row-cols-md-3 g-5 text-center justify-content-center">
-            <div class="col">
-               <div class="d-inline-flex align-items-center justify-content-center bg-body-tertiary text-primary rounded-circle mb-3 shadow-sm border" style="width: 80px; height: 80px;">
-                  <i class="bi bi-heart-fill fs-2"></i>
-               </div>
-               <h4 class="fw-bold fs-5 text-body-emphasis">Berkhidmat untuk Umat</h4>
-               <p class="text-muted small">Bekerja di sini bukan sekadar profesi, melainkan jalan pengabdian untuk membantu ribuan jamaah menuju Baitullah.</p>
-            </div>
-            <div class="col">
-               <div class="d-inline-flex align-items-center justify-content-center bg-body-tertiary text-warning rounded-circle mb-3 shadow-sm border" style="width: 80px; height: 80px;">
-                  <i class="bi bi-people-fill fs-2"></i>
-               </div>
-               <h4 class="fw-bold fs-5 text-body-emphasis">Lingkungan Islami</h4>
-               <p class="text-muted small">Budaya kerja yang mengedepankan nilai-nilai kekeluargaan, toleransi, dan ukhuwah Islamiyah yang kuat.</p>
-            </div>
-            <div class="col">
-               <div class="d-inline-flex align-items-center justify-content-center bg-body-tertiary text-primary rounded-circle mb-3 shadow-sm border" style="width: 80px; height: 80px;">
-                  <i class="bi bi-graph-up-arrow fs-2"></i>
-               </div>
-               <h4 class="fw-bold fs-5 text-body-emphasis">Pengembangan Diri</h4>
-               <p class="text-muted small">Dukungan penuh untuk terus belajar dan berkembang dalam ekosistem kerja yang profesional dan modern.</p>
-            </div>
-         </div>
-      </div> -->
 
       <div class="bg-body-tertiary py-5 border-top border-bottom">
          <div class="container py-4">
@@ -282,7 +287,7 @@
 
             <div class="row g-4">
                
-               <div class="col-lg-6">
+               <!-- <div class="col-lg-6">
                   <div class="card border-0 shadow-sm rounded-4 p-4 job-card h-100 bg-body">
                      <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
@@ -303,9 +308,9 @@
                         <a href="mailto:kbihualzamzami@gmail.com?subject=Lamaran: Staf Administrasi" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Lamar Posisi <i class="bi bi-send ms-1"></i></a>
                      </div>
                   </div>
-               </div>
+               </div> -->
 
-               <div class="col-lg-6">
+               <div class="col-lg-12">
                   <div class="card border-0 shadow-sm rounded-4 p-4 job-card h-100 bg-body">
                      <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
@@ -483,6 +488,32 @@
       })
       setTheme(localStorage.getItem('theme') || 'auto')
 
+      // ==========================================
+      // FUNGSI AUTO-SHOW MODAL PERINGATAN
+      // ==========================================
+      document.addEventListener("DOMContentLoaded", function() {
+         // Mengecek apakah pengunjung sudah melihat modal ini di sesi yang sama
+         const sudahDilihat = sessionStorage.getItem('waspadaModalDilihat');
+         
+         if (!sudahDilihat) {
+            // Ambil elemen modal
+            const modalElemen = document.getElementById('modalWaspada');
+            
+            if (modalElemen) {
+               // Inisialisasi modal Bootstrap
+               const modalPeringatan = new bootstrap.Modal(modalElemen);
+               
+               // Beri jeda 1 detik sebelum pop-up muncul agar efeknya lebih elegan
+               setTimeout(() => {
+                  modalPeringatan.show();
+               }, 1000);
+               
+               // Catat di memory browser bahwa pengunjung sudah melihatnya
+               sessionStorage.setItem('waspadaModalDilihat', 'true');
+            }
+         }
+      });
+
       // 2. Tahun Copyright
       document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -613,6 +644,7 @@
             }
          }, 3000);
       }
+      
    </script>
 </body>
 </html>

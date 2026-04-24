@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+   <meta http-equiv="Pragma" content="no-cache">
+   <meta http-equiv="Expires" content="0">
+
+   <title>Pusat Bantuan & FAQ - KBIHU Al-Zamzami</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   <style>
+      :root{--bs-primary:#1869A0;--bs-primary-rgb:24,105,160;--bs-secondary:#696B6D;--bs-secondary-rgb:105,107,109;--bs-warning:#A67536;--bs-warning-rgb:166,117,54;--bs-dark:#383C3E}.lead{font-weight:350}.btn-primary{--bs-btn-color:#fff;--bs-btn-bg:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#135480;--bs-btn-hover-border-color:#114a70}.btn-warning{--bs-btn-color:#fff;--bs-btn-bg:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#8a612d;--bs-btn-hover-border-color:#7a5628}.btn-outline-primary{--bs-btn-color:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--bs-primary)}.btn-outline-warning{--bs-btn-color:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--bs-warning)}a:not(.btn):not(.nav-link):not(.dropdown-item){color:var(--bs-warning-rgb);text-decoration:none;transition:all .3s ease-in-out;font-weight:500}a:not(.btn):not(.nav-link):not(.dropdown-item):hover{color:var(--bs-warning)}.link-hover-primary:hover{color:var(--bs-primary)!important}[data-bs-theme=dark]{--bs-body-bg:#1a1c1d;--bs-card-bg:#383C3E}.footer-link{color:#fff!important;transition:color .3s ease}.footer-link:hover{color:var(--bs-warning)!important}.logo-putih{filter:brightness(0) invert(1)}.footer-heading{margin-bottom:5px!important;color:#fff!important}.job-card{transition:transform .3s ease,box-shadow .3s ease;border:2px solid transparent}.job-card:hover{transform:translateY(-5px);box-shadow:0 .5rem 1rem rgba(0,0,0,.15)!important;border-color:rgba(24,105,160,.2)}.widget-tanah-suci{height:48px;width:100%;max-width:460px;background-color:var(--bs-body-bg);position:relative}.widget-teks{font-size:12.5px}.widget-teks-lokasi{font-size:14.5px}@media (min-width:576px){.widget-tanah-suci{width:430px}.widget-teks{font-size:14px}.widget-teks-lokasi{font-size:16px}}button[onclick^=salinKode]:hover{background-color:var(--bs-warning)!important}button[onclick^=salinKode]:hover *{color:#fff!important}.ikon-pulsa{animation:pulsa 2s infinite}@keyframes pulsa{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(24,105,160,.4)}70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(24,105,160,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(24,105,160,0)}}
+      .accordion-custom .accordion-item{border:1px solid rgba(24,105,160,.2);border-radius:15px!important;margin-bottom:16px;box-shadow:0 4px 6px rgba(0,0,0,.03);overflow:hidden}.accordion-custom .accordion-button{font-weight:600;color:var(--bs-primary);background-color:var(--bs-body-bg);padding:20px 25px;box-shadow:none!important;transition:all .3s ease}.accordion-custom .accordion-button:hover{background-color:rgba(24,105,160,.05)}.accordion-custom .accordion-button:not(.collapsed){color:#fff;background-color:var(--bs-primary);border-bottom:3px solid var(--bs-warning)}.accordion-custom .accordion-button:not(.collapsed)::after{filter:brightness(0) invert(1)}.accordion-custom .accordion-body{padding:25px;color:var(--bs-secondary-color);line-height:1.8;background-color:var(--bs-body-bg)}[data-bs-theme=dark] .accordion-custom .accordion-item{border-color:rgba(255,255,255,.1)}[data-bs-theme=dark] .accordion-custom .accordion-button{color:#5ab1ea;background-color:var(--bs-card-bg)}[data-bs-theme=dark] .accordion-custom .accordion-button:not(.collapsed){color:#fff;background-color:var(--bs-primary)}[data-bs-theme=dark] .accordion-custom .accordion-body{background-color:var(--bs-card-bg)}
+   </style>
+   <script>
+      /**
+       * Memaksa penghapusan cookies setiap kali halaman dimuat
+       */
+      function clearCookies() {
+         const cookies = document.cookie.split(";");
+         for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            // Set masa berlaku ke masa lalu agar terhapus
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+         }
+      }
+
+      // Jalankan saat halaman dibuka
+      clearCookies();
+
+      // Opsional: Refresh otomatis setiap 5 menit untuk mengecek status terbaru
+      setTimeout(function () {
+         window.location.reload(true);
+      }, 300000);
+   </script>
+</head>
+
+<body>
+
+   <main>
+      <nav class="navbar navbar-expand-lg py-2 bg-body-tertiary border-bottom sticky-top shadow-sm">
+         <div class="container justify-content-center justify-content-lg-between">
+            <a href="/" class="navbar-brand p-2 d-lg-none text-decoration-none mx-auto">
+               <img src="../../images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
+            </a>
+         </div>
+      </nav>
+
+      <header class="py-3 border-bottom bg-body">
+         <div
+            class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
+            <a href="/" class="d-none d-lg-flex align-items-center link-body-emphasis text-decoration-none">
+               <img src="../../images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
+            </a>
+
+            <div
+               class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
+               <div id="sliderTanahSuci" class="w-100"
+                  style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Makkah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMakkah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMakkah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMakkah">--:--</span></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Madinah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMadinah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMadinah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMadinah">--:--</span></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <div class="bg-body-tertiary border-bottom">
+         <div class="container py-3 d-flex flex-column flex-md-row justify-content-md-between align-items-center gap-3">
+            <nav aria-label="breadcrumb">
+               <ol class="breadcrumb mb-0 justify-content-center" style="font-size: 15px;">
+                  <li class="breadcrumb-item"><a href="/"
+                        class="text-decoration-none text-muted transition-all link-hover-primary"><i
+                           class="bi bi-house-door-fill me-1"></i>Beranda</a></li>
+                  <li class="breadcrumb-item"><a href="/#tentang"
+                        class="text-decoration-none text-muted transition-all link-hover-primary">Bantuan</a></li>
+                  <li class="breadcrumb-item active fw-bold text-primary" aria-current="page">Pusat Bantuan & FAQ</li>
+               </ol>
+            </nav>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+               <div class="dropdown">
+                  <button
+                     class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all text-muted"
+                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                     data-bs-display="static"><i class="bi bi-circle-half fs-5"></i></button>
+                  <ul class="dropdown-menu dropdown-menu-center dropdown-menu-md-end shadow border-0"
+                     aria-labelledby="bd-theme" style="border-radius: 12px;">
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>Light</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-muted"></i>Dark</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2 active"
+                           data-bs-theme-value="auto"><i class="bi bi-circle-half me-2 text-primary"></i>Auto</button>
+                     </li>
+                  </ul>
+               </div>
+               <a href="/daftar" class="btn btn-primary py-2 px-4 rounded-pill fw-bold shadow-sm"
+                  target="_blank">Pendaftaran</a>
+            </div>
+         </div>
+      </div>
+
+      <div class="text-center text-white position-relative"
+         style="background: linear-gradient(170deg, rgba(24, 105, 160, 0.85) 0%, rgba(0, 0, 0, 0.9) 100%)">
+         <div class="container py-5">
+            <i class="bi bi-question-circle display-4 mb-3 d-inline-block text-white"></i>
+            <h1 class="display-5 fw-bold text-white mb-3">Pusat Bantuan & FAQ</h1>
+            <p class="col-lg-8 mx-auto lead text-white-50 mb-0" style="font-size: 1.1rem;">
+               Temukan jawaban dari pertanyaan yang paling sering diajukan seputar pendaftaran, bimbingan manasik, dan layanan KBIHU Al-Zamzami.
+            </p>
+         </div>
+      </div>
+
+      <div class="container py-5 my-4">
+         <div class="row justify-content-center">
+            <div class="col-lg-9">
+               
+               <div class="mb-5">
+                  <h4 class="fw-bold text-body-emphasis mb-4 d-flex align-items-center border-bottom pb-3">
+                     Perihal Pendaftaran & Persyaratan
+                  </h4>
+                  
+                  <div class="accordion accordion-custom" id="faqPendaftaran">
+                     
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSatu" aria-expanded="true" aria-controls="collapseSatu">
+                              Apa saja syarat untuk mendaftar bimbingan manasik haji?
+                           </button>
+                        </h2>
+                        <div id="collapseSatu" class="accordion-collapse collapse show" data-bs-parent="#faqPendaftaran">
+                           <div class="accordion-body">
+                              Untuk mendaftar bimbingan manasik di KBIHU Al-Zamzami, Anda perlu menyiapkan:<br>
+                              1. Fotokopi Bukti Setoran Awal BPIH (Lembar nomor porsi).<br>
+                              2. Fotokopi KTP dan Kartu Keluarga (KK).<br>
+                              3. Pas foto ukuran 3x4 dan 4x6 (masing-masing 4 lembar).<br>
+                              4. Mengisi formulir pendaftaran yang bisa dilakukan secara online di website ini atau datang langsung ke kantor kami.
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDua" aria-expanded="false" aria-controls="collapseDua">
+                              Kapan saya sebaiknya mendaftar bimbingan manasik?
+                           </button>
+                        </h2>
+                        <div id="collapseDua" class="accordion-collapse collapse" data-bs-parent="#faqPendaftaran">
+                           <div class="accordion-body">
+                              Sangat disarankan untuk mendaftar segera setelah Anda menerima surat pemberitahuan estimasi keberangkatan dari Kementerian Agama (biasanya 1 tahun sebelum tahun keberangkatan). Hal ini untuk memastikan Anda mendapatkan jadwal bimbingan sejak sesi awal.
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTiga" aria-expanded="false" aria-controls="collapseTiga">
+                              Apakah pendaftaran bisa diwakilkan?
+                           </button>
+                        </h2>
+                        <div id="collapseTiga" class="accordion-collapse collapse" data-bs-parent="#faqPendaftaran">
+                           <div class="accordion-body">
+                              Tentu bisa. Pendaftaran dapat diwakilkan oleh keluarga kandung (suami/istri/anak) dengan membawa kelengkapan dokumen calon jamaah yang bersangkutan.
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+
+               <div class="mb-5">
+                  <h4 class="fw-bold text-body-emphasis mb-4 d-flex align-items-center border-bottom pb-3">
+                     Perihal Pelaksanaan Bimbingan
+                  </h4>
+                  
+                  <div class="accordion accordion-custom" id="faqBimbingan">
+                     
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEmpat" aria-expanded="false" aria-controls="collapseEmpat">
+                              Di mana lokasi bimbingan manasik diadakan?
+                           </button>
+                        </h2>
+                        <div id="collapseEmpat" class="accordion-collapse collapse" data-bs-parent="#faqBimbingan">
+                           <div class="accordion-body">
+                              Bimbingan teori (materi ruangan) diadakan di Gedung Kamukten Bapak Sengkahan yang sejuk dan nyaman. Sedangkan untuk Praktik Kolosal (Tawaf, Sa'i, Lontar Jumrah), kami menggunakan fasilitas lapangan/Safari Manasik khusus yang sudah didesain menyerupai kondisi di Tanah Suci.
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLima" aria-expanded="false" aria-controls="collapseLima">
+                              Berapa lama program manasik ini berlangsung?
+                           </button>
+                        </h2>
+                        <div id="collapseLima" class="accordion-collapse collapse" data-bs-parent="#faqBimbingan">
+                           <div class="accordion-body">
+                              Program manasik reguler biasanya berlangsung selama 6 hingga 8 bulan sebelum jadwal keberangkatan, dengan frekuensi pertemuan 1-2 kali setiap akhir pekan (Ahad/Minggu). Kami juga memiliki jadwal Manasik Pemantapan dan Praktik Kolosal menjelang keberangkatan.
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+
+               <div class="mb-5">
+                  <h4 class="fw-bold text-body-emphasis mb-4 d-flex align-items-center border-bottom pb-3">
+                     Layanan Badal & Qurban
+                  </h4>
+                  
+                  <div class="accordion accordion-custom" id="faqLayanan">
+                     
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEnam" aria-expanded="false" aria-controls="collapseEnam">
+                              Apa yang dimaksud dengan Program Badal Haji?
+                           </button>
+                        </h2>
+                        <div id="collapseEnam" class="accordion-collapse collapse" data-bs-parent="#faqLayanan">
+                           <div class="accordion-body">
+                              Badal Haji adalah program menggantikan/mewakilkan pelaksanaan ibadah haji untuk seseorang yang sudah meninggal dunia (Almarhum/Almarhumah) atau seseorang yang menderita sakit parah secara fisik sehingga tidak memiliki harapan sembuh untuk berangkat sendiri. Ibadah ini akan dilaksanakan oleh tim asatidz/mukimin terpercaya kami di Tanah Suci.
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTujuh" aria-expanded="false" aria-controls="collapseTujuh">
+                              Apakah pemesan Badal Haji mendapatkan sertifikat?
+                           </button>
+                        </h2>
+                        <div id="collapseTujuh" class="accordion-collapse collapse" data-bs-parent="#faqLayanan">
+                           <div class="accordion-body">
+                              Ya. Keluarga yang mendaftarkan Badal Haji akan menerima <strong>Sertifikat Badal Haji Eksklusif</strong>, cuplikan video dokumentasi saat pelaksanaan (jika memungkinkan/diizinkan otoritas setempat), dan suvenir/air zamzam yang akan diserahkan setelah tim badal pulang ke Tanah Air.
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+
+      <div class="bg-body-tertiary py-5 border-top">
+         <div class="container py-4 text-center">
+            <div class="bg-white rounded-circle mx-auto d-flex align-items-center justify-content-center shadow-sm mb-4" style="width: 80px; height: 80px;">
+               <i class="bi bi-headset display-5 text-warning"></i>
+            </div>
+            <h3 class="fw-bold text-body-emphasis mb-3">Masih Memiliki Pertanyaan?</h3>
+            <p class="text-muted col-lg-6 mx-auto mb-4" style="font-size: 1.1rem;">
+               Tim layanan informasi KBIHU Al-Zamzami siap membantu menjawab semua keraguan Anda. Jangan ragu untuk menghubungi kami melalui WhatsApp.
+            </p>
+            <a href="https://wa.me/6281322079374" target="_blank" class="btn btn-warning btn-lg rounded-pill px-5 fw-bold shadow-sm">
+               <i class="bi bi-whatsapp me-2"></i> Hubungi Customer Service
+            </a>
+         </div>
+      </div>
+
+      <div id="tentang" class="bg-primary text-white pt-5 pb-4 w-100">
+         <div class="container">
+            <footer>
+               <div class="row">
+
+                  <div class="col-3 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Layanan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="/#bimbingan" class="nav-link p-0 footer-link">Bimbingan
+                              Manasik</a></li>
+                        <li class="nav-item mb-2"><a href="/#badalhaji" class="nav-link p-0 footer-link">Badal Haji</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/#qurban" class="nav-link p-0 footer-link">Qurban</a></li>
+                        <li class="nav-item mb-2"><a href="/#wakaf" class="nav-link p-0 footer-link">Wakaf Quran</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-6 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Tentang Kami</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="/profile" class="nav-link p-0 footer-link">Profil KBIHU</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/karir" class="nav-link p-0 footer-link">Karir</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-3 col-lg-2 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Bantuan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" 
+                              class="nav-link p-0 footer-link">Cek Porsi Haji</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
+                        </li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">Kebijakan Privasi</a>
+                        </li>
+                        <li class="nav-item mb-2"><a
+                              onclick="alert('Halaman sedang di maintenance, silakan kembali lagi nanti.');"
+                              class="nav-link p-0 footer-link">FAQ</a></li>
+                     </ul>
+                  </div>
+
+                  <div class="col-lg-5 offset-lg-1 mb-3 mt-4 mt-lg-0 text-center text-lg-start">
+                     <!-- <form>
+                        <h5 class="fw-bold footer-heading">Berlangganan Info</h5>
+                        <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                        <p class="text-white mb-3">Join Komunitas Whatsapp</p>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2 mb-4">
+                           <label for="newsletter1" class="visually-hidden">Nomor Whatsapp</label>
+                           <input id="newsletter1" type="tel" class="form-control rounded-pill px-3 border-0 shadow-sm"
+                              placeholder="Nomor Whatsapp Anda">
+                           <button onclick="alert('Belum di fungsikan, silakan kembali lagi nanti.');"
+                              class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm"
+                              type="button">Subscribe</button>
+                        </div>
+                     </form> -->
+
+                     <h5 class="fw-bold footer-heading">Kontak</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="nav flex-column">
+                        <li class="nav-item mb-2">Email : kbihualzamzami@gmail.com</li>
+                        <li class="nav-item mb-2">Telp : +62 813-2207-9374 <a href="https://wa.me/6281322079374"
+                              target="_blank" rel="noopener noreferrer" class="link-animasi">Klik Chat via WhatsApp</a>
+                        </li>
+                        <li class="nav-item mb-2">Alamat : Jl. Cut Nyak Dhien, Kel. Windusengkahan Kab. Kuningan, Jawa
+                           Barat, Indonesia</li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/hJpyGLvtg9wpRRnbA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Kantor</a>
+                        </li>
+                        <li class="nav-item mb-2"><i class="bi bi-geo-alt-fill"></i>
+                           <a href="https://maps.app.goo.gl/C5oPGFPvDPUgUBHXA" target="_blank" rel="noopener noreferrer"
+                              class="link-animasi">Klik Map Lokasi Manasik</a>
+
+                        </li>
+                     </ul>
+
+                  </div>
+               </div>
+
+               <div class="row">
+
+                  <div class="col-lg-6 mb-3 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Kemitraan</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <a href="https://kemenag.go.id/" target="_blank">
+                        <img src="../images/kemenag.svg" alt="Kementerian Agama RI" height="70" class="me-4">
+                     </a>
+                     <a href="https://haji.go.id/estimasi-keberangkatan" target="_blank">
+                        <img src="../images/kemenhaj.svg" alt="Kementerian Haji dan Umrah RI" height="70">
+                     </a>
+                  </div>
+                  <div class="col-lg-5 offset-lg-1 mb-3 mt-4 mt-lg-0 text-center text-lg-start">
+                     <h5 class="fw-bold footer-heading">Sosial Media</h5>
+                     <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
+                     <ul class="list-unstyled d-flex justify-content-center justify-content-lg-start mb-0">
+                        <li class="me-4"><a class="footer-link" href="https://www.youtube.com/@haji.alzamzami"
+                              target="_blank"><i class="bi bi-youtube fs-3"></i></a></li>
+                        <li class="me-4"><a class="footer-link" href="https://www.instagram.com/haji.alzamzami"
+                              target="_blank"><i class="bi bi-instagram fs-4"></i></a></li>
+                        <li><a class="footer-link" href="https://www.tiktok.com/@haji.alzamzami" target="_blank"><i
+                                 class="bi bi-tiktok fs-4"></i></a></li>
+                     </ul>
+                  </div>
+
+               </div>
+
+               <div
+                  class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-5 border-top"
+                  style="border-color: rgba(255,255,255,0.2) !important;">
+                  <p class="text-white text-center text-sm-start mb-3 mb-sm-0">© <span id="currentYear"></span> KBIHU
+                     Al-Zamzami. All rights reserved.</p>
+
+                  <div>
+                     <img src="../images/alzamzami.svg" alt="Logo KBIHU Al-Zamzami" height="30" class="logo-putih">
+                  </div>
+               </div>
+            </footer>
+         </div>
+      </div>
+   </main>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      // 1. Dark Mode
+      const setTheme = theme => {
+         if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')
+         } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+         }
+      }
+      document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+         toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value')
+            localStorage.setItem('theme', theme)
+            setTheme(theme)
+         })
+      })
+      setTheme(localStorage.getItem('theme') || 'auto')
+
+      // 2. Tahun Copyright
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+      // 3. Widget Tanah Suci (Cuaca & Shalat)
+      let isMakkah = true;
+      setInterval(() => {
+         const slider = document.getElementById('sliderTanahSuci');
+         slider.style.transform = isMakkah ? 'translateY(-48px)' : 'translateY(0)';
+         isMakkah = !isMakkah;
+      }, 4000);
+
+      function getIkonCuaca(weatherCode) {
+         if (weatherCode <= 1) return 'bi-sun-fill text-warning';
+         if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info';
+         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-muted';
+         if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary';
+         return 'bi-cloud-fill text-muted';
+      }
+
+      function tentukanShalatBerikutnya(jadwal) {
+         const waktuArab = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
+         const jamSekarang = waktuArab.getHours();
+         const menitSekarang = waktuArab.getMinutes();
+         const waktuSekarangInt = jamSekarang * 60 + menitSekarang;
+
+         const daftarShalat = [
+            { nama: 'Subuh', waktu: jadwal.Fajr }, { nama: 'Dzuhur', waktu: jadwal.Dhuhr },
+            { nama: 'Ashar', waktu: jadwal.Asr }, { nama: 'Maghrib', waktu: jadwal.Maghrib },
+            { nama: 'Isya', waktu: jadwal.Isha }
+         ];
+
+         for (let shalat of daftarShalat) {
+            let [jam, menit] = shalat.waktu.split(':').map(Number);
+            let waktuShalatInt = jam * 60 + menit;
+            if (waktuShalatInt > waktuSekarangInt) return shalat;
+         }
+         return { nama: 'Subuh', waktu: daftarShalat[0].waktu };
+      }
+
+      async function updateDataTanahSuci() {
+         try {
+            const resCuaca = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.4225,24.4686&longitude=39.8262,39.6142&current_weather=true');
+            const dataCuaca = await resCuaca.json();
+            document.getElementById('suhuMakkah').innerText = Math.round(dataCuaca[0].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMakkah').className = 'bi ' + getIkonCuaca(dataCuaca[0].current_weather.weathercode);
+            document.getElementById('suhuMadinah').innerText = Math.round(dataCuaca[1].current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaMadinah').className = 'bi ' + getIkonCuaca(dataCuaca[1].current_weather.weathercode);
+
+            const resShalatMakkah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4');
+            const dataShalatMakkah = await resShalatMakkah.json();
+            const resShalatMadinah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Madinah&country=Saudi%20Arabia&method=4');
+            const dataShalatMadinah = await resShalatMadinah.json();
+
+            const tgl = dataShalatMakkah.data.date.readable;
+            document.getElementById('tglMakkah').innerText = tgl;
+            document.getElementById('tglMadinah').innerText = tgl;
+
+            const nextMakkah = tentukanShalatBerikutnya(dataShalatMakkah.data.timings);
+            document.getElementById('namaShalatMakkah').innerText = nextMakkah.nama;
+            document.getElementById('waktuShalatMakkah').innerText = nextMakkah.waktu;
+            const nextMadinah = tentukanShalatBerikutnya(dataShalatMadinah.data.timings);
+            document.getElementById('namaShalatMadinah').innerText = nextMadinah.nama;
+            document.getElementById('waktuShalatMadinah').innerText = nextMadinah.waktu;
+         } catch (error) {
+            console.log("Gagal memuat data", error);
+         }
+      }
+      updateDataTanahSuci();
+
+      // ==========================================
+      // FUNGSI SALIN KODE REFERAL
+      // ==========================================
+      function salinKode(teks, tombolElemen) {
+         // 1. Menyalin Teks ke Clipboard Browser
+         navigator.clipboard.writeText(teks).then(() => {
+
+            // 2. Mengubah Ikon menjadi Centang (Berhasil)
+            const ikon = tombolElemen.querySelector('.btn-ikon-salin');
+            if (ikon) {
+               ikon.classList.remove('bi-copy');
+               ikon.classList.add('bi-check2-all');
+
+               // Kembalikan ke ikon semula setelah 2 detik
+               setTimeout(() => {
+                  ikon.classList.remove('bi-check2-all');
+                  ikon.classList.add('bi-copy');
+               }, 2000);
+            }
+
+            // 3. Menampilkan Notifikasi Toast Sederhana
+            tampilkanToastSederhana(`Kode <strong>${teks}</strong> berhasil disalin!`);
+         }).catch(err => {
+            console.error('Gagal menyalin:', err);
+            alert('Maaf, browser Anda tidak mendukung fitur salin otomatis.');
+         });
+      }
+
+      // Fungsi Pembantu: Membuat Toast Notifikasi (Tanpa HTML tambahan)
+      function tampilkanToastSederhana(pesan) {
+         // Cek apakah sudah ada toast lama, jika ada hapus dulu
+         let toastLama = document.getElementById('toastSalin');
+         if (toastLama) toastLama.remove();
+
+         // Buat elemen div untuk Toast
+         const div = document.createElement('div');
+         div.id = 'toastSalin';
+         div.className = 'position-fixed bottom-0 start-50 translate-middle-x p-3';
+         div.style.zIndex = '9999';
+
+         // Isi HTML Toast (Menggunakan desain Bootstrap 5)
+         div.innerHTML = `
+            <div class="toast align-items-center text-bg-success border-0 show shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+               <div class="d-flex">
+                  <div class="toast-body">
+                     <i class="bi bi-check-circle-fill me-2"></i> ${pesan}
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.parentElement.parentElement.remove()"></button>
+               </div>
+            </div>
+         `;
+
+         document.body.appendChild(div);
+
+         // Hilangkan otomatis setelah 3 detik
+         setTimeout(() => {
+            if (document.getElementById('toastSalin')) {
+               document.getElementById('toastSalin').remove();
+            }
+         }, 3000);
+      }
+   </script>
+</body>
+
+</html>
