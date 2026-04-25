@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+   <meta http-equiv="Pragma" content="no-cache">
+   <meta http-equiv="Expires" content="0">
+
+   <title>KBIHU Al-Zamzami</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <style>
+      :root {
+         --bs-primary: #1869A0;
+         --bs-primary-rgb: 24, 105, 160;
+         --bs-secondary: #696B6D;
+         --bs-secondary-rgb: 105, 107, 109;
+         --bs-warning: #A67536;
+         --bs-warning-rgb: 166, 117, 54;
+         --bs-dark: #383C3E;
+      }
+
+      .lead {
+         font-weight: 350;
+         /* Ukuran font untuk teks utama */
+      }
+
+      @font-face {
+         font-family: 'LPMQ Isep Misbah';
+         src: url('./files/LPMQIsepMisbah.ttf') format('truetype');
+      }
+
+      .quran-text {
+         font-family: 'LPMQ Isep Misbah', serif;
+      }
+
+
+      .force-rtl {
+         direction: rtl !important;
+         unicode-bidi: embed;
+         /* Memastikan teks di dalamnya mengikuti aturan RTL */
+         text-align: right !important;
+         font-size: 1em !important;
+         font-weight: 600 !important;
+         line-height: 2em !important;
+         /* Memastikan perataan tetap di kanan */
+      }
+
+
+      /* Kustomisasi Tombol Primary */
+      .btn-primary {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #135480;
+         --bs-btn-hover-border-color: #114a70;
+         --bs-btn-active-bg: #114a70;
+         --bs-btn-active-border-color: #0e3f60;
+      }
+
+      /* Kustomisasi Tombol Warning */
+      .btn-warning {
+         --bs-btn-color: #fff;
+         --bs-btn-bg: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         --bs-btn-hover-color: #fff;
+         --bs-btn-hover-bg: #8a612d;
+         --bs-btn-hover-border-color: #7a5628;
+      }
+
+      /* Mode Gelap */
+      [data-bs-theme="dark"] {
+         --bs-body-bg: #1a1c1d;
+         --bs-card-bg: #383C3E;
+      }
+
+      /* Kustomisasi Dropdown Tema */
+      #bd-theme {
+         color: var(--bs-primary);
+         font-weight: bold;
+      }
+
+      .dropdown-item:hover,
+      .dropdown-item:focus {
+         background-color: rgba(24, 105, 160, 0.1);
+         color: var(--bs-primary);
+      }
+
+      .dropdown-item.active,
+      .dropdown-item:active {
+         background-color: var(--bs-primary);
+         color: #fff;
+      }
+
+      /* Kustomisasi Menu Utama */
+      .nav-custom .nav-link {
+         position: relative;
+         padding: 10px 16px 20px !important;
+         margin: 0 4px;
+         border-radius: 5px;
+         font-weight: 500;
+         color: var(--bs-secondary);
+         transition: all 0.3s ease;
+      }
+
+      /* Menyembunyikan panah dropdown bawaan Bootstrap tanpa membunuh animasi kapsul kita */
+      .nav-custom .dropdown-toggle::after {
+         border: none !important;
+         /* Cukup hapus garis pembentuk panahnya */
+         /* JANGAN gunakan display: none; di sini */
+      }
+
+      /* Sedikit penyesuaian untuk sub-menu dropdown agar lebih estetik */
+      .nav-custom .dropdown-menu {
+         padding: 8px;
+      }
+
+      .nav-custom .dropdown-item {
+         border-radius: 6px;
+         color: var(--bs-secondary);
+         font-weight: 500;
+         margin-bottom: 2px;
+      }
+
+      /* Penyesuaian jarak di mode HP */
+      @media (max-width: 991px) {
+         .nav-custom .nav-link {
+            padding: 12px 16px !important;
+            margin-bottom: 8px;
+         }
+
+         .nav-custom .nav-link::after {
+            bottom: 2px !important;
+         }
+      }
+
+      .nav-custom .nav-link::after {
+         content: '';
+         position: absolute;
+         bottom: 8px;
+         left: 50%;
+         transform: translateX(-50%);
+         width: 0;
+         height: 4px;
+         border-radius: 10px;
+         background-color: transparent;
+         transition: all 0.3s ease;
+      }
+
+      .nav-custom .nav-link.active {
+         background-color: var(--bs-primary) !important;
+         color: #ffffff !important;
+      }
+
+      .nav-custom .nav-link.active::after {
+         background-color: rgba(255, 255, 255, 0.8);
+         width: 35px;
+      }
+
+      .nav-custom .nav-link:hover:not(.active) {
+         background-color: rgba(0, 0, 0, 0.06);
+         color: var(--bs-secondary);
+      }
+
+      .nav-custom .nav-link:hover:not(.active)::after {
+         background-color: var(--bs-warning);
+         width: 35px;
+      }
+
+      [data-bs-theme="dark"] .nav-custom .nav-link:hover:not(.active) {
+         background-color: rgba(255, 255, 255, 0.1);
+         color: #ffffff;
+      }
+
+      /* Kustomisasi Heading Global */
+      h1,
+      .h1 {
+         color: var(--bs-primary);
+      }
+
+      h2,
+      .h2 {
+         color: var(--bs-dark);
+      }
+
+      h3,
+      .h3 {
+         color: var(--bs-primary);
+      }
+
+      h4,
+      .h4 {
+         color: var(--bs-secondary);
+      }
+
+      h5,
+      .h5 {
+         color: var(--bs-warning);
+      }
+
+      [data-bs-theme="dark"] h1,
+      [data-bs-theme="dark"] .h1,
+      [data-bs-theme="dark"] h3,
+      [data-bs-theme="dark"] .h3 {
+         color: #5ab1ea;
+      }
+
+      [data-bs-theme="dark"] h2,
+      [data-bs-theme="dark"] .h2 {
+         color: #ffffff;
+      }
+
+      [data-bs-theme="dark"] h4,
+      [data-bs-theme="dark"] .h4 {
+         color: #adb5bd;
+      }
+
+      [data-bs-theme="dark"] h5,
+      [data-bs-theme="dark"] .h5 {
+         color: #e0c193;
+      }
+
+      /* --- KUSTOMISASI FOOTER DOMINAN --- */
+      .footer-link {
+         color: #ffffff !important;
+         /* Putih Solid */
+         transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+         color: var(--bs-warning) !important;
+         /* Berubah jadi Emas saat di-hover */
+      }
+
+      /* Trik mengubah logo menjadi putih murni */
+      .logo-putih {
+         filter: brightness(0) invert(1);
+      }
+
+      /* Garis bawah (underline) untuk judul Footer */
+      .footer-heading {
+         margin-bottom: 5px !important;
+         color: #ffffff !important;
+         /* Memaksa judul jadi putih solid */
+
+      }
+
+      /* --- KUSTOMISASI CAROUSEL TESTIMONI --- */
+      .carousel-indicators {
+         bottom: -40px;
+         /* Menurunkan posisi titik-titik agar tidak menabrak kartu */
+      }
+
+      .carousel-indicators [data-bs-target] {
+         background-color: var(--bs-secondary);
+         /* Warna abu-abu saat tidak aktif */
+         width: 22px;
+         height: 4px;
+         margin: 0 6px;
+         transition: all 0.3s ease;
+      }
+
+      .carousel-indicators .active {
+         background-color: var(--bs-warning);
+         /* Berubah menjadi Emas saat aktif */
+         transform: scale(1.3);
+         /* Sedikit membesar saat aktif */
+      }
+   </style>
+   <script>
+      /**
+       * Memaksa penghapusan cookies setiap kali halaman dimuat
+       */
+      function clearCookies() {
+         const cookies = document.cookie.split(";");
+         for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            // Set masa berlaku ke masa lalu agar terhapus
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+         }
+      }
+
+      // Jalankan saat halaman dibuka
+      clearCookies();
+
+   </script>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#menuUtama" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
+   tabindex="0">
+
+   <section id="daftar" class="py-5 bg-body-tertiary">
+      <div class="container py-4">
+         <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+
+               <div class="card border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+
+                  <div class="p-4 p-lg-5 text-white text-center position-relative"
+                     style="background: linear-gradient(135deg, var(--bs-primary) 0%, black 100%);">
+                     
+                     <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-4" 
+                        aria-label="Tutup" onclick="tutupHalamanPendaftaran()" style="z-index: 10;" title="Tutup Halaman"></button>
+                     
+                     <i class="bi bi-person-hearts display-4 mb-3 d-inline-block text-white"></i>
+                     <h2 class="fw-bold mb-2 text-white">Pendaftaran Badal Haji</h2>
+                     <p class="mb-0 text-white-50 lead fs-6">Program Layanan Badal KBIHU Al-Zamzami</p>
+                  </div>
+
+                  <div class="card-body p-4 p-lg-5 bg-body relative">
+
+                     <div id="step1" class="step-container">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-primary px-3 py-2 rounded-pill mb-3" style="font-size: 17px;">Langkah 1 dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Syarat & Ketentuan Badal Haji</h4>
+                        </div>
+
+                        <div class="p-4 bg-body-tertiary rounded-4 shadow-sm mb-4" style="max-height: 350px; overflow-y: auto;">
+                           <p class="text-secondary fw-bold">Pembaruan Terakhir: 25 April 2026</p>
+                           <p class="text-secondary text-body-emphasis">Bismillah, sebelum mendaftarkan Badal Haji untuk keluarga tercinta, mohon pahami ketentuan berikut:</p>
+                           <ol class="text-secondary text-body-emphasis" style="line-height: 1.8;">
+                              <li class="mb-2"><strong>Syarat Sah Badal:</strong> Orang yang dibadalkan haji/umrohnya harus sudah Meninggal Dunia (Wafat) atau mengalami Sakit Kronis/Usia Lanjut (Udzur Syar'i) sehingga tidak mampu secara fisik untuk berangkat ke Tanah Suci.</li>
+                              <li class="mb-2"><strong>Amanah Pelaksana:</strong> Pelaksanaan Badal Haji akan dilakukan oleh Asatidz/Mukimin yang berkompeten, amanah, dan dipastikan telah menunaikan ibadah haji untuk dirinya sendiri terlebih dahulu.</li>
+                              <li class="mb-2"><strong>Rincian Biaya Layanan:</strong> Total biaya pelaksanaan Badal Haji ditetapkan sebesar <strong>Rp 23.000.000,- (Dua Puluh Tiga Juta Rupiah)</strong>. Biaya ini sudah mencakup:
+                                 <ul class="mt-2 mb-2">
+                                    <li>Honorarium / Uang Lelah Pelaksana Badal di Tanah Suci.</li>
+                                    <li>Biaya Operasional (Izin/Tasreh, Transportasi, Akomodasi, Konsumsi pelaksana selama masa Armuzna).</li>
+                                    <li>Pembayaran Dam / Hadyu (jika pelaksana melakukan Haji Tamattu/Qiran).</li>
+                                    <li>Sertifikat Badal Haji Eksklusif berbingkai dari KBIHU Al-Zamzami.</li>
+                                    <li>Dokumentasi / Cuplikan Video saat pelaksanaan (kondisional sesuai izin otoritas setempat).</li>
+                                    <li>Cenderamata (Air Zamzam & Souvenir) untuk pihak keluarga.</li>
+                                 </ul>
+                              </li>
+                              <li class="mb-2"><strong>Pembayaran:</strong> Pembayaran dianggap sah apabila ditransfer langsung ke Rekening Resmi Lembaga KBIHU Al-Zamzami, bukan ke rekening pribadi/agen.</li>
+                           </ol>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                           <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
+                              onclick="goToStep(2)">
+                              Saya Setuju & Lanjutkan <i class="bi bi-arrow-right ms-2"></i>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div id="step2" class="step-container d-none">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-warning text-white px-3 py-2 rounded-pill mb-3" style="font-size: 17px;">Langkah 2 dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Data Almarhum / Udzur</h4>
+                           <p class="text-muted">Masukkan data keluarga yang akan di-Badalkan ibadah Hajinya.</p>
+                        </div>
+
+                        <div class="row justify-content-center mb-5 mt-4">
+                           <div class="col-md-10">
+                              <div class="row g-4 text-start">
+                                 <div class="col-md-12">
+                                    <label class="form-label fw-bold text-body-emphasis">Nama Lengkap (Yang Dibadalkan) <span class="text-danger">*</span></label>
+                                    <input type="text" id="namaBadal" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" placeholder="Contoh: Fulan" required>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <label class="form-label fw-bold text-body-emphasis">Nama Ayah Kandung (Bin/Binti) <span class="text-danger">*</span></label>
+                                    <input type="text" id="ayahBadal" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" placeholder="Contoh: Bin Fulanah" required>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <label class="form-label fw-bold text-body-emphasis">Status <span class="text-danger">*</span></label>
+                                    <select id="statusBadal" class="form-select form-select-lg bg-body-tertiary border-0 shadow-sm" required>
+                                       <option value="" disabled selected>Pilih Status...</option>
+                                       <option value="Meninggal Dunia">Meninggal Dunia</option>
+                                       <option value="Sakit Kronis / Udzur">Sakit Kronis / Udzur Syar'i</option>
+                                    </select>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <label class="form-label fw-bold text-body-emphasis">Upload Foto (Wajah 80%) <span class="text-danger">*</span></label>
+                                    <input type="file" id="fotoBadal" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" accept="image/jpeg, image/png, image/jpg" required>
+                                    <div class="form-text text-muted small mt-1">Format: JPG/PNG. Digunakan untuk keperluan piagam.</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                           <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold"
+                              onclick="goToStep(1)">
+                              <i class="bi bi-arrow-left me-2"></i> Kembali
+                           </button>
+                           <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
+                              onclick="goToStep(3)">
+                              Lanjut Data Pemesan <i class="bi bi-arrow-right ms-2"></i>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div id="step3" class="step-container d-none">
+                        <div class="text-center mb-4">
+                           <span class="badge bg-primary px-3 py-2 rounded-pill mb-3" style="font-size: 17px;">Langkah 3 dari 3</span>
+                           <h4 class="fw-bold text-body-emphasis">Data Pemesan (Keluarga)</h4>
+                           <p class="text-muted">Data ini akan digunakan untuk pengiriman piagam dan cenderamata.</p>
+                        </div>
+
+                        <form class="row g-4 needs-validation" id="formPendaftaran">
+                           
+                           <input type="hidden" name="NAMA_BADAL" id="hiddenNamaBadal">
+                           <input type="hidden" name="AYAH_BADAL" id="hiddenAyahBadal">
+                           <input type="hidden" name="STATUS_BADAL" id="hiddenStatusBadal">
+                           <div class="col-md-6 mt-4">
+                              <label for="namapemesan" class="form-label fw-bold text-body-emphasis">Nama Pemesan <span class="text-danger">*</span></label>
+                              <input name="NAMA_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="namapemesan" placeholder="Nama Lengkap Anda" required />
+                           </div>
+                           
+                           <div class="col-md-6 mt-4">
+                              <label for="hppemesan" class="form-label fw-bold text-body-emphasis">No. HP / WhatsApp <span class="text-danger">*</span></label>
+                              <input name="HP_PEMESAN" type="number" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="hppemesan" placeholder="08..." required />
+                           </div>
+
+                           <div class="col-md-12">
+                              <label for="alamatpemesan" class="form-label fw-bold text-body-emphasis">Alamat Lengkap <span class="text-danger">*</span></label>
+                              <input name="ALAMAT_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="alamatpemesan" placeholder="Nama Jalan, Blok, RT/RW" required />
+                           </div>
+
+                           <div class="col-md-6">
+                              <label for="desapemesan" class="form-label fw-bold text-body-emphasis">Desa / Kelurahan <span class="text-danger">*</span></label>
+                              <input name="DESA_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="desapemesan" required />
+                           </div>
+
+                           <div class="col-md-6">
+                              <label for="kecpemesan" class="form-label fw-bold text-body-emphasis">Kecamatan <span class="text-danger">*</span></label>
+                              <input name="KEC_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="kecpemesan" required />
+                           </div>
+
+                           <div class="col-md-6">
+                              <label for="kabpemesan" class="form-label fw-bold text-body-emphasis">Kabupaten / Kota <span class="text-danger">*</span></label>
+                              <input name="KAB_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="kabpemesan" required />
+                           </div>
+
+                           <div class="col-md-6">
+                              <label for="provpemesan" class="form-label fw-bold text-body-emphasis">Provinsi <span class="text-danger">*</span></label>
+                              <input name="PROV_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="provpemesan" required />
+                           </div>
+
+                           <div class="col-12 mt-4">
+                              <div class="p-3 bg-body-tertiary rounded-4 border border-secondary border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-3 shadow-sm">
+                                 <div>
+                                    <label class="form-label fw-bold mb-0 text-body-emphasis">Verifikasi Keamanan <span class="text-danger">*</span></label>
+                                    <p class="text-muted small mb-0">Buktikan Anda manusia dengan menjawab soal matematika ini:</p>
+                                 </div>
+                                 <div class="d-flex align-items-center gap-2">
+                                    <span id="captchaSoal" class="fs-4 fw-bold text-primary bg-primary bg-opacity-10 px-3 py-1 rounded border border-primary border-opacity-25">? + ?</span>
+                                    <span class="fs-4 fw-bold text-secondary">=</span>
+                                    <input type="number" id="captchaJawaban" class="form-control form-control-lg text-center fw-bold border-secondary" style="width: 100px;" required placeholder="...">
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-12 mt-4">
+                              <div class="form-check p-4 rounded-4" style="background-color: rgba(166, 117, 54, 0.1); border: 1px solid var(--bs-warning);">
+                                 <input class="form-check-input ms-1 me-3 border-secondary" type="checkbox" value="1" id="invalidCheck" required style="transform: scale(1.5);" />
+                                 <label class="form-check-label text-body-emphasis fw-bold mt-1" for="invalidCheck">
+                                    Bismillah, dengan ini saya memberikan amanah Badal Haji kepada KBIHU Al-Zamzami dan menjamin data di atas adalah benar.
+                                 </label>
+                              </div>
+                           </div>
+
+                           <div class="col-12 mt-4 text-center d-flex justify-content-between gap-3 flex-column flex-md-row">
+                              <button class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold" type="button" onclick="goToStep(2)">
+                                 <i class="bi bi-arrow-left me-2"></i> Kembali
+                              </button>
+                              <button class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm flex-grow-1" type="submit">
+                                 <i class="bi bi-send-fill me-2"></i> KIRIM PENDAFTARAN BADAL
+                              </button>
+                           </div>
+                        </form>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      // ==========================================
+      // NAVIGASI LANGKAH PENDAFTARAN (STEPPER)
+      // ==========================================
+      function goToStep(stepNumber) {
+         // Validasi sebelum pindah ke step 3 (Cek apakah step 2 diisi)
+         if (stepNumber === 3) {
+            const nama = document.getElementById('namaBadal').value;
+            const ayah = document.getElementById('ayahBadal').value;
+            const status = document.getElementById('statusBadal').value;
+            const foto = document.getElementById('fotoBadal').value;
+
+            if(!nama || !ayah || !status || !foto) {
+               alert("Mohon lengkapi semua data dan upload foto Almarhum/Udzur sebelum melanjutkan.");
+               return;
+            }
+
+            // Pindahkan value dari form Step 2 ke Input Hidden di form Step 3 agar ikut tersubmit
+            document.getElementById('hiddenNamaBadal').value = nama;
+            document.getElementById('hiddenAyahBadal').value = ayah;
+            document.getElementById('hiddenStatusBadal').value = status;
+         }
+
+         // Sembunyikan semua langkah
+         document.getElementById('step1').classList.add('d-none');
+         document.getElementById('step2').classList.add('d-none');
+         document.getElementById('step3').classList.add('d-none');
+
+         // Tampilkan langkah yang dituju
+         document.getElementById('step' + stepNumber).classList.remove('d-none');
+
+         // Gulir halaman sedikit ke atas agar fokus
+         document.getElementById('daftar').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // ==========================================
+      // SISTEM CAPTCHA MATEMATIKA ANTI-BOT
+      // ==========================================
+      let jawabanCaptchaBenar = 0;
+
+      function buatCaptchaBaru() {
+         const angka1 = Math.floor(Math.random() * 10) + 1;
+         const angka2 = Math.floor(Math.random() * 10) + 1;
+         jawabanCaptchaBenar = angka1 + angka2;
+         document.getElementById('captchaSoal').innerText = `${angka1} + ${angka2}`;
+         document.getElementById('captchaJawaban').value = ''; 
+      }
+      buatCaptchaBaru();
+
+      // ==========================================
+      // PENGIRIMAN DATA FORM
+      // ==========================================
+      document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
+         e.preventDefault(); 
+
+         const btnSubmit = this.querySelector('button[type="submit"]');
+         const originalText = btnSubmit.innerHTML;
+
+         // CEK CAPTCHA DULU
+         const jawabanUser = parseInt(document.getElementById('captchaJawaban').value);
+         if (jawabanUser !== jawabanCaptchaBenar) {
+            alert("Mohon maaf, jawaban perhitungan matematika Anda salah. Silakan coba lagi.");
+            buatCaptchaBaru();
+            document.getElementById('captchaJawaban').focus();
+            return; 
+         }
+
+         // Ubah tombol jadi "Mengirim..."
+         btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim...';
+         btnSubmit.disabled = true;
+
+         const formData = new FormData(this);
+
+         /* CATATAN PENTING UNTUK DEVELOPER:
+         File Upload (Foto) pada formData murni tidak bisa langsung ditangkap oleh Google Apps Script standard macro/exec. 
+         Dibutuhkan fungsi pembacaan Base64 menggunakan FileReader di sisi klien (JS) sebelum di fetch ke macro Google Script. 
+         Jika URL fetch Anda di bawah belum mendukung Base64 parser, data teks akan masuk tapi data gambarnya akan hilang.
+         */
+
+         fetch("https://script.google.com/macros/s/AKfycbwVdmWoa6VKxpmxZLenBgpJ5VTP9-8q2U3T0FJ2OlwldZU0NkmOUYaFMnDKXXP5K7Z2/exec", {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' 
+         })
+         .then(response => {
+            alert("Alhamdulillah, pendaftaran Badal Haji berhasil! Tim kami akan segera menghubungi Anda.");
+            window.location.href = "index.html"; 
+         })
+         .catch(error => {
+            alert("Mohon maaf, terjadi kesalahan jaringan. Silakan coba klik Daftar lagi.");
+            btnSubmit.innerHTML = originalText;
+            btnSubmit.disabled = false;
+         });
+      });
+
+      function tutupHalamanPendaftaran() {
+         window.close();
+         window.location.href = "index.html"; 
+      }
+   </script>
+</body>
+
+</html>
