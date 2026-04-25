@@ -10,7 +10,91 @@
 
    <style>
       /* --- VARIABEL & TEMA DASAR SAMA SEPERTI SEBELUMNYA --- */
-      :root{--bs-primary:#1869A0;--bs-primary-rgb:24,105,160;--bs-secondary:#696B6D;--bs-warning:#A67536;--bs-dark:#383C3E}.btn-primary{--bs-btn-bg:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-bg:#135480}.btn-warning{--bs-btn-bg:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);color:#fff;--bs-btn-hover-color:#fff}.btn-outline-primary{--bs-btn-color:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-bg:var(--bs-primary)}.radio-pill input[type=radio]{display:none}.radio-pill label{display:inline-block;padding:10px 20px;margin:0 8px 10px 0;border:1px solid var(--bs-secondary);border-radius:10px;cursor:pointer;transition:all .3s ease;font-weight:500;color:var(--bs-secondary-color)}.radio-pill input[type=radio]:checked+label{border:3px solid var(--bs-primary);border-color:var(--bs-primary);background-color:rgba(24,105,160,.1);color:var(--bs-primary-rgb)}.radio-pill input[type=radio]:disabled+label{opacity:.5;cursor:not-allowed}.qty-input{width:60px;text-align:center;font-weight:700;border:none;outline:0;background:0 0}.qty-btn{width:35px;height:35px;border-radius:50%;border:1px solid var(--bs-secondary);background:#fff;cursor:pointer;transition:all .2s}.qty-btn:hover{background:var(--bs-body-tertiary)}.product-img{width:100%;max-height:500px;object-fit:cover;border-radius:20px;transition:opacity .3s}
+      :root {
+         --bs-primary: #1869A0;
+         --bs-primary-rgb: 24, 105, 160;
+         --bs-secondary: #696B6D;
+         --bs-warning: #A67536;
+         --bs-dark: #383C3E
+      }
+
+      .btn-primary {
+         --bs-btn-bg: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-bg: #135480
+      }
+
+      .btn-warning {
+         --bs-btn-bg: var(--bs-warning);
+         --bs-btn-border-color: var(--bs-warning);
+         color: #fff;
+         --bs-btn-hover-color: #fff
+      }
+
+      .btn-outline-primary {
+         --bs-btn-color: var(--bs-primary);
+         --bs-btn-border-color: var(--bs-primary);
+         --bs-btn-hover-bg: var(--bs-primary)
+      }
+
+      .radio-pill input[type=radio] {
+         display: none
+      }
+
+      .radio-pill label {
+         display: inline-block;
+         padding: 10px 20px;
+         margin: 0 8px 10px 0;
+         border: 1px solid var(--bs-secondary);
+         border-radius: 10px;
+         cursor: pointer;
+         transition: all .3s ease;
+         font-weight: 500;
+         color: var(--bs-secondary-color)
+      }
+
+      .radio-pill input[type=radio]:checked+label {
+         border: 3px solid var(--bs-primary);
+         border-color: var(--bs-primary);
+         background-color: rgba(24, 105, 160, .1);
+         color: var(--bs-primary-rgb)
+      }
+
+      .radio-pill input[type=radio]:disabled+label {
+         opacity: .5;
+         cursor: not-allowed
+      }
+
+      .qty-input {
+         width: 60px;
+         text-align: center;
+         font-weight: 700;
+         border: none;
+         outline: 0;
+         background: 0 0
+      }
+
+      .qty-btn {
+         width: 35px;
+         height: 35px;
+         border-radius: 50%;
+         border: 1px solid var(--bs-secondary);
+         background: #fff;
+         cursor: pointer;
+         transition: all .2s
+      }
+
+      .qty-btn:hover {
+         background: var(--bs-body-tertiary)
+      }
+
+      .product-img {
+         width: 100%;
+         max-height: 500px;
+         object-fit: cover;
+         border-radius: 20px;
+         transition: opacity .3s
+      }
    </style>
 </head>
 
@@ -18,9 +102,9 @@
 
    <nav class="navbar navbar-expand-lg py-3 bg-body-tertiary sticky-top border-bottom shadow-sm">
       <div class="container justify-content-between align-items-center">
-         <img src="../../images/logokbihu.svg" alt="Logo KBIHU"
-               height="60">
-         <a onclick="tutupHalamanPendaftaran()" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i class="bi bi-x-lg me-1"></i>
+         <img src="../../images/logokbihu.svg" alt="Logo KBIHU" height="60">
+         <a onclick="tutupHalamanPendaftaran()" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i
+               class="bi bi-x-lg me-1"></i>
             Tutup</a>
       </div>
    </nav>
@@ -46,7 +130,12 @@
                   <span class="text-warning fw-bold mb-2 text-uppercase tracking-wider">Layanan di Tanah Suci
                      Mekkah</span>
                   <h2 class="fw-bold text-body-emphasis mb-3">Qurban, Sadaqah atau Dam</h2>
-                  <p class="text-secondary  border-bottom pb-3 fw-bold">Update: 25 April 2026</p>
+                  <p class="text-secondary border-bottom pb-3 mb-4 fw-bold">
+                     <i class="bi bi-broadcast me-1 text-danger"></i>
+                     Kurs Live: 1 SAR = <span id="kursTampil" class="text-primary">Loading...</span>
+                     <br><small class="text-muted fw-normal" style="font-size: 0.8rem;">Update: <span
+                           id="tglUpdateTampil">--</span></small>
+                  </p>
 
                   <div class="mb-4">
                      <label class="fw-bold text-body-emphasis d-block mb-3">1. Jenis Hewan</label>
@@ -93,7 +182,13 @@
                      </div>
                   </div>
 
-                  <h3 id="hargaTampil" class="fw-bold border-top pt-3 mb-4 display-6">Rp 5.854.000</h3>
+                  <div class="border-top pt-4 mb-4 mt-2">
+                     <p class="text-muted fw-bold mb-1">Harga Layanan:</p>
+                     <div class="d-flex align-items-end gap-3 flex-wrap">
+                        <h3 id="hargaRupiahTampil" class="fw-bold text-primary mb-0 display-6">Rp ---</h3>
+                        <h5 id="hargaRiyalTampil" class="fw-bold text-muted mb-1 opacity-75">--- SAR</h5>
+                     </div>
+                  </div>
 
                   <div class="d-flex align-items-end justify-content-between mt-auto pt-4 border-top">
 
@@ -170,11 +265,15 @@
 
                   <div class="bg-body-tertiary text-muted p-3 rounded-4 mb-3 text-center">
                      <p class="small text-muted mb-1 fw-bold">Transfer ke Rekening Resmi:</p>
-                     <img src="https://upload.wikimedia.org/wikipedia/id/f/fa/Bank_Mandiri_logo.svg" alt="Mandiri" height="30" class="mb-3 mt-2">
-                     
+                     <img src="https://upload.wikimedia.org/wikipedia/id/f/fa/Bank_Mandiri_logo.svg" alt="Mandiri"
+                        height="30" class="mb-3 mt-2">
+
                      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
                         <h4 class="fw-bold text-primary mb-0" style="letter-spacing: 2px;">1340024423757</h4>
-                        <button type="button" onclick="salinRekening('1340024423757', this)" class="btn btn-sm btn-outline-primary rounded-circle" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" title="Salin Rekening">
+                        <button type="button" onclick="salinRekening('1340024423757', this)"
+                           class="btn btn-sm btn-outline-primary rounded-circle"
+                           style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"
+                           title="Salin Rekening">
                            <i class="bi bi-copy btn-ikon-salin"></i>
                         </button>
                      </div>
@@ -183,7 +282,8 @@
                      <p class="small fw-bold mb-0 mt-1">(Bendahara)</p>
                   </div>
 
-                  <p class="small opacity-75 mb-0 text-center"><i class="bi bi-shield-lock-fill text-warning me-1"></i> Harap transfer sesuai nominal sebelum mengirim form ini.</p>
+                  <p class="small opacity-75 mb-0 text-center"><i class="bi bi-shield-lock-fill text-warning me-1"></i>
+                     Harap transfer sesuai nominal sebelum mengirim form ini.</p>
                </div>
             </div>
 
@@ -263,27 +363,6 @@
 
    <script>
       // ==========================================
-      // DATABASE HARGA & STATE
-      // ==========================================
-      const HARGA = {
-         'Domba/Kambing': 5854000,
-         'Unta': 41920000
-      };
-
-      const GAMBAR = {
-         'Domba/Kambing': '../images/domba.png',
-         'Unta': '../images/unta.png'
-      };
-
-      let cart = [];
-      let currentHarga = HARGA['Domba/Kambing'];
-
-      // Format Uang Rupiah
-      const formatRupiah = (angka) => {
-         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-      }
-
-      // ==========================================
       // SINKRONISASI TEMA DARK/LIGHT
       // ==========================================
       const setTheme = theme => {
@@ -305,14 +384,65 @@
             setTheme(theme);
          });
       });
+      
+      // ==========================================
+      // DATABASE HARGA & STATE (Live Kurs)
+      // ==========================================
+      // Harga asli (FIX) dalam mata uang Saudi Riyal (SAR)
+      const HARGA_RIYAL = {
+         'Domba/Kambing': 1150,
+         'Unta': 9150
+      };
 
-      // ==========================================
-      // LOGIKA STEP 1 (HALAMAN PRODUK)
-      // ==========================================
+      const GAMBAR = {
+         'Domba/Kambing': '../images/domba.png',
+         'Unta': '../images/unta.png'
+      };
+
+      let cart = [];
+      let nilaiKursSARkeIDR = 4300; // Nilai default sementara (jika API gagal)
+      let currentHargaRupiah = 0;   // Akan dihitung otomatis
+
+      // Format Uang
+      const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+      const formatRiyal = (angka) => new Intl.NumberFormat('en-SA', { style: 'currency', currency: 'SAR', minimumFractionDigits: 0 }).format(angka);
+
+      // 1. Tarik Data API Kurs Live
+      async function fetchKursLive() {
+         try {
+            // Mengambil data kurs dari API gratis (Open.er-api.com)
+            const response = await fetch('https://open.er-api.com/v6/latest/SAR');
+            const data = await response.json();
+            
+            if(data.result === "success") {
+               nilaiKursSARkeIDR = data.rates.IDR; // Dapatkan nilai tukar IDR
+
+               // Update tampilan teks Kurs dan Tanggal
+               document.getElementById('kursTampil').innerText = formatRupiah(nilaiKursSARkeIDR);
+               
+               // Tanggal update dari API (dikonversi dari timestamp)
+               const tglUpdate = new Date(data.time_last_update_unix * 1000);
+               document.getElementById('tglUpdateTampil').innerText = tglUpdate.toLocaleString('id-ID', { 
+                  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+               }) + ' WIB';
+            }
+         } catch (error) {
+            console.error('Gagal mengambil kurs live. Menggunakan kurs default.', error);
+            document.getElementById('kursTampil').innerText = formatRupiah(nilaiKursSARkeIDR) + ' (Estimasi)';
+         }
+         
+         // Setel tampilan awal (otomatis panggil fungsi update harga)
+         updateHargaDanGambar();
+      }
+
+      // 2. Fungsi Memperbarui Harga dan Gambar di Layar
       function updateHargaDanGambar() {
          const hewanTerpilih = document.querySelector('input[name="hewan"]:checked').value;
-         currentHarga = HARGA[hewanTerpilih];
-
+         
+         const hargaRiyalAsli = HARGA_RIYAL[hewanTerpilih];
+         // Kalkulasi otomatis ke Rupiah (dibulatkan ke atas agar tidak ada recehan repot)
+         currentHargaRupiah = Math.ceil(hargaRiyalAsli * nilaiKursSARkeIDR); 
+         
          // Animasi transisi gambar
          const img = document.getElementById('gambarUtama');
          img.style.opacity = 0;
@@ -321,8 +451,13 @@
             img.style.opacity = 1;
          }, 300);
 
-         document.getElementById('hargaTampil').innerText = formatRupiah(currentHarga);
+         // Tampilkan Harga Riyal dan Rupiah
+         document.getElementById('hargaRiyalTampil').innerText = formatRiyal(hargaRiyalAsli);
+         document.getElementById('hargaRupiahTampil').innerText = formatRupiah(currentHargaRupiah);
       }
+
+      fetchKursLive();
+
 
       function toggleAtasNama() {
          const atasNama = document.querySelector('input[name="atasnama"]:checked').value;
@@ -359,7 +494,7 @@
             }
          }
 
-         const subtotal = currentHarga * qty;
+         const subtotal = currentHargaRupiah * qty;
 
          // Masukkan ke array cart
          cart.push({
@@ -367,7 +502,7 @@
             peruntukan: peruntukan,
             atasNama: namaTitipan,
             qty: qty,
-            hargaSatuan: currentHarga,
+            hargaSatuan: currentHargaRupiah, // <--- Ini yang dipakai
             subtotal: subtotal
          });
 
