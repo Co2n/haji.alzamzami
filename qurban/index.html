@@ -161,22 +161,29 @@
                <div class="bg-primary text-white rounded-4 shadow-lg p-4 sticky-top" style="top: 100px;">
                   <h5 class="fw-bold mb-4 border-bottom pb-3 border-light border-opacity-25">Ringkasan & Pembayaran</h5>
 
-                  <div class="d-flex justify-content-between mb-2 opacity-75"><span>Total Item</span> <span
-                        id="checkoutTotalItem" class="fw-bold">0 Ekor</span></div>
-                  <div class="d-flex justify-content-between mb-4 fs-5"><span>Total Bayar</span> <span
-                        id="checkoutTotalBayar" class="fw-bold text-warning">Rp 0</span></div>
+                  <div class="d-flex justify-content-between mb-2 opacity-75">
+                     <span>Total Item</span> <span id="checkoutTotalItem" class="fw-bold">0 Ekor</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-4 fs-5">
+                     <span>Total Bayar</span> <span id="checkoutTotalBayar" class="fw-bold text-warning">Rp 0</span>
+                  </div>
 
                   <div class="bg-body-tertiary text-muted p-3 rounded-4 mb-3 text-center">
                      <p class="small text-muted mb-1 fw-bold">Transfer ke Rekening Resmi:</p>
-                     <img src="https://upload.wikimedia.org/wikipedia/id/f/fa/Bank_Mandiri_logo.svg" alt="BSI"
-                        height="30" class="mb-2 mt-2">
-                     <h4 class="fw-bold text-primary mb-0" style="letter-spacing: 2px;">1340024423757</h4>
+                     <img src="https://upload.wikimedia.org/wikipedia/id/f/fa/Bank_Mandiri_logo.svg" alt="Mandiri" height="30" class="mb-3 mt-2">
+                     
+                     <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                        <h4 class="fw-bold text-primary mb-0" style="letter-spacing: 2px;">1340024423757</h4>
+                        <button type="button" onclick="salinRekening('1340024423757', this)" class="btn btn-sm btn-outline-primary rounded-circle" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" title="Salin Rekening">
+                           <i class="bi bi-copy btn-ikon-salin"></i>
+                        </button>
+                     </div>
+
                      <p class="small fw-bold mb-0 mt-1">A.N. MUNA FARIDAH</p>
                      <p class="small fw-bold mb-0 mt-1">(Bendahara)</p>
                   </div>
 
-                  <p class="small opacity-75 mb-0 text-center"><i class="bi bi-shield-lock-fill text-warning me-1"></i>
-                     Harap transfer sesuai nominal sebelum mengirim form ini.</p>
+                  <p class="small opacity-75 mb-0 text-center"><i class="bi bi-shield-lock-fill text-warning me-1"></i> Harap transfer sesuai nominal sebelum mengirim form ini.</p>
                </div>
             </div>
 
