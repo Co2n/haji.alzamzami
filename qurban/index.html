@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="id">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>KBIHU Al-Zamzami - Pesan Qurban & Sadaqah</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   
+   <style>
+      /* --- VARIABEL & TEMA DASAR SAMA SEPERTI SEBELUMNYA --- */
+      :root {
+         --bs-primary: #1869A0; --bs-primary-rgb: 24, 105, 160;
+         --bs-secondary: #696B6D; --bs-warning: #A67536; --bs-dark: #383C3E;
+      }
+      .btn-primary { --bs-btn-bg: var(--bs-primary); --bs-btn-border-color: var(--bs-primary); --bs-btn-hover-bg: #135480; }
+      .btn-warning { --bs-btn-bg: var(--bs-warning); --bs-btn-border-color: var(--bs-warning); color: #fff; --bs-btn-hover-color:#fff;}
+      .btn-outline-primary { --bs-btn-color: var(--bs-primary); --bs-btn-border-color: var(--bs-primary); --bs-btn-hover-bg: var(--bs-primary); }
+      
+      /* Style Khusus Radio Button ala E-commerce (Pills) */
+      .radio-pill input[type="radio"] { display: none; }
+      .radio-pill label {
+         display: inline-block; padding: 10px 20px; margin: 0 8px 10px 0;
+         border: 1px solid var(--bs-secondary); border-radius: 10px;
+         cursor: pointer; transition: all 0.3s ease; font-weight: 500; color: var(--bs-secondary-color);
+      }
+      .radio-pill input[type="radio"]:checked + label {
+         border: 3px solid var(--bs-primary); border-color: var(--bs-primary); background-color: rgba(24,105,160,0.1); color: var(--bs-primary-rgb);
+      }
+      .radio-pill input[type="radio"]:disabled + label { opacity: 0.5; cursor: not-allowed; }
+      
+      /* Quantity Input Style */
+      .qty-input { width: 60px; text-align: center; font-weight: bold; border: none; outline: none; background: transparent; }
+      .qty-btn { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--bs-secondary); background: white; cursor: pointer; transition: all 0.2s;}
+      .qty-btn:hover { background: var(--bs-body-tertiary); }
+      
+      /* Gambar Produk */
+      .product-img { width: 100%; max-height: 500px; object-fit: cover; border-radius: 20px; transition: opacity 0.3s; }
+   </style>
+</head>
+
+<body>
+
+   <nav class="navbar navbar-expand-lg py-3 bg-body-tertiary sticky-top border-bottom shadow-sm">
+      <div class="container justify-content-between align-items-center">
+         <a href="/" class="navbar-brand p-0 m-0"><img src="../../images/logokbihu.svg" alt="Logo KBIHU" height="60"></a>
+         <a href="/" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i class="bi bi-x-lg me-1"></i> Tutup</a>
+      </div>
+   </nav>
+
+   <div class="container py-5" id="mainContainer">
+      
+      <div id="step1" class="step-container">
+         <div class="bg-body-tertiary rounded-4 shadow-sm p-4 p-md-5">
+            <div class="row g-5">
+               
+               <div class="col-lg-6">
+                  <div class="position-relative">
+                     <span class="badge bg-warning text-muted position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.9rem; z-index: 2;"><i class="bi bi-geo-alt-fill me-1"></i> Pelaksanaan di Makkah</span>
+                     <img id="gambarUtama" src="../images/domba.png" alt="Hewan Qurban" class="product-img shadow-sm border">
+                  </div>
+               </div>
+
+               <div class="col-lg-6 d-flex flex-column">
+                  <span class="text-warning fw-bold mb-2 text-uppercase tracking-wider">Layanan di Tanah Suci Mekkah</span>
+                  <h2 class="fw-bold text-body-emphasis border-bottom pb-3 mb-3">Qurban, Sadaqah atau Dam</h2>
+                  
+                  <div class="mb-4">
+                     <label class="fw-bold text-body-emphasis d-block mb-3">1. Jenis Hewan</label>
+                     <div class="radio-pill">
+                        <input type="radio" id="hewan1" name="hewan" value="Domba/Kambing" checked onchange="updateHargaDanGambar()">
+                        <label for="hewan1">Domba / Kambing</label>
+                        
+                        <input type="radio" id="hewan2" name="hewan" value="Unta" onchange="updateHargaDanGambar()">
+                        <label for="hewan2">Unta</label>
+                     </div>
+                  </div>
+
+                  <div class="mb-4">
+                     <label class="fw-bold text-body-emphasis d-block mb-3">2. Peruntukan Ibadah</label>
+                     <div class="radio-pill">
+                        <input type="radio" id="niat1" name="peruntukan" value="Qurban Idul Adha" checked>
+                        <label for="niat1">Qurban Idul Adha</label>
+                        
+                        <input type="radio" id="niat2" name="peruntukan" value="Sadaqah Jariyah">
+                        <label for="niat2">Sadaqah/Hadiah</label>
+
+                        <input type="radio" id="niat3" name="peruntukan" value="Dam / Kaffarah / Fidyah">
+                        <label for="niat3">Dam/Kaffarah/Fidyah</label>
+                     </div>
+                  </div>
+
+                  <div class="mb-4">
+                     <label class="fw-bold text-body-emphasis d-block mb-3">3. Atas Nama (Niat)</label>
+                     <div class="radio-pill mb-3">
+                        <input type="radio" id="atasnama1" name="atasnama" value="Diri Sendiri" checked onchange="toggleAtasNama()">
+                        <label for="atasnama1">Diri Sendiri</label>
+                        
+                        <input type="radio" id="atasnama2" name="atasnama" value="Orang Lain" onchange="toggleAtasNama()">
+                        <label for="atasnama2">Orang Lain / Keluarga</label>
+                     </div>
+                     <div id="boxNamaOrangLain" class="d-none bg-body-tertiary p-3 rounded-4 border">
+                        <label class="form-label small fw-bold text-muted mb-1">Masukkan Nama & Nama Ayah (Bin/Binti) <span class="text-danger">*</span></label>
+                        <input type="text" id="inputNamaOrangLain" class="form-control form-control-lg shadow-sm" placeholder="Contoh: Fulan bin Abdullah">
+                     </div>
+                  </div>
+
+                  <h3 id="hargaTampil" class="fw-bold border-top pt-3 mb-4 display-6">Rp 5.854.000</h3>
+
+                  <div class="d-flex align-items-end justify-content-between mt-auto pt-4 border-top">
+                     
+                     <div>
+                        <label class="form-label fw-bold text-body-emphasis mb-2 d-block" style="font-size: 1.1rem;">Banyaknya:</label>
+                        <div class="d-flex align-items-center bg-body-tertiary rounded-pill px-2 py-1 border shadow-sm">
+                           <button type="button" class="qty-btn fw-bold text-secondary" onclick="ubahQty(-1)"><i class="bi bi-dash"></i></button>
+                           <input type="number" id="qtyInput" class="qty-input fs-5" value="1" min="1" readonly>
+                           <button type="button" class="qty-btn fw-bold text-primary" onclick="ubahQty(1)"><i class="bi bi-plus"></i></button>
+                        </div>
+                     </div>
+                     
+                     <button type="button" class="btn btn-primary btn-lg rounded-pill px-4 px-md-5 fw-bold shadow-sm" onclick="tambahKeKeranjang()">
+                        <i class="bi bi-cart-plus-fill me-2"></i> Tambah
+                     </button>
+                     
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="step2" class="step-container d-none">
+         <div class="row justify-content-center">
+            <div class="col-lg-8">
+               <div class="text-center mb-4">
+                  <h2 class="fw-bold text-body-emphasis"><i class="bi bi-cart-check-fill text-warning me-2"></i>Keranjang Pesanan Anda</h2>
+                  <p class="text-muted">Periksa kembali detail pesanan hewan Qurban/Sadaqah Anda.</p>
+               </div>
+
+               <div class="bg-body-tertiary rounded-4 shadow-sm p-4 p-md-5 mb-4">
+                  <div id="cartItemsContainer">
+                     </div>
+                  
+                  <div class="d-flex justify-content-between align-items-center pt-4 mt-4 border-top">
+                     <h4 class="fw-bold text-body-emphasis mb-0">Total Tagihan</h4>
+                     <h3 id="cartTotal" class="fw-bold text-primary mb-0">Rp 0</h3>
+                  </div>
+               </div>
+
+               <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+                  <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold" onclick="goToStep(1)">
+                     <i class="bi bi-plus-circle me-2"></i> Tambah Hewan Lagi
+                  </button>
+                  <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm" onclick="goToStep(3)">
+                     Checkout & Pembayaran <i class="bi bi-arrow-right ms-2"></i>
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="step3" class="step-container d-none">
+         <div class="row justify-content-center g-5">
+            
+            <div class="col-lg-4 order-lg-2">
+               <div class="bg-primary text-white rounded-4 shadow-lg p-4 sticky-top" style="top: 100px;">
+                  <h5 class="fw-bold mb-4 border-bottom pb-3 border-light border-opacity-25">Ringkasan & Pembayaran</h5>
+                  
+                  <div class="d-flex justify-content-between mb-2 opacity-75"><span>Total Item</span> <span id="checkoutTotalItem" class="fw-bold">0 Ekor</span></div>
+                  <div class="d-flex justify-content-between mb-4 fs-5"><span>Total Bayar</span> <span id="checkoutTotalBayar" class="fw-bold text-warning">Rp 0</span></div>
+                  
+                  <div class="bg-body-tertiary text-muted p-3 rounded-4 mb-3 text-center">
+                     <p class="small text-muted mb-1 fw-bold">Transfer ke Rekening Resmi:</p>
+                     <img src="https://upload.wikimedia.org/wikipedia/id/f/fa/Bank_Mandiri_logo.svg" alt="BSI" height="30" class="mb-2 mt-2">
+                     <h4 class="fw-bold text-primary mb-0" style="letter-spacing: 2px;">1340024423757</h4>
+                     <p class="small fw-bold mb-0 mt-1">A.N. MUNA FARIDAH</p>
+                     <p class="small fw-bold mb-0 mt-1">(Bendahara)</p>
+                  </div>
+                  
+                  <p class="small opacity-75 mb-0 text-center"><i class="bi bi-shield-lock-fill text-warning me-1"></i> Harap transfer sesuai nominal sebelum mengirim form ini.</p>
+               </div>
+            </div>
+
+            <div class="col-lg-8 order-lg-1">
+               <div class="bg-body-tertiary rounded-4 shadow-sm p-4 p-md-5">
+                  <h3 class="fw-bold text-body-emphasis mb-4 border-bottom pb-3"><i class="bi bi-person-vcard text-warning me-2"></i>Lengkapi Data Anda</h3>
+                  
+                  <form id="formCheckout" class="row g-4 needs-validation">
+                     <input type="hidden" name="JENIS_FORM" value="QURBAN">
+                     <input type="hidden" name="TOTAL_BAYAR" id="hiddenTotalBayar">
+                     <input type="hidden" name="DETAIL_PESANAN" id="hiddenDetailPesanan">
+
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">Nama Pemesan <span class="text-danger">*</span></label>
+                        <input type="text" name="NAMA_PEMESAN" class="form-control form-control-lg" required placeholder="Nama Lengkap">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">No. WhatsApp <span class="text-danger">*</span></label>
+                        <input type="number" name="WA_PEMESAN" class="form-control form-control-lg" required placeholder="08...">
+                     </div>
+                     <div class="col-12">
+                        <label class="form-label fw-bold">Alamat Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" name="ALAMAT" class="form-control form-control-lg" required placeholder="Jalan, Blok, RT/RW">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">Desa / Kelurahan <span class="text-danger">*</span></label>
+                        <input type="text" name="DESA" class="form-control form-control-lg" required>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">Kecamatan <span class="text-danger">*</span></label>
+                        <input type="text" name="KECAMATAN" class="form-control form-control-lg" required>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">Kabupaten / Kota <span class="text-danger">*</span></label>
+                        <input type="text" name="KABUPATEN" class="form-control form-control-lg" required>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label fw-bold">Provinsi <span class="text-danger">*</span></label>
+                        <input type="text" name="PROVINSI" class="form-control form-control-lg" required>
+                     </div>
+
+                     <div class="col-12 mt-4">
+                        <div class="p-3 bg-body-tertiary rounded-4 border d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                           <div><label class="form-label fw-bold mb-0">Verifikasi <span class="text-danger">*</span></label></div>
+                           <div class="d-flex align-items-center gap-2">
+                              <span id="captchaSoal" class="fs-5 fw-bold text-primary bg-body-tertiary px-3 py-1 rounded border">? + ?</span>
+                              <span class="fs-5 fw-bold text-secondary">=</span>
+                              <input type="number" id="captchaJawaban" class="form-control text-center fw-bold" style="width: 80px;" required>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-12 mt-5 d-flex gap-3">
+                        <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold" onclick="goToStep(2)">Kembali</button>
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow-sm flex-grow-1"><i class="bi bi-send-check-fill me-2"></i> Konfirmasi & Kirim Pesanan</button>
+                     </div>
+                  </form>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+   <script>
+      // ==========================================
+      // DATABASE HARGA & STATE
+      // ==========================================
+      const HARGA = {
+         'Domba/Kambing': 5854000,
+         'Unta': 41920000
+      };
+      
+      const GAMBAR = {
+         'Domba/Kambing': '../images/domba.png',
+         'Unta': '../images/unta.png'
+      };
+
+      let cart = [];
+      let currentHarga = HARGA['Domba/Kambing'];
+
+      // Format Uang Rupiah
+      const formatRupiah = (angka) => {
+         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+      }
+
+      // ==========================================
+      // SINKRONISASI TEMA DARK/LIGHT
+      // ==========================================
+      const setTheme = theme => {
+         if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+         } else {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+         }
+      }
+
+      // 1. Set tema saat halaman pertama kali dibuka (membaca memori halaman utama)
+      setTheme(localStorage.getItem('theme') || 'auto');
+
+      // 2. Fungsi jika tombol tema di klik
+      document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+         toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value');
+            localStorage.setItem('theme', theme);
+            setTheme(theme);
+         });
+      });
+
+      // ==========================================
+      // LOGIKA STEP 1 (HALAMAN PRODUK)
+      // ==========================================
+      function updateHargaDanGambar() {
+         const hewanTerpilih = document.querySelector('input[name="hewan"]:checked').value;
+         currentHarga = HARGA[hewanTerpilih];
+         
+         // Animasi transisi gambar
+         const img = document.getElementById('gambarUtama');
+         img.style.opacity = 0;
+         setTimeout(() => {
+            img.src = GAMBAR[hewanTerpilih];
+            img.style.opacity = 1;
+         }, 300);
+
+         document.getElementById('hargaTampil').innerText = formatRupiah(currentHarga);
+      }
+
+      function toggleAtasNama() {
+         const atasNama = document.querySelector('input[name="atasnama"]:checked').value;
+         const boxNama = document.getElementById('boxNamaOrangLain');
+         if(atasNama === 'Orang Lain') {
+            boxNama.classList.remove('d-none');
+            document.getElementById('inputNamaOrangLain').focus();
+         } else {
+            boxNama.classList.add('d-none');
+            document.getElementById('inputNamaOrangLain').value = '';
+         }
+      }
+
+      function ubahQty(perubahan) {
+         let qty = parseInt(document.getElementById('qtyInput').value);
+         qty += perubahan;
+         if (qty < 1) qty = 1;
+         document.getElementById('qtyInput').value = qty;
+      }
+
+      function tambahKeKeranjang() {
+         const hewan = document.querySelector('input[name="hewan"]:checked').value;
+         const peruntukan = document.querySelector('input[name="peruntukan"]:checked').value;
+         const atasNamaType = document.querySelector('input[name="atasnama"]:checked').value;
+         let namaTitipan = "Diri Sendiri";
+         const qty = parseInt(document.getElementById('qtyInput').value);
+
+         if (atasNamaType === 'Orang Lain') {
+            namaTitipan = document.getElementById('inputNamaOrangLain').value.trim();
+            if (!namaTitipan) {
+               alert("Mohon masukkan nama (Bin/Binti) orang yang diniatkan sebelum menambah ke keranjang.");
+               document.getElementById('inputNamaOrangLain').focus();
+               return;
+            }
+         }
+
+         const subtotal = currentHarga * qty;
+         
+         // Masukkan ke array cart
+         cart.push({
+            hewan: hewan,
+            peruntukan: peruntukan,
+            atasNama: namaTitipan,
+            qty: qty,
+            hargaSatuan: currentHarga,
+            subtotal: subtotal
+         });
+
+         // Reset form produk
+         document.getElementById('qtyInput').value = 1;
+         document.getElementById('atasnama1').click();
+
+         // Lanjut ke Step 2
+         renderCart();
+         goToStep(2);
+      }
+
+      // ==========================================
+      // LOGIKA STEP 2 (KERANJANG)
+      // ==========================================
+      function hapusItem(index) {
+         cart.splice(index, 1);
+         renderCart();
+         if(cart.length === 0) goToStep(1); // Jika kosong paksa kembali pilih
+      }
+
+      function renderCart() {
+         const container = document.getElementById('cartItemsContainer');
+         container.innerHTML = '';
+         let totalAll = 0;
+         let totalQty = 0;
+
+         cart.forEach((item, index) => {
+            totalAll += item.subtotal;
+            totalQty += item.qty;
+
+            container.innerHTML += `
+               <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom position-relative">
+                  <div class="d-flex align-items-center gap-3">
+                     <div class="bg-body-tertiary rounded-3 d-flex align-items-center justify-content-center border" style="width: 70px; height: 70px;">
+                        <img src="${GAMBAR[item.hewan]}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+                     </div>
+                     <div>
+                        <h5 class="fw-bold mb-1">${item.hewan} <span class="badge bg-primary ms-2">x${item.qty}</span></h5>
+                        <p class="text-muted small mb-0"><i class="bi bi-tag-fill me-1"></i>${item.peruntukan}</p>
+                        <p class="text-muted small mb-0"><i class="bi bi-person-fill me-1"></i>A.N: <strong class="text-muted">${item.atasNama}</strong></p>
+                     </div>
+                  </div>
+                  <div class="text-end">
+                     <p class="fw-bold text-primary mb-1">${formatRupiah(item.subtotal)}</p>
+                     <button class="btn btn-sm btn-link text-danger p-0 text-decoration-none" onclick="hapusItem(${index})"><i class="bi bi-trash"></i> Hapus</button>
+                  </div>
+               </div>
+            `;
+         });
+
+         document.getElementById('cartTotal').innerText = formatRupiah(totalAll);
+         
+         // Update data untuk di form checkout (Step 3)
+         document.getElementById('checkoutTotalBayar').innerText = formatRupiah(totalAll);
+         document.getElementById('checkoutTotalItem').innerText = `${totalQty} Ekor`;
+         document.getElementById('hiddenTotalBayar').value = formatRupiah(totalAll);
+         
+         // Merakit string panjang untuk masuk ke 1 kolom Google Sheet
+         let textDetailPesanan = cart.map((i, idx) => `${idx+1}. ${i.qty}x ${i.hewan} (${i.peruntukan}) - A.N: ${i.atasNama}`).join('\n');
+         document.getElementById('hiddenDetailPesanan').value = textDetailPesanan;
+      }
+
+      // ==========================================
+      // NAVIGASI & CHECKOUT
+      // ==========================================
+      function goToStep(step) {
+         if(step === 3 && cart.length === 0) {
+            alert("Keranjang kosong!"); return;
+         }
+         document.getElementById('step1').classList.add('d-none');
+         document.getElementById('step2').classList.add('d-none');
+         document.getElementById('step3').classList.add('d-none');
+         
+         document.getElementById('step' + step).classList.remove('d-none');
+         document.getElementById('mainContainer').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // ==========================================
+      // CAPTCHA & SUBMIT
+      // ==========================================
+      let jawabanCaptchaBenar = 0;
+      function buatCaptchaBaru() {
+         const angka1 = Math.floor(Math.random() * 10) + 1;
+         const angka2 = Math.floor(Math.random() * 10) + 1;
+         jawabanCaptchaBenar = angka1 + angka2;
+         document.getElementById('captchaSoal').innerText = `${angka1} + ${angka2}`;
+         document.getElementById('captchaJawaban').value = ''; 
+      }
+      buatCaptchaBaru();
+
+      document.getElementById('formCheckout').addEventListener('submit', function(e) {
+         e.preventDefault(); 
+         const btnSubmit = this.querySelector('button[type="submit"]');
+         const originalText = btnSubmit.innerHTML;
+
+         if (parseInt(document.getElementById('captchaJawaban').value) !== jawabanCaptchaBenar) {
+            alert("Jawaban perhitungan salah. Silakan coba lagi.");
+            buatCaptchaBaru(); return; 
+         }
+
+         btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Memproses...';
+         btnSubmit.disabled = true;
+
+         const formData = new FormData(this);
+
+         // GANTI DENGAN URL WEB APP BARU ANDA (Hasil dari Step 1)
+         fetch("https://script.google.com/macros/s/AKfycbw6vwUJ2UoOiA4ibWD59dE8QxGZnuerEsoPQGkRsd-djjGfQmiciJNjRc7MvrSTIS-XdA/exec", {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Trik bypass CORS Error
+         })
+         .then(() => {
+            alert("Alhamdulillah, pesanan Qurban/Sadaqah berhasil dikirim. Kami akan memverifikasi pembayaran Anda segera.");
+            window.location.href = "index.html"; 
+         })
+         .catch(() => {
+            alert("Terjadi kesalahan jaringan.");
+            btnSubmit.innerHTML = originalText;
+            btnSubmit.disabled = false;
+         });
+      });
+
+   </script>
+</body>
+</html>
