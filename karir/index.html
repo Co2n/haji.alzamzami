@@ -13,7 +13,7 @@
 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-   
+
    <style>
       :root{--bs-primary:#1869A0;--bs-primary-rgb:24,105,160;--bs-secondary:#696B6D;--bs-secondary-rgb:105,107,109;--bs-warning:#A67536;--bs-warning-rgb:166,117,54;--bs-dark:#383C3E}.lead{font-weight:350}.btn-primary{--bs-btn-color:#fff;--bs-btn-bg:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#135480;--bs-btn-hover-border-color:#114a70}.btn-warning{--bs-btn-color:#fff;--bs-btn-bg:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#8a612d;--bs-btn-hover-border-color:#7a5628}.btn-outline-primary{--bs-btn-color:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--bs-primary)}.btn-outline-warning{--bs-btn-color:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--bs-warning)}a:not(.btn):not(.nav-link):not(.dropdown-item){color:var(--bs-warning-rgb);text-decoration:none;transition:all .3s ease-in-out;font-weight:500}a:not(.btn):not(.nav-link):not(.dropdown-item):hover{color:var(--bs-warning)}.link-hover-primary:hover{color:var(--bs-primary)!important}[data-bs-theme=dark]{--bs-body-bg:#1a1c1d;--bs-card-bg:#383C3E}.footer-link{color:#fff!important;transition:color .3s ease}.footer-link:hover{color:var(--bs-warning)!important}.logo-putih{filter:brightness(0) invert(1)}.footer-heading{margin-bottom:5px!important;color:#fff!important}.job-card{transition:transform .3s ease,box-shadow .3s ease;border:2px solid transparent}.job-card:hover{transform:translateY(-5px);box-shadow:0 .5rem 1rem rgba(0,0,0,.15)!important;border-color:rgba(24,105,160,.2)}.widget-tanah-suci{height:48px;width:100%;max-width:460px;background-color:var(--bs-body-bg);position:relative}.widget-teks{font-size:12.5px}.widget-teks-lokasi{font-size:14.5px}@media (min-width:576px){.widget-tanah-suci{width:430px}.widget-teks{font-size:14px}.widget-teks-lokasi{font-size:16px}}button[onclick^=salinKode]:hover{background-color:var(--bs-warning)!important}button[onclick^=salinKode]:hover *{color:#fff!important}
    </style>
@@ -44,41 +44,48 @@
 
 <body>
 
-   <div class="modal fade" id="modalWaspada" tabindex="-1" aria-labelledby="modalWaspadaLabel" aria-hidden="true" data-bs-backdrop="static">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-               
-               <div class="modal-header bg-warning border-0 px-4 py-3">
-                  <h5 class="modal-title fw-bold text-dark d-flex align-items-center" id="modalWaspadaLabel">
-                     <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i> Peringatan Penting!
-                  </h5>
-                  </div>
-               
-               <div class="modal-body px-4 py-4 text-center">
-                  <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 75px; height: 75px;">
-                     <i class="bi bi-shield-lock-fill display-5"></i>
-                  </div>
-                  <h4 class="fw-bold text-body-emphasis mb-3">Waspada Penipuan</h4>
-                  <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1.05rem;">
-                     Kami menghimbau kepada seluruh pengunjung untuk berhati-hati terhadap oknum yang mengatasnamakan <strong>Agen Representatif</strong> maupun <strong>Tim Rekrutmen</strong> KBIHU Al-Zamzami.
-                  </p>
-                  
-                  <div class="bg-body-tertiary rounded-3 p-3 mt-4 text-start border border-warning-subtle shadow-sm">
-                     <p class="small text-muted mb-0">
-                        <i class="bi bi-info-circle-fill text-primary me-2"></i> Agen resmi kami <strong>HANYA</strong> nama-nama yang tercantum secara sah pada halaman ini. Seluruh transaksi pembayaran yang sah hanya ditujukan ke Rekening a.n. Muna Faridah (Bendahara KBIHU Al-Zamzami).<br><br>    
-                     </p>
-                  </div>
-               </div>
-               
-               <div class="modal-footer border-0 px-4 py-4 justify-content-center bg-body">
-                  <button type="button" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm" data-bs-dismiss="modal">
-                     Saya Mengerti <i class="bi bi-check2-circle ms-1"></i>
-                  </button>
-               </div>
+   <div class="modal fade" id="modalWaspada" tabindex="-1" aria-labelledby="modalWaspadaLabel" aria-hidden="true"
+      data-bs-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
 
+            <div class="modal-header bg-warning border-0 px-4 py-3">
+               <h5 class="modal-title fw-bold text-dark d-flex align-items-center" id="modalWaspadaLabel">
+                  <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i> Peringatan Penting!
+               </h5>
             </div>
+
+            <div class="modal-body px-4 py-4 text-center">
+               <div
+                  class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm"
+                  style="width: 75px; height: 75px;">
+                  <i class="bi bi-shield-lock-fill display-5"></i>
+               </div>
+               <h4 class="fw-bold text-body-emphasis mb-3">Waspada Penipuan</h4>
+               <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1.05rem;">
+                  Kami menghimbau kepada seluruh pengunjung untuk berhati-hati terhadap oknum yang mengatasnamakan
+                  <strong>Agen Representatif</strong> maupun <strong>Tim Rekrutmen</strong> KBIHU Al-Zamzami.
+               </p>
+
+               <div class="bg-body-tertiary rounded-3 p-3 mt-4 text-start border border-warning-subtle shadow-sm">
+                  <p class="small text-muted mb-0">
+                     <i class="bi bi-info-circle-fill text-primary me-2"></i> Agen resmi kami <strong>HANYA</strong>
+                     nama-nama yang tercantum secara sah pada halaman ini. Seluruh transaksi pembayaran yang sah hanya
+                     ditujukan ke Rekening a.n. Muna Faridah (Bendahara KBIHU Al-Zamzami).<br><br>
+                  </p>
+               </div>
+            </div>
+
+            <div class="modal-footer border-0 px-4 py-4 justify-content-center bg-body">
+               <button type="button" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm"
+                  data-bs-dismiss="modal">
+                  Saya Mengerti <i class="bi bi-check2-circle ms-1"></i>
+               </button>
+            </div>
+
          </div>
       </div>
+   </div>
 
    <main>
       <nav class="navbar navbar-expand-lg py-2 bg-body-tertiary border-bottom sticky-top shadow-sm">
@@ -90,24 +97,39 @@
       </nav>
 
       <header class="py-3 border-bottom bg-body">
-         <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
+         <div
+            class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center gap-3">
             <a href="/" class="d-none d-lg-flex align-items-center link-body-emphasis text-decoration-none">
                <img src="../../images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
             </a>
 
-            <div class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
-               <div id="sliderTanahSuci" class="w-100" style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
-                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i class="bi bi-geo-alt-fill"></i> <span>Makkah</span></div>
-                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMakkah" class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span></div>
-                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span id="tglMakkah">--/--/--</span></div>
-                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMakkah">--:--</span></div>
+            <div
+               class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
+               <div id="sliderTanahSuci" class="w-100"
+                  style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Makkah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMakkah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMakkah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMakkah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMakkah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMakkah">--:--</span></div>
                   </div>
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
-                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i class="bi bi-geo-alt-fill"></i> <span>Madinah</span></div>
-                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMadinah" class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span></div>
-                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span id="tglMadinah">--/--/--</span></div>
-                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span id="waktuShalatMadinah">--:--</span></div>
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
+                     style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi"><i
+                           class="bi bi-geo-alt-fill"></i> <span>Madinah</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks"><i id="iconCuacaMadinah"
+                           class="bi bi-hourglass-split"></i> <span id="suhuMadinah">--°C</span></div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex"><span
+                           id="tglMadinah">--/--/--</span></div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks"><span
+                           id="namaShalatMadinah">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i> <span
+                           id="waktuShalatMadinah">--:--</span></div>
                   </div>
                </div>
             </div>
@@ -118,21 +140,34 @@
          <div class="container py-3 d-flex flex-column flex-md-row justify-content-md-between align-items-center gap-3">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb mb-0 justify-content-center" style="font-size: 15px;">
-                  <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-muted transition-all link-hover-primary"><i class="bi bi-house-door-fill me-1"></i>Beranda</a></li>
-                  <li class="breadcrumb-item"><a href="/#tentang" class="text-decoration-none text-muted transition-all link-hover-primary">Tentang Kami</a></li>
+                  <li class="breadcrumb-item"><a href="/"
+                        class="text-decoration-none text-muted transition-all link-hover-primary"><i
+                           class="bi bi-house-door-fill me-1"></i>Beranda</a></li>
+                  <li class="breadcrumb-item"><a href="/#tentang"
+                        class="text-decoration-none text-muted transition-all link-hover-primary">Tentang Kami</a></li>
                   <li class="breadcrumb-item active fw-bold text-primary" aria-current="page">Karir</li>
                </ol>
             </nav>
             <div class="d-flex justify-content-center align-items-center gap-3">
                <div class="dropdown">
-                  <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all text-muted" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static"><i class="bi bi-circle-half fs-5"></i></button>
-                  <ul class="dropdown-menu dropdown-menu-center dropdown-menu-md-end shadow border-0" aria-labelledby="bd-theme" style="border-radius: 12px;">
-                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>Light</button></li>
-                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-muted"></i>Dark</button></li>
-                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2 active" data-bs-theme-value="auto"><i class="bi bi-circle-half me-2 text-primary"></i>Auto</button></li>
+                  <button
+                     class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center transition-all text-muted"
+                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                     data-bs-display="static"><i class="bi bi-circle-half fs-5"></i></button>
+                  <ul class="dropdown-menu dropdown-menu-center dropdown-menu-md-end shadow border-0"
+                     aria-labelledby="bd-theme" style="border-radius: 12px;">
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>Light</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2"
+                           data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-muted"></i>Dark</button>
+                     </li>
+                     <li><button type="button" class="dropdown-item d-flex align-items-center py-2 active"
+                           data-bs-theme-value="auto"><i class="bi bi-circle-half me-2 text-primary"></i>Auto</button>
+                     </li>
                   </ul>
                </div>
-               
+
             </div>
          </div>
       </div>
@@ -142,13 +177,14 @@
          <div class="container py-5">
             <h1 class="display-5 fw-bold text-white mb-3">Bersama Dengan Kami</h1>
             <p class="col-lg-8 mx-auto lead text-white-50 mb-0" style="font-size: 1.1rem;">
-               Mari berkhidmat melayani Tamu Allah. Temukan peluang karir yang tepat dan jadilah bagian dari kami <br>KBIHU Al-Zamzami Kuningan.
+               Mari berkhidmat melayani Tamu Allah. Temukan peluang karir yang tepat dan jadilah bagian dari kami
+               <br>KBIHU Al-Zamzami Kuningan.
             </p>
          </div>
       </div>
 
       <div class="container py-5 my-4">
-         
+
          <div class="row align-items-end mb-5 gap-3 gap-lg-0">
             <div class="col-lg-8 text-center text-lg-start">
                <h5 class="fw-bold text-warning mb-2">MITRA KAMI</h5>
@@ -156,111 +192,28 @@
             </div>
             <div class="col-lg-4 text-center text-lg-end">
                <p class="text-muted mb-0 small">
-                  Hubungi agen terdekat di wilayah Anda dan gunakan <strong class="text-primary">Kode Referal</strong> untuk mendapatkan prioritas layanan pendaftaran.
+                  Hubungi agen terdekat di wilayah Anda dan gunakan <strong class="text-primary">Kode Referal</strong>
+                  untuk mendapatkan prioritas layanan pendaftaran.
                </p>
             </div>
          </div>
 
-         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            
-            <div class="col">
-               <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
-                  <div class="d-flex align-items-center gap-3">
-                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
-                        <i class="bi bi-person-bounding-box fs-3"></i>
-                     </div>
-                     <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Ayat Hidayatullah</h5>
-                        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Lingk. Mukti RT/RW. 011/004 Kel. Windusengkahan Kec. Kuningan</p>
-                        <button type="button" onclick="salinKode('ALZ001', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ001</span>
-                           <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
+         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="agenContainer">
 
-            <div class="col">
-               <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
-                  <div class="d-flex align-items-center gap-3">
-                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
-                        <i class="bi bi-person-bounding-box fs-3"></i>
-                     </div>
-                     <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Awan Sopwan</h5>
-                        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Lingk. Mukti RT/RW. 011/004 Kel. Windusengkahan Kec. Kuningan</p>
-                        <button type="button" onclick="salinKode('ALZ002', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ002</span>
-                           <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
-                        </button>
-                     </div>
-                  </div>
+            <div class="col-12 text-center py-5 w-100">
+               <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
                </div>
+               <p class="mt-2 text-muted fw-bold">Memuat daftar Agen Resmi...</p>
             </div>
-
-            <div class="col">
-               <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
-                  <div class="d-flex align-items-center gap-3">
-                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
-                        <i class="bi bi-person-bounding-box fs-3"></i>
-                     </div>
-                     <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Ono Sutrisno</h5>
-                        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Lingk. Subur RT/RW. 002/001 Kel. Windusengkahan Kec. Kuningan</p>
-                        <button type="button" onclick="salinKode('ALZ003', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
-                           <span class="text-warning fw-bold me-2">ALZ003</span>
-                           <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="col">
-               <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
-                  <div class="d-flex align-items-center gap-3">
-                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
-                        <i class="bi bi-person-bounding-box fs-3"></i>
-                     </div>
-                     <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1 text-body-emphasis fs-6">M. Budi Setiawan, S.Pd.I</h5>
-                        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Dusun Manis RT/RW. 006/002 Desa Bojong Kec. Kramatmulya</p>
-                        <button type="button" onclick="salinKode('ALZ004', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ004</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="col">
-               <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
-                  <div class="d-flex align-items-center gap-3">
-                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
-                        <i class="bi bi-person-bounding-box fs-3"></i>
-                     </div>
-                     <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1 text-body-emphasis fs-6">H. Sudin Sofiudin</h5>
-                        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Dusun 02 RT/RW. 006/003 Desa Walaharcageur Kec. Luragung</p>
-                        <button type="button" onclick="salinKode('ALZ005', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
-                           <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i><span class="text-warning fw-bold me-2">ALZ005</span><i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
 
          </div>
+
       </div>
 
       <div class="bg-body-tertiary py-5 border-top border-bottom">
          <div class="container py-4">
-            
+
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 gap-3">
                <div>
                   <h5 class="fw-bold text-warning mb-2">POSISI TERSEDIA</h5>
@@ -270,7 +223,7 @@
             </div>
 
             <div class="row g-4">
-               
+
                <!-- <div class="col-lg-6">
                   <div class="card border-0 shadow-sm rounded-4 p-4 job-card h-100 bg-body">
                      <div class="d-flex justify-content-between align-items-start mb-3">
@@ -298,25 +251,33 @@
                   <div class="card border-0 shadow-sm rounded-4 p-4 job-card h-100 bg-body">
                      <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                           <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-3 py-2 rounded-pill mb-2"><i class="bi bi-briefcase me-1"></i> Paruh Waktu (Part-time)</span>
+                           <span
+                              class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-3 py-2 rounded-pill mb-2"><i
+                                 class="bi bi-briefcase me-1"></i> Paruh Waktu (Part-time)</span>
                            <h4 class="fw-bold text-body-emphasis mb-1">Agen Representatif</h4>
-                           <p class="text-muted small mb-0"><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Kuningan / WFH</p>
+                           <p class="text-muted small mb-0"><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Kuningan
+                              / WFH</p>
                         </div>
                      </div>
                      <p class="text-muted" style="font-size: 0.95rem;">
-                        Dibutuhkan agen representatif yang energik dan komunikatif untuk memperluas jaringan dan membantu masyarakat dalam mendapatkan layanan KBIHU Al-Zamzami. Tanggung jawab meliputi promosi layanan, menjalin hubungan dengan calon jamaah, dan memberikan informasi yang akurat tentang program kami. Posisi ini fleksibel dan dapat dilakukan secara remote dengan target yang jelas.
+                        Dibutuhkan agen representatif yang energik dan komunikatif untuk memperluas jaringan dan
+                        membantu masyarakat dalam mendapatkan layanan KBIHU Al-Zamzami. Tanggung jawab meliputi promosi
+                        layanan, menjalin hubungan dengan calon jamaah, dan memberikan informasi yang akurat tentang
+                        program kami. Posisi ini fleksibel dan dapat dilakukan secara remote dengan target yang jelas.
                      </p>
                      <hr class="opacity-10">
                      <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
                         <span class="text-muted small"><i class="bi bi-clock me-1"></i> </span>
-                        <a href="https://wa.me/6281322079374?text=Halo%20KBIHU%20Al-Zamzami,%20saya%20ingin%20menjadi%20Agen%20Representatif." target="_blank" class="btn btn-outline-warning rounded-pill px-4 fw-bold shadow-sm">Hubungi via WA <i class="bi bi-whatsapp ms-1"></i></a>
+                        <a href="https://wa.me/6281322079374?text=Halo%20KBIHU%20Al-Zamzami,%20saya%20ingin%20menjadi%20Agen%20Representatif."
+                           target="_blank" class="btn btn-outline-warning rounded-pill px-4 fw-bold shadow-sm">Hubungi
+                           via WA <i class="bi bi-whatsapp ms-1"></i></a>
                      </div>
                   </div>
                </div>
 
             </div>
 
-            </div>
+         </div>
       </div>
 
       <div id="tentang" class="bg-primary text-white pt-5 pb-4 w-100">
@@ -333,7 +294,8 @@
                         <li class="nav-item mb-2"><a href="/#badalhaji" class="nav-link p-0 footer-link">Badal Haji</a>
                         </li>
                         <li class="nav-item mb-2"><a href="/#qurban" class="nav-link p-0 footer-link">Qurban</a></li>
-                        <li class="nav-item mb-2"><a href="/#wakaf" class="nav-link p-0 footer-link">Wakaf Quran</a></li>
+                        <li class="nav-item mb-2"><a href="/#wakaf" class="nav-link p-0 footer-link">Wakaf Quran</a>
+                        </li>
                      </ul>
                   </div>
 
@@ -341,12 +303,9 @@
                      <h5 class="fw-bold footer-heading">Tentang Kami</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a
-                              href="/profile"
-                              class="nav-link p-0 footer-link">Profil KBIHU</a></li>
-                        <li class="nav-item mb-2"><a
-                              href="#"
-                              class="nav-link p-0 footer-link">Karir</a></li>
+                        <li class="nav-item mb-2"><a href="/profile" class="nav-link p-0 footer-link">Profil KBIHU</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Karir</a></li>
                      </ul>
                   </div>
 
@@ -354,22 +313,14 @@
                      <h5 class="fw-bold footer-heading">Bantuan</h5>
                      <div class="border-top pb-3" style="border-color: rgba(255,255,255,0.2) !important;"></div>
                      <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="/cekporsi" 
-                              class="nav-link p-0 footer-link">Cek Porsi Haji</a></li>
-                        <li class="nav-item mb-2"><a
-                              href="/faq"
-                              class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
-                        <li class="nav-item mb-2"><a
-                              href="/sdk"
-                              class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
+                        <li class="nav-item mb-2"><a href="/cekporsi" class="nav-link p-0 footer-link">Cek Porsi
+                              Haji</a></li>
+                        <li class="nav-item mb-2"><a href="/faq" class="nav-link p-0 footer-link">Pusat Bantuan</a></li>
+                        <li class="nav-item mb-2"><a href="/sdk" class="nav-link p-0 footer-link">Syarat & Ketentuan</a>
                         </li>
-                        <li class="nav-item mb-2"><a
-                              href="/kp"
-                              class="nav-link p-0 footer-link">Kebijakan Privasi</a>
+                        <li class="nav-item mb-2"><a href="/kp" class="nav-link p-0 footer-link">Kebijakan Privasi</a>
                         </li>
-                        <li class="nav-item mb-2"><a
-                              href="/faq"
-                              class="nav-link p-0 footer-link">FAQ</a></li>
+                        <li class="nav-item mb-2"><a href="/faq" class="nav-link p-0 footer-link">FAQ</a></li>
                      </ul>
                   </div>
 
@@ -472,26 +423,98 @@
       })
       setTheme(localStorage.getItem('theme') || 'auto')
 
+      // GANTI URL DI BAWAH DENGAN URL WEB APP DARI GOOGLE SCRIPT ANDA (Dari Bagian 1)
+      const scriptURLAgen = 'https://script.google.com/macros/s/AKfycbxQXsKoAgCrlRtND9Fbk_VHIyJYiVuKbmNuxY18rHZ581vFE-FSlG6lIaOhFAxMjxW7/exec';
+
+      async function loadDataAgen() {
+         const container = document.getElementById('agenContainer');
+
+         try {
+            const response = await fetch(scriptURLAgen);
+            const result = await response.json();
+
+            if (result.result === 'success') {
+               const dataAgen = result.data;
+               container.innerHTML = ''; // Hapus animasi loading
+
+               // Jika tidak ada data yang punya referral
+               if (dataAgen.length === 0) {
+                  container.innerHTML = '<div class="col-12 text-center"><p class="text-muted fw-bold">Belum ada agen / perwakilan yang terdaftar saat ini.</p></div>';
+                  return;
+               }
+
+               // Looping/Ulangi pembuatan kartu sebanyak jumlah data di Sheet
+               dataAgen.forEach(agen => {
+
+                  // Logika cerdas: Jika kolom 'Foto' di Sheet diisi URL gambar, pakai gambar itu. 
+                  // Jika kosong, pakai Ikon Bawaan (bi-person-bounding-box)
+                  let fotoHTML = `
+                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
+                     <i class="bi bi-person-bounding-box fs-3"></i>
+                  </div>
+               `;
+                  if (agen.foto && agen.foto.trim() !== '') {
+                     fotoHTML = `
+                  <div class="rounded-circle overflow-hidden flex-shrink-0 shadow-sm border" style="width: 60px; height: 60px;">
+                     <img src="../${agen.foto}" alt="${agen.nama}" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  `;
+                  }
+
+                  // Rangkaian HTML Kartu
+                  const cardHTML = `
+                  <div class="col">
+                     <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-body transition-all job-card">
+                        <div class="d-flex align-items-center gap-3">
+                           ${fotoHTML}
+                           <div class="flex-grow-1">
+                              <h5 class="fw-bold mb-1 text-body-emphasis fs-6">${agen.nama}</h5>
+                              <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>${agen.alamat}</p>
+                              <button type="button" onclick="salinKode('${agen.referal}', this)" class="btn btn-sm bg-warning bg-opacity-10 border border-warning-subtle rounded-pill px-3 py-1 w-auto d-inline-flex align-items-center transition-all" style="font-size: 0.85rem;" title="Klik untuk menyalin">
+                                 <i class="bi bi-ticket-detailed-fill me-2 text-warning"></i>
+                                 <span class="text-warning fw-bold me-2">${agen.referal}</span>
+                                 <i class="bi bi-copy text-warning opacity-75 ms-auto btn-ikon-salin"></i>
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               `;
+
+                  // Masukkan kartu ke dalam wadah
+                  container.innerHTML += cardHTML;
+               });
+            } else {
+               container.innerHTML = `<div class="col-12 text-center text-danger"><p>Gagal memuat data dari server.</p></div>`;
+            }
+         } catch (error) {
+            container.innerHTML = '<div class="col-12 text-center text-danger"><p>Terjadi kesalahan koneksi internet.</p></div>';
+         }
+      }
+
+      // Otomatis jalankan fungsi penarikan data ketika halaman selesai dimuat
+      document.addEventListener('DOMContentLoaded', loadDataAgen);
+
       // ==========================================
       // FUNGSI AUTO-SHOW MODAL PERINGATAN
       // ==========================================
-      document.addEventListener("DOMContentLoaded", function() {
+      document.addEventListener("DOMContentLoaded", function () {
          // Mengecek apakah pengunjung sudah melihat modal ini di sesi yang sama
          const sudahDilihat = sessionStorage.getItem('waspadaModalDilihat');
-         
+
          if (!sudahDilihat) {
             // Ambil elemen modal
             const modalElemen = document.getElementById('modalWaspada');
-            
+
             if (modalElemen) {
                // Inisialisasi modal Bootstrap
                const modalPeringatan = new bootstrap.Modal(modalElemen);
-               
+
                // Beri jeda 1 detik sebelum pop-up muncul agar efeknya lebih elegan
                setTimeout(() => {
                   modalPeringatan.show();
                }, 1000);
-               
+
                // Catat di memory browser bahwa pengunjung sudah melihatnya
                sessionStorage.setItem('waspadaModalDilihat', 'true');
             }
@@ -510,11 +533,11 @@
       }, 4000);
 
       function getIkonCuaca(weatherCode) {
-         if (weatherCode <= 1) return 'bi-sun-fill text-warning'; 
-         if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info'; 
-         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-muted'; 
-         if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary'; 
-         return 'bi-cloud-fill text-muted'; 
+         if (weatherCode <= 1) return 'bi-sun-fill text-warning';
+         if (weatherCode <= 3) return 'bi-cloud-sun-fill text-info';
+         if (weatherCode <= 48) return 'bi-cloud-fog2-fill text-muted';
+         if (weatherCode <= 67) return 'bi-cloud-rain-fill text-primary';
+         return 'bi-cloud-fill text-muted';
       }
 
       function tentukanShalatBerikutnya(jadwal) {
@@ -573,13 +596,13 @@
       function salinKode(teks, tombolElemen) {
          // 1. Menyalin Teks ke Clipboard Browser
          navigator.clipboard.writeText(teks).then(() => {
-            
+
             // 2. Mengubah Ikon menjadi Centang (Berhasil)
             const ikon = tombolElemen.querySelector('.btn-ikon-salin');
-            if(ikon) {
+            if (ikon) {
                ikon.classList.remove('bi-copy');
                ikon.classList.add('bi-check2-all');
-               
+
                // Kembalikan ke ikon semula setelah 2 detik
                setTimeout(() => {
                   ikon.classList.remove('bi-check2-all');
@@ -599,14 +622,14 @@
       function tampilkanToastSederhana(pesan) {
          // Cek apakah sudah ada toast lama, jika ada hapus dulu
          let toastLama = document.getElementById('toastSalin');
-         if(toastLama) toastLama.remove();
+         if (toastLama) toastLama.remove();
 
          // Buat elemen div untuk Toast
          const div = document.createElement('div');
          div.id = 'toastSalin';
          div.className = 'position-fixed bottom-0 start-50 translate-middle-x p-3';
          div.style.zIndex = '9999';
-         
+
          // Isi HTML Toast (Menggunakan desain Bootstrap 5)
          div.innerHTML = `
             <div class="toast align-items-center text-bg-success border-0 show shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
@@ -618,17 +641,18 @@
                </div>
             </div>
          `;
-         
+
          document.body.appendChild(div);
 
          // Hilangkan otomatis setelah 3 detik
          setTimeout(() => {
-            if(document.getElementById('toastSalin')) {
+            if (document.getElementById('toastSalin')) {
                document.getElementById('toastSalin').remove();
             }
          }, 3000);
       }
-      
+
    </script>
 </body>
+
 </html>
