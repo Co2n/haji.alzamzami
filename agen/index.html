@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>ID Card Agen - KBIHU Al-Zamzami</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   <style>
+      :root {
+         --bs-primary: #1869A0;
+         --bs-warning: #A67536;
+         --bs-dark: #383C3E;
+      }
+
+      body {
+         background-color: #f8f9fa;
+      }
+
+      /* --- DESAIN SPESIFIK ID CARD --- */
+      .id-card-wrapper {
+         width: 340px;
+         /* Ukuran proporsional ID Card Potrait */
+         height: 540px;
+         background: linear-gradient(135deg, #1869A0 0%, #0d3b5c 100%);
+         border-radius: 20px;
+         position: relative;
+         overflow: hidden;
+         margin: 0 auto;
+         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+         color: white;
+         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      }
+
+      /* Wrapper Header agar lengkungan tidak melebar keluar ID Card */
+      .id-card-header-wrapper {
+         position: relative;
+         height: 140px;
+         width: 100%;
+         /* overflow: hidden; */
+      }
+
+      /* Trik Ornamen Lengkungan Emas yang "Ramah" html2canvas */
+      .id-card-header-curve {
+         position: absolute;
+         width: 150%;
+         height: 140px;
+         left: -25%;
+         top: 0;
+         background-color: white;
+         border-bottom-left-radius: 50%;
+         border-bottom-right-radius: 50%;
+         border-bottom: 5px solid var(--bs-warning);
+         z-index: 1;
+      }
+
+      /* Konten di dalam header (Logo KBIHU) */
+      .id-card-header-content {
+         position: relative;
+         z-index: 2;
+         display: flex;
+         justify-content: center;
+         padding-top: 20px;
+      }
+
+      /* Foto Profil */
+      .id-card-photo {
+         width: 120px;
+         height: 120px;
+         border-radius: 50%;
+         border: 4px solid var(--bs-warning);
+         background-color: white;
+
+         /* UBAH DI SINI: Dari -60px menjadi -30px agar foto turun */
+         margin: -30px auto 15px auto;
+
+         position: relative;
+         z-index: 2;
+         object-fit: cover;
+         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+
+      /* Area QR Code */
+      .qr-wrapper {
+         background: white;
+         padding: 10px;
+         border-radius: 12px;
+         display: inline-block;
+         margin: 15px auto 0 auto;
+      }
+
+      /* Pola Transparan di Background */
+      .bg-pattern {
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         opacity: 0.05;
+         background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+         background-size: 20px 20px;
+         pointer-events: none;
+      }
+   </style>
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-lg py-3 bg-white border-bottom shadow-sm">
+      <div class="container justify-content-between align-items-center">
+         <a href="/" class="navbar-brand p-0 m-0"><img src="../../images/logokbihu.svg" alt="Logo KBIHU"
+               height="50"></a>
+         <a href="karir.html" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i
+               class="bi bi-arrow-left me-1"></i> Kembali</a>
+      </div>
+   </nav>
+
+   <div class="container py-5 text-center">
+
+      <div id="loadingStatus" class="py-5">
+         <div class="spinner-border text-primary" role="status"></div>
+         <p class="mt-3 fw-bold text-muted" id="loadingText">Mencari data agen...</p>
+      </div>
+
+      <div id="idCardContainer" class="d-none">
+
+         <div class="mb-4">
+            <h3 class="fw-bold" style="color: var(--bs-primary);">ID Card Mitra Resmi</h3>
+            <p class="text-muted">Kartu digital ini adalah bukti representatif yang sah.</p>
+         </div>
+
+         <div id="captureArea" class="id-card-wrapper d-flex flex-column text-center">
+            <div class="bg-pattern"></div>
+
+            <div class="id-card-header-wrapper">
+               <div class="id-card-header-curve"></div>
+               <div class="id-card-header-content">
+                  <img src="../../images/logokbihu.png" alt="KBIHU"
+                     style="height: 50px; width: auto; max-width: 250px; object-fit: contain;">
+               </div>
+            </div>
+
+            <div class="id-card-photo" id="agenPhotoWrapper">
+               <i class="bi bi-person-fill text-secondary" style="font-size: 4rem;"></i>
+            </div>
+
+            <div class="px-3" style="z-index: 2;">
+               <h4 class="fw-bold mb-0 text-white" id="agenNama" style="font-size: 1.3rem;">Nama Agen</h4>
+               <p class="text-warning fw-bold small mb-3 letter-spacing-1">REPRESENTATIF</p>
+
+               <div
+                  class="bg-white bg-opacity-10 border border-light border-opacity-25 rounded-pill py-1 px-3 d-inline-block mb-3">
+                  <span class="text-white-50 small me-2">KODE REFERRAL:</span>
+                  <span class="text-warning text-uppercase fw-bold fs-5" id="agenReferral">ALZ---</span>
+               </div>
+            </div>
+
+            <div class="mt-auto pb-4" style="z-index: 2;">
+               <div class="qr-wrapper" id="qrcode"></div>
+               <p class="small text-white-50 mt-2 mb-0" style="font-size: 0.75rem;">haji.alzamzami.co.id</p>
+            </div>
+         </div>
+         <div class="mt-5 d-flex flex-column flex-sm-row justify-content-center gap-3">
+            <button onclick="downloadIDCard()" id="btnDownload"
+               class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow-sm">
+               <i class="bi bi-download me-2"></i> Download JPG
+            </button>
+            <button onclick="salinLink()" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold">
+               <i class="bi bi-link-45deg me-2"></i> Salin Link Promosi
+            </button>
+         </div>
+
+      </div>
+   </div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+   <script>
+      // ==========================================
+      // 1. TANGKAP PARAMETER URL & FETCH DATA
+      // ==========================================
+      // URL Google Script Anda (Sama seperti halaman Karir)
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxQXsKoAgCrlRtND9Fbk_VHIyJYiVuKbmNuxY18rHZ581vFE-FSlG6lIaOhFAxMjxW7/exec';
+
+      async function init() {
+         // Ambil parameter '?ref=' dari URL
+         const urlParams = new URLSearchParams(window.location.search);
+         const refCode = urlParams.get('ref');
+
+         if (!refCode) {
+            tampilkanError("Kode Referral tidak ditemukan di URL.");
+            return;
+         }
+
+         try {
+            const response = await fetch(scriptURL);
+            const result = await response.json();
+
+            if (result.result === 'success') {
+               // Cari agen yang referalnya cocok (Abaikan huruf besar/kecil)
+               const agen = result.data.find(a => a.referal.toUpperCase() === refCode.toUpperCase());
+
+               if (agen) {
+                  renderIDCard(agen);
+               } else {
+                  tampilkanError(`Agen dengan kode <strong>${refCode}</strong> tidak ditemukan.`);
+               }
+            } else {
+               tampilkanError("Gagal terhubung ke database server.");
+            }
+         } catch (e) {
+            tampilkanError("Terjadi kesalahan jaringan.");
+         }
+      }
+
+      function tampilkanError(pesan) {
+         document.getElementById('loadingStatus').innerHTML = `
+            <i class="bi bi-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+            <h4 class="mt-3 fw-bold text-dark">Ups! Ada masalah</h4>
+            <p class="text-muted">${pesan}</p>
+            <a href="karir.html" class="btn btn-primary rounded-pill mt-3">Lihat Daftar Agen</a>
+         `;
+      }
+
+      // ==========================================
+      // 2. RENDER ID CARD
+      // ==========================================
+      let urlPromosiAgen = "";
+
+      function renderIDCard(agen) {
+         // Sembunyikan loading, tampilkan card
+         document.getElementById('loadingStatus').classList.add('d-none');
+         document.getElementById('idCardContainer').classList.remove('d-none');
+
+         // Isi teks
+         document.getElementById('agenNama').innerText = agen.nama;
+         document.getElementById('agenReferral').innerText = agen.referal;
+
+         // Cek Foto
+         if (agen.foto && agen.foto.trim() !== "") {
+            //document.getElementById('agenPhotoWrapper').innerHTML = `<img src="../${agen.foto}" alt="${agen.nama}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            // Wadah untuk Foto
+            // Wadah untuk Foto (div bulat)
+            const photoWrapper = document.getElementById('agenPhotoWrapper');
+
+            // 2. Jurus Pamungkas Sesungguhnya: Gunakan Background Image agar TIDAK PENGEK
+            if (agen.foto && agen.foto.trim() !== "") {
+               // Path lokal, contoh: user_images/ayat.jpg
+               const pathFotoUser = `../${agen.foto}`;
+
+               // Hapus isi wadah (hapus ikon default jika ada)
+               photoWrapper.innerHTML = '';
+
+               // Terapkan gaya background langsung di JS
+               // html2canvas JAUH lebih akurat merender background-size: cover
+               photoWrapper.style.backgroundImage = `url('${pathFotoUser}')`;
+               photoWrapper.style.backgroundSize = 'cover'; // Gambar penuh, aspect ratio terjaga, terpotong otomatis
+               photoWrapper.style.backgroundPosition = 'center'; // Tengah
+               photoWrapper.style.backgroundRepeat = 'no-repeat';
+
+               // Penting agar html2canvas tidak blank saat download
+               photoWrapper.setAttribute('crossorigin', 'anonymous');
+
+            } else {
+               // Ikon default jika tidak ada foto (kosongkan background dulu)
+               photoWrapper.style.backgroundImage = 'none';
+               photoWrapper.innerHTML = `<i class="bi bi-person-fill text-secondary" style="font-size: 4rem;"></i>`;
+            }
+         }
+
+         // Buat Link Promosi Unik
+         urlPromosiAgen = `https://haji.alzamzami.co.id/?ref=${agen.referal}`;
+
+         // JURUS PAMUNGKAS: Gunakan API Gambar murni agar html2canvas tidak blank
+         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlPromosiAgen)}`;
+
+         // Masukkan sebagai tag <img> biasa (tambahkan crossorigin agar tidak kena blokir CORS html2canvas)
+         document.getElementById("qrcode").innerHTML = `<img src="${qrApiUrl}" crossorigin="anonymous" alt="QR Code" style="width: 100px; height: 100px;">`;
+      }
+
+      // ==========================================
+      // 3. FUNGSI DOWNLOAD KE JPG (html2canvas)
+      // ==========================================
+      function downloadIDCard() {
+         const btn = document.getElementById('btnDownload');
+         const originalText = btn.innerHTML;
+         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Memproses...';
+         btn.disabled = true;
+
+         // MAGIC TRICK: Beri jeda 500 milidetik (0.5 detik) agar QR Code selesai dirender
+         setTimeout(() => {
+            const idCardArea = document.getElementById('captureArea');
+
+            html2canvas(idCardArea, {
+               scale: 2,
+               useCORS: true,
+               backgroundColor: null
+            }).then(canvas => {
+               const image = canvas.toDataURL("image/jpeg", 1.0);
+
+               const a = document.createElement("a");
+               a.href = image;
+               a.download = `ID-Card-${document.getElementById('agenReferral').innerText}.jpg`;
+               a.click();
+
+               btn.innerHTML = originalText;
+               btn.disabled = false;
+            }).catch(err => {
+               console.error("Error html2canvas:", err);
+               alert("Maaf, terjadi kesalahan saat membuat file gambar.");
+               btn.innerHTML = originalText;
+               btn.disabled = false;
+            });
+
+         }, 500); // Angka 500 inilah yang menjadi penyelamatnya
+      }
+
+      // ==========================================
+      // 4. FUNGSI SALIN LINK
+      // ==========================================
+      function salinLink() {
+         navigator.clipboard.writeText(urlPromosiAgen).then(() => {
+            alert("Link promosi berhasil disalin! Silakan paste di WhatsApp atau Sosmed agen.");
+         }).catch(() => {
+            alert("Gagal menyalin link.");
+         });
+      }
+
+      // Jalankan inisialisasi saat halaman dimuat
+      document.addEventListener('DOMContentLoaded', init);
+
+   </script>
+</body>
+
+</html>
