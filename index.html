@@ -1070,6 +1070,24 @@
 
       // Jalankan fungsi saat web dibuka
       muatNotifikasiJadwal();
+
+   </script>
+   <script>
+      // ==========================================
+      // SISTEM PELACAKAN REFERRAL AGEN (AFFILIATE)
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+         // 1. Cek apakah ada parameter '?ref=' di URL
+         const urlParams = new URLSearchParams(window.location.search);
+         const refCode = urlParams.get('ref');
+
+         // 2. Jika ada, simpan kodenya ke memori browser (localStorage)
+         if (refCode) {
+            // Simpan dalam huruf besar agar seragam (misal: alz002 jadi ALZ002)
+            localStorage.setItem('kodeReferralAgen', refCode.toUpperCase());
+            console.log("Kode agen " + refCode + " berhasil disimpan di memori.");
+         }
+      });
    </script>
 </body>
 

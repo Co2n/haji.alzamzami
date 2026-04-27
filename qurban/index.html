@@ -15,91 +15,7 @@
 
    <style>
       /* --- VARIABEL & TEMA DASAR SAMA SEPERTI SEBELUMNYA --- */
-      :root {
-         --bs-primary: #1869A0;
-         --bs-primary-rgb: 24, 105, 160;
-         --bs-secondary: #696B6D;
-         --bs-warning: #A67536;
-         --bs-dark: #383C3E
-      }
-
-      .btn-primary {
-         --bs-btn-bg: var(--bs-primary);
-         --bs-btn-border-color: var(--bs-primary);
-         --bs-btn-hover-bg: #135480
-      }
-
-      .btn-warning {
-         --bs-btn-bg: var(--bs-warning);
-         --bs-btn-border-color: var(--bs-warning);
-         color: #fff;
-         --bs-btn-hover-color: #fff
-      }
-
-      .btn-outline-primary {
-         --bs-btn-color: var(--bs-primary);
-         --bs-btn-border-color: var(--bs-primary);
-         --bs-btn-hover-bg: var(--bs-primary)
-      }
-
-      .radio-pill input[type=radio] {
-         display: none
-      }
-
-      .radio-pill label {
-         display: inline-block;
-         padding: 10px 20px;
-         margin: 0 8px 10px 0;
-         border: 1px solid var(--bs-secondary);
-         border-radius: 10px;
-         cursor: pointer;
-         transition: all .3s ease;
-         font-weight: 500;
-         color: var(--bs-secondary-color)
-      }
-
-      .radio-pill input[type=radio]:checked+label {
-         border: 3px solid var(--bs-primary);
-         border-color: var(--bs-primary);
-         background-color: rgba(24, 105, 160, .1);
-         color: var(--bs-primary-rgb)
-      }
-
-      .radio-pill input[type=radio]:disabled+label {
-         opacity: .5;
-         cursor: not-allowed
-      }
-
-      .qty-input {
-         width: 60px;
-         text-align: center;
-         font-weight: 700;
-         border: none;
-         outline: 0;
-         background: 0 0
-      }
-
-      .qty-btn {
-         width: 35px;
-         height: 35px;
-         border-radius: 50%;
-         border: 1px solid var(--bs-secondary);
-         background: #fff;
-         cursor: pointer;
-         transition: all .2s
-      }
-
-      .qty-btn:hover {
-         background: var(--bs-body-tertiary)
-      }
-
-      .product-img {
-         width: 100%;
-         max-height: 500px;
-         object-fit: cover;
-         border-radius: 20px;
-         transition: opacity .3s
-      }
+      :root{--bs-primary:#1869A0;--bs-primary-rgb:24,105,160;--bs-secondary:#696B6D;--bs-warning:#A67536;--bs-dark:#383C3E}.btn-primary{--bs-btn-bg:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-bg:#135480}.btn-warning{--bs-btn-bg:var(--bs-warning);--bs-btn-border-color:var(--bs-warning);color:#fff;--bs-btn-hover-color:#fff}.btn-outline-primary{--bs-btn-color:var(--bs-primary);--bs-btn-border-color:var(--bs-primary);--bs-btn-hover-bg:var(--bs-primary)}.radio-pill input[type=radio]{display:none}.radio-pill label{display:inline-block;padding:10px 20px;margin:0 8px 10px 0;border:1px solid var(--bs-secondary);border-radius:10px;cursor:pointer;transition:all .3s ease;font-weight:500;color:var(--bs-secondary-color)}.radio-pill input[type=radio]:checked+label{border:3px solid var(--bs-primary);border-color:var(--bs-primary);background-color:rgba(24,105,160,.1);color:var(--bs-primary-rgb)}.radio-pill input[type=radio]:disabled+label{opacity:.5;cursor:not-allowed}.qty-input{width:60px;text-align:center;font-weight:700;border:none;outline:0;background:0 0}.qty-btn{width:35px;height:35px;border-radius:50%;border:1px solid var(--bs-secondary);background:#fff;cursor:pointer;transition:all .2s}.qty-btn:hover{background:var(--bs-body-tertiary)}.product-img{width:100%;max-height:500px;object-fit:cover;border-radius:20px;transition:opacity .3s}
    </style>
    <script>
       /**
@@ -151,8 +67,7 @@
                </div>
 
                <div class="col-lg-6 d-flex flex-column">
-                  <span class="text-warning fw-bold mb-2 text-uppercase tracking-wider">Layanan di Tanah Suci
-                     Mekkah</span>
+                  <span id="spanKodeReferral" class="text-warning fw-bold mb-2 text-uppercase tracking-wider">Layanan di Tanah Suci Mekkah</span>
                   <h2 class="fw-bold text-body-emphasis mb-3">Qurban, Sadaqah atau Dam</h2>
                   <p class="text-secondary border-bottom pb-3 mb-4 fw-bold">
                      <i class="bi bi-broadcast me-1 text-danger"></i>
@@ -320,6 +235,7 @@
                      <input type="hidden" name="JENIS_FORM" value="QURBAN">
                      <input type="hidden" name="TOTAL_BAYAR" id="hiddenTotalBayar">
                      <input type="hidden" name="DETAIL_PESANAN" id="hiddenDetailPesanan">
+                     <input type="hidden" name="KODE_REFERAL" id="inputReferal" value="-">
 
                      <div class="col-md-6">
                         <label class="form-label fw-bold">Nama Pemesan <span class="text-danger">*</span></label>
@@ -407,6 +323,26 @@
             localStorage.setItem('theme', theme);
             setTheme(theme);
          });
+      });
+
+      // ==========================================
+      // SUNTIKKAN KODE REFERRAL KE DALAM FORM
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+         // Ambil kode dari memori browser
+         const savedRef = localStorage.getItem('kodeReferralAgen');
+         
+         // Jika kodenya ada, masukkan ke dalam input form
+         if (savedRef) {
+            const inputElement = document.getElementById('inputReferal');
+            if(inputElement) {
+               inputElement.value = savedRef;
+            }
+            const spanRef = document.getElementById('spanKodeReferral');
+            if(spanRef) {
+               spanRef.textContent = 'Layanan di Tanah Suci Mekkah' + ' (' + savedRef + ')';
+            }
+         }
       });
       
       // ==========================================

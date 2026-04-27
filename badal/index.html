@@ -54,7 +54,7 @@
                         aria-label="Tutup" onclick="tutupHalamanPendaftaran()" style="z-index: 10;" title="Tutup Halaman"></button>
                      
                      <i class="bi bi-person-hearts display-4 mb-3 d-inline-block text-white"></i>
-                     <h2 class="fw-bold mb-2 text-white">Pendaftaran Badal Haji</h2>
+                     <h2 id="spanKodeReferral" class="fw-bold mb-2 text-white">Pendaftaran Badal Haji</h2>
                      <p class="mb-0 text-white-50 lead fs-6">Program Layanan Badal KBIHU Al-Zamzami</p>
                   </div>
 
@@ -153,6 +153,8 @@
                            <input type="hidden" name="NAMA_BADAL" id="hiddenNamaBadal">
                            <input type="hidden" name="AYAH_BADAL" id="hiddenAyahBadal">
                            <input type="hidden" name="STATUS_BADAL" id="hiddenStatusBadal">
+                           <input type="hidden" name="KODE_REFERAL" id="inputReferal" value="-">
+
                            <div class="col-md-6 mt-4">
                               <label for="namapemesan" class="form-label fw-bold text-body-emphasis">Nama Pemesan <span class="text-danger">*</span></label>
                               <input name="NAMA_PEMESAN" type="text" class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm" id="namapemesan" placeholder="Nama Lengkap Anda" required />
@@ -252,6 +254,27 @@
             setTheme(theme);
          });
       });
+
+      // ==========================================
+      // SUNTIKKAN KODE REFERRAL KE DALAM FORM
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+         // Ambil kode dari memori browser
+         const savedRef = localStorage.getItem('kodeReferralAgen');
+         
+         // Jika kodenya ada, masukkan ke dalam input form
+         if (savedRef) {
+            const inputElement = document.getElementById('inputReferal');
+            if(inputElement) {
+               inputElement.value = savedRef;
+            }
+            const spanRef = document.getElementById('spanKodeReferral');
+            if(spanRef) {
+               spanRef.textContent = 'Pendaftaran Badal Haji' + ' (' + savedRef + ')';
+            }
+         }
+      });
+
       // ==========================================
       // NAVIGASI LANGKAH PENDAFTARAN (STEPPER)
       // ==========================================

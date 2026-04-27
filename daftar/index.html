@@ -360,21 +360,21 @@
 
                         <div class="row justify-content-center mb-5 mt-4">
                            <div class="col-md-8 col-lg-6">
-                              <input type="text" id="inputReferral" oninput="cekReferral()"
+                              <input type="text" name="KODE_REFERAL" id="inputReferral" oninput="cekReferral()"
                                  class="form-control form-control-lg bg-body-tertiary border-0 shadow-sm text-center fw-bold"
                                  placeholder="" style="letter-spacing: 2px; text-transform: uppercase;">
                            </div>
                         </div>
 
                         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                           <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold"
+                           <button type="button" id="btnLewati" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold"
                               onclick="goToStep(3, false)">
                               Lewati Saja
                            </button>
                            <button type="button" id="btnGunakanKode"
                               class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"
                               onclick="goToStep(3, true)" disabled>
-                              Gunakan Kode & Lanjut <i class="bi bi-arrow-right ms-2"></i>
+                              Lanjut <i class="bi bi-arrow-right ms-2"></i>
                            </button>
                         </div>
                      </div>
@@ -562,8 +562,8 @@
                                  <input class="form-check-input ms-1 me-3 border-secondary" type="checkbox" value="1"
                                     id="invalidCheck" required style="transform: scale(1.5);" />
                                  <label class="form-check-label text-body-emphasis fw-bold mt-1" for="invalidCheck">
-                                    Bismillah, Labbaikallohummalabbaik Labaikalaasyarikalakalabaik Innalhamda Wa Nikmata Lakawalmulk Laa Syariikalak 
-                                    dengan ini saya mendaftarkan diri bimbingan Manasik Haji di KBIHU
+                                    Bismillah, Labbaikallohummalabbaik Labaikalaasyarikalakalabaik Innalhamda Wa Nikmata Lakawalmulk Laa Syariikalak. 
+                                    Dengan ini saya mendaftarkan diri bimbingan Manasik Haji di KBIHU
                                     Al-Zamzami.
                                  </label>
                               </div>
@@ -633,6 +633,7 @@
       })
       setTheme(localStorage.getItem('theme') || 'auto')
 
+      
       // Mengatur nyala/mati tombol referral
       function cekReferral() {
          const input = document.getElementById('inputReferral').value;
@@ -714,6 +715,47 @@
          // (Ganti 'index.html' dengan link halaman utama Anda jika namanya berbeda)
          window.location.href = "index.html"; 
       }
+
+      // ==========================================
+      // SUNTIKKAN & KUNCI KODE REFERRAL (KHUSUS PENDAFTARAN)
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+         // 1. Ambil kode dari memori browser
+         const savedRef = localStorage.getItem('kodeReferralAgen');
+         
+         // 2. Jika pengunjung membawa kode referal
+         if (savedRef) {
+            const inputElement = document.getElementById('inputReferral');
+            const btnLewati = document.getElementById('btnLewati'); // Pastikan ID tombolnya sesuai
+            const btn = document.getElementById('btnGunakanKode');
+            
+            if (inputElement) {
+               // Masukkan kodenya
+               inputElement.value = savedRef;
+               
+               // KUNCI kolomnya menggunakan 'readonly' (JANGAN 'disabled')
+               inputElement.setAttribute('readonly', true);
+               
+               // Tambahkan efek visual agar terlihat mati/abu-abu (menggunakan class Bootstrap)
+               inputElement.classList.add('bg-body-secondary', 'text-muted');
+               inputElement.style.cursor = 'not-allowed';
+               btn.disabled = false; // Pastikan tombol "Gunakan Kode" tetap aktif karena sudah ada kode valid
+            }
+
+            if (btnLewati) {
+               // Matikan tombol lewati
+               btnLewati.disabled = true;
+               
+               // Opsional: Sembunyikan tombolnya sekalian agar jamaah tidak bingung
+               btnLewati.classList.add('d-none');
+            }
+            
+            // Opsional: Tampilkan pesan kecil di form bahwa mereka didampingi agen
+            console.log(`Pendaftaran ini terkunci dengan agen: ${savedRef}`);
+         }
+      });
+      
+
    </script>
 </body>
 
