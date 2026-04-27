@@ -114,14 +114,39 @@
       <div class="container justify-content-between align-items-center">
          <a href="/" class="navbar-brand p-0 m-0"><img src="../../images/logokbihu.svg" alt="Logo KBIHU"
                height="50"></a>
-         <a href="karir.html" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i
+         <a href="index.html" id="btnKembaliNav" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold"><i
                class="bi bi-arrow-left me-1"></i> Kembali</a>
       </div>
    </nav>
 
    <div class="container py-5 text-center">
 
-      <div id="loadingStatus" class="py-5">
+      <div id="formInputContainer" class="d-none py-5 mt-4">
+         <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+               <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                  <div
+                     class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mx-auto mb-3"
+                     style="width: 70px; height: 70px;">
+                     <i class="bi bi-person-vcard fs-1"></i>
+                  </div>
+                  <h4 class="fw-bold text-body-emphasis mb-2">Cari ID Card</h4>
+                  <p class="text-muted small mb-4">Masukkan kode referral Anda untuk melihat dan mengunduh ID Card
+                     digital.</p>
+
+                  <div class="input-group input-group-lg mb-3 shadow-sm rounded-pill overflow-hidden border">
+                     <input type="text" id="inputManualReferral"
+                        class="form-control border-0 text-uppercase text-center fw-bold text-primary"
+                        placeholder="" onkeypress="handleEnter(event)">
+                     <button class="btn btn-primary px-4 fw-bold" type="button" onclick="cariIDCard()">Lihat ID
+                        Card</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="loadingStatus" class="py-5 d-none">
          <div class="spinner-border text-primary" role="status"></div>
          <p class="mt-3 fw-bold text-muted" id="loadingText">Mencari data agen...</p>
       </div>
@@ -183,31 +208,39 @@
       // ==========================================
       // 1. TANGKAP PARAMETER URL & FETCH DATA
       // ==========================================
-      // URL Google Script Anda (Sama seperti halaman Karir)
       const scriptURL = 'https://script.google.com/macros/s/AKfycbxQXsKoAgCrlRtND9Fbk_VHIyJYiVuKbmNuxY18rHZ581vFE-FSlG6lIaOhFAxMjxW7/exec';
 
       async function init() {
-         // Ambil parameter '?ref=' dari URL
          const urlParams = new URLSearchParams(window.location.search);
          const refCode = urlParams.get('ref');
+         const btnKembali = document.getElementById('btnKembaliNav');
 
-         if (!refCode) {
-            tampilkanError("Kode Referral tidak ditemukan di URL.");
+         // SKENARIO A: Jika TIDAK ADA parameter (Halaman Pencarian)
+         if (!refCode || refCode.trim() === '') {
+            btnKembali.href = "/"; // Tombol kembali arahkan ke beranda
+            document.getElementById('formInputContainer').classList.remove('d-none');
+            document.getElementById('loadingStatus').classList.add('d-none');
+            document.getElementById('idCardContainer').classList.add('d-none');
+            document.getElementById('inputManualReferral').focus();
             return;
          }
+
+         // SKENARIO B: Jika ADA parameter (Menampilkan ID Card)
+         btnKembali.href = "/agen"; // Tombol kembali arahkan ke pencarian ID Card
+         document.getElementById('formInputContainer').classList.add('d-none');
+         document.getElementById('loadingStatus').classList.remove('d-none'); // Tampilkan loading
 
          try {
             const response = await fetch(scriptURL);
             const result = await response.json();
 
             if (result.result === 'success') {
-               // Cari agen yang referalnya cocok (Abaikan huruf besar/kecil)
                const agen = result.data.find(a => a.referal.toUpperCase() === refCode.toUpperCase());
 
                if (agen) {
                   renderIDCard(agen);
                } else {
-                  tampilkanError(`Agen dengan kode <strong>${refCode}</strong> tidak ditemukan.`);
+                  tampilkanError(`Agen dengan kode <strong>${refCode.toUpperCase()}</strong> tidak ditemukan.`);
                }
             } else {
                tampilkanError("Gagal terhubung ke database server.");
@@ -217,12 +250,30 @@
          }
       }
 
+      // Fungsi untuk tombol Cari ID Card di form
+      function cariIDCard() {
+         const inputVal = document.getElementById('inputManualReferral').value.trim();
+         if (inputVal === '') {
+            alert('Silakan masukkan kode referral terlebih dahulu.');
+            return;
+         }
+         // Arahkan halaman ke dirinya sendiri namun dengan parameter tambahan
+         window.location.href = `?ref=${inputVal}`;
+      }
+
+      // Fungsi agar bisa tekan 'Enter' di keyboard
+      function handleEnter(e) {
+         if (e.key === 'Enter') {
+            cariIDCard();
+         }
+      }
+
       function tampilkanError(pesan) {
          document.getElementById('loadingStatus').innerHTML = `
             <i class="bi bi-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
             <h4 class="mt-3 fw-bold text-dark">Ups! Ada masalah</h4>
             <p class="text-muted">${pesan}</p>
-            <a href="karir.html" class="btn btn-primary rounded-pill mt-3">Lihat Daftar Agen</a>
+            <a href="agen.html" class="btn btn-primary rounded-pill mt-3 px-4 fw-bold">Cari Lagi</a>
          `;
       }
 
