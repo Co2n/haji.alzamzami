@@ -1,0 +1,50 @@
+[
+  {
+    "tanggal": "2026-04-27",
+    "waktuMulai": "07:00 WAS",
+    "waktuSelesai": "11:00 WAS",
+    "nama": "Ziarah Masjid Nabawi",
+    "destinasi": "Raudhoh, Makam Rasulullah, Pemakaman Baqi",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-1"
+  },
+  {
+    "tanggal": "2026-04-28",
+    "waktuMulai": "08:00 WAS",
+    "waktuSelesai": "12:00 WAS",
+    "nama": "City Tour Madinah",
+    "destinasi": "Masjid Quba, Masjid Qiblatain, Kebun Kurma",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-2"
+  },
+  {
+    "tanggal": "2026-04-29",
+    "waktuMulai": "14:00 WAS",
+    "waktuSelesai": "20:00 WAS",
+    "nama": "Persiapan Umrah Wajib",
+    "destinasi": "Miqat Bir Ali & Perjalanan menuju Makkah",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-3"
+  },
+  {
+    "tanggal": "2026-04-30",
+    "waktuMulai": "08:00 WAS",
+    "waktuSelesai": "12:00 WAS",
+    "nama": "Pelaksanaan Umrah Wajib",
+    "destinasi": "Masjidil Haram (Thawaf, Sa'i, Tahallul)",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-4"
+  },
+  {
+    "tanggal": "2026-05-01",
+    "waktuMulai": "15:00 WIB",
+    "waktuSelesai": "18:00 WIB",
+    "nama": "Istirahat & Pemantapan Ibadah",
+    "destinasi": "Aula Hotel Makkah",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-5"
+  },
+  {
+    "tanggal": "2026-05-02",
+    "waktuMulai": "07:00 WAS",
+    "waktuSelesai": "13:00 WAS",
+    "nama": "City Tour Kota Makkah",
+    "destinasi": "Jabal Tsur, Padang Arafah, Jabal Rahmah, Mina",
+    "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-6"
+  }
+]
