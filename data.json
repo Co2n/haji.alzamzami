@@ -5,6 +5,7 @@
     "waktuSelesai": "11:00 WAS",
     "nama": "Ziarah Masjid Nabawi",
     "destinasi": "Raudhoh, Makam Rasulullah, Pemakaman Baqi",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-1"
   },
   {
@@ -13,6 +14,7 @@
     "waktuSelesai": "12:00 WAS",
     "nama": "City Tour Madinah",
     "destinasi": "Masjid Quba, Masjid Qiblatain, Kebun Kurma",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-2"
   },
   {
@@ -21,6 +23,7 @@
     "waktuSelesai": "20:00 WAS",
     "nama": "Persiapan Umrah Wajib",
     "destinasi": "Miqat Bir Ali & Perjalanan menuju Makkah",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-3"
   },
   {
@@ -29,6 +32,7 @@
     "waktuSelesai": "12:00 WAS",
     "nama": "Pelaksanaan Umrah Wajib",
     "destinasi": "Masjidil Haram (Thawaf, Sa'i, Tahallul)",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-4"
   },
   {
@@ -37,6 +41,7 @@
     "waktuSelesai": "18:00 WIB",
     "nama": "Istirahat & Pemantapan Ibadah",
     "destinasi": "Aula Hotel Makkah",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-5"
   },
   {
@@ -45,6 +50,7 @@
     "waktuSelesai": "13:00 WAS",
     "nama": "City Tour Kota Makkah",
     "destinasi": "Jabal Tsur, Padang Arafah, Jabal Rahmah, Mina",
+    "tampilkanGaleri": "Ya",
     "linkGaleri": "https://drive.google.com/drive/folders/contoh-folder-6"
   }
 ]
