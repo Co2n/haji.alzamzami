@@ -1421,9 +1421,7 @@
    <script>
       // 1. PENGAMBILAN DATA DARI GOOGLE SHEETS (GAS)
       // ==========================================
-      // GANTI DENGAN LINK WEB APP GOOGLE APPS SCRIPT ANDA
       const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbzEMLcsUAbkZD6mpGfOPbY0T7DA3t4xbRgrtPZObfuvMrSQ7YIpnqJ-dRFEzICZ1nUn/exec?getJson=1';
-      // const gasWebAppUrl = './data.json';
       
       let dataKegiatan = [];
 
@@ -1439,10 +1437,9 @@
                kegiatan: item.nama,
                destinasi: item.destinasi,
                linkGaleri: item.linkGaleri,
-               tampilkanGaleri: item.tampilkanGaleri // <--- DATA BARU DITANGKAP DI SINI
+               tampilkanGaleri: item.tampilkanGaleri
             }));
 
-            // Setelah data siap, jalankan pengecekan bulan Haji
             cekBulanHajiTampil();
          } catch (error) {
             console.error("Gagal mengambil data kegiatan:", error);
@@ -1489,7 +1486,7 @@
          
          const isMusimHaji = (hijriMonth === 11 || hijriMonth === 12 || hijriMonth === 1); 
 
-         if (isMusimHaji || true) { // <--- Hapus "|| true" saat website sudah live
+         if (isMusimHaji || true) { 
             document.getElementById('widgetKegiatanHaji').classList.remove('d-none');
             initSliderKegiatan();
          }
@@ -1506,7 +1503,10 @@
          hariIni.setHours(0,0,0,0);
 
          track.innerHTML = ''; 
+         
+         // TIGA VARIABEL PELACAK BARU
          let indexHariIni = -1;
+         let indexBerikutnya = -1;
 
          dataKegiatan.forEach((item, index) => {
             const tglParts = item.date.split('-');
@@ -1538,8 +1538,6 @@
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
                btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-right"></i></button>` : `<div style="width: 31px;"></div>`;
                
-               // <--- LOGIKA BARU DITAMBAHKAN DI SINI --->
-               // Tombol galeri HANYA dimunculkan jika kolom TAMPILKAN_GALERI bernilai "Ya"
                if (item.tampilkanGaleri === 'Ya') {
                   galleryBtnBelowLocation = `
                      <div class="mt-2">
@@ -1551,6 +1549,11 @@
             } 
             // JIKA MASA DEPAN
             else {
+               // Menangkap indeks kegiatan masa depan yang PERTAMA KALI ditemukan
+               if (indexBerikutnya === -1) {
+                  indexBerikutnya = index;
+               }
+
                let kataDepan = selisihHari === 1 ? "Besok" : "Mendatang";
                statusLabel = `<p class="text-warning fw-bold small mb-1" style="font-size: 1.2rem;">${kataDepan}, ${formatTgl}</p>`;
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
@@ -1585,7 +1588,18 @@
             track.innerHTML += slideHTML;
          });
 
-         currentSlideIndex = indexHariIni !== -1 ? indexHariIni : 0;
+         // --- LOGIKA PENENTUAN POSISI AWAL SLIDER (DIUBAH DI SINI) ---
+         if (indexHariIni !== -1) {
+            // Prioritas 1: Jika ada kegiatan hari ini, tampilkan hari ini
+            currentSlideIndex = indexHariIni;
+         } else if (indexBerikutnya !== -1) {
+            // Prioritas 2: Jika tidak ada hari ini, tapi ada yang akan datang, tampilkan yang selanjutnya
+            currentSlideIndex = indexBerikutnya;
+         } else {
+            // Prioritas 3: Jika semua kegiatan sudah berlalu, tampilkan kegiatan terakhir di dalam list
+            currentSlideIndex = dataKegiatan.length > 0 ? dataKegiatan.length - 1 : 0;
+         }
+         
          updatePosisiSlider();
          initTouchSlider(); 
       }
