@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --bs-primary: #1869A0; }
+    body { background: #f4f7f6; font-family: sans-serif; }
+    .bg-primary { background: var(--bs-primary) !important; }
+    .btn-primary { background: var(--bs-primary); border: none; }
+  </style>
+</head>
+<body>
+
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-calendar-event-fill me-2"></i>Admin Kegiatan Haji</h4>
+    <button class="btn btn-primary rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
+      <i class="bi bi-plus-lg me-1"></i> Tambah Kegiatan
+    </button>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th class="py-3 px-3">Tanggal</th>
+            <th class="py-3">Waktu</th>
+            <th class="py-3">Kegiatan</th>
+            <th class="py-3">Galeri</th>
+            <th class="py-3 text-center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="tabelBody">
+          <tr><td colspan="5" class="text-center py-5">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalTambah" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="fw-bold">Input Kegiatan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formTambah">
+          <div class="mb-3">
+            <label class="small fw-bold">Tanggal</label>
+            <input type="date" name="tanggal" class="form-control" required>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6">
+              <label class="small fw-bold">Mulai</label>
+              <input type="text" name="waktuMulai" class="form-control" placeholder="14:00 WIB atau WAS" required>
+            </div>
+            <div class="col-6">
+              <label class="small fw-bold">Selesai</label>
+              <input type="text" name="waktuSelesai" class="form-control" placeholder="18:00 WIB" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="small fw-bold">Nama Kegiatan</label>
+            <input type="text" name="nama" class="form-control" placeholder="Contoh: City Tour Madinah" required>
+          </div>
+          <div class="mb-4">
+            <label class="small fw-bold">Destinasi</label>
+            <textarea name="destinasi" class="form-control" rows="2" required></textarea>
+          </div>
+          <button type="submit" id="btnSimpan" class="btn btn-primary w-100 rounded-pill fw-bold">Simpan & Buat Folder</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="fw-bold text-primary">Edit Kegiatan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEdit">
+          <input type="hidden" id="editRowId">
+          
+          <div class="mb-3">
+            <label class="small fw-bold">Tanggal</label>
+            <input type="date" id="editTanggal" class="form-control" required>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6">
+              <label class="small fw-bold">Mulai (24j)</label>
+              <input type="time" id="editWaktuMulai" class="form-control" required>
+            </div>
+            <div class="col-6">
+              <label class="small fw-bold">Selesai (24j)</label>
+              <input type="time" id="editWaktuSelesai" class="form-control" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="small fw-bold">Nama Kegiatan</label>
+            <input type="text" id="editNama" class="form-control" required>
+          </div>
+          <div class="mb-4">
+            <label class="small fw-bold">Destinasi</label>
+            <textarea id="editDestinasi" class="form-control" rows="2" required></textarea>
+          </div>
+          <button type="submit" id="btnUpdate" class="btn btn-primary w-100 rounded-pill fw-bold">Update Data</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ==========================================
+  // GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+  // ==========================================
+  const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbzEMLcsUAbkZD6mpGfOPbY0T7DA3t4xbRgrtPZObfuvMrSQ7YIpnqJ-dRFEzICZ1nUn/exec'; 
+
+  let dataKegiatanGlobal = [];
+
+  // ==========================================
+  // 1. LOAD DATA AWAL (READ)
+  // ==========================================
+  async function loadData() {
+    const body = document.getElementById('tabelBody');
+    body.innerHTML = '<tr><td colspan="5" class="text-center py-5"><div class="spinner-border text-primary spinner-border-sm me-2"></div>Memuat data...</td></tr>';
+
+    try {
+      // Kita panggil ?getJson=1 persis seperti widget di halaman utama
+      const response = await fetch(gasWebAppUrl + '?getJson=1', { redirect: "follow" });
+      const data = await response.json();
+      
+      body.innerHTML = '';
+      dataKegiatanGlobal = data; 
+      
+      if(!data || data.length === 0) {
+        body.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">Belum ada kegiatan yang diinput.</td></tr>';
+        return;
+      }
+      
+      data.forEach(item => {
+        let tglTampil = "-";
+        if (item.tanggal && item.tanggal.includes('-')) {
+          const p = item.tanggal.split('-');
+          tglTampil = `${p[2]}/${p[1]}/${p[0]}`;
+        }
+
+        body.innerHTML += `
+          <tr>
+            <td class="px-3 fw-bold">${tglTampil}</td>
+            <td class="text-muted small"><i class="bi bi-clock me-1"></i> ${item.waktuMulai} - ${item.waktuSelesai}</td>
+            <td><span class="d-block fw-bold text-primary">${item.nama}</span><small class="text-muted">${item.destinasi}</small></td>
+            <td><a href="${item.linkGaleri}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="bi bi-folder2-open"></i> Buka Drive</a></td>
+            <td class="text-center">
+              <button onclick="bukaModalEdit(${item.rowId})" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm me-1" title="Edit"><i class="bi bi-pencil-square"></i></button>
+              <button onclick="hapusData(${item.rowId})" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm" title="Hapus"><i class="bi bi-trash3-fill"></i></button>
+            </td>
+          </tr>`;
+      });
+    } catch (error) {
+      body.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i> Gagal memuat data: ${error.message}</td></tr>`;
+    }
+  }
+
+  // ==========================================
+  // BUKA MODAL EDIT (Tidak perlu diubah, murni UI)
+  // ==========================================
+  function bukaModalEdit(rowId) {
+    const item = dataKegiatanGlobal.find(d => d.rowId === rowId);
+    if (item) {
+      document.getElementById('editRowId').value = item.rowId;
+      document.getElementById('editTanggal').value = item.tanggal; 
+      // Ganti input waktu menjadi text sesuai setting terakhir kita
+      document.getElementById('editWaktuMulai').value = item.waktuMulai;
+      document.getElementById('editWaktuSelesai').value = item.waktuSelesai;
+      document.getElementById('editNama').value = item.nama;
+      document.getElementById('editDestinasi').value = item.destinasi;
+      
+      const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
+      modal.show();
+    }
+  }
+
+  // ==========================================
+  // 2. PROSES SIMPAN EDIT (UPDATE)
+  // ==========================================
+  document.getElementById('formEdit').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btnUpdate');
+    btn.disabled = true; btn.innerText = "Menyimpan...";
+
+    const formData = {
+      rowId: document.getElementById('editRowId').value,
+      tanggal: document.getElementById('editTanggal').value,
+      waktuMulai: document.getElementById('editWaktuMulai').value,
+      waktuSelesai: document.getElementById('editWaktuSelesai').value,
+      nama: document.getElementById('editNama').value,
+      destinasi: document.getElementById('editDestinasi').value
+    };
+
+    try {
+      const response = await fetch(gasWebAppUrl, {
+        method: 'POST',
+        body: JSON.stringify({ action: "edit", data: formData })
+      });
+      const result = await response.json();
+
+      if(result.status === "success") {
+        alert("Alhamdulillah, Data berhasil diperbarui!");
+        bootstrap.Modal.getInstance(document.getElementById('modalEdit')).hide();
+        loadData(); 
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (err) {
+      alert("Gagal update data: " + err.message);
+    } finally {
+      btn.disabled = false; btn.innerText = "Update Data";
+    }
+  });
+
+  // ==========================================
+  // 3. PROSES TAMBAH DATA (CREATE)
+  // ==========================================
+  document.getElementById('formTambah').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btnSimpan');
+    btn.disabled = true; btn.innerText = "Memproses...";
+    
+    const formData = {
+      tanggal: this.tanggal.value,
+      waktuMulai: this.waktuMulai.value,
+      waktuSelesai: this.waktuSelesai.value,
+      nama: this.nama.value,
+      destinasi: this.destinasi.value
+    };
+
+    try {
+      const response = await fetch(gasWebAppUrl, {
+        method: 'POST',
+        body: JSON.stringify({ action: "tambah", data: formData })
+      });
+      const result = await response.json();
+
+      if(result.status === "success") {
+        alert("Berhasil! Folder Drive otomatis dibuat & data tersimpan.");
+        document.getElementById('formTambah').reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalTambah')).hide();
+        loadData();
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (err) {
+      alert("Gagal menyimpan: " + err.message);
+    } finally {
+      btn.disabled = false; btn.innerText = "Simpan & Buat Folder";
+    }
+  });
+
+  // ==========================================
+  // 4. PROSES HAPUS DATA (DELETE)
+  // ==========================================
+  async function hapusData(id) {
+    if(confirm("Yakin ingin menghapus data ini?")) {
+      try {
+        const response = await fetch(gasWebAppUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: "hapus", rowId: id })
+        });
+        const result = await response.json();
+
+        if(result.status === "success") {
+          loadData();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (err) {
+        alert("Gagal menghapus: " + err.message);
+      }
+    }
+  }
+
+  // Muat data pertama kali
+  window.onload = loadData;
+</script>
+</body>
+</html>
