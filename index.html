@@ -1439,7 +1439,8 @@
                waktuSelesai: item.waktuSelesai,
                kegiatan: item.nama,
                destinasi: item.destinasi,
-               linkGaleri: item.linkGaleri
+               linkGaleri: item.linkGaleri,
+               tampilkanGaleri: item.tampilkanGaleri // <--- DATA BARU DITANGKAP DI SINI
             }));
 
             // Setelah data siap, jalankan pengecekan bulan Haji
@@ -1466,10 +1467,10 @@
 
           if (zona === 'WIB') {
               jamWIB = jam;
-              jamWAS = (jam - 4 + 24) % 24; // Mundur 4 jam
+              jamWAS = (jam - 4 + 24) % 24; 
           } else {
               jamWAS = jam;
-              jamWIB = (jam + 4) % 24; // Maju 4 jam
+              jamWIB = (jam + 4) % 24; 
           }
 
           const format = (j) => j.toString().padStart(2, '0') + ":" + menit;
@@ -1538,12 +1539,16 @@
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
                btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-right"></i></button>` : `<div style="width: 31px;"></div>`;
                
-               galleryBtnBelowLocation = `
-                  <div class="mt-2">
-                     <a href="${item.linkGaleri}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold shadow-sm" title="Lihat Galeri">
-                        <i class="bi bi-images me-1"></i> Lihat Galeri
-                     </a>
-                  </div>`;
+               // <--- LOGIKA BARU DITAMBAHKAN DI SINI --->
+               // Tombol galeri HANYA dimunculkan jika kolom TAMPILKAN_GALERI bernilai "Ya"
+               if (item.tampilkanGaleri === 'Ya') {
+                  galleryBtnBelowLocation = `
+                     <div class="mt-2">
+                        <a href="${item.linkGaleri}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold shadow-sm" title="Lihat Galeri">
+                           <i class="bi bi-images me-1"></i> Lihat Galeri
+                        </a>
+                     </div>`;
+               }
             } 
             // JIKA MASA DEPAN
             else {
@@ -1583,7 +1588,7 @@
 
          currentSlideIndex = indexHariIni !== -1 ? indexHariIni : 0;
          updatePosisiSlider();
-         initTouchSlider(); // Panggil fungsi swipe jari
+         initTouchSlider(); 
       }
 
       function geserKegiatan(arah) {
@@ -1623,9 +1628,9 @@
          let swipeDistance = touchEndX - touchStartX;
          if (Math.abs(swipeDistance) > minSwipeDistance) {
             if (swipeDistance < 0) {
-               geserKegiatan(1); // Geser Kiri (Next)
+               geserKegiatan(1); 
             } else if (swipeDistance > 0) {
-               geserKegiatan(-1); // Geser Kanan (Prev)
+               geserKegiatan(-1); 
             }
          }
          touchStartX = 0;
