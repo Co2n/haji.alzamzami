@@ -1502,9 +1502,14 @@
          const hariIni = new Date();
          hariIni.setHours(0,0,0,0);
 
+         // Dapatkan jam saat ini dalam format WIB untuk komparasi status "Live"
+         const waktuSekarangDate = new Date();
+         const wibTimeStr = waktuSekarangDate.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
+         const [jamReal, menitReal] = wibTimeStr.split(':').map(Number);
+         const menitSekarangTotal = (jamReal * 60) + menitReal; // Konversi ke total menit
+
          track.innerHTML = ''; 
          
-         // TIGA VARIABEL PELACAK BARU
          let indexHariIni = -1;
          let indexBerikutnya = -1;
 
@@ -1528,9 +1533,49 @@
             // JIKA HARI INI
             if (selisihHari === 0) {
                indexHariIni = index;
-               statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Sedang Berlangsung</span>`;
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
                btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"><i class="bi bi-chevron-right ms-1"></i></button>` : `<div style="width: 31px;"></div>`;
+               
+               // === LOGIKA PENGECEKAN JAM ===
+               // Ekstrak waktu mulai dan selesai ke dalam total menit
+               const [jamM, menitM] = waktuMulaiObj.wib.replace(' WIB', '').split(':').map(Number);
+               const mulaiTotal = (jamM * 60) + (menitM || 0);
+
+               const [jamS, menitS] = waktuSelesaiObj.wib.replace(' WIB', '').split(':').map(Number);
+               const selesaiTotal = (jamS * 60) + (menitS || 0);
+
+               let isSedangBerlangsung = false;
+               let isSudahSelesai = false;
+
+               // Logika cerdas jika waktu selesai melewati tengah malam (misal 22:00 s/d 02:00)
+               if (mulaiTotal <= selesaiTotal) {
+                  isSedangBerlangsung = (menitSekarangTotal >= mulaiTotal && menitSekarangTotal <= selesaiTotal);
+                  isSudahSelesai = (menitSekarangTotal > selesaiTotal);
+               } else {
+                  isSedangBerlangsung = (menitSekarangTotal >= mulaiTotal || menitSekarangTotal <= selesaiTotal);
+                  isSudahSelesai = (menitSekarangTotal > selesaiTotal && menitSekarangTotal < mulaiTotal);
+               }
+
+               // Terapkan Label berdasarkan status menit
+               if (isNaN(mulaiTotal) || isNaN(selesaiTotal)) {
+                  // Fallback jika lupa isi jam
+                  statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Hari Ini</span>`;
+               } else if (isSedangBerlangsung) {
+                  statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Sedang Berlangsung</span>`;
+               } else if (isSudahSelesai) {
+                  statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">Selesai Hari Ini</p>`;
+                  // Munculkan galeri karena sudah selesai hari ini
+                  if (item.tampilkanGaleri === 'Ya') {
+                     galleryBtnBelowLocation = `
+                        <div class="mt-2">
+                           <a href="${item.linkGaleri}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold shadow-sm" title="Lihat Galeri">
+                              <i class="bi bi-images me-1"></i> Lihat Galeri
+                           </a>
+                        </div>`;
+                  }
+               } else {
+                  statusLabel = `<p class="text-primary fw-bold small mb-1" style="font-size: 1.1rem;">Hari Ini, Akan Datang</p>`;
+               }
             } 
             // JIKA MASA LALU
             else if (selisihHari < 0) {
@@ -1549,11 +1594,9 @@
             } 
             // JIKA MASA DEPAN
             else {
-               // Menangkap indeks kegiatan masa depan yang PERTAMA KALI ditemukan
                if (indexBerikutnya === -1) {
                   indexBerikutnya = index;
                }
-
                let kataDepan = selisihHari === 1 ? "Besok" : "Mendatang";
                statusLabel = `<p class="text-warning fw-bold small mb-1" style="font-size: 1.2rem;">${kataDepan}, ${formatTgl}</p>`;
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
@@ -1588,15 +1631,11 @@
             track.innerHTML += slideHTML;
          });
 
-         // --- LOGIKA PENENTUAN POSISI AWAL SLIDER (DIUBAH DI SINI) ---
          if (indexHariIni !== -1) {
-            // Prioritas 1: Jika ada kegiatan hari ini, tampilkan hari ini
             currentSlideIndex = indexHariIni;
          } else if (indexBerikutnya !== -1) {
-            // Prioritas 2: Jika tidak ada hari ini, tapi ada yang akan datang, tampilkan yang selanjutnya
             currentSlideIndex = indexBerikutnya;
          } else {
-            // Prioritas 3: Jika semua kegiatan sudah berlalu, tampilkan kegiatan terakhir di dalam list
             currentSlideIndex = dataKegiatan.length > 0 ? dataKegiatan.length - 1 : 0;
          }
          
