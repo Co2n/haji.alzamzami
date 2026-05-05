@@ -1092,6 +1092,22 @@
       let dataKegiatan = [];
 
       async function fetchKegiatanDariSheet() {
+         const track = document.getElementById('trackKegiatan');
+         const widget = document.getElementById('widgetKegiatanHaji'); // Tangkap wadah utama
+         
+         // Buka d-none terlebih dahulu agar animasi loading bisa terlihat
+         if (widget) widget.classList.remove('d-none'); 
+
+         // === LOGIKA TAMPILKAN LOADING SPINNER ===
+         if (track) {
+            track.innerHTML = `
+               <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 90px;">
+                  <div class="spinner-border text-primary spinner-border-sm me-2" role="status"></div>
+                  <span class="text-muted fw-bold small">Memuat jadwal kegiatan...</span>
+               </div>
+            `;
+         }
+
          try {
             const response = await fetch(gasWebAppUrl, { redirect: "follow" });
             const result = await response.json();
@@ -1109,6 +1125,15 @@
             cekBulanHajiTampil();
          } catch (error) {
             console.error("Gagal mengambil data kegiatan:", error);
+            
+            // === LOGIKA BARU: TAMPILKAN ERROR JIKA GAGAL ===
+            if (track) {
+               track.innerHTML = `
+                  <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 90px;">
+                     <span class="text-danger fw-bold small"><i class="bi bi-exclamation-triangle-fill me-1"></i> Gagal memuat data. Coba muat ulang halaman.</span>
+                  </div>
+               `;
+            }
          }
       }
 
@@ -1168,11 +1193,10 @@
          const hariIni = new Date();
          hariIni.setHours(0,0,0,0);
 
-         // Dapatkan jam saat ini dalam format WIB untuk komparasi status "Live"
          const waktuSekarangDate = new Date();
          const wibTimeStr = waktuSekarangDate.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
          const [jamReal, menitReal] = wibTimeStr.split(':').map(Number);
-         const menitSekarangTotal = (jamReal * 60) + menitReal; // Konversi ke total menit
+         const menitSekarangTotal = (jamReal * 60) + menitReal; 
 
          track.innerHTML = ''; 
          
@@ -1202,8 +1226,6 @@
                btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
                btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"><i class="bi bi-chevron-right ms-1"></i></button>` : `<div style="width: 31px;"></div>`;
                
-               // === LOGIKA PENGECEKAN JAM ===
-               // Ekstrak waktu mulai dan selesai ke dalam total menit
                const [jamM, menitM] = waktuMulaiObj.wib.replace(' WIB', '').split(':').map(Number);
                const mulaiTotal = (jamM * 60) + (menitM || 0);
 
@@ -1213,7 +1235,6 @@
                let isSedangBerlangsung = false;
                let isSudahSelesai = false;
 
-               // Logika cerdas jika waktu selesai melewati tengah malam (misal 22:00 s/d 02:00)
                if (mulaiTotal <= selesaiTotal) {
                   isSedangBerlangsung = (menitSekarangTotal >= mulaiTotal && menitSekarangTotal <= selesaiTotal);
                   isSudahSelesai = (menitSekarangTotal > selesaiTotal);
@@ -1222,15 +1243,12 @@
                   isSudahSelesai = (menitSekarangTotal > selesaiTotal && menitSekarangTotal < mulaiTotal);
                }
 
-               // Terapkan Label berdasarkan status menit
                if (isNaN(mulaiTotal) || isNaN(selesaiTotal)) {
-                  // Fallback jika lupa isi jam
                   statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Hari Ini</span>`;
                } else if (isSedangBerlangsung) {
                   statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Sedang Berlangsung</span>`;
                } else if (isSudahSelesai) {
                   statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">Selesai Hari Ini</p>`;
-                  // Munculkan galeri karena sudah selesai hari ini
                   if (item.tampilkanGaleri === 'Ya') {
                      galleryBtnBelowLocation = `
                         <div class="mt-2">
