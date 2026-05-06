@@ -1085,7 +1085,7 @@
 
    </script>
    <script>
-      // 1. PENGAMBILAN DATA DARI (GAS)
+      // 1. PENGAMBILAN DATA DARI GOOGLE SHEETS (GAS)
       // ==========================================
       const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbzEMLcsUAbkZD6mpGfOPbY0T7DA3t4xbRgrtPZObfuvMrSQ7YIpnqJ-dRFEzICZ1nUn/exec?getJson=1';
       
@@ -1093,12 +1093,10 @@
 
       async function fetchKegiatanDariSheet() {
          const track = document.getElementById('trackKegiatan');
-         const widget = document.getElementById('widgetKegiatanHaji'); // Tangkap wadah utama
+         const widget = document.getElementById('widgetKegiatanHaji'); 
          
-         // Buka d-none terlebih dahulu agar animasi loading bisa terlihat
          if (widget) widget.classList.remove('d-none'); 
 
-         // === LOGIKA TAMPILKAN LOADING SPINNER ===
          if (track) {
             track.innerHTML = `
                <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 90px;">
@@ -1125,8 +1123,6 @@
             cekBulanHajiTampil();
          } catch (error) {
             console.error("Gagal mengambil data kegiatan:", error);
-            
-            // === LOGIKA BARU: TAMPILKAN ERROR JIKA GAGAL ===
             if (track) {
                track.innerHTML = `
                   <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 90px;">
@@ -1138,33 +1134,54 @@
       }
 
       // ==========================================
-      // 2. MESIN WAKTU: PINTAR WAS/WIB
+      // 2. MESIN WAKTU: PINTAR WAS/WIB & LINTAS HARI (+1)
       // ==========================================
       function prosesWaktuDuaZona(waktuTeks) {
-          if (!waktuTeks) return { was: "--:--", wib: "--:--" };
+          if (!waktuTeks) return { was: "--:--", wib: "--:--", jamWIB: NaN, menit: NaN, offsetWIB: 0 };
 
           let raw = waktuTeks.toUpperCase().trim();
           let parts = raw.split(' '); 
-          let jamMenit = parts[0].split(':');
-          let jam = parseInt(jamMenit[0]);
-          let menit = jamMenit[1] || "00";
-          let zona = parts[1]; 
+          let timePart = parts[0]; 
+          let zona = parts[1] || "WAS"; 
 
-          let jamWAS, jamWIB;
-
-          if (zona === 'WIB') {
-              jamWIB = jam;
-              jamWAS = (jam - 4 + 24) % 24; 
-          } else {
-              jamWAS = jam;
-              jamWIB = (jam + 4) % 24; 
+          // Cek apakah ada penambahan hari (contoh: 03:00+1)
+          let offsetTulis = 0;
+          if (timePart.includes('+')) {
+             let splitPlus = timePart.split('+');
+             timePart = splitPlus[0];
+             offsetTulis = parseInt(splitPlus[1]) || 0;
           }
 
-          const format = (j) => j.toString().padStart(2, '0') + ":" + menit;
+          let jamMenit = timePart.split(':');
+          let jam = parseInt(jamMenit[0]);
+          let menit = parseInt(jamMenit[1] || "0");
+
+          let jamWAS = jam;
+          let jamWIB = jam;
+          let offsetWAS = offsetTulis;
+          let offsetWIB = offsetTulis;
+
+          // Konversi Waktu
+          if (zona === 'WIB') {
+              jamWAS = jam - 4;
+              if (jamWAS < 0) { jamWAS += 24; offsetWAS -= 1; }
+          } else {
+              jamWIB = jam + 4;
+              if (jamWIB >= 24) { jamWIB -= 24; offsetWIB += 1; }
+          }
+
+          const format = (j, m) => j.toString().padStart(2, '0') + ":" + m.toString().padStart(2, '0');
+
+          // Rakit Teks Tampilan (Jika ada offset, kembalikan teks +1 nya)
+          let formatWAS = format(jamWAS, menit) + (offsetWAS !== 0 ? `+${offsetWAS}` : "") + " WAS";
+          let formatWIB = format(jamWIB, menit) + (offsetWIB !== 0 ? `+${offsetWIB}` : "") + " WIB";
 
           return {
-              was: format(jamWAS) + " WAS",
-              wib: format(jamWIB) + " WIB"
+              was: formatWAS,
+              wib: formatWIB,
+              jamWIB: jamWIB,
+              menit: menit,
+              offsetWIB: offsetWIB // Kirim offset untuk kalkulasi matematis
           };
       }
 
@@ -1184,7 +1201,7 @@
       }
 
       // ==========================================
-      // 4. RENDER SLIDE & LOGIKA TAMPILAN
+      // 4. RENDER SLIDE & MATEMATIKA TOTAL MENIT
       // ==========================================
       let currentSlideIndex = 0;
 
@@ -1193,6 +1210,7 @@
          const hariIni = new Date();
          hariIni.setHours(0,0,0,0);
 
+         // Tangkap jam Real-time pengguna (Konversi absolut ke WIB)
          const waktuSekarangDate = new Date();
          const wibTimeStr = waktuSekarangDate.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
          const [jamReal, menitReal] = wibTimeStr.split(':').map(Number);
@@ -1212,60 +1230,53 @@
             const selisihHari = Math.round(selisihWaktu / (1000 * 3600 * 24));
             const formatTgl = tglItem.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
 
-            let statusLabel = '';
-            let btnLeft = '';
-            let btnRight = '';
-            let galleryBtnBelowLocation = '';
-
             const waktuMulaiObj = prosesWaktuDuaZona(item.waktuMulai);
             const waktuSelesaiObj = prosesWaktuDuaZona(item.waktuSelesai);
 
-            // JIKA HARI INI
-            if (selisihHari === 0) {
-               indexHariIni = index;
-               btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
-               btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"><i class="bi bi-chevron-right ms-1"></i></button>` : `<div style="width: 31px;"></div>`;
-               
-               const [jamM, menitM] = waktuMulaiObj.wib.replace(' WIB', '').split(':').map(Number);
-               const mulaiTotal = (jamM * 60) + (menitM || 0);
+            // === SUPER LOGIKA: KALKULASI MENIT ABSOLUT LINTAS HARI ===
+            // 1 hari = 1440 menit
+            const mulaiTotal = (waktuMulaiObj.jamWIB * 60) + waktuMulaiObj.menit + (waktuMulaiObj.offsetWIB * 1440);
+            const selesaiTotal = (waktuSelesaiObj.jamWIB * 60) + waktuSelesaiObj.menit + (waktuSelesaiObj.offsetWIB * 1440);
+            
+            // Konversi waktu sekarang menjadi relatif terhadap hari H kegiatan
+            const menitSekarangRelatif = menitSekarangTotal - (selisihHari * 1440);
 
-               const [jamS, menitS] = waktuSelesaiObj.wib.replace(' WIB', '').split(':').map(Number);
-               const selesaiTotal = (jamS * 60) + (menitS || 0);
+            let isSedangBerlangsung = false;
+            let isSudahSelesai = false;
+            let isAkanDatang = false;
 
-               let isSedangBerlangsung = false;
-               let isSudahSelesai = false;
-
-               if (mulaiTotal <= selesaiTotal) {
-                  isSedangBerlangsung = (menitSekarangTotal >= mulaiTotal && menitSekarangTotal <= selesaiTotal);
-                  isSudahSelesai = (menitSekarangTotal > selesaiTotal);
+            if (isNaN(mulaiTotal) || isNaN(selesaiTotal)) {
+               // Fallback jika tidak mengisi jam
+               if (selisihHari < 0) isSudahSelesai = true;
+               else if (selisihHari === 0) isSedangBerlangsung = true;
+               else isAkanDatang = true;
+            } else {
+               // Penentuan status super presisi (Bisa lintas 2-3 hari sekalipun)
+               if (menitSekarangRelatif < mulaiTotal) {
+                  isAkanDatang = true;
+               } else if (menitSekarangRelatif > selesaiTotal) {
+                  isSudahSelesai = true;
                } else {
-                  isSedangBerlangsung = (menitSekarangTotal >= mulaiTotal || menitSekarangTotal <= selesaiTotal);
-                  isSudahSelesai = (menitSekarangTotal > selesaiTotal && menitSekarangTotal < mulaiTotal);
+                  isSedangBerlangsung = true;
                }
+            }
 
-               if (isNaN(mulaiTotal) || isNaN(selesaiTotal)) {
-                  statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Hari Ini</span>`;
-               } else if (isSedangBerlangsung) {
-                  statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Sedang Berlangsung</span>`;
-               } else if (isSudahSelesai) {
-                  statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">Selesai Hari Ini</p>`;
-                  if (item.tampilkanGaleri === 'Ya') {
-                     galleryBtnBelowLocation = `
-                        <div class="mt-2">
-                           <a href="${item.linkGaleri}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold shadow-sm" title="Lihat Galeri">
-                              <i class="bi bi-images me-1"></i> Lihat Galeri
-                           </a>
-                        </div>`;
-                  }
-               } else {
-                  statusLabel = `<p class="text-primary fw-bold small mb-1" style="font-size: 1.1rem;">Hari Ini, Akan Datang</p>`;
+            // === PEMBUATAN TAMPILAN (UI) BERDASARKAN STATUS ===
+            let statusLabel = '';
+            let btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
+            let btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-right"></i></button>` : `<div style="width: 31px;"></div>`;
+            let galleryBtnBelowLocation = '';
+
+            if (isSedangBerlangsung) {
+               indexHariIni = index;
+               statusLabel = `<span class="badge bg-danger rounded-pill px-3 py-2 mb-2" style="font-size: 1.2rem;"><i class="bi bi-broadcast me-1"></i> Sedang Berlangsung</span>`;
+               if (index < dataKegiatan.length - 1) {
+                  btnRight = `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"><i class="bi bi-chevron-right ms-1"></i></button>`;
                }
             } 
-            // JIKA MASA LALU
-            else if (selisihHari < 0) {
-               statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">Selesai, ${formatTgl}</p>`;
-               btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
-               btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-right"></i></button>` : `<div style="width: 31px;"></div>`;
+            else if (isSudahSelesai) {
+               let textSelesai = selisihHari === 0 ? "Selesai Hari Ini" : `Selesai, ${formatTgl}`;
+               statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">${textSelesai}</p>`;
                
                if (item.tampilkanGaleri === 'Ya') {
                   galleryBtnBelowLocation = `
@@ -1276,15 +1287,14 @@
                      </div>`;
                }
             } 
-            // JIKA MASA DEPAN
-            else {
-               if (indexBerikutnya === -1) {
-                  indexBerikutnya = index;
-               }
-               let kataDepan = selisihHari === 1 ? "Besok" : "Mendatang";
-               statusLabel = `<p class="text-warning fw-bold small mb-1" style="font-size: 1.2rem;">${kataDepan}, ${formatTgl}</p>`;
-               btnLeft = index > 0 ? `<button onclick="geserKegiatan(-1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-left"></i></button>` : `<div style="width: 31px;"></div>`;
-               btnRight = index < dataKegiatan.length - 1 ? `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="bi bi-chevron-right"></i></button>` : `<div style="width: 31px;"></div>`;
+            else if (isAkanDatang) {
+               if (indexBerikutnya === -1) indexBerikutnya = index;
+               
+               let textDatang = selisihHari === 0 ? "Hari Ini, Akan Datang" : (selisihHari === 1 ? "Besok" : "Mendatang");
+               let kataDepan = selisihHari === 0 ? textDatang : `${textDatang}, ${formatTgl}`;
+               let colorClass = selisihHari === 0 ? "text-primary" : "text-warning";
+               
+               statusLabel = `<p class="${colorClass} fw-bold small mb-1" style="font-size: 1.1rem;">${kataDepan}</p>`;
             }
 
             const slideHTML = `
