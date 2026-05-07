@@ -152,14 +152,14 @@
                <img src="images/logokbihu.svg" alt="Logo KBIHU Al-Zamzami" height="80">
             </a>
 
-            <div
-               class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0">
+            <div class="col-12 col-lg-auto overflow-hidden rounded-pill shadow-sm border widget-tanah-suci mx-auto mx-lg-0" style="position: relative; height: 48px; min-width: 320px;">
 
-               <div id="sliderTanahSuci" class="w-100"
+               <!-- WIDGET TANAH SUCI (Makkah & Madinah - Slider) -->
+               <div id="sliderTanahSuci" class="w-100 d-none"
                   style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; top: 0; left: 0;">
 
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
-                     style="height: 48px;">
+                  <!-- Makkah -->
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Makkah</span>
                      </div>
@@ -175,8 +175,8 @@
                      </div>
                   </div>
 
-                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100"
-                     style="height: 48px;">
+                  <!-- Madinah -->
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
                      <div class="d-flex align-items-center gap-1 text-primary fw-bold widget-teks-lokasi">
                         <i class="bi bi-geo-alt-fill"></i> <span>Madinah</span>
                      </div>
@@ -193,6 +193,26 @@
                   </div>
 
                </div>
+
+               <!-- WIDGET KUNINGAN (Lokal - Statis) -->
+               <div id="widgetKuningan" class="w-100 d-none" style="position: absolute; top: 0; left: 0;">
+                  <div class="d-flex justify-content-between align-items-center px-3 px-sm-3 w-100" style="height: 48px;">
+                     <div class="d-flex align-items-center gap-1 text-success fw-bold widget-teks-lokasi">
+                        <i class="bi bi-geo-alt-fill"></i> <span>Kuningan</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks">
+                        <i id="iconCuacaKuningan" class="bi bi-hourglass-split"></i> <span id="suhuKuningan">--°C</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-muted widget-teks d-none d-sm-flex">
+                        <span id="tglKuningan">--/--/--</span>
+                     </div>
+                     <div class="d-flex align-items-center gap-1 text-warning fw-bold widget-teks">
+                        <span id="namaShalatKuningan">--</span> <i class="bi bi-clock-history d-none d-sm-inline"></i>
+                        <span id="waktuShalatKuningan">--:--</span>
+                     </div>
+                  </div>
+               </div>
+
             </div>
 
          </div>
@@ -854,17 +874,17 @@
       });
 
       // ==========================================
-      // WIDGET INFO TANAH SUCI (LIVE UPDATE)
+      // WIDGET CUACA & SHALAT (DINAMIS BERDASARKAN MUSIM HAJI)
       // ==========================================
 
-      // 1. Animasi Carousel Vertikal
-      let isMakkah = true;
-      setInterval(() => {
-         const slider = document.getElementById('sliderTanahSuci');
-         // Tinggi 1 item adalah 48px. Jika Madinah, geser ke atas (-48px)
-         slider.style.transform = isMakkah ? 'translateY(-48px)' : 'translateY(0)';
-         isMakkah = !isMakkah;
-      }, 4000); // Berganti setiap 4 detik
+      let carouselInterval; // Variabel global untuk menyimpan interval slider
+
+      // 1. Fungsi Mengecek Apakah Saat Ini Musim Haji (Dzulqa'dah, Dzulhijjah, Muharram)
+      function isMusimHaji() {
+         const formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic', { month: 'numeric' });
+         const hijriMonth = parseInt(formatter.format(new Date()));
+         return (hijriMonth === 11 || hijriMonth === 12 || hijriMonth === 1);
+      }
 
       // 2. Fungsi Pembantu: Mengubah Kode Cuaca menjadi Ikon Bootstrap
       function getIkonCuaca(weatherCode) {
@@ -875,12 +895,12 @@
          return 'bi-cloud-fill text-muted'; // Default
       }
 
-      // 3. Fungsi Menentukan Jadwal Shalat Berikutnya (Berdasarkan Waktu Arab Saudi)
-      function tentukanShalatBerikutnya(jadwal) {
-         // Ambil waktu Arab Saudi saat ini (WIB - 4 jam)
-         const waktuArab = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
-         const jamSekarang = waktuArab.getHours();
-         const menitSekarang = waktuArab.getMinutes();
+      // 3. Fungsi Menentukan Jadwal Shalat Berikutnya (Dinamis dengan Timezone)
+      function tentukanShalatBerikutnya(jadwal, timezone) {
+         // Ambil waktu sesuai dengan zona waktu kota tersebut
+         const waktuLokal = new Date(new Date().toLocaleString("en-US", { timeZone: timezone }));
+         const jamSekarang = waktuLokal.getHours();
+         const menitSekarang = waktuLokal.getMinutes();
          const waktuSekarangInt = jamSekarang * 60 + menitSekarang;
 
          const daftarShalat = [
@@ -894,50 +914,44 @@
          for (let shalat of daftarShalat) {
             let [jam, menit] = shalat.waktu.split(':').map(Number);
             let waktuShalatInt = jam * 60 + menit;
-            // Jika waktu shalat ini lebih besar dari waktu sekarang, ini adalah shalat berikutnya!
+
             if (waktuShalatInt > waktuSekarangInt) {
                return shalat;
             }
          }
-         // Jika sudah lewat Isya, tampilkan Subuh besoknya
+         // Jika lewat Isya, kembali ke Subuh besoknya
          return { nama: 'Subuh', waktu: daftarShalat[0].waktu };
       }
 
-      // 4. Fungsi Utama Penarik Data API
-      async function updateDataTanahSuci() {
+      // 4. API Penarik Data Tanah Suci
+      async function fetchTanahSuci() {
          try {
-            // --- A. UPDATE CUACA (Open-Meteo) ---
-            // Makkah: 21.4225, 39.8262 | Madinah: 24.4686, 39.6142
             const resCuaca = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.4225,24.4686&longitude=39.8262,39.6142&current_weather=true');
             const dataCuaca = await resCuaca.json();
 
-            // Terapkan ke UI Makkah
+            // UI Makkah
             document.getElementById('suhuMakkah').innerText = Math.round(dataCuaca[0].current_weather.temperature) + '°C';
             document.getElementById('iconCuacaMakkah').className = 'bi ' + getIkonCuaca(dataCuaca[0].current_weather.weathercode);
 
-            // Terapkan ke UI Madinah
+            // UI Madinah
             document.getElementById('suhuMadinah').innerText = Math.round(dataCuaca[1].current_weather.temperature) + '°C';
             document.getElementById('iconCuacaMadinah').className = 'bi ' + getIkonCuaca(dataCuaca[1].current_weather.weathercode);
 
-
-            // --- B. UPDATE TANGGAL & JADWAL SHALAT (Aladhan API) ---
             const resShalatMakkah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4');
             const dataShalatMakkah = await resShalatMakkah.json();
 
             const resShalatMadinah = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Madinah&country=Saudi%20Arabia&method=4');
             const dataShalatMadinah = await resShalatMadinah.json();
 
-            // Set Tanggal (Format: DD-MMM-YYYY)
             const tgl = dataShalatMakkah.data.date.readable;
             document.getElementById('tglMakkah').innerText = tgl;
             document.getElementById('tglMadinah').innerText = tgl;
 
-            // Kalkulasi Shalat Berikutnya
-            const nextMakkah = tentukanShalatBerikutnya(dataShalatMakkah.data.timings);
+            const nextMakkah = tentukanShalatBerikutnya(dataShalatMakkah.data.timings, "Asia/Riyadh");
             document.getElementById('namaShalatMakkah').innerText = nextMakkah.nama;
             document.getElementById('waktuShalatMakkah').innerText = nextMakkah.waktu;
 
-            const nextMadinah = tentukanShalatBerikutnya(dataShalatMadinah.data.timings);
+            const nextMadinah = tentukanShalatBerikutnya(dataShalatMadinah.data.timings, "Asia/Riyadh");
             document.getElementById('namaShalatMadinah').innerText = nextMadinah.nama;
             document.getElementById('waktuShalatMadinah').innerText = nextMadinah.waktu;
 
@@ -946,15 +960,69 @@
          }
       }
 
-      // Jalankan saat web dibuka, dan perbarui otomatis setiap 1 jam
-      updateDataTanahSuci();
-      // setInterval(updateDataTanahSuci, 3600000);
+      // 5. API Penarik Data Kuningan
+      async function fetchKuningan() {
+         try {
+            // Koordinat Kuningan: Lat -6.9756, Lon 108.4833
+            const resCuaca = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-6.9756&longitude=108.4833&current_weather=true');
+            const dataCuaca = await resCuaca.json();
+
+            document.getElementById('suhuKuningan').innerText = Math.round(dataCuaca.current_weather.temperature) + '°C';
+            document.getElementById('iconCuacaKuningan').className = 'bi ' + getIkonCuaca(dataCuaca.current_weather.weathercode);
+
+            // Method 20 adalah standar Kemenag RI
+            const resShalat = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Kuningan&country=Indonesia&method=20');
+            const dataShalat = await resShalat.json();
+
+            document.getElementById('tglKuningan').innerText = dataShalat.data.date.readable;
+
+            const nextKuningan = tentukanShalatBerikutnya(dataShalat.data.timings, "Asia/Jakarta");
+            document.getElementById('namaShalatKuningan').innerText = nextKuningan.nama;
+            document.getElementById('waktuShalatKuningan').innerText = nextKuningan.waktu;
+
+         } catch (error) {
+            console.log("Gagal memuat data Kuningan", error);
+         }
+      }
+
+      // 6. Controller Utama (Menjalankan logika pergantian musim)
+      async function inisialisasiWidget() {
+         if (isMusimHaji()) {
+            // Tampilkan Tanah Suci, sembunyikan Kuningan
+            document.getElementById('sliderTanahSuci').classList.remove('d-none');
+            document.getElementById('widgetKuningan').classList.add('d-none');
+
+            await fetchTanahSuci();
+
+            // Mulai Animasi Carousel
+            let isMakkah = true;
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+               const slider = document.getElementById('sliderTanahSuci');
+               slider.style.transform = isMakkah ? 'translateY(-48px)' : 'translateY(0)';
+               isMakkah = !isMakkah;
+            }, 4000);
+
+         } else {
+            // Tampilkan Kuningan, sembunyikan Tanah Suci
+            document.getElementById('widgetKuningan').classList.remove('d-none');
+            document.getElementById('sliderTanahSuci').classList.add('d-none');
+
+            // Hentikan carousel jika berjalan
+            if (carouselInterval) clearInterval(carouselInterval);
+
+            await fetchKuningan();
+         }
+      }
+
+      // Jalankan saat web dibuka
+      inisialisasiWidget();
+
+      // (Opsional) Perbarui otomatis setiap 1 jam (3600000 ms)
+      setInterval(inisialisasiWidget, 3600000);
 
       // ==========================================
       // FITUR NOTIFIKASI JADWAL DINAMIS (FIX TANGGAL INDONESIA)
-      // ==========================================
-      // ==========================================
-      // FITUR NOTIFIKASI JADWAL DINAMIS (BISA LINTAS ZONA & HARI)
       // ==========================================
       async function muatNotifikasiJadwal() {
          try {
@@ -1006,7 +1074,7 @@
 
                // 1. MENGATASI FORMAT TANGGAL DD/MM/YYYY
                const tglParts = event.tanggal.split('/');
-               let tglValid = event.tanggal; 
+               let tglValid = event.tanggal;
                if (tglParts.length === 3) {
                   tglValid = `${tglParts[2]}/${tglParts[1]}/${tglParts[0]}`;
                } else if (event.tanggal.includes('T')) {
@@ -1015,7 +1083,7 @@
 
                // Buat Tanggal Dasar (Jam 00:00)
                let baseDate = new Date(tglValid);
-               baseDate.setHours(0,0,0,0);
+               baseDate.setHours(0, 0, 0, 0);
 
                // 2. Ambil Jam Mulai & Selesai dari teks "20:00 WIB - 01:00+1 WAS"
                const bagianWaktu = event.waktu.split('-');
@@ -1110,19 +1178,17 @@
       // Jalankan fungsi saat web dibuka
       muatNotifikasiJadwal();
 
-   </script>
-   <script>
       // 1. PENGAMBILAN DATA DARI GOOGLE SHEETS (GAS)
       // ==========================================
       const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbzEMLcsUAbkZD6mpGfOPbY0T7DA3t4xbRgrtPZObfuvMrSQ7YIpnqJ-dRFEzICZ1nUn/exec?getJson=1';
-      
+
       let dataKegiatan = [];
 
       async function fetchKegiatanDariSheet() {
          const track = document.getElementById('trackKegiatan');
-         const widget = document.getElementById('widgetKegiatanHaji'); 
-         
-         if (widget) widget.classList.remove('d-none'); 
+         const widget = document.getElementById('widgetKegiatanHaji');
+
+         if (widget) widget.classList.remove('d-none');
 
          if (track) {
             track.innerHTML = `
@@ -1136,9 +1202,9 @@
          try {
             const response = await fetch(gasWebAppUrl, { redirect: "follow" });
             const result = await response.json();
-            
+
             dataKegiatan = result.map(item => ({
-               date: item.tanggal, 
+               date: item.tanggal,
                waktuMulai: item.waktuMulai,
                waktuSelesai: item.waktuSelesai,
                kegiatan: item.nama,
@@ -1164,52 +1230,52 @@
       // 2. MESIN WAKTU: PINTAR WAS/WIB & LINTAS HARI (+1)
       // ==========================================
       function prosesWaktuDuaZona(waktuTeks) {
-          if (!waktuTeks) return { was: "--:--", wib: "--:--", jamWIB: NaN, menit: NaN, offsetWIB: 0 };
+         if (!waktuTeks) return { was: "--:--", wib: "--:--", jamWIB: NaN, menit: NaN, offsetWIB: 0 };
 
-          let raw = waktuTeks.toUpperCase().trim();
-          let parts = raw.split(' '); 
-          let timePart = parts[0]; 
-          let zona = parts[1] || "WAS"; 
+         let raw = waktuTeks.toUpperCase().trim();
+         let parts = raw.split(' ');
+         let timePart = parts[0];
+         let zona = parts[1] || "WAS";
 
-          // Cek apakah ada penambahan hari (contoh: 03:00+1)
-          let offsetTulis = 0;
-          if (timePart.includes('+')) {
-             let splitPlus = timePart.split('+');
-             timePart = splitPlus[0];
-             offsetTulis = parseInt(splitPlus[1]) || 0;
-          }
+         // Cek apakah ada penambahan hari (contoh: 03:00+1)
+         let offsetTulis = 0;
+         if (timePart.includes('+')) {
+            let splitPlus = timePart.split('+');
+            timePart = splitPlus[0];
+            offsetTulis = parseInt(splitPlus[1]) || 0;
+         }
 
-          let jamMenit = timePart.split(':');
-          let jam = parseInt(jamMenit[0]);
-          let menit = parseInt(jamMenit[1] || "0");
+         let jamMenit = timePart.split(':');
+         let jam = parseInt(jamMenit[0]);
+         let menit = parseInt(jamMenit[1] || "0");
 
-          let jamWAS = jam;
-          let jamWIB = jam;
-          let offsetWAS = offsetTulis;
-          let offsetWIB = offsetTulis;
+         let jamWAS = jam;
+         let jamWIB = jam;
+         let offsetWAS = offsetTulis;
+         let offsetWIB = offsetTulis;
 
-          // Konversi Waktu
-          if (zona === 'WIB') {
-              jamWAS = jam - 4;
-              if (jamWAS < 0) { jamWAS += 24; offsetWAS -= 1; }
-          } else {
-              jamWIB = jam + 4;
-              if (jamWIB >= 24) { jamWIB -= 24; offsetWIB += 1; }
-          }
+         // Konversi Waktu
+         if (zona === 'WIB') {
+            jamWAS = jam - 4;
+            if (jamWAS < 0) { jamWAS += 24; offsetWAS -= 1; }
+         } else {
+            jamWIB = jam + 4;
+            if (jamWIB >= 24) { jamWIB -= 24; offsetWIB += 1; }
+         }
 
-          const format = (j, m) => j.toString().padStart(2, '0') + ":" + m.toString().padStart(2, '0');
+         const format = (j, m) => j.toString().padStart(2, '0') + ":" + m.toString().padStart(2, '0');
 
-          // Rakit Teks Tampilan (Jika ada offset, kembalikan teks +1 nya)
-          let formatWAS = format(jamWAS, menit) + (offsetWAS !== 0 ? `+${offsetWAS}` : "") + " WAS";
-          let formatWIB = format(jamWIB, menit) + (offsetWIB !== 0 ? `+${offsetWIB}` : "") + " WIB";
+         // Rakit Teks Tampilan (Jika ada offset, kembalikan teks +1 nya)
+         let formatWAS = format(jamWAS, menit) + (offsetWAS !== 0 ? `+${offsetWAS}` : "") + " WAS";
+         let formatWIB = format(jamWIB, menit) + (offsetWIB !== 0 ? `+${offsetWIB}` : "") + " WIB";
 
-          return {
-              was: formatWAS,
-              wib: formatWIB,
-              jamWIB: jamWIB,
-              menit: menit,
-              offsetWIB: offsetWIB // Kirim offset untuk kalkulasi matematis
-          };
+         return {
+            was: formatWAS,
+            wib: formatWIB,
+            jamWIB: jamWIB,
+            menit: menit,
+            offsetWIB: offsetWIB // Kirim offset untuk kalkulasi matematis
+         };
       }
 
       // ==========================================
@@ -1218,10 +1284,10 @@
       function cekBulanHajiTampil() {
          const formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic', { month: 'numeric' });
          const hijriMonth = parseInt(formatter.format(new Date()));
-         
-         const isMusimHaji = (hijriMonth === 11 || hijriMonth === 12 || hijriMonth === 1); 
 
-         if (isMusimHaji || true) { 
+         const isMusimHaji = (hijriMonth === 11 || hijriMonth === 12 || hijriMonth === 1);
+
+         if (isMusimHaji || true) {
             document.getElementById('widgetKegiatanHaji').classList.remove('d-none');
             initSliderKegiatan();
          }
@@ -1235,24 +1301,24 @@
       function initSliderKegiatan() {
          const track = document.getElementById('trackKegiatan');
          const hariIni = new Date();
-         hariIni.setHours(0,0,0,0);
+         hariIni.setHours(0, 0, 0, 0);
 
          // Tangkap jam Real-time pengguna (Konversi absolut ke WIB)
          const waktuSekarangDate = new Date();
          const wibTimeStr = waktuSekarangDate.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
          const [jamReal, menitReal] = wibTimeStr.split(':').map(Number);
-         const menitSekarangTotal = (jamReal * 60) + menitReal; 
+         const menitSekarangTotal = (jamReal * 60) + menitReal;
 
-         track.innerHTML = ''; 
-         
+         track.innerHTML = '';
+
          let indexHariIni = -1;
          let indexBerikutnya = -1;
 
          dataKegiatan.forEach((item, index) => {
             const tglParts = item.date.split('-');
             const tglItem = new Date(tglParts[0], tglParts[1] - 1, tglParts[2]);
-            tglItem.setHours(0,0,0,0);
-            
+            tglItem.setHours(0, 0, 0, 0);
+
             const selisihWaktu = tglItem.getTime() - hariIni.getTime();
             const selisihHari = Math.round(selisihWaktu / (1000 * 3600 * 24));
             const formatTgl = tglItem.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -1264,7 +1330,7 @@
             // 1 hari = 1440 menit
             const mulaiTotal = (waktuMulaiObj.jamWIB * 60) + waktuMulaiObj.menit + (waktuMulaiObj.offsetWIB * 1440);
             const selesaiTotal = (waktuSelesaiObj.jamWIB * 60) + waktuSelesaiObj.menit + (waktuSelesaiObj.offsetWIB * 1440);
-            
+
             // Konversi waktu sekarang menjadi relatif terhadap hari H kegiatan
             const menitSekarangRelatif = menitSekarangTotal - (selisihHari * 1440);
 
@@ -1300,11 +1366,11 @@
                if (index < dataKegiatan.length - 1) {
                   btnRight = `<button onclick="geserKegiatan(1)" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"><i class="bi bi-chevron-right ms-1"></i></button>`;
                }
-            } 
+            }
             else if (isSudahSelesai) {
                let textSelesai = selisihHari === 0 ? "Selesai Hari Ini" : `Selesai, ${formatTgl}`;
                statusLabel = `<p class="text-secondary fw-bold small mb-1" style="font-size: 0.9rem;">${textSelesai}</p>`;
-               
+
                if (item.tampilkanGaleri === 'Ya') {
                   galleryBtnBelowLocation = `
                      <div class="mt-2">
@@ -1313,14 +1379,14 @@
                         </a>
                      </div>`;
                }
-            } 
+            }
             else if (isAkanDatang) {
                if (indexBerikutnya === -1) indexBerikutnya = index;
-               
+
                let textDatang = selisihHari === 0 ? "Hari Ini, Akan Datang" : (selisihHari === 1 ? "Besok" : "Mendatang");
                let kataDepan = selisihHari === 0 ? textDatang : `${textDatang}, ${formatTgl}`;
                let colorClass = selisihHari === 0 ? "text-primary" : "text-warning";
-               
+
                statusLabel = `<p class="${colorClass} fw-bold small mb-1" style="font-size: 1.1rem;">${kataDepan}</p>`;
             }
 
@@ -1359,15 +1425,15 @@
          } else {
             currentSlideIndex = dataKegiatan.length > 0 ? dataKegiatan.length - 1 : 0;
          }
-         
+
          updatePosisiSlider();
-         initTouchSlider(); 
+         initTouchSlider();
       }
 
       function geserKegiatan(arah) {
          currentSlideIndex += arah;
-         if(currentSlideIndex < 0) currentSlideIndex = 0;
-         if(currentSlideIndex >= dataKegiatan.length) currentSlideIndex = dataKegiatan.length - 1;
+         if (currentSlideIndex < 0) currentSlideIndex = 0;
+         if (currentSlideIndex >= dataKegiatan.length) currentSlideIndex = dataKegiatan.length - 1;
          updatePosisiSlider();
       }
 
@@ -1381,17 +1447,17 @@
       // ==========================================
       let touchStartX = 0;
       let touchEndX = 0;
-      let minSwipeDistance = 50; 
+      let minSwipeDistance = 50;
 
       function initTouchSlider() {
          const sliderTrack = document.getElementById('trackKegiatan');
          if (!sliderTrack) return;
 
-         sliderTrack.addEventListener('touchstart', function(e) {
+         sliderTrack.addEventListener('touchstart', function (e) {
             touchStartX = e.touches[0].clientX;
          }, { passive: true });
 
-         sliderTrack.addEventListener('touchend', function(e) {
+         sliderTrack.addEventListener('touchend', function (e) {
             touchEndX = e.changedTouches[0].clientX;
             handleSwipeGesture();
          }, { passive: true });
@@ -1401,9 +1467,9 @@
          let swipeDistance = touchEndX - touchStartX;
          if (Math.abs(swipeDistance) > minSwipeDistance) {
             if (swipeDistance < 0) {
-               geserKegiatan(1); 
+               geserKegiatan(1);
             } else if (swipeDistance > 0) {
-               geserKegiatan(-1); 
+               geserKegiatan(-1);
             }
          }
          touchStartX = 0;
