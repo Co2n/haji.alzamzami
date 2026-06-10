@@ -147,8 +147,20 @@
                <td id="d-perihal">-</td>
             </tr>
             <tr>
+               <th>Porsi</th>
+               <td id="d-porsi">-</td>
+            </tr>
+            <tr>
                <th>Ditujukan Kepada</th>
                <td id="d-untuk">-</td>
+            </tr>
+            <tr>
+               <th>Geleri</th>
+               <td id="d-geleri">-</td>
+            </tr>
+            <tr>
+               <th>Sertifikat Haj</th>
+               <td id="d-sertikemenhaj">-</td>
             </tr>
             <tr>
                <th>Pejabat Penanda Tangan</th>
@@ -197,13 +209,30 @@
                loadingEl.style.display = 'none';
 
                if (result.status === 'success') {
-                  // Isi data ke HTML
-                  document.getElementById('d-jenis').textContent = result.data.jenis_dokumen;
-                  document.getElementById('d-nomor').textContent = result.data.nomor_dokumen;
-                  document.getElementById('d-tanggal').textContent = result.data.tgl_dok;
-                  document.getElementById('d-perihal').textContent = result.data.perihal;
-                  document.getElementById('d-untuk').textContent = result.data.untuk;
-                  document.getElementById('d-pejabat').textContent = result.data.pejabat;
+                  // Fungsi bantuan untuk mengisi data atau menyembunyikan baris (<tr>) jika kosong
+                  function setRowData(elementId, dataValue) {
+                     const tdElement = document.getElementById(elementId);
+                     const trElement = tdElement.closest('tr'); // Mencari elemen <tr> pembungkusnya
+                     
+                     // Cek apakah dataValue ada isinya (bukan null, undefined, atau string kosong)
+                     if (dataValue && dataValue.toString().trim() !== '') {
+                        tdElement.textContent = dataValue;
+                        trElement.style.display = ''; // Tampilkan baris
+                     } else {
+                        trElement.style.display = 'none'; // Sembunyikan baris
+                     }
+                  }
+
+                  // Terapkan fungsi ke masing-masing baris
+                  setRowData('d-jenis', result.data.jenis_dokumen);
+                  setRowData('d-nomor', result.data.nomor_dokumen);
+                  setRowData('d-tanggal', result.data.tgl_dok);
+                  setRowData('d-perihal', result.data.perihal);
+                  setRowData('d-untuk', result.data.untuk);
+                  setRowData('d-pejabat', result.data.pejabat);
+                  setRowData('d-porsi', result.data.porsi);
+                  setRowData('d-geleri', result.data.geleri);
+                  setRowData('d-sertikemenhaj', result.data.sertikemenhaj);
 
                   // Tampilkan konten
                   contentEl.style.display = 'block';
