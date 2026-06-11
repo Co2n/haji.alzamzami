@@ -267,13 +267,14 @@
                   setRowData('d-nomor', result.data.nomor_dokumen);
                   setRowData('d-tanggal', result.data.tgl_dok);
                   setRowData('d-perihal', result.data.perihal);
+                  setRowData('d-porsi', result.data.porsi);
                   setRowData('d-untuk', result.data.untuk);
                   setRowData('d-pejabat', result.data.pejabat);
 
                   // Terapkan fungsi link ke baris URL
                   // Pastikan 'result.data.galeri' dan 'result.data.sertikemenhaj' sesuai dengan nama kolom/key dari Apps Script Anda
-                  setRowLink('d-galeri', result.data.galeri, 'Klik Galeri');
-                  setRowLink('d-sertikemenhaj', result.data.sertikemenhaj, 'Klik Sertifikat Kemenhaj');
+                  setRowLink('d-galeri', result.data.galeri, 'Klik untuk melihat Galeri Foto');
+                  setRowLink('d-sertikemenhaj', result.data.sertikemenhaj, 'Klik untuk melihat Sertifikat Kemenhaj');
 
                   // Tampilkan konten
                   contentEl.style.display = 'block';
