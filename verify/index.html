@@ -158,6 +158,10 @@
                <td id="d-jenis">-</td>
             </tr>
             <tr>
+               <th>Wukuf 9 Djulhijjah</th>
+               <td id="d-wukuf">-</td>
+            </tr>
+            <tr>
                <th>Nomor Dokumen</th>
                <td id="d-nomor">-</td>
             </tr>
@@ -170,7 +174,7 @@
                <td id="d-perihal">-</td>
             </tr>
             <tr>
-               <th>Porsi</th>
+               <th>Porsi/Paspor/Visa</th>
                <td id="d-porsi">-</td>
             </tr>
             <tr>
@@ -264,6 +268,7 @@
 
                   // Terapkan fungsi teks ke masing-masing baris
                   setRowData('d-jenis', result.data.jenis_dokumen);
+                  setRowData('d-wukuf', result.data.wukuf);
                   setRowData('d-nomor', result.data.nomor_dokumen);
                   setRowData('d-tanggal', result.data.tgl_dok);
                   setRowData('d-perihal', result.data.perihal);
