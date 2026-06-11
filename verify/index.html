@@ -159,7 +159,7 @@
                <td id="d-galeri">-</td>
             </tr>
             <tr>
-               <th>Sertifikat Haj</th>
+               <th>Sertifikat Haji Kemanhaj</th>
                <td id="d-sertikemenhaj">-</td>
             </tr>
             <tr>
@@ -209,30 +209,48 @@
                loadingEl.style.display = 'none';
 
                if (result.status === 'success') {
-                  // Fungsi bantuan untuk mengisi data atau menyembunyikan baris (<tr>) jika kosong
+                  // Fungsi bantuan untuk teks biasa
                   function setRowData(elementId, dataValue) {
                      const tdElement = document.getElementById(elementId);
-                     const trElement = tdElement.closest('tr'); // Mencari elemen <tr> pembungkusnya
+                     if (!tdElement) return; // Mencegah error jika elemen tidak ada di HTML
                      
-                     // Cek apakah dataValue ada isinya (bukan null, undefined, atau string kosong)
+                     const trElement = tdElement.closest('tr'); 
                      if (dataValue && dataValue.toString().trim() !== '') {
                         tdElement.textContent = dataValue;
-                        trElement.style.display = ''; // Tampilkan baris
+                        trElement.style.display = ''; 
                      } else {
-                        trElement.style.display = 'none'; // Sembunyikan baris
+                        trElement.style.display = 'none'; 
                      }
                   }
 
-                  // Terapkan fungsi ke masing-masing baris
+                  // Fungsi bantuan khusus untuk URL / Tautan
+                  function setRowLink(elementId, urlValue, linkText) {
+                     const tdElement = document.getElementById(elementId);
+                     if (!tdElement) return;
+                     
+                     const trElement = tdElement.closest('tr');
+                     if (urlValue && urlValue.toString().trim() !== '') {
+                        // Memasukkan tag <a> dengan target="_blank"
+                        // Ditambahkan sedikit inline CSS agar link terlihat rapi
+                        tdElement.innerHTML = `<a href="${urlValue}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: bold;">${linkText}</a>`;
+                        trElement.style.display = '';
+                     } else {
+                        trElement.style.display = 'none';
+                     }
+                  }
+
+                  // Terapkan fungsi teks ke masing-masing baris
                   setRowData('d-jenis', result.data.jenis_dokumen);
                   setRowData('d-nomor', result.data.nomor_dokumen);
                   setRowData('d-tanggal', result.data.tgl_dok);
                   setRowData('d-perihal', result.data.perihal);
                   setRowData('d-untuk', result.data.untuk);
                   setRowData('d-pejabat', result.data.pejabat);
-                  setRowData('d-porsi', result.data.porsi);
-                  setRowData('d-galeri', result.data.galeri);
-                  setRowData('d-sertikemenhaj', result.data.sertikemenhaj);
+
+                  // Terapkan fungsi link ke baris URL
+                  // Pastikan 'result.data.galeri' dan 'result.data.sertikemenhaj' sesuai dengan nama kolom/key dari Apps Script Anda
+                  setRowLink('d-galeri', result.data.galeri, 'Klik Galeri');
+                  setRowLink('d-sertikemenhaj', result.data.sertikemenhaj, 'Klik Sertifikat Kemenhaj');
 
                   // Tampilkan konten
                   contentEl.style.display = 'block';
