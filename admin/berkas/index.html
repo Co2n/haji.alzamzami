@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perbandingan Gambar Urutan Porsi</title>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; padding: 20px; background-color: #f4f6f9; }
+        
+        /* Bagian Atas 1 & 2 */
+        .header-panel { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .nav-controls { display: flex; align-items: center; gap: 20px; }
+        button { padding: 10px 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; background-color: #007bff; color: white; transition: 0.2s; }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        .porsi-display { font-size: 18px; font-weight: bold; color: #333; background: #e9ecef; padding: 8px 20px; border-radius: 4px; }
+
+        /* Bagian Bawah: Split Layout Kiri & Kanan */
+        .main-container { display: flex; gap: 20px; height: calc(100vh - 180px); min-height: 500px; }
+        .panel-side { flex: 1; display: flex; flex-direction: column; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; }
+        .panel-title { text-align: center; margin: 0 0 10px 0; font-size: 16px; color: #555; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        
+        /* Slider Internal */
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .image-label { font-weight: bold; color: #007bff; }
+        
+        /* PERUBAHAN DISINI: Pembungkus Gambar dibuat Scroll Vertikal */
+        .image-wrapper { 
+            flex: 1; 
+            background: #222; 
+            border-radius: 6px; 
+            overflow-y: auto;  /* Mengaktifkan scroll vertikal jika gambar terlalu tinggi */
+            overflow-x: hidden; /* Menyembunyikan scroll horizontal agar rapi */
+            position: relative; 
+            text-align: center; /* Menjaga gambar tetap di tengah secara horizontal */
+            padding: 10px;
+        }
+        
+        /* PERUBAHAN DISINI: Mengatur Gambar agar Lebarnya Max 100% dan Tinggi Alami */
+        .image-wrapper img { 
+            max-width: 100%; 
+            height: auto;       /* Membiarkan tinggi gambar memanjang sesuai resolusi asli */
+            display: block; 
+            margin: 0 auto;     /* Mengetengahkan gambar */
+        }
+        
+        .no-image { color: #888; font-style: italic; }
+
+        /* Modal Box untuk Input Porsi */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 25px; border-radius: 8px; width: 400px; max-width: 90%; display: flex; flex-direction: column; gap: 15px; }
+        .modal-content textarea { width: 100%; height: 200px; padding: 10px; font-size: 14px; resize: none; border: 1px solid #ccc; border-radius: 4px; }
+        .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        
+        /* Loading overlay tetap fixed di tengah pembungkus */
+        .loading { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            color: white; 
+            background: rgba(0,0,0,0.7); 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            display: none; 
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-panel">
+        <div>
+            <button onclick="openModal()">Input Daftar Porsi</button>
+        </div>
+        <div class="nav-controls">
+            <button id="btnPrev" onclick="navigatePorsi(-1)">Sebelumnya</button>
+            <div id="porsiText" class="porsi-display">Belum ada data</div>
+            <button id="btnNext" onclick="navigatePorsi(1)">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="panel-side" id="leftPanel">
+            <h3 class="panel-title">Tampilan Pembanding Kiri</h3>
+            <div class="slider-controls">
+                <button onclick="slideImage('left', -1)">◀</button>
+                <span class="image-label" id="leftLabel">Loading...</span>
+                <button onclick="slideImage('left', 1)">▶</button>
+            </div>
+            <div class="image-wrapper">
+                <div class="loading" id="leftLoading">Loading Gambar...</div>
+                <img id="leftImg" src="" alt="Gambar Kiri">
+            </div>
+        </div>
+
+        <div class="panel-side" id="rightPanel">
+            <h3 class="panel-title">Tampilan Pembanding Kanan</h3>
+            <div class="slider-controls">
+                <button onclick="slideImage('right', -1)">◀</button>
+                <span class="image-label" id="rightLabel">Loading...</span>
+                <button onclick="slideImage('right', 1)">▶</button>
+            </div>
+            <div class="image-wrapper">
+                <div class="loading" id="rightLoading">Loading Gambar...</div>
+                <img id="rightImg" src="" alt="Gambar Kanan">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="porsiModal">
+        <div class="modal-content">
+            <h3>Masukkan Daftar Nomor Porsi</h3>
+            <p style="font-size:12px; color:#666; margin:0;">Pisahkan setiap nomor porsi menggunakan Baris Baru (Enter).</p>
+            <textarea id="porsiInput" placeholder="Contoh:&#10;1000636477&#10;1000698370&#10;1000698372"></textarea>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeModal()">Batal</button>
+                <button onclick="savePorsiList()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MASUKKAN URL WEB APP GAS ANDA DISINI
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx0sjsR5mmzXyI874osByPE1EKmcZ9MAggM9hTLWBiITHBQqL2T2uMZ8uMur4L7BAYHeQ/exec";
+
+        const imageKeys = ["BPIH", "PENDAFTARAN BPIH", "IMAGE PERDIM", "IMAGE KTP", "IMAGE_KK"];
+        
+        let porsiQueue = [];
+        let currentPorsiIndex = -1;
+        let currentLeftImgIndex = 0;
+        let currentRightImgIndex = 0;
+        let fetchedImagesData = {};
+
+        window.onload = function() {
+            const savedList = localStorage.getItem('porsi_queue');
+            if (savedList) {
+                porsiQueue = JSON.parse(savedList);
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const porsiInUrl = urlParams.get('porsi');
+
+            if (porsiInUrl && porsiQueue.length > 0) {
+                currentPorsiIndex = porsiQueue.indexOf(porsiInUrl);
+                if (currentPorsiIndex === -1) {
+                    porsiQueue.unshift(porsiInUrl);
+                    currentPorsiIndex = 0;
+                    localStorage.setItem('porsi_queue', JSON.stringify(porsiQueue));
+                }
+                loadDataFromServer(porsiInUrl);
+            } else if (porsiQueue.length > 0) {
+                currentPorsiIndex = 0;
+                updateUrlAndFetch();
+            } else {
+                openModal();
+            }
+            updateNavButtons();
+        }
+
+        function openModal() { document.getElementById('porsiModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('porsiModal').style.display = 'none'; }
+
+        function savePorsiList() {
+            const text = document.getElementById('porsiInput').value;
+            porsiQueue = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            
+            if (porsiQueue.length === 0) {
+                alert("Mohon masukkan minimal 1 nomor porsi!");
+                return;
+            }
+
+            localStorage.setItem('porsi_queue', JSON.stringify(porsiQueue));
+            currentPorsiIndex = 0;
+            closeModal();
+            updateUrlAndFetch();
+        }
+
+        function navigatePorsi(direction) {
+            let newIndex = currentPorsiIndex + direction;
+            if (newIndex >= 0 && newIndex < porsiQueue.length) {
+                currentPorsiIndex = newIndex;
+                updateUrlAndFetch();
+            }
+        }
+
+        function updateUrlAndFetch() {
+            const activePorsi = porsiQueue[currentPorsiIndex];
+            document.getElementById('porsiText').innerText = activePorsi;
+            
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?porsi=' + activePorsi;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            
+            updateNavButtons();
+            loadDataFromServer(activePorsi);
+        }
+
+        function updateNavButtons() {
+            document.getElementById('btnPrev').disabled = (currentPorsiIndex <= 0);
+            document.getElementById('btnNext').disabled = (currentPorsiIndex >= porsiQueue.length - 1 || porsiQueue.length === 0);
+        }
+
+        function loadDataFromServer(porsi) {
+            document.getElementById('leftLoading').style.display = 'block';
+            document.getElementById('rightLoading').style.display = 'block';
+            document.getElementById('leftImg').style.opacity = '0.3';
+            document.getElementById('rightImg').style.opacity = '0.3';
+
+            fetch(`${GAS_API_URL}?porsi=${porsi}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('leftLoading').style.display = 'none';
+                    document.getElementById('rightLoading').style.display = 'none';
+                    document.getElementById('leftImg').style.opacity = '1';
+                    document.getElementById('rightImg').style.opacity = '1';
+
+                    if (data.error) {
+                        alert(data.error);
+                        clearImages();
+                        return;
+                    }
+
+                    fetchedImagesData = data.images;
+                    currentLeftImgIndex = 0;
+                    currentRightImgIndex = 0;
+                    
+                    renderSlider('left');
+                    renderSlider('right');
+                })
+                .catch(err => {
+                    console.error("Error Fetching:", err);
+                    alert("Gagal mengambil data dari Google Sheet Server.");
+                });
+        }
+
+        function clearImages() {
+            fetchedImagesData = {};
+            document.getElementById('leftLabel').innerText = "-";
+            document.getElementById('rightLabel').innerText = "-";
+            document.getElementById('leftImg').src = "";
+            document.getElementById('rightImg').src = "";
+        }
+
+        function slideImage(side, direction) {
+            if (Object.keys(fetchedImagesData).length === 0) return;
+
+            // Setiap kali ganti gambar, reset posisi scroll panel ke paling atas (top)
+            document.getElementById(`${side}Panel`).querySelector('.image-wrapper').scrollTop = 0;
+
+            if (side === 'left') {
+                currentLeftImgIndex = (currentLeftImgIndex + direction + imageKeys.length) % imageKeys.length;
+                renderSlider('left');
+            } else {
+                currentRightImgIndex = (currentRightImgIndex + direction + imageKeys.length) % imageKeys.length;
+                renderSlider('right');
+            }
+        }
+
+        function renderSlider(side) {
+            const index = (side === 'left') ? currentLeftImgIndex : currentRightImgIndex;
+            const labelEl = document.getElementById(`${side}Label`);
+            const imgEl = document.getElementById(`${side}Img`);
+            
+            const currentKey = imageKeys[index];
+            const imgUrl = fetchedImagesData[currentKey];
+
+            labelEl.innerText = currentKey;
+            if (imgUrl) {
+                imgEl.src = imgUrl;
+                imgEl.style.display = "block";
+            } else {
+                imgEl.src = "";
+                imgEl.alt = "Gambar Tidak Tersedia / Kosong";
+            }
+        }
+    </script>
+</body>
+</html>
