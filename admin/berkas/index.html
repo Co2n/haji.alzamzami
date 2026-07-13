@@ -25,7 +25,7 @@
         .slider-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .image-label { font-weight: bold; color: #007bff; }
         
-        /* FITUR BARU: Tombol Zoom melayang di pojok kanan atas gambar */
+        /* Tombol Zoom */
         .zoom-controls {
             display: flex;
             gap: 5px;
@@ -54,14 +54,14 @@
             cursor: grabbing; 
         }
         
-        /* PERUBAHAN: Menggunakan min-width 100% sesuai permintaan */
+        /* Gambar min-width 100% */
         .image-wrapper img { 
             min-width: 100%; 
             height: auto;
             display: block; 
             margin: 0 auto;
             transform-origin: top center; 
-            transition: min-width 0.15s ease-out; /* Animasi zoom dirubah ke min-width */
+            transition: min-width 0.15s ease-out;
         }
         
         /* Styling teks ALT warna putih saat kosong */
@@ -73,7 +73,7 @@
             font-style: italic;
             padding: 30px 10px;         
             min-height: 100px;
-            min-width: auto; /* Mencegah text melar terpaksa ke 100% lebar */
+            min-width: auto;
         }
 
         /* Modal Box untuk Input Porsi */
@@ -167,9 +167,9 @@
         let currentRightImgIndex = 0;
         let fetchedImagesData = {};
         
-        // State untuk Zoom (Sekarang berbasis min-width 100%)
+        // State untuk Zoom
         let currentZoom = { left: 100, right: 100 };
-        const ZOOM_STEP = 20; // Besaran zoom per klik/scroll
+        const ZOOM_STEP = 20; 
 
         window.onload = function() {
             const savedList = localStorage.getItem('porsi_queue');
@@ -194,30 +194,15 @@
             }
             updateNavButtons();
             
-            setupZoomAndDrag('left');
-            setupZoomAndDrag('right');
+            setupDragPanning('left');
+            setupDragPanning('right');
         }
 
-        // Fitur Zoom (Mouse Wheel) & Drag
-        function setupZoomAndDrag(side) {
+        // PERUBAHAN DISINI: Fungsi diganti hanya menangani Click & Drag Panning saja.
+        // Event listener 'wheel' (scroll mouse) sudah dihapus sepenuhnya.
+        function setupDragPanning(side) {
             const wrapper = document.getElementById(`${side}Wrapper`);
-            const img = document.getElementById(`${side}Img`);
             
-            wrapper.addEventListener('wheel', function(e) {
-                if (!img.src || img.getAttribute('src') === "") return;
-                e.preventDefault();
-                
-                if (e.deltaY < 0) {
-                    currentZoom[side] += ZOOM_STEP;
-                } else {
-                    currentZoom[side] -= ZOOM_STEP;
-                    if (currentZoom[side] < 100) currentZoom[side] = 100; // Batas minimal kembali ke lebar asal (100%)
-                }
-                
-                img.style.minWidth = currentZoom[side] + '%';
-            });
-
-            // Logika Click & Drag
             let isDragging = false;
             let startX, startY, scrollLeft, scrollTop;
 
@@ -242,7 +227,7 @@
             });
         }
 
-        // FITUR BARU: Aksi Tombol Manual Zoom (+ dan -)
+        // Aksi Tombol Manual Zoom (+ dan -) tetap berfungsi penuh
         function zoomButton(side, direction) {
             const img = document.getElementById(`${side}Img`);
             if (!img.src || img.getAttribute('src') === "") return;
@@ -362,7 +347,7 @@
 
             labelEl.innerText = currentKey;
             
-            // RESET ZOOM DAN SCROLL KEMBALI KE LEBAR MINIMAL ASAL (100%)
+            // RESET ZOOM DAN SCROLL
             currentZoom[side] = 100;
             imgEl.style.minWidth = '100%';
             wrapper.scrollTop = 0;
