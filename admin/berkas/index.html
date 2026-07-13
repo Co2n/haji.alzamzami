@@ -2,9 +2,6 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perbandingan Gambar Urutan Porsi</title>
     <style>
@@ -21,39 +18,63 @@
 
         /* Bagian Bawah: Split Layout Kiri & Kanan */
         .main-container { display: flex; gap: 20px; height: calc(100vh - 180px); min-height: 500px; }
-        .panel-side { flex: 1; display: flex; flex-direction: column; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; }
+        .panel-side { flex: 1; display: flex; flex-direction: column; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; position: relative; }
         .panel-title { text-align: center; margin: 0 0 10px 0; font-size: 16px; color: #555; border-bottom: 2px solid #eee; padding-bottom: 5px; }
         
-        /* Slider Internal */
+        /* Slider & Zoom Controls */
         .slider-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .image-label { font-weight: bold; color: #007bff; }
         
-        /* Pembungkus Gambar - Sekarang support Scroll X dan Y & Cursor Grab */
+        /* FITUR BARU: Tombol Zoom melayang di pojok kanan atas gambar */
+        .zoom-controls {
+            display: flex;
+            gap: 5px;
+        }
+        .btn-zoom {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #6c757d;
+        }
+        .btn-zoom:hover {
+            background-color: #495057;
+        }
+        
+        /* Pembungkus Gambar */
         .image-wrapper { 
             flex: 1; 
             background: #222; 
             border-radius: 6px; 
-            overflow: auto; /* Memunculkan scroll horizontal & vertikal jika di-zoom */
+            overflow: auto; 
             position: relative; 
             text-align: center; 
             padding: 10px;
-            cursor: grab; /* Kursor berubah jadi tangan */
+            cursor: grab; 
         }
         .image-wrapper:active {
-            cursor: grabbing; /* Kursor saat sedang di-klik/drag */
+            cursor: grabbing; 
         }
         
-        /* Gambar ditambahkan animasi smooth saat zoom */
+        /* PERUBAHAN: Menggunakan min-width 100% sesuai permintaan */
         .image-wrapper img { 
-            width: 100%; 
+            min-width: 100%; 
             height: auto;
             display: block; 
             margin: 0 auto;
-            transform-origin: top center; /* Titik tumpu zoom dari atas tengah */
-            transition: width 0.15s ease-out; /* Efek halus saat scroll zoom */
+            transform-origin: top center; 
+            transition: min-width 0.15s ease-out; /* Animasi zoom dirubah ke min-width */
         }
         
-        .no-image { color: #888; font-style: italic; }
+        /* Styling teks ALT warna putih saat kosong */
+        .image-wrapper img:not([src]), 
+        .image-wrapper img[src=""] {
+            color: #ffffff;             
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+            padding: 30px 10px;         
+            min-height: 100px;
+            min-width: auto; /* Mencegah text melar terpaksa ke 100% lebar */
+        }
 
         /* Modal Box untuk Input Porsi */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
@@ -88,6 +109,12 @@
             <div class="slider-controls">
                 <button onclick="slideImage('left', -1)">◀</button>
                 <span class="image-label" id="leftLabel">Loading...</span>
+                
+                <div class="zoom-controls">
+                    <button class="btn-zoom" onclick="zoomButton('left', -1)" title="Zoom Out">-</button>
+                    <button class="btn-zoom" onclick="zoomButton('left', 1)" title="Zoom In">+</button>
+                </div>
+                
                 <button onclick="slideImage('left', 1)">▶</button>
             </div>
             <div class="image-wrapper" id="leftWrapper">
@@ -101,6 +128,12 @@
             <div class="slider-controls">
                 <button onclick="slideImage('right', -1)">◀</button>
                 <span class="image-label" id="rightLabel">Loading...</span>
+                
+                <div class="zoom-controls">
+                    <button class="btn-zoom" onclick="zoomButton('right', -1)" title="Zoom Out">-</button>
+                    <button class="btn-zoom" onclick="zoomButton('right', 1)" title="Zoom In">+</button>
+                </div>
+                
                 <button onclick="slideImage('right', 1)">▶</button>
             </div>
             <div class="image-wrapper" id="rightWrapper">
@@ -134,8 +167,9 @@
         let currentRightImgIndex = 0;
         let fetchedImagesData = {};
         
-        // State untuk Zoom (Default 100%)
+        // State untuk Zoom (Sekarang berbasis min-width 100%)
         let currentZoom = { left: 100, right: 100 };
+        const ZOOM_STEP = 20; // Besaran zoom per klik/scroll
 
         window.onload = function() {
             const savedList = localStorage.getItem('porsi_queue');
@@ -160,34 +194,30 @@
             }
             updateNavButtons();
             
-            // Inisialisasi fitur Zoom & Drag
             setupZoomAndDrag('left');
             setupZoomAndDrag('right');
         }
 
-        // --- FITUR BARU: ZOOM & DRAG (PANNING) ---
+        // Fitur Zoom (Mouse Wheel) & Drag
         function setupZoomAndDrag(side) {
             const wrapper = document.getElementById(`${side}Wrapper`);
             const img = document.getElementById(`${side}Img`);
             
-            // 1. Logika Zoom menggunakan Mouse Wheel
             wrapper.addEventListener('wheel', function(e) {
-                if (!img.src) return;
-                e.preventDefault(); // Mencegah halaman ikut ke-scroll
+                if (!img.src || img.getAttribute('src') === "") return;
+                e.preventDefault();
                 
-                const zoomStep = 15; // Kecepatan zoom
                 if (e.deltaY < 0) {
-                    currentZoom[side] += zoomStep; // Scroll Up = Zoom In
+                    currentZoom[side] += ZOOM_STEP;
                 } else {
-                    currentZoom[side] -= zoomStep; // Scroll Down = Zoom Out
-                    if (currentZoom[side] < 50) currentZoom[side] = 50; // Batas minimum zoom 50%
+                    currentZoom[side] -= ZOOM_STEP;
+                    if (currentZoom[side] < 100) currentZoom[side] = 100; // Batas minimal kembali ke lebar asal (100%)
                 }
                 
-                img.style.width = currentZoom[side] + '%';
-                img.style.maxWidth = 'none'; // Override CSS agar bisa membesar lebih dari 100%
+                img.style.minWidth = currentZoom[side] + '%';
             });
 
-            // 2. Logika Click & Drag untuk menggeser gambar (Panning)
+            // Logika Click & Drag
             let isDragging = false;
             let startX, startY, scrollLeft, scrollTop;
 
@@ -205,13 +235,26 @@
                 e.preventDefault();
                 const x = e.pageX - wrapper.offsetLeft;
                 const y = e.pageY - wrapper.offsetTop;
-                const walkX = (x - startX) * 1.5; // Angka 1.5 adalah kecepatan geser
+                const walkX = (x - startX) * 1.5;
                 const walkY = (y - startY) * 1.5;
                 wrapper.scrollLeft = scrollLeft - walkX;
                 wrapper.scrollTop = scrollTop - walkY;
             });
         }
-        // -----------------------------------------
+
+        // FITUR BARU: Aksi Tombol Manual Zoom (+ dan -)
+        function zoomButton(side, direction) {
+            const img = document.getElementById(`${side}Img`);
+            if (!img.src || img.getAttribute('src') === "") return;
+
+            if (direction === 1) {
+                currentZoom[side] += ZOOM_STEP;
+            } else {
+                currentZoom[side] -= ZOOM_STEP;
+                if (currentZoom[side] < 100) currentZoom[side] = 100; // Batas minimal 100%
+            }
+            img.style.minWidth = currentZoom[side] + '%';
+        }
 
         function openModal() { document.getElementById('porsiModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('porsiModal').style.display = 'none'; }
@@ -319,27 +362,18 @@
 
             labelEl.innerText = currentKey;
             
-            // RESET ZOOM DAN SCROLL SETIAP KALI GANTI GAMBAR
+            // RESET ZOOM DAN SCROLL KEMBALI KE LEBAR MINIMAL ASAL (100%)
             currentZoom[side] = 100;
-            imgEl.style.width = '100%';
+            imgEl.style.minWidth = '100%';
             wrapper.scrollTop = 0;
             wrapper.scrollLeft = 0;
 
             if (imgUrl) {
                 imgEl.src = imgUrl;
                 imgEl.style.display = "block";
-                imgEl.style.color = "transparent"; // Menyembunyikan teks alt jika gambar ada
-                imgEl.style.padding = "0";
             } else {
                 imgEl.src = "";
                 imgEl.alt = "Gambar Tidak Tersedia / Kosong";
-                imgEl.style.display = "block"; // Pastikan tetap block agar style CSS di bawah bekerja
-                
-                // WARNA PUTIH DI SINI
-                imgEl.style.color = "#ffffff"; 
-                imgEl.style.padding = "20px";
-                imgEl.style.fontSize = "16px";
-                imgEl.style.fontWeight = "bold";
             }
         }
     </script>
