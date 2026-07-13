@@ -25,24 +25,29 @@
         .slider-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .image-label { font-weight: bold; color: #007bff; }
         
-        /* PERUBAHAN DISINI: Pembungkus Gambar dibuat Scroll Vertikal */
+        /* Pembungkus Gambar - Sekarang support Scroll X dan Y & Cursor Grab */
         .image-wrapper { 
             flex: 1; 
             background: #222; 
             border-radius: 6px; 
-            overflow-y: auto;  /* Mengaktifkan scroll vertikal jika gambar terlalu tinggi */
-            overflow-x: hidden; /* Menyembunyikan scroll horizontal agar rapi */
+            overflow: auto; /* Memunculkan scroll horizontal & vertikal jika di-zoom */
             position: relative; 
-            text-align: center; /* Menjaga gambar tetap di tengah secara horizontal */
+            text-align: center; 
             padding: 10px;
+            cursor: grab; /* Kursor berubah jadi tangan */
+        }
+        .image-wrapper:active {
+            cursor: grabbing; /* Kursor saat sedang di-klik/drag */
         }
         
-        /* PERUBAHAN DISINI: Mengatur Gambar agar Lebarnya Max 100% dan Tinggi Alami */
+        /* Gambar ditambahkan animasi smooth saat zoom */
         .image-wrapper img { 
-            max-width: 100%; 
-            height: auto;       /* Membiarkan tinggi gambar memanjang sesuai resolusi asli */
+            width: 100%; 
+            height: auto;
             display: block; 
-            margin: 0 auto;     /* Mengetengahkan gambar */
+            margin: 0 auto;
+            transform-origin: top center; /* Titik tumpu zoom dari atas tengah */
+            transition: width 0.15s ease-out; /* Efek halus saat scroll zoom */
         }
         
         .no-image { color: #888; font-style: italic; }
@@ -55,27 +60,18 @@
         .btn-secondary { background-color: #6c757d; }
         .btn-secondary:hover { background-color: #5a6268; }
         
-        /* Loading overlay tetap fixed di tengah pembungkus */
+        /* Loading overlay */
         .loading { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            color: white; 
-            background: rgba(0,0,0,0.7); 
-            padding: 10px 20px; 
-            border-radius: 4px; 
-            display: none; 
-            z-index: 10;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            color: white; background: rgba(0,0,0,0.7); padding: 10px 20px; 
+            border-radius: 4px; display: none; z-index: 10;
         }
     </style>
 </head>
 <body>
 
     <div class="header-panel">
-        <div>
-            <button onclick="openModal()">Input Daftar Porsi</button>
-        </div>
+        <div><button onclick="openModal()">Input Daftar Porsi</button></div>
         <div class="nav-controls">
             <button id="btnPrev" onclick="navigatePorsi(-1)">Sebelumnya</button>
             <div id="porsiText" class="porsi-display">Belum ada data</div>
@@ -91,7 +87,7 @@
                 <span class="image-label" id="leftLabel">Loading...</span>
                 <button onclick="slideImage('left', 1)">▶</button>
             </div>
-            <div class="image-wrapper">
+            <div class="image-wrapper" id="leftWrapper">
                 <div class="loading" id="leftLoading">Loading Gambar...</div>
                 <img id="leftImg" src="" alt="Gambar Kiri">
             </div>
@@ -104,7 +100,7 @@
                 <span class="image-label" id="rightLabel">Loading...</span>
                 <button onclick="slideImage('right', 1)">▶</button>
             </div>
-            <div class="image-wrapper">
+            <div class="image-wrapper" id="rightWrapper">
                 <div class="loading" id="rightLoading">Loading Gambar...</div>
                 <img id="rightImg" src="" alt="Gambar Kanan">
             </div>
@@ -115,7 +111,7 @@
         <div class="modal-content">
             <h3>Masukkan Daftar Nomor Porsi</h3>
             <p style="font-size:12px; color:#666; margin:0;">Pisahkan setiap nomor porsi menggunakan Baris Baru (Enter).</p>
-            <textarea id="porsiInput" placeholder="Contoh:&#10;1000636477&#10;1000698370&#10;1000698372"></textarea>
+            <textarea id="porsiInput" placeholder="Contoh:&#10;1000636477&#10;1000698370"></textarea>
             <div class="modal-buttons">
                 <button class="btn-secondary" onclick="closeModal()">Batal</button>
                 <button onclick="savePorsiList()">OK</button>
@@ -125,7 +121,7 @@
 
     <script>
         // MASUKKAN URL WEB APP GAS ANDA DISINI
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx0sjsR5mmzXyI874osByPE1EKmcZ9MAggM9hTLWBiITHBQqL2T2uMZ8uMur4L7BAYHeQ/exec";
+        const GAS_API_URL = "URL_WEB_APP_GAS_ANDA_DISINI";
 
         const imageKeys = ["BPIH", "PENDAFTARAN BPIH", "IMAGE PERDIM", "IMAGE KTP", "IMAGE_KK"];
         
@@ -134,12 +130,13 @@
         let currentLeftImgIndex = 0;
         let currentRightImgIndex = 0;
         let fetchedImagesData = {};
+        
+        // State untuk Zoom (Default 100%)
+        let currentZoom = { left: 100, right: 100 };
 
         window.onload = function() {
             const savedList = localStorage.getItem('porsi_queue');
-            if (savedList) {
-                porsiQueue = JSON.parse(savedList);
-            }
+            if (savedList) porsiQueue = JSON.parse(savedList);
 
             const urlParams = new URLSearchParams(window.location.search);
             const porsiInUrl = urlParams.get('porsi');
@@ -159,7 +156,59 @@
                 openModal();
             }
             updateNavButtons();
+            
+            // Inisialisasi fitur Zoom & Drag
+            setupZoomAndDrag('left');
+            setupZoomAndDrag('right');
         }
+
+        // --- FITUR BARU: ZOOM & DRAG (PANNING) ---
+        function setupZoomAndDrag(side) {
+            const wrapper = document.getElementById(`${side}Wrapper`);
+            const img = document.getElementById(`${side}Img`);
+            
+            // 1. Logika Zoom menggunakan Mouse Wheel
+            wrapper.addEventListener('wheel', function(e) {
+                if (!img.src) return;
+                e.preventDefault(); // Mencegah halaman ikut ke-scroll
+                
+                const zoomStep = 15; // Kecepatan zoom
+                if (e.deltaY < 0) {
+                    currentZoom[side] += zoomStep; // Scroll Up = Zoom In
+                } else {
+                    currentZoom[side] -= zoomStep; // Scroll Down = Zoom Out
+                    if (currentZoom[side] < 50) currentZoom[side] = 50; // Batas minimum zoom 50%
+                }
+                
+                img.style.width = currentZoom[side] + '%';
+                img.style.maxWidth = 'none'; // Override CSS agar bisa membesar lebih dari 100%
+            });
+
+            // 2. Logika Click & Drag untuk menggeser gambar (Panning)
+            let isDragging = false;
+            let startX, startY, scrollLeft, scrollTop;
+
+            wrapper.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.pageX - wrapper.offsetLeft;
+                startY = e.pageY - wrapper.offsetTop;
+                scrollLeft = wrapper.scrollLeft;
+                scrollTop = wrapper.scrollTop;
+            });
+            wrapper.addEventListener('mouseleave', () => { isDragging = false; });
+            wrapper.addEventListener('mouseup', () => { isDragging = false; });
+            wrapper.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - wrapper.offsetLeft;
+                const y = e.pageY - wrapper.offsetTop;
+                const walkX = (x - startX) * 1.5; // Angka 1.5 adalah kecepatan geser
+                const walkY = (y - startY) * 1.5;
+                wrapper.scrollLeft = scrollLeft - walkX;
+                wrapper.scrollTop = scrollTop - walkY;
+            });
+        }
+        // -----------------------------------------
 
         function openModal() { document.getElementById('porsiModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('porsiModal').style.display = 'none'; }
@@ -247,9 +296,6 @@
         function slideImage(side, direction) {
             if (Object.keys(fetchedImagesData).length === 0) return;
 
-            // Setiap kali ganti gambar, reset posisi scroll panel ke paling atas (top)
-            document.getElementById(`${side}Panel`).querySelector('.image-wrapper').scrollTop = 0;
-
             if (side === 'left') {
                 currentLeftImgIndex = (currentLeftImgIndex + direction + imageKeys.length) % imageKeys.length;
                 renderSlider('left');
@@ -263,17 +309,34 @@
             const index = (side === 'left') ? currentLeftImgIndex : currentRightImgIndex;
             const labelEl = document.getElementById(`${side}Label`);
             const imgEl = document.getElementById(`${side}Img`);
+            const wrapper = document.getElementById(`${side}Wrapper`);
             
             const currentKey = imageKeys[index];
             const imgUrl = fetchedImagesData[currentKey];
 
             labelEl.innerText = currentKey;
+            
+            // RESET ZOOM DAN SCROLL SETIAP KALI GANTI GAMBAR
+            currentZoom[side] = 100;
+            imgEl.style.width = '100%';
+            wrapper.scrollTop = 0;
+            wrapper.scrollLeft = 0;
+
             if (imgUrl) {
                 imgEl.src = imgUrl;
                 imgEl.style.display = "block";
+                imgEl.style.color = "transparent"; // Menyembunyikan teks alt jika gambar ada
+                imgEl.style.padding = "0";
             } else {
                 imgEl.src = "";
                 imgEl.alt = "Gambar Tidak Tersedia / Kosong";
+                imgEl.style.display = "block"; // Pastikan tetap block agar style CSS di bawah bekerja
+                
+                // WARNA PUTIH DI SINI
+                imgEl.style.color = "#ffffff"; 
+                imgEl.style.padding = "20px";
+                imgEl.style.fontSize = "16px";
+                imgEl.style.fontWeight = "bold";
             }
         }
     </script>
