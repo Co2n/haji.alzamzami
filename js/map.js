@@ -62,22 +62,22 @@ function hideLoading() {
 function outputer(vals) {
   const textOutput = document.querySelector('#textOutput');
 
-  const perdimImigrasi = vals[41].search("Perdim") > -1 ? 'checked' : '';
-  const rekomKemenag = vals[41].search("Rekom") > -1 ? 'checked' : '';
-  const pasporLama = vals[41].search("Lama") > -1 ? 'checked' : '';
-  const buktiBpihPelunasan = vals[41].search("Bukti") > -1 ? 'checked' : '';
-  const sphPelimpahanPorsi = vals[41].search("SPH ") > -1 ? 'checked' : '';
-  const eKTP = vals[41].search("KTP") > -1 ? 'checked' : '';
-  const kk = vals[41].search("Kartu") > -1 ? 'checked' : '';
-  const aktaKelahiran = vals[41].search("Kelahiran") > -1 ? 'checked' : '';
-  const ijazah = vals[41].search("Ijazah") > -1 ? 'checked' : '';
-  const bukuNikah = vals[41].search("Nikah") > -1 ? 'checked' : '';
-  const suketKakek = vals[41].search("Kakek") > -1 ? 'checked' : '';
-  const suketSingkatan = vals[41].search("Singkatan") > -1 ? 'checked' : '';
-  const suketKehilangan = vals[41].search("Kehilangan") > -1 ? 'checked' : '';
+  const perdimImigrasi = vals[42].search("Perdim") > -1 ? 'checked' : '';
+  const rekomKemenag = vals[42].search("Rekom") > -1 ? 'checked' : '';
+  const pasporLama = vals[42].search("Lama") > -1 ? 'checked' : '';
+  const buktiBpihPelunasan = vals[42].search("Bukti") > -1 ? 'checked' : '';
+  const sphPelimpahanPorsi = vals[42].search("SPH ") > -1 ? 'checked' : '';
+  const eKTP = vals[42].search("KTP") > -1 ? 'checked' : '';
+  const kk = vals[42].search("Kartu") > -1 ? 'checked' : '';
+  const aktaKelahiran = vals[42].search("Kelahiran") > -1 ? 'checked' : '';
+  const ijazah = vals[42].search("Ijazah") > -1 ? 'checked' : '';
+  const bukuNikah = vals[42].search("Nikah") > -1 ? 'checked' : '';
+  const suketKakek = vals[42].search("Kakek") > -1 ? 'checked' : '';
+  const suketSingkatan = vals[42].search("Singkatan") > -1 ? 'checked' : '';
+  const suketKehilangan = vals[42].search("Kehilangan") > -1 ? 'checked' : '';
 
-  const bap = vals[40];
-  const perpanjangan = vals[39];
+  const bap = vals[41];
+  const perpanjangan = vals[40];
 
   if (vals[1] > 1000776008) {
     textOutput.innerHTML =
