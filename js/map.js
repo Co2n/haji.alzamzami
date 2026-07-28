@@ -1,3 +1,4 @@
+// https://script.google.com/macros/s/AKfycbyFca469t2xJ3KBTo6mIxAlO87wd3rIaQNflEdNR9Evj2wNman4VyaZXw9l5T7nuVhf/exec;
 const url = 'https://script.google.com/macros/s/AKfycbyFca469t2xJ3KBTo6mIxAlO87wd3rIaQNflEdNR9Evj2wNman4VyaZXw9l5T7nuVhf/exec';
 const myMusim = document.querySelector('#hijriyah');
 const myAbsen = document.querySelector('#absen');
@@ -78,7 +79,7 @@ function outputer(vals) {
   const bap = vals[40];
   const perpanjangan = vals[39];
 
-  if (vals[1] > 1000704204) {
+  if (vals[1] > 1000776008) {
     textOutput.innerHTML =
       `<div class="content">
         <div class="container text-center">
