@@ -31,9 +31,26 @@ btn.addEventListener('click', (e) => {
   if (valAbsen > 0 && valMusim > 0) {
     displayLoading();
     fetch(url1)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+           throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
       .then(data => {
         outputer(data);
+      })
+      .catch(error => {
+        console.error('Ada masalah dengan fetch:', error);
+        // Tampilkan pesan error di layar dan sembunyikan loading
+        const textOutput = document.querySelector('#textOutput');
+        textOutput.innerHTML = `
+          <div class="container text-center mt-3">
+            <div class="alert alert-danger" role="alert">
+              Terjadi kesalahan saat mengambil data atau data tidak ditemukan. Silakan periksa kembali No Absen dan Musim.
+            </div>
+          </div>`;
+        hideLoading();
       });
   }
 });
@@ -62,19 +79,30 @@ function hideLoading() {
 function outputer(vals) {
   const textOutput = document.querySelector('#textOutput');
 
-  const perdimImigrasi = vals[42].search("Perdim") > -1 ? 'checked' : '';
-  const rekomKemenag = vals[42].search("Rekom") > -1 ? 'checked' : '';
-  const pasporLama = vals[42].search("Lama") > -1 ? 'checked' : '';
-  const buktiBpihPelunasan = vals[42].search("Bukti") > -1 ? 'checked' : '';
-  const sphPelimpahanPorsi = vals[42].search("SPH ") > -1 ? 'checked' : '';
-  const eKTP = vals[42].search("KTP") > -1 ? 'checked' : '';
-  const kk = vals[42].search("Kartu") > -1 ? 'checked' : '';
-  const aktaKelahiran = vals[42].search("Kelahiran") > -1 ? 'checked' : '';
-  const ijazah = vals[42].search("Ijazah") > -1 ? 'checked' : '';
-  const bukuNikah = vals[42].search("Nikah") > -1 ? 'checked' : '';
-  const suketKakek = vals[42].search("Kakek") > -1 ? 'checked' : '';
-  const suketSingkatan = vals[42].search("Singkatan") > -1 ? 'checked' : '';
-  const suketKehilangan = vals[42].search("Kehilangan") > -1 ? 'checked' : '';
+  // Pastikan vals ada dan vals[41] didefinisikan, ubah jadi string kosong jika tidak ada
+  if (!vals || vals.length === 0) {
+     textOutput.innerHTML = `<div class="alert alert-warning text-center mt-3">Data tidak ditemukan.</div>`;
+     hideLoading();
+     return;
+  }
+
+  // Gunakan String() agar aman meskipun nilai vals[41] null atau angka
+  const dokumenString = String(vals[42] || "");
+
+  // Lebih baik pakai .includes() untuk pencarian string biasa
+  const perdimImigrasi = dokumenString.includes("Perdim") ? 'checked' : '';
+  const rekomKemenag = dokumenString.includes("Rekom") ? 'checked' : '';
+  const pasporLama = dokumenString.includes("Lama") ? 'checked' : '';
+  const buktiBpihPelunasan = dokumenString.includes("Bukti") ? 'checked' : '';
+  const sphPelimpahanPorsi = dokumenString.includes("SPH") ? 'checked' : '';
+  const eKTP = dokumenString.includes("KTP") ? 'checked' : '';
+  const kk = dokumenString.includes("Kartu") ? 'checked' : '';
+  const aktaKelahiran = dokumenString.includes("Kelahiran") ? 'checked' : '';
+  const ijazah = dokumenString.includes("Ijazah") ? 'checked' : '';
+  const bukuNikah = dokumenString.includes("Nikah") ? 'checked' : '';
+  const suketKakek = dokumenString.includes("Kakek") ? 'checked' : '';
+  const suketSingkatan = dokumenString.includes("Singkatan") ? 'checked' : '';
+  const suketKehilangan = dokumenString.includes("Kehilangan") ? 'checked' : '';
 
   const bap = vals[41];
   const perpanjangan = vals[40];
