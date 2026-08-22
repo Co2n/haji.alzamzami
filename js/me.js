@@ -85,44 +85,45 @@ const table = new DataTable('#tabelJemaah', {
       { visible: false, targets: 68, className: 'dt-body-center' }, //SABUK IHROM
       { visible: false, targets: 69, className: 'dt-body-center' }, //TAS GENDONG
       { visible: false, targets: 70, className: 'dt-body-center' }, //KAOS KAKI
-      { visible: false, targets: 71, className: 'dt-body-center' }, //TAARUF
-      { visible: false, targets: 72, className: 'dt-body-center' }, //TAARUF 2
-      { visible: false, targets: 73, className: 'dt-body-center' }, //MANASIK AWAL 1
-      { visible: false, targets: 74, className: 'dt-body-center' }, //MANASIK AWAL 2
-      { visible: false, targets: 75, className: 'dt-body-center' }, //MANASIK AWAL 3
-      { visible: false, targets: 76, className: 'dt-body-center' }, //MANASIK AWAL 4
-      { visible: false, targets: 77, className: 'dt-body-center' }, //MANASIK AWAL 5
-      { visible: false, targets: 78, className: 'dt-body-center' }, //MANASIK AWAL 6
-      { visible: false, targets: 79, className: 'dt-body-center' }, //MANASIK PEMANTAPAN
-      { visible: false, targets: 80, className: 'dt-body-center' }, //PERSIAPAN KOLOSAL
-      { visible: false, targets: 81, className: 'dt-body-center' }, //MANASIK KOLOSAL
-      { visible: false, targets: 82, className: 'dt-body-center' }, //EVALUASI KOLOSAL
-      { visible: false, targets: 83, className: 'dt-body-center' }, //MANASIK PRIVAT
-      { visible: false, targets: 84, className: 'dt-body-center' }, //PELATIHAN KARU KARU
-      { visible: false, targets: 85, className: 'dt-body-center' }, //PERSIAPAN KEBERANGKATAN
-      { visible: false, targets: 86, className: 'dt-body-center' }, //PASKA HAJI
-      { visible: false, targets: 87, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-1
-      { visible: false, targets: 88, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-2
-      { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-3
-      { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-4
-      { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-5
-      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-7
-      { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
-      { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
-      { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
-      { visible: false, targets: 96, searchable: false, orderable: false, className: 'dt-body-center' }, //UK-GAMIS
-      { visible: false, targets: 97, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
-      { visible: false, targets: 98, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
-      { visible: false, targets: 99, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
-      { visible: false, targets: 100, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGANG
-      { visible: false, targets: 101, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
-      { visible: false, targets: 102, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
-      { visible: false, targets: 103, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
-      { visible: false, targets: 104, className: 'dt-body-center' }, //KERAH
-      { visible: false, targets: 105, className: 'dt-body-center' }, //PARAF
-      { visible: false, targets: 106, className: 'dt-body-center' }, //TANDA TANGAN
-      { visible: false, targets: 107, className: 'dt-body-center' }, //KETERANGAN
-      { visible: false, targets: 108, className: 'dt-body-center' }, //KET
+      { visible: false, targets: 71, className: 'dt-body-center' }, //BUKU MANASIK 2027
+      { visible: false, targets: 72, className: 'dt-body-center' }, //TAARUF
+      { visible: false, targets: 73, className: 'dt-body-center' }, //TAARUF 2
+      { visible: false, targets: 74, className: 'dt-body-center' }, //MANASIK AWAL 1
+      { visible: false, targets: 75, className: 'dt-body-center' }, //MANASIK AWAL 2
+      { visible: false, targets: 76, className: 'dt-body-center' }, //MANASIK AWAL 3
+      { visible: false, targets: 77, className: 'dt-body-center' }, //MANASIK AWAL 4
+      { visible: false, targets: 78, className: 'dt-body-center' }, //MANASIK AWAL 5
+      { visible: false, targets: 79, className: 'dt-body-center' }, //MANASIK AWAL 6
+      { visible: false, targets: 80, className: 'dt-body-center' }, //MANASIK PEMANTAPAN
+      { visible: false, targets: 81, className: 'dt-body-center' }, //PERSIAPAN KOLOSAL
+      { visible: false, targets: 82, className: 'dt-body-center' }, //MANASIK KOLOSAL
+      { visible: false, targets: 83, className: 'dt-body-center' }, //EVALUASI KOLOSAL
+      { visible: false, targets: 84, className: 'dt-body-center' }, //MANASIK PRIVAT
+      { visible: false, targets: 85, className: 'dt-body-center' }, //PELATIHAN KARU KARU
+      { visible: false, targets: 86, className: 'dt-body-center' }, //PERSIAPAN KEBERANGKATAN
+      { visible: false, targets: 87, className: 'dt-body-center' }, //PASKA HAJI
+      { visible: false, targets: 88, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-1
+      { visible: false, targets: 89, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-2
+      { visible: false, targets: 90, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-3
+      { visible: false, targets: 91, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-4
+      { visible: false, targets: 92, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-5
+      { visible: false, targets: 93, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-7
+      { visible: false, targets: 94, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-8
+      { visible: false, targets: 95, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-9
+      { visible: false, targets: 96, searchable: false, orderable: false, className: 'dt-body-center' }, //COL-10
+      { visible: false, targets: 97, searchable: false, orderable: false, className: 'dt-body-center' }, //UK-GAMIS
+      { visible: false, targets: 98, searchable: false, orderable: false, className: 'dt-body-center' }, //PUNDAK
+      { visible: false, targets: 99, searchable: false, orderable: false, className: 'dt-body-center' }, //P-BADAN
+      { visible: false, targets: 100, searchable: false, orderable: false, className: 'dt-body-center' }, //L-DADA
+      { visible: false, targets: 101, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGANG
+      { visible: false, targets: 102, searchable: false, orderable: false, className: 'dt-body-center' }, //L-PINGGUL
+      { visible: false, targets: 103, searchable: false, orderable: false, className: 'dt-body-center' }, //P-TANGAN
+      { visible: false, targets: 104, searchable: false, orderable: false, className: 'dt-body-center' }, //L-TANGAN
+      { visible: false, targets: 105, searchable: false, orderable: false, className: 'dt-body-center' }, //KERAH
+      { visible: false, targets: 106, className: 'dt-body-center' }, //PARAF
+      { visible: false, targets: 107, className: 'dt-body-center' }, //TANDA TANGAN
+      { visible: false, targets: 108, className: 'dt-body-center' }, //KETERANGAN
+      { visible: false, targets: 109, className: 'dt-body-center' }, //KET
    ],
    order: [[5, 'asc']],
    ajax: {
@@ -202,44 +203,45 @@ const table = new DataTable('#tabelJemaah', {
       { data: "sabuk ihrom" }, //68
       { data: "tas gendong" }, //69
       { data: "kaos kaki" }, //70
-      { data: "taaruf" }, //71
-      { data: "taaruf 2" }, //72
-      { data: "manasik awal 1" }, //73
-      { data: "manasik awal 2" }, //74
-      { data: "manasik awal 3" }, //75
-      { data: "manasik awal 4" }, //76
-      { data: "manasik awal 5" }, //77
-      { data: "manasik awal 6" }, //78
-      { data: "manasik pemantapan" }, //79
-      { data: "persiapan kolosal" }, //80
-      { data: "manasik kolosal" }, //81
-      { data: "evaluasi kolosal" }, //82
-      { data: "manasik privat" }, //83
-      { data: "pelatihan karu karu" }, //84
-      { data: "persiapan keberangkatan" }, //85
-      { data: "paska haji" }, //86
-      { data: "col-1" }, //87
-      { data: "col-2" }, //88
-      { data: "col-3" }, //89
-      { data: "col-4" }, //90
-      { data: "col-5" }, //91
-      { data: "col-7" }, //92
-      { data: "col-8" }, //93
-      { data: "col-9" }, //94
-      { data: "col-10" }, //95
-      { data: "uk-gamis" }, //96
-      { data: "pundak" }, //97
-      { data: "p-badan" }, //98
-      { data: "l-dada" }, //99
-      { data: "l-pinggang" }, //100
-      { data: "l-pinggul" }, //101
-      { data: "p-tangan" }, //102
-      { data: "l-tangan" }, //103
-      { data: "kerah" }, //104
-      { data: "paraf" }, //105
-      { data: "tanda tangan" }, //106
-      { data: "keterangan" }, //107
-      { data: "ket" }, //108
+      { data: "buku manasik 2027" }, //71
+      { data: "taaruf" }, //72
+      { data: "taaruf 2" }, //73
+      { data: "manasik awal 1" }, //74
+      { data: "manasik awal 2" }, //75
+      { data: "manasik awal 3" }, //76
+      { data: "manasik awal 4" }, //77
+      { data: "manasik awal 5" }, //78
+      { data: "manasik awal 6" }, //79
+      { data: "manasik pemantapan" }, //80
+      { data: "persiapan kolosal" }, //81
+      { data: "manasik kolosal" }, //82
+      { data: "evaluasi kolosal" }, //83
+      { data: "manasik privat" }, //84
+      { data: "pelatihan karu karu" }, //85
+      { data: "persiapan keberangkatan" }, //86
+      { data: "paska haji" }, //87
+      { data: "col-1" }, //88
+      { data: "col-2" }, //89
+      { data: "col-3" }, //90
+      { data: "col-4" }, //91
+      { data: "col-5" }, //92
+      { data: "col-7" }, //93
+      { data: "col-8" }, //94
+      { data: "col-9" }, //95
+      { data: "col-10" }, //96
+      { data: "uk-gamis" }, //97
+      { data: "pundak" }, //98
+      { data: "p-badan" }, //99
+      { data: "l-dada" }, //100
+      { data: "l-pinggang" }, //101
+      { data: "l-pinggul" }, //102
+      { data: "p-tangan" }, //103
+      { data: "l-tangan" }, //104
+      { data: "kerah" }, //105
+      { data: "paraf" }, //106
+      { data: "tanda tangan" }, //107
+      { data: "keterangan" }, //108
+      { data: "ket" }, //109
    ],
    processing: true,
    colReorder: true,
