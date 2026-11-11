@@ -341,111 +341,86 @@ const table = new DataTable('#tabelJemaah', {
       top2End: {
          buttons: [
             {
-               extend: 'print',
-               autoPrint: false,
-               text: 'Print Dokumen',
-               title: function () {
-                  switch ($("#titleDok").val()) {
-                     case '':
-                        return 'Data Peserta Bimbingan Manasik Haji'
-                        break;
+   extend: 'print',
+   autoPrint: false,
+   text: 'Print Dokumen',
+   title: function () {
+      switch ($("#titleDok").val()) {
+         case '':
+            return 'Data Peserta Bimbingan Manasik Haji'
+            break;
 
-                     default:
-                        return $("#titleDok").val()
-                        break;
-                  }
-               },
-               messageTop: 'KBIHU Al-Zamzami Kuningan',
-               messageBottom: '',
-               orientation: document.getElementById('paper').value,
-               // pageSize: 'A4',
-               exportOptions: {
-                  columns: ':visible',
-                  format: {
-                     // body: function (inner, rowidx, colidx, node) {
-                     //    if (node.classList.contains('summary')) {
-                     //       return '<span class="summary" style="color:red; font-style:italic;">' + inner + '</span>';
-                     //    } else {
-                     //       return inner;
-                     //    }
-                     // }
-                     body: function (inner, rowidx, colidx, node) {
-                        if (node.classList.contains('img')) {
-                           return inner;
-                        } else {
-                           return inner;
-                        }
-                     }
-                  }
-               },
-               customize: function (win, butt, tbl) {
+         default:
+            return $("#titleDok").val()
+            break;
+      }
+   },
+   messageTop: 'KBIHU Al-Zamzami Kuningan',
+   messageBottom: '',
+   orientation: document.getElementById('paper').value,
+   exportOptions: {
+      columns: ':visible',
+      format: {
+         body: function (inner, rowidx, colidx, node) {
+            if (node.classList.contains('img')) {
+               return inner;
+            } else {
+               return inner;
+            }
+         }
+      }
+   },
+   customize: function (win, butt, tbl) {
 
-                  $(win.document.body)
-                     .css('font-size', '10pt')
-                     .prepend(
-                        '<img src="http://haji.alzamzami.co.id/img/logokbihu.svg" style="position:absolute; height:95px; top:0; right:0;" />'
-                     );
+      $(win.document.body)
+         .css('font-size', '10pt')
+         .prepend(
+            '<img src="http://haji.alzamzami.co.id/img/logokbihu.svg" style="position:absolute; height:95px; top:0; right:0;" />'
+         );
 
-                  // $(win.document.body)
-                  //    .find('table')
-                  //    .addClass('compact')
-                  //    .css('font-size', 'inherit');
-                  let tinggi = document.getElementById('tinggi').value
-                  $(win.document.body).find('td').each(function (index) { $(this).css('height', tinggi + 'px') });
+      let tinggi = document.getElementById('tinggi').value
+      $(win.document.body).find('td').each(function (index) { $(this).css('height', tinggi + 'px') });
 
-                  // $(win.document.body).find('span.summary').css('font-size', '20px');
-                  // $(win.document.body).find('span.summary').parent().css('background-color', 'yellow');
+      $(win.document.body).find('span.summary').each(function (index) { $(this).addClass('dt-body-center') });
 
-                  $(win.document.body).find('span.summary').each(function (index) { $(this).addClass('dt-body-center') });
+      // ==========================================
+      // TAMBAHKAN BARIS INI UNTUK MENGHILANGKAN TFOOT:
+      // ==========================================
+      $(win.document.body).find('table tfoot').remove();
 
+      // Untuk menyelaraskan style di view dan di print 
+      let colVisible = table.columns(':visible')[0];
+      for (var i = 0; i < colVisible.length; ++i) {
+         //header
+         $(win.document.body).find('table thead th:nth-child(' + (i + 1) + ')').each(function (index) {
+            $(this).addClass(
+               table.cell(0, colVisible[i]).node().getAttribute('class')
+            )
+         });
+         //isi
+         $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) {
+            $(this).addClass(
+               table.cell(0, colVisible[i]).node().getAttribute('class')
+            )
+         });
+      }
 
-                  // Untuk menyelaraskan style di view dan di print 
-                  let colVisible = table.columns(':visible')[0];
-                  for (var i = 0; i < colVisible.length; ++i) {
-                     //header
-                     $(win.document.body).find('table thead th:nth-child(' + (i + 1) + ')').each(function (index) {
-                        $(this).addClass(
-                           //ambil dari style view
-                           table.cell(0, colVisible[i]).node().getAttribute('class')
-                        )
-                     });
-                     //isi
-                     $(win.document.body).find('table tr td:nth-child(' + (i + 1) + ')').each(function (index) {
-                        $(this).addClass(
-                           //ambil dari style view
-                           table.cell(0, colVisible[i]).node().getAttribute('class')
-                        )
-                     });
-                     //footer
-                     $(win.document.body).find('table tfoot th:nth-child(' + (i + 1) + ')').each(function (index) {
-                        $(this).addClass(
-                           //ambil dari style view
-                           table.cell(0, colVisible[i]).node().getAttribute('class')
-                        )
-                     });
-                  }
-
-                  // --> Landscape START
-                  var last = null;
-                  var current = null;
-                  var bod = [];
-                  var paper = document.getElementById('paper').value === 'portrait' ? '' : 'landscape';
-                  var css = '@page { size: ' + paper + ' }',
-                     head = win.document.head || win.document.getElementsByTagName('head')[0],
-                     style = win.document.createElement('style');
-                  style.type = 'text/css';
-                  style.media = 'print';
-                  if (style.styleSheet) {
-                     style.styleSheet.cssText = css;
-                  }
-                  else {
-                     style.appendChild(win.document.createTextNode(css));
-                  }
-                  head.appendChild(style)
-                  // <-- END
-
-               }
-            },
+      // Landscape / Portrait styling
+      var paper = document.getElementById('paper').value === 'portrait' ? '' : 'landscape';
+      var css = '@page { size: ' + paper + ' }',
+         head = win.document.head || win.document.getElementsByTagName('head')[0],
+         style = win.document.createElement('style');
+      style.type = 'text/css';
+      style.media = 'print';
+      if (style.styleSheet) {
+         style.styleSheet.cssText = css;
+      }
+      else {
+         style.appendChild(win.document.createTextNode(css));
+      }
+      head.appendChild(style)
+   }
+},
             {
                extend: 'pdfHtml5',
                text: 'PDF',
