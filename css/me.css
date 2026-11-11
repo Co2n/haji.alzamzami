@@ -72,4 +72,7 @@ body.dt-print-view div {
    body {
       margin-right: 2px;
    }
+   table#tabelJemaah tfoot {
+        display: none !important;
+    }
  }
